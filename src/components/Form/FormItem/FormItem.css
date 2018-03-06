@@ -1,0 +1,31 @@
+
+.form-item{
+    font-size: 18px;
+}
+.form-item input{
+    border-radius: 3px;
+    box-shadow: 2px 2px 3px grey;
+    margin: 10px 0;
+    width: 60%;
+    height: 40px;
+    font-size: 22px;
+    
+}
+
+.form-item input:hover{
+    border: 2px solid lightseagreen;
+}
+
+
+.errorMessage{
+    color: red;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: bold;
+   
+}
+
+.Label{
+    font-weight: bold;
+    font-size: 18px;
+}

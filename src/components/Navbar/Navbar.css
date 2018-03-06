@@ -1,0 +1,17 @@
+.Navbar{
+    top: 0;
+    left: 0;
+    z-index: 90;
+    box-shadow: 0 2px 3px #ccc;
+    color: white;
+    padding: 32px 100px;
+    background: #085078;
+    background: -webkit-linear-gradient(to right,#085078,#85d8ce);
+    background: linear-gradient(to right,#085078,#85d8ce);
+    width: 100%;
+    font-size: 24px;
+    display: flex;
+    align-content: space-around;
+    font-family: Open 'sans-serif';
+
+}

@@ -1,0 +1,13 @@
+.Items{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 700px;
+    justify-content: space-between;
+    margin-left: auto;
+}
+.Items li:hover{
+    color: orangered;
+    cursor: pointer;
+}

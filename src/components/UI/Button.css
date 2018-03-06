@@ -1,0 +1,23 @@
+.Button{
+    background-color: indianred;
+    padding: 10px;
+    font-size:inherit;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    color: white;
+    width: 40%;
+    letter-spacing: 2px;
+    margin-top: 25px;
+    cursor: pointer;
+    transition: all 1s;
+    
+}
+
+
+.Button:hover{
+    box-shadow: 3px 3px 4px #ccc;
+  
+}
+
+
