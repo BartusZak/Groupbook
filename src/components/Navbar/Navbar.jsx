@@ -50,10 +50,10 @@ class Navbar extends Component{
                     <Searcher items={items}/>
                     <Avatar />
     
-                    <NavLink to="/logged/settings" >
-                        <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs'/>
+                    <NavLink to="/logged/settings">
+                        <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
                     </NavLink>
-                    <NavbarButton name="Wyloguj" logout={this.onLogoutHandler}/>
+                    <NavbarButton name="Wyloguj" logout={this.onLogoutHandler} />
                    
                 </div>
             );

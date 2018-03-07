@@ -36,7 +36,7 @@ class FormItem extends Component {
     }
 
    
-//
+
     render(){
         const isPassword = this.props.title === "Hasło" ? "password" : "text";
         const disableInput = this.state.disable;
