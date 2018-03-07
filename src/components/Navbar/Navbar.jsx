@@ -46,6 +46,7 @@ class Navbar extends Component{
             items = ["Grupa", "Post", "Użytkownik"];
     
             navbarContent = (
+            <Aux>
                 <div className="NavbarContainer">
                     <Searcher items={items}/>
                     <Avatar />
@@ -58,13 +59,10 @@ class Navbar extends Component{
                 </div>
             </Aux>
             );
+        }
         return(
             <nav className="Navbar">
-                <div id="logoDiv">
-                    <Link to="/">
-                        <img src={logo} alt="logo"/>
-                    </Link>
-                </div>
+                <Logo width="300"/>
                 {navbarContent}
             </nav>
         );

@@ -24,7 +24,7 @@ class HomePage extends Component {
     render() {
       return (
         <Aux>
-            <Navbar isLogged={false}/>
+            <Navbar isLogged={true}/>
             <Route exact path="/" component={Content} />
             <Route path="/logged/settings" component={UserPanel} />
             <Route path="/register"  component={Register} />
