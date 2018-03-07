@@ -10,7 +10,7 @@ class Form extends Component {
 
     render(){
         const Items = this.props.loginItems;
-
+//elo dasdsad
         return (
             <div className="Form">
                 <h2>{this.props.name}</h2>
