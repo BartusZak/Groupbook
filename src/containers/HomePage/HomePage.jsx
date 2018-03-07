@@ -7,6 +7,7 @@ import {
 import Navbar from '../../components/Navbar/Navbar';
 import Content from '../../components/Content/Content';
 import UserPanel from '../../components/UI/UserPanel/UserPanel';
+import Register from '../../components/Register/Register';
 
 import Aux from '../../hoc/Auxi';
 
@@ -14,9 +15,10 @@ class HomePage extends Component {
     render() {
       return (
         <Aux>
-            <Navbar isLogged={true}/>
+            <Navbar isLogged={false}/>
             <Route exact path="/" component={Content} />
             <Route path="/logged/settings" component={UserPanel} />
+            <Route path="/register"  component={Register} />
         </Aux>
            
 

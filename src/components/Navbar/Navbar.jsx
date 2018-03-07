@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.css';
 import Items from './Items/Items';
-import logo from '../../assets/img/logo/groupsconnects.png';
+import Logo from '../Logo/Logo';
 import 'font-awesome/css/font-awesome.min.css';
 import {Link, NavLink} from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
@@ -27,7 +27,7 @@ const navbar = (props) => {
                     <Items items={items}/>
                 </div>
                 <div id="socialDiv">
-                    <a href="http://twitter.com" rel="noopener noreferrer" target="_blank">
+                    <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
                         <i className='fa fa-facebook-square'/>
                     </a>
                     <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
@@ -57,11 +57,7 @@ const navbar = (props) => {
     return (
         
         <nav className="Navbar">
-            <div id="logoDiv">
-                <Link to="/">
-                    <img src={logo} alt="logo"/>
-                </Link>
-            </div>
+            <Logo width="300"/>
             {navbarContent}
         </nav>
     );

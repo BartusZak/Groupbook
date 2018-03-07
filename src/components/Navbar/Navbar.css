@@ -16,10 +16,6 @@
     height: 110px;
 
 }
-#logoDiv img{
-    width: 300px;
-    margin-bottom: 20px;
-}
 
 #socialDiv {
     width: 10%;
@@ -27,6 +23,14 @@
 #socialDiv i{
     padding: 0 20px;
     font-size: 40px;
+}
+
+.fa-facebook-square {
+    color: #3B5998;
+}
+
+.fa-twitter-square {
+    color: #00aced;
 }
 
 .NavbarContainer{
