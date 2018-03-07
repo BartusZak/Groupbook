@@ -3,4 +3,5 @@
     padding: 2%;
     margin-top: 15px;
     justify-content: space-between;
+    flex-flow: row wrap;
 }
