@@ -6,7 +6,7 @@ import {
     NavLink
   } from 'react-router-dom';
 import './SingleItem.css';
-
+//
 
 const singleItem = (props) => (
     <NavLink to={props.url} activeClassName="selected">
