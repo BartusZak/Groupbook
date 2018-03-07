@@ -4,18 +4,18 @@ import {
   Route,
 } from 'react-router-dom';
 
-import Navbar from './components/Navbar/Navbar';
-import Content from './components/Content/Content';
-import About from './components/About/About';
+
+
+import HomePage from './containers/HomePage/HomePage';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="App">
-          <Navbar />
-          <Route exact path="/" component={Content} />
-          <Route path="/about" component={About} />
+
+          <HomePage />
+          
         </div>
       </Router>
     );
