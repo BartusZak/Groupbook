@@ -21,16 +21,40 @@ class Navbar extends Component{
         let navbarContent = null;
         let items = null;
 
-        navbarContent = (
-            <Aux>
-                <div id="navUl">
-                    <Items items={items}/>
-                </div>
-                <div id="socialDiv">
-                    <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
-                        <i className='fa fa-facebook-square'/>
-                    </a>
-                    <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
+        if(!this.state.isLogged){
+            items = [
+                {id: 1, name: "O nas", url: "/about"},
+                {id: 2, name: "Rejestracja", url: "/register"} 
+            ];
+    
+            navbarContent = (
+                <Aux>
+                    <div id="navUl">
+                        <Items items={items}/>
+                    </div>
+                    <div id="socialDiv">
+                        <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
+                            <i className='fa fa-facebook-square'/>
+                        </a>
+                        <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
+                    </div>
+                </Aux>
+               
+            );
+        }
+        else{
+            items = ["Grupa", "Post", "Użytkownik"];
+    
+            navbarContent = (
+                <div className="NavbarContainer">
+                    <Searcher items={items}/>
+                    <Avatar />
+    
+                    <NavLink to="/logged/settings">
+                        <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
+                    </NavLink>
+                    <NavbarButton name="Wyloguj" logout={this.onLogoutHandler} />
+                   
                 </div>
             </Aux>
             );

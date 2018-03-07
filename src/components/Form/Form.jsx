@@ -20,6 +20,7 @@ class Form extends Component {
                     placeholder={item.placeholder}
                     min={5}
                     max={15}
+                    data={this.props.data}
                     />
                 })}
                 <Button title="Zaloguj" disable={this.state.buttonDisabled}/>

@@ -36,7 +36,7 @@ class FormItem extends Component {
     }
 
    
-//
+
     render(){
         const isPassword = this.props.title === "Hasło" || "Powtórz hasło" ? "password" : "text";
         const isEmail = this.props.title === "E-mail" ? "email" : "text";
