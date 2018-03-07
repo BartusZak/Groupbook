@@ -1,3 +1,0 @@
-"Siema";
-Bartek;
-"Siema" "TOCWEL";
