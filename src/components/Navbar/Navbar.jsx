@@ -1,22 +1,26 @@
 import React from 'react';
 import './Navbar.css';
 import Items from './Items/Items';
+import logo from '../../assets/img/logo/groupsconnects.png';
+import 'font-awesome/css/font-awesome.min.css';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    NavLink
+  } from 'react-router-dom';
+
+
 const navbar = (props) => {
 
     const itemsBeforeLogIn = [
-        {id: 1, name: "O nas"},
-        {id: 2, name: "Rejestracja"},
-        {id: 3, name: "Facebook"},
-        {id: 4, name: "Twitter"}
-    
+        {id: 1, name: "O nas", url: "/about"},
+        {id: 2, name: "Rejestracja", url: "/register"} 
     ]
 
     const itemsAfterLogIn = [
         {id: 1, name: "Siema"},
-        {id: 2, name: "Rejestracja"},
-        {id: 3, name: "Facebook"},
-        {id: 4, name: "Twitter"}
-    
+        {id: 2, name: "BOBIE"} 
     ]
  
     const result = props.result ? itemsAfterLogIn : itemsBeforeLogIn;
@@ -24,9 +28,23 @@ const navbar = (props) => {
         
         <nav className="Navbar">
         
-                <div>Logo</div>
+                <div id="logoDiv">
+                    <Link to="/">
+                        <img  id="logo" src={logo} alt="logo"/>
+                    </Link>
+                </div>
+
+                <div id="navUl">
+                    <Items items={result}/>
+
+                </div>
                 
-                <Items items={result}/>
+                <div id="socialDiv">
+                <a href="http://twitter.com" target="_blank">
+                    <i className='fa fa-facebook-square'/>
+                </a>
+                    <a href="http://twitter.com" target="_blank"><i className='fa fa-twitter-square'/></a>
+                </div>
      
          
          
