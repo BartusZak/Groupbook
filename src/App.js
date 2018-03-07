@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link
 } from 'react-router-dom';
 
 import Navbar from './components/Navbar/Navbar';
@@ -19,11 +18,6 @@ class App extends Component {
           <Route path="/about" component={About} />
         </div>
       </Router>
-
-      // <div className="App">
-      //     <Navbar />
-      //     <Content />
-      // </div>
     );
   }
 }
