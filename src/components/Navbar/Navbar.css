@@ -4,26 +4,21 @@
     z-index: 90;
     box-shadow: 0 2px 3px #ccc;
     color: white;
-    padding: 32px 0px;
+    padding: 0 2%;
     background: #085078;
     background: -webkit-linear-gradient(to right,#085078,#85d8ce);
     background: linear-gradient(to right,#085078,#85d8ce);
-    width: 100%;
+    width: 96%;
     font-size: 24px;
     display: flex;
-    align-content: space-around;
-    font-family: Open 'sans-serif';
+    justify-content: space-between;
+    align-items: center;
+    height: 110px;
 
 }
-
-#logo {
-    display: inline-block;
-    width: 100%;
-}
-
-#logoDiv {
-    width: 20%;
-    margin-left: 5%;
+#logoDiv img{
+    width: 300px;
+    margin-bottom: 20px;
 }
 
 #socialDiv {
@@ -33,3 +28,17 @@
     padding: 0 20px;
     font-size: 40px;
 }
+
+.NavbarContainer{
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
+    align-items: center;
+    height: 90%;
+   
+}
+
+.selected{
+    font-weight: bold;
+}
+

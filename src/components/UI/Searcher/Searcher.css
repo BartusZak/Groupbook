@@ -1,0 +1,25 @@
+.Searcher{
+    display: flex;
+    width: 40%;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+.ForJustifyContent{
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+.SettingsIco{
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+}
+
+
+.SettingsIco:hover{
+    color: red;
+  
+}

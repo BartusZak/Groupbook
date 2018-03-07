@@ -3,40 +3,66 @@ import './Navbar.css';
 import Items from './Items/Items';
 import logo from '../../assets/img/logo/groupsconnects.png';
 import 'font-awesome/css/font-awesome.min.css';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
+import Aux from '../../hoc/Auxi';
+import NavbarButton from '../UI/NavbarButton/NavbarButton';
+import Searcher from '../UI/Searcher/Searcher';
+
 
 const navbar = (props) => {
 
-    const itemsBeforeLogIn = [
-        {id: 1, name: "O nas", url: "/about"},
-        {id: 2, name: "Rejestracja", url: "/register"} 
-    ]
+    let navbarContent = null;
+    let items = null;
 
-    const itemsAfterLogIn = [
-        {id: 1, name: "Edytuj profil", url: "/"} 
-    ]
-    
-    const result = props.result ? itemsAfterLogIn : itemsBeforeLogIn;
+
+    if(!props.isLogged){
+        items = [
+            {id: 1, name: "O nas", url: "/about"},
+            {id: 2, name: "Rejestracja", url: "/register"} 
+        ];
+
+        navbarContent = (
+            <Aux>
+                <div id="navUl">
+                    <Items items={items}/>
+                </div>
+                <div id="socialDiv">
+                    <a href="http://twitter.com" rel="noopener noreferrer" target="_blank">
+                        <i className='fa fa-facebook-square'/>
+                    </a>
+                    <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
+                </div>
+            </Aux>
+           
+        );
+    }
+    else{
+        items = ["Grupa", "Post", "Użytkownik"];
+
+        navbarContent = (
+            <div className="NavbarContainer">
+                <Searcher items={items}/>
+                <NavLink to="/logged/settings" >
+                    <a className="SettingsIco" href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i style={{fontSize: '32px'}} className='fa fa-cogs'/></a>
+                </NavLink>
+                
+               
+            </div>
+        );
+    }
+
+   
+
+   
     return (
         
         <nav className="Navbar">
-        
-                <div id="logoDiv">
-                    <Link to="/">
-                        <img  id="logo" src={logo} alt="logo"/>
-                    </Link>
-                </div>
-
-                <div id="navUl">
-                    <Items items={result}/>
-                </div>
-                
-                <div id="socialDiv">
-                <a href="http://twitter.com" rel="noopener noreferrer" target="_blank">
-                    <i className='fa fa-facebook-square'/>
-                </a>
-                    <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
-                </div>
+            <div id="logoDiv">
+                <Link to="/">
+                    <img src={logo} alt="logo"/>
+                </Link>
+            </div>
+            {navbarContent}
         </nav>
     );
 }
