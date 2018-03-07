@@ -1,2 +1,3 @@
-"Siema"
-Bartek
+"Siema";
+Bartek;
+"Siema" "TOCWEL";
