@@ -15,3 +15,21 @@
     font-family: Open 'sans-serif';
 
 }
+
+#logo {
+    display: inline-block;
+    width: 100%;
+}
+
+#logoDiv {
+    width: 20%;
+    margin-left: 5%;
+}
+
+#socialDiv {
+    width: 10%;
+}
+#socialDiv i{
+    padding: 0 20px;
+    font-size: 40px;
+}
