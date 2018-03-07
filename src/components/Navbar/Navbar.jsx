@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Navbar.css';
 import Items from './Items/Items';
 import Logo from '../Logo/Logo';
@@ -7,20 +7,21 @@ import {Link, NavLink} from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
 import NavbarButton from '../UI/NavbarButton/NavbarButton';
 import Searcher from '../UI/Searcher/Searcher';
+import Avatar from '../UI/Avatar/Avatar';
 
+class Navbar extends Component{
+    state = {
+        isLogged: this.props.isLogged
+    }
+    onLogoutHandler = () => {
+        this.setState({isLogged: false});
+    }
 
-const navbar = (props) => {
+    render(){
+        let navbarContent = null;
+        let items = null;
 
-    let navbarContent = null;
-    let items = null;
-
-
-    if(!props.isLogged){
-        items = [
-            {id: 1, name: "O nas", url: "/about"},
-            {id: 2, name: "Rejestracja", url: "/register"} 
-        ];
-
+<<<<<<< HEAD
         navbarContent = (
             <Aux>
                 <div id="navUl">
@@ -31,25 +32,58 @@ const navbar = (props) => {
                         <i className='fa fa-facebook-square'/>
                     </a>
                     <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
-                </div>
-            </Aux>
-           
-        );
-    }
-    else{
-        items = ["Grupa", "Post", "Użytkownik"];
-
-        navbarContent = (
-            <div className="NavbarContainer">
-                <Searcher items={items}/>
-                <NavLink to="/logged/settings" >
-                    <a className="SettingsIco" href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i style={{fontSize: '32px'}} className='fa fa-cogs'/></a>
-                </NavLink>
-                
+=======
+        if(!this.state.isLogged){
+            items = [
+                {id: 1, name: "O nas", url: "/about"},
+                {id: 2, name: "Rejestracja", url: "/register"} 
+            ];
+    
+            navbarContent = (
+                <Aux>
+                    <div id="navUl">
+                        <Items items={items}/>
+                    </div>
+                    <div id="socialDiv">
+                        <a href="http://twitter.com" rel="noopener noreferrer" target="_blank">
+                            <i className='fa fa-facebook-square'/>
+                        </a>
+                        <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
+                    </div>
+                </Aux>
                
-            </div>
+            );
+        }
+        else{
+            items = ["Grupa", "Post", "Użytkownik"];
+    
+            navbarContent = (
+                <div className="NavbarContainer">
+                    <Searcher items={items}/>
+                    <Avatar />
+    
+                    <NavLink to="/logged/settings" >
+                        <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs'/>
+                    </NavLink>
+                    <NavbarButton name="Wyloguj" logout={this.onLogoutHandler}/>
+                   
+>>>>>>> de4da7899065e5d0fd8d9a5533923ca2acff0139
+                </div>
+            );
+        }
+
+        return(
+            <nav className="Navbar">
+                <div id="logoDiv">
+                    <Link to="/">
+                        <img src={logo} alt="logo"/>
+                    </Link>
+                </div>
+                {navbarContent}
+            </nav>
         );
     }
+<<<<<<< HEAD
 
    
 
@@ -61,6 +95,9 @@ const navbar = (props) => {
             {navbarContent}
         </nav>
     );
+=======
+>>>>>>> de4da7899065e5d0fd8d9a5533923ca2acff0139
 }
 
-export default navbar;
+
+export default Navbar;
