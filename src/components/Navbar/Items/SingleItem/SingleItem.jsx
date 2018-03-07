@@ -1,7 +1,18 @@
 import React from 'react';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    NavLink
+  } from 'react-router-dom';
+import './SingleItem.css';
+
+
 const singleItem = (props) => (
-    <li>
+    <NavLink to={props.url} activeClassName="selected">
+        <li>
         {props.name}
-    </li>
+        </li>
+    </NavLink>
 );
 export default singleItem;
