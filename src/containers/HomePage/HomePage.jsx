@@ -10,6 +10,7 @@ import UserPanel from '../../components/UI/UserPanel/UserPanel';
 
 import Aux from '../../hoc/Auxi';
 
+import UserProfile from '../UserProfile/UserProfile';
 class HomePage extends Component {
     render() {
       return (
@@ -17,6 +18,7 @@ class HomePage extends Component {
             <Navbar isLogged={true}/>
             <Route exact path="/" component={Content} />
             <Route path="/logged/settings" component={UserPanel} />
+            <Route path="/logged/userprofile" component={UserProfile} />
         </Aux>
            
 

@@ -1,3 +1,13 @@
 .Avatar{
-    
+    height: 100%;
+}
+
+.Avatar img{
+    width: 140px;
+    border-radius: 50%;
+    height: 100%;
+}
+.Avatar img:hover{
+    border: 1px solid orange;
+    cursor: pointer;
 }
