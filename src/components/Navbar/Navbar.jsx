@@ -21,7 +21,6 @@ class Navbar extends Component{
         let navbarContent = null;
         let items = null;
 
-<<<<<<< HEAD
         navbarContent = (
             <Aux>
                 <div id="navUl">
@@ -32,46 +31,9 @@ class Navbar extends Component{
                         <i className='fa fa-facebook-square'/>
                     </a>
                     <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
-=======
-        if(!this.state.isLogged){
-            items = [
-                {id: 1, name: "O nas", url: "/about"},
-                {id: 2, name: "Rejestracja", url: "/register"} 
-            ];
-    
-            navbarContent = (
-                <Aux>
-                    <div id="navUl">
-                        <Items items={items}/>
-                    </div>
-                    <div id="socialDiv">
-                        <a href="http://twitter.com" rel="noopener noreferrer" target="_blank">
-                            <i className='fa fa-facebook-square'/>
-                        </a>
-                        <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
-                    </div>
-                </Aux>
-               
-            );
-        }
-        else{
-            items = ["Grupa", "Post", "Użytkownik"];
-    
-            navbarContent = (
-                <div className="NavbarContainer">
-                    <Searcher items={items}/>
-                    <Avatar />
-    
-                    <NavLink to="/logged/settings" >
-                        <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs'/>
-                    </NavLink>
-                    <NavbarButton name="Wyloguj" logout={this.onLogoutHandler}/>
-                   
->>>>>>> de4da7899065e5d0fd8d9a5533923ca2acff0139
                 </div>
+            </Aux>
             );
-        }
-
         return(
             <nav className="Navbar">
                 <div id="logoDiv">
@@ -82,12 +44,7 @@ class Navbar extends Component{
                 {navbarContent}
             </nav>
         );
-    }
-<<<<<<< HEAD
 
-   
-
-   
     return (
         
         <nav className="Navbar">
@@ -95,9 +52,6 @@ class Navbar extends Component{
             {navbarContent}
         </nav>
     );
-=======
->>>>>>> de4da7899065e5d0fd8d9a5533923ca2acff0139
 }
-
-
+}
 export default Navbar;
