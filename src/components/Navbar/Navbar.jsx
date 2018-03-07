@@ -3,13 +3,7 @@ import './Navbar.css';
 import Items from './Items/Items';
 import logo from '../../assets/img/logo/groupsconnects.png';
 import 'font-awesome/css/font-awesome.min.css';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    NavLink
-  } from 'react-router-dom';
-
+import {Link} from 'react-router-dom';
 
 const navbar = (props) => {
 
@@ -19,10 +13,9 @@ const navbar = (props) => {
     ]
 
     const itemsAfterLogIn = [
-        {id: 1, name: "Siema"},
-        {id: 2, name: "BOBIE"} 
+        {id: 1, name: "Edytuj profil", url: "/"} 
     ]
- 
+    
     const result = props.result ? itemsAfterLogIn : itemsBeforeLogIn;
     return (
         
@@ -36,19 +29,14 @@ const navbar = (props) => {
 
                 <div id="navUl">
                     <Items items={result}/>
-
                 </div>
                 
                 <div id="socialDiv">
-                <a href="http://twitter.com" target="_blank">
+                <a href="http://twitter.com" rel="noopener noreferrer" target="_blank">
                     <i className='fa fa-facebook-square'/>
                 </a>
-                    <a href="http://twitter.com" target="_blank"><i className='fa fa-twitter-square'/></a>
+                    <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
                 </div>
-     
-         
-         
-          
         </nav>
     );
 }
