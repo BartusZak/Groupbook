@@ -82,12 +82,11 @@ class Form extends Component {
                     min={item.min}
                     max={item.max}
                     change={(event) => this.onChangeHandler(event, item.id)}
-                 
                     text={item.text}
                     
                     />
                 })}
-                <Button title="Zaloguj" disable={this.state.buttonDisabled} />
+                <Button title="Zaloguj" isDisable={this.state.buttonDisabled} />
             </Aux>
         );
 

@@ -13,9 +13,8 @@ class Navbar extends Component{
     state = {
         isLogged: this.props.isLogged
     }
-    onLogoutHandler = () => {
-        this.setState({isLogged: false});
-    }
+
+
 
     render(){
         let navbarContent = null;
@@ -54,7 +53,7 @@ class Navbar extends Component{
                     <NavLink to="/logged/settings">
                         <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
                     </NavLink>
-                    <NavbarButton name="Wyloguj" logout={this.onLogoutHandler} />
+                    <NavbarButton name="Wyloguj" path="/"/>
                    
                 </div>
             </Aux>

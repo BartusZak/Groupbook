@@ -6,11 +6,11 @@ import {
 
 import Navbar from '../../components/Navbar/Navbar';
 import Content from '../../components/Content/Content';
-
-
+import UserPanel from '../../components/UI/UserPanel/UserPanel';
 import Register from '../../components/Register/Register';
-import Aux from '../../hoc/Auxi';
 
+import Aux from '../../hoc/Auxi';
+import UserProfile from '../UserProfile/UserProfile';
 
 const userDate = [
   {id: 1, login: "wacław", password: "spagettiCode"},
@@ -19,14 +19,16 @@ const userDate = [
 
 
 
-class HomePage extends Component {
-
+class PageAfterLogin extends Component {
     render() {
-
       return (
         <Aux>
-            <Navbar isLogged={false} />
+            <Navbar isLogged={true} />
             <Content />
+            {/*  //<Route path="/logged/settings" component={UserPanel} />
+            <Route path="/register"  component={Register} />
+            <Route path="/logged/userprofile" component={UserProfile} />*/}
+          
         </Aux>
            
 
@@ -35,4 +37,4 @@ class HomePage extends Component {
     }
   }
   
-  export default HomePage;
+  export default PageAfterLogin;

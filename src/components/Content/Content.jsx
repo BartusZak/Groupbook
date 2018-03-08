@@ -6,7 +6,7 @@ import Advert from '../Advert/Advert';
 import Authors from '../Authors/Authors';
 import Footer from '../Footer/Footer';
 
-const content = (props) => {
+const content = () => {
     const LoginItems = [
         {id: 1,name: "Login", placeholder: "Wpisz swój login...", text: "", min: 5, max: 15},
         {id: 2,name: "Hasło", placeholder: "Wpisz swoje hasło...", text: "", min: 5, max: 15}
@@ -18,8 +18,8 @@ const content = (props) => {
             <AppDescription/>
 
             <Form name="Logowanie" 
-            loginItems={LoginItems} 
-            data={props.data} />
+                loginItems={LoginItems} 
+             />
 
             <div style={{width: '100%', marginTop: '30px'}}></div>
             

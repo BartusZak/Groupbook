@@ -4,7 +4,7 @@ import {
   Route,
 } from 'react-router-dom';
 
-
+import RootContainer from './containers/RootContainer/RootContainer';
 
 import HomePage from './containers/HomePage/HomePage';
 
@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <HomePage />
+          <RootContainer />
         </div>
       </Router>
     );

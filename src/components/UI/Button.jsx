@@ -1,10 +1,13 @@
 import React from 'react';
 import './Button.css';
-
+import { Link } from 'react-router-dom';
 const button = (props) => (
-    <button className="Button" disabled={props.disable}>
-        {props.title}
-    </button>
+    <Link to="/logged">
+         <button className="Button" disabled={props.isDisable}>
+            {props.title}
+        </button>
+    </Link>
+   
 );
 
 export default button;
