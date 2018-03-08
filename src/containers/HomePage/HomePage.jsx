@@ -8,6 +8,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import Content from '../../components/Content/Content';
 import UserPanel from '../../components/UI/UserPanel/UserPanel';
 import Register from '../../components/Register/Register';
+import About from '../About/About';
 
 import Aux from '../../hoc/Auxi';
 import UserProfile from '../UserProfile/UserProfile';
@@ -29,6 +30,7 @@ class HomePage extends Component {
             <Route path="/logged/settings" component={UserPanel} />
             <Route path="/register"  component={Register} />
             <Route path="/logged/userprofile" component={UserProfile} />
+            <Route path="/about" component={About}/>
         </Aux>
            
 
