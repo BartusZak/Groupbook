@@ -25,7 +25,7 @@ class RootContainer extends Component{
                     <About />
                 )}/>
 
-                <Route exact path='/about' render={() => (
+                <Route exact path='/register' render={() => (
                     <Register />
                 )}/>
                 <Route path="/logged" exact component={UserProfile} />
