@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom';
-
+import { Route } from 'react-router-dom';
+import Register from '../../components/Register/Register';
 import HomePage from '../HomePage/HomePage';
 import Aux from '../../hoc/Auxi';
 import PageafterLogin from '../PageAfterLogin/PageAfterLogin';
-import Register from '../../components/Register/Register';
-
 class RootContainer extends Component{
-  
+    
     render(){
         return(
             <Aux>
                 <Route path="/" exact component={HomePage} />
-                <Route path="/logged" component={PageafterLogin} />
-                <Route path="/register" component={Register} />
+                <Route path="/logged" exact component={PageafterLogin} />
+                <Route path="/register" exact component={Register} />
+            
             </Aux>
         );
     }

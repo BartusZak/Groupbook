@@ -8,11 +8,6 @@ const button = (props) => (
             <span>{props.name}</span>
         </button>
     </Link>
-   
-       
-        
-   
-
 );
 
 export default button;

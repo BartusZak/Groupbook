@@ -24,7 +24,7 @@ class PageAfterLogin extends Component {
       return (
         <Aux>
             <Navbar isLogged={true} />
-            <Content />
+            <Content isLogged={true} />
             {/*  //<Route path="/logged/settings" component={UserPanel} />
             <Route path="/register"  component={Register} />
             <Route path="/logged/userprofile" component={UserProfile} />*/}

@@ -43,13 +43,12 @@ class Navbar extends Component{
         }
         else{
             items = ["Grupa", "Post", "Użytkownik"];
-    
+
             navbarContent = (
             <Aux>
                 <div className="NavbarContainer">
                     <Searcher items={items}/>
                     <Avatar />
-    
                     <NavLink to="/logged/settings">
                         <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
                     </NavLink>
