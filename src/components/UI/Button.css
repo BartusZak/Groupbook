@@ -1,9 +1,7 @@
 .Button{
     background-color: indianred;
-    padding: 10px;
-    font-size:inherit;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     outline: none;
     color: white;
     width: 40%;
@@ -11,13 +9,43 @@
     margin-top: 25px;
     cursor: pointer;
     transition: all 1s;
-    
+    position: relative;
+    font-size: 28px;
+    padding: 20px;
+    width: 200px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    overflow: hidden;
 }
 
+.Button:after {
+    content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.Button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
 
 .Button:hover{
     box-shadow: 3px 3px 4px #ccc;
   
 }
+
+.Button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
 
 

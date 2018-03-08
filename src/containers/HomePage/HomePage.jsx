@@ -20,11 +20,12 @@ const userDate = [
 
 
 class HomePage extends Component {
+ 
 
     render() {
       return (
         <Aux>
-            <Navbar isLogged={true}/>
+            <Navbar isLogged={false}/>
             <Route exact path="/" component={Content} />
             <Route path="/logged/settings" component={UserPanel} />
             <Route path="/register"  component={Register} />
