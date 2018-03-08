@@ -10,8 +10,6 @@ import UserPanel from '../../components/UI/UserPanel/UserPanel';
 import Register from '../../components/Register/Register';
 import About from '../About/About';
 
-
-import Register from '../../components/Register/Register';
 import Aux from '../../hoc/Auxi';
 
 
