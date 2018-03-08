@@ -1,0 +1,32 @@
+#AboutContent {
+    /* font-family: 'Titillium Web', sans-serif; */
+    font-family: 'Nunito', sans-serif;
+    text-transform: uppercase;
+    font-size: 30px;
+    margin: auto auto;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.headerTop {
+    height: 400px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.headerTop h1 {
+    margin: 0;
+}
+
+.peopleTop {
+    background-image: url('../../assets/img/about/people.jpg');
+    width: 100%;
+    height: 400px;
+    font-size: 30px
+}
