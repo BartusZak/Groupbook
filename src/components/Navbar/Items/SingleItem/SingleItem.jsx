@@ -4,7 +4,7 @@ import './SingleItem.css';
 
 const singleItem = (props) => (
     <NavLink to={props.url} activeClassName="selected">
-        <li>
+        <li onClick={props.changeNothing}>
             {props.name}
         </li>
     </NavLink>

@@ -9,35 +9,28 @@ import NavbarButton from '../UI/NavbarButton/NavbarButton';
 import Searcher from '../UI/Searcher/Searcher';
 import Avatar from '../UI/Avatar/Avatar';
 
-class Navbar extends Component{
-    state = {
-        isLogged: this.props.isLogged
-    }
+const navbar = (props) => {
+    let navbarContent = null;
+    let items = null;
 
-
-
-    render(){
-        let navbarContent = null;
-        let items = null;
-
-        if(!this.state.isLogged){
-            items = [
-                {id: 1, name: "O nas", url: "/about"},
-                {id: 2, name: "Rejestracja", url: "/register"} 
-            ];
+    if(!props.isLogged){
+        items = [
+            {id: 1, name: "O nas", url: "/about"},
+            {id: 2, name: "Rejestracja", url: "/register"} 
+        ];
     
-            navbarContent = (
-                <Aux>
-                    <div id="navUl">
-                        <Items items={items}/>
-                    </div>
-                    <div id="socialDiv">
-                        <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
-                            <i className='fa fa-facebook-square'/>
-                        </a>
-                        <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
-                    </div>
-                </Aux>
+        navbarContent = (
+            <Aux>
+                <div id="navUl">
+                    <Items changeNothing={props.changeNothing} items={items}/>
+                </div>
+                <div id="socialDiv">
+                    <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
+                        <i className='fa fa-facebook-square'/>
+                    </a>
+                    <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
+                </div>
+            </Aux>
                
             );
         }
@@ -52,12 +45,14 @@ class Navbar extends Component{
                     <NavLink to="/logged/settings">
                         <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
                     </NavLink>
-                    <NavbarButton name="Wyloguj" path="/"/>
+                    <NavbarButton name="Wyloguj" path="/" clicked={props.clicked}/>
                    
                 </div>
             </Aux>
             );
         }
+
+
         return(
             <nav className="Navbar">
                 <Logo width="300"/>
@@ -65,13 +60,7 @@ class Navbar extends Component{
             </nav>
         );
 
-    return (
-        
-        <nav className="Navbar">
-            <Logo width="300"/>
-            {navbarContent}
-        </nav>
-    );
 }
-}
-export default Navbar;
+
+
+export default navbar;

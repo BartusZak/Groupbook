@@ -6,7 +6,7 @@ import {
 
 import RootContainer from './containers/RootContainer/RootContainer';
 
-import HomePage from './containers/HomePage/HomePage';
+
 
 class App extends Component {
   render() {

@@ -10,9 +10,6 @@ class Form extends Component {
         buttonDisabled: false,
         loginItems: this.props.loginItems
     }
-
-    
-
     onChangeHandler = (event, id) => {
         const index = this.state.loginItems.findIndex(p => {
             return p.id === id;
@@ -62,16 +59,7 @@ class Form extends Component {
 
         this.setState({buttonDisabled: btnDisable});
     }
-
- 
-
-
-    
-
-
     render(){
-        
-
         const form = (
             <Aux>
                 <h2>{this.props.name}</h2>
@@ -86,7 +74,7 @@ class Form extends Component {
                     
                     />
                 })}
-                <Button title="Zaloguj" isDisable={this.state.buttonDisabled} />
+                <Button title="Zaloguj" isDisable={this.state.buttonDisabled} clicked={this.props.clicked}/>
             </Aux>
         );
 
