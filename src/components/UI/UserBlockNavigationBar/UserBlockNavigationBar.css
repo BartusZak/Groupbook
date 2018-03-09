@@ -1,0 +1,15 @@
+.NavigationBar{
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 2px 3px gray;
+    padding: 2%;
+    width: 96%;
+    margin-bottom: 60px;
+}
+.NavigationBar .fa{
+    font-size: 56px;
+}
+.NavigationBar .fa:hover{
+    color: red;
+    cursor: pointer;
+}

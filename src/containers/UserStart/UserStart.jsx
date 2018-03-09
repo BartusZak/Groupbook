@@ -7,18 +7,33 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import SpinnerContainer from '../../hoc/SpinnerContainer/SpinnerContainer';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
+import UserBlock from './UserBlock/UserBlock';
+
 
 
 class UserStart extends Component {
 
-    state = {
-        data: [],
-        error: false,
-        isLoading: false,
-        start: 0,
-        end: 4
-    }
+   
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+            error: false,
+            isLoading: false,
+            start: 0,
+            end: 4,
+            isSticky: false
+        }
+        this.handleScroll = this.handleScroll.bind(this);
+      }
+      
+      
+      
+    
+
     componentDidMount(){
+        window.addEventListener('scroll', this.handleScroll);
+
         this.setState({isLoading: true});
         axios.get('/posts')
         .then(response => {
@@ -30,6 +45,25 @@ class UserStart extends Component {
             this.setState({error: true, isLoading: false});
         });
     }   
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    };
+      
+    handleScroll() {
+        let oldState = [...this.state];
+        if(window.pageYOffset > 100){
+            oldState.isSticky = true;
+        }
+        else{
+            oldState.isSticky = false;
+        }
+        
+        this.setState({isSticky: oldState.isSticky});
+        
+    };
+
+
     generateNextData = () => {
         this.setState({isLoading: true});
         let oldState = [...this.state];
@@ -51,15 +85,15 @@ class UserStart extends Component {
         data={this.state.data} 
         error={this.state.error}
         clicked={this.generateNextData}/>;
-
+        console.log(this.state.isSticky);
         if(this.state.error){
             posts = <PostShortcut data={this.state.data} error={this.state.error} clicked={this.generateNextData}/>
         }
 
         return (
             <SpinnerContainer>
-                <h1>Najnowsze posty</h1>
                 {posts}
+                <UserBlock isSticky={this.state.isSticky}/>
             </SpinnerContainer>
           
         );

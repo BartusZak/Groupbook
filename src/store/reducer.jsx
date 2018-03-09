@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GENERATE_NEXT_POSTS:
             return {
                 ...state,
-
+                
             }
             break;
     }
