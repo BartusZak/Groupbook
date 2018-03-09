@@ -5,10 +5,10 @@ import Aux from '../../hoc/Auxi';
 import Navbar from '../../components/Navbar/Navbar';
 import HomeContent from '../../components/HomeContent/HomeContent';
 import About from '../About/About';
-import UserProfile from '../UserProfile/UserProfile';
+import CenterComponent from '../CenterComponent/CenterComponent';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
-
+import UserStart from '../UserStart/UserStart';
 
 class RootContainer extends Component{
     render(){
@@ -18,17 +18,24 @@ class RootContainer extends Component{
                 isLogged={this.props.isLogged}
                 clicked={this.props.changeLoginState}
                 changeNothing={this.props.helperChanging} />
-                <Route exact path='/' render={() => (
-                    <HomeContent clicked={this.props.changeLoginState}/>
-                )}/>
-                <Route exact path='/about' render={() => (
-                    <About />
-                )}/>
 
-                <Route exact path='/register' render={() => (
-                    <Register />
-                )}/>
-                <Route path="/logged" exact component={UserProfile} />
+                <CenterComponent>
+                    <Route exact path='/' render={() => (
+                        <HomeContent clicked={this.props.changeLoginState}/>
+                    )}/>
+                    <Route exact path='/about' render={() => (
+                    <About />
+                    )}/>
+
+                    <Route exact path='/register' render={() => (
+                        <Register />
+                    )}/>
+
+                    <Route path="/logged" exact component={UserStart} />
+                </CenterComponent>
+             
+             
+               
             </Aux>
         );
     }

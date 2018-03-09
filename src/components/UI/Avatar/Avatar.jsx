@@ -7,7 +7,6 @@ const avatar = (props) => (
     <div className="Avatar">
         <NavLink to="/logged/userprofile">
             <img src={ProfilePicture} alt="Profilowe" />
-          
         </NavLink>
        
     </div>

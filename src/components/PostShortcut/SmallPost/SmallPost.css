@@ -1,0 +1,26 @@
+.SmallPost{
+    text-align: initial;
+    cursor: pointer;
+    width: 96%;
+    padding: 2%;
+    margin-bottom: 20px;
+    
+}
+.SmallPost:hover{
+    box-shadow: 2px 2px 3px 3px black;
+}
+
+.PostContent{
+    display: flex;
+    justify-content: space-around;
+}
+.Text{
+    text-align: justify;
+    width: 68%;
+    padding-left: 2%;
+
+}
+.PostMinImage{
+    width: 23%;
+    border: 2px solid grey;
+}

@@ -10,6 +10,8 @@ class Form extends Component {
         buttonDisabled: false,
         loginItems: this.props.loginItems
     }
+
+
     onChangeHandler = (event, id) => {
         const index = this.state.loginItems.findIndex(p => {
             return p.id === id;
@@ -22,32 +24,34 @@ class Form extends Component {
         const newItems = [...this.state.loginItems];
         const min = item.min;
         const max =  item.max; 
-        
-            if(item.text.length < min){
-                item.text = "Pole " + item.name 
-                + " powinno zawierać co najmniej " 
-                + min + " znaków.";
-        
+        switch(item.name){
+            default:
+                if(item.text.length < min){
+                    item.text = "Pole " + item.name 
+                    + " powinno zawierać co najmniej " 
+                    + min + " znaków.";
             
-            }
-            else if(item.text.length > max){
-                item.text = "Pole " + item.name
-                + " powinno zawierać co najwyżej " 
-                + max + " znaków.";
-            }
-            else{
-                item.text = "";
-             
                 
-            }
+                }
+                else if(item.text.length > max){
+                    item.text = "Pole " + item.name
+                    + " powinno zawierać co najwyżej " 
+                    + max + " znaków.";
+                }
+                else{
+                    item.text = "";
+                
+                    
+                }
+                break;
+        }
             newItems[index] = item; 
             this.setState({loginItems: newItems});
             this.handlingButtonDisable();
-
-           
-            
-           
     }
+
+  
+
     handlingButtonDisable = () => {
         const loginItems = [...this.state.loginItems];
         let btnDisable = false;
@@ -74,7 +78,10 @@ class Form extends Component {
                     
                     />
                 })}
-                <Button title="Zaloguj" isDisable={this.state.buttonDisabled} clicked={this.props.clicked}/>
+                <Button title={this.props.buttonTitle}
+                 isDisable={this.state.buttonDisabled}
+                  clicked={this.props.clicked}
+                  url="/logged"/>
             </Aux>
         );
 

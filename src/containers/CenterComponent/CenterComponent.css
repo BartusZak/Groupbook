@@ -1,0 +1,8 @@
+.CenterComponent{
+    display: flex;
+    width: 96%;
+    padding: 0 2%;
+    margin-top: 50px;
+    align-items: center;
+    justify-content: space-between;
+}

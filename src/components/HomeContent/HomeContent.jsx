@@ -18,7 +18,7 @@ const content = (props) => {
     return (
         <main className="Content">
             <AppDescription/>
-                <Form name="Logowanie" 
+                <Form name="Logowanie" buttonTitle="Zaloguj"
                     loginItems={LoginItems}
                     clicked={props.clicked}
                 />

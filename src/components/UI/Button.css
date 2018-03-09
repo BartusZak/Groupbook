@@ -46,6 +46,10 @@
 .Button:disabled {
     background: #ccc;
     cursor: not-allowed;
-  }
+}
+
+.margins{
+    margin-top: -40px;
+}
 
 
