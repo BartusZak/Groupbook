@@ -12,7 +12,7 @@ const smallPost = (props) => {
         }
     }   
 
-    const isImage = props.image ? <div className="PostMinImage">{props.image}</div> : null;
+    const isImage = props.image ? <div className="PostMinImage"><img src={props.image} /></div> : null;
         
                      
        

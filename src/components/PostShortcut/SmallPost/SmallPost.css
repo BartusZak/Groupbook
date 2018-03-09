@@ -4,6 +4,7 @@
     width: 96%;
     padding: 2%;
     margin-bottom: 20px;
+    height: 270px;
     
 }
 .SmallPost:hover{
@@ -18,9 +19,16 @@
     text-align: justify;
     width: 68%;
     padding-left: 2%;
+    
 
 }
 .PostMinImage{
     width: 23%;
     border: 2px solid grey;
+}
+
+.PostMinImage img{
+    width: 98%;
+    padding: 1%;
+    height: 98%;
 }

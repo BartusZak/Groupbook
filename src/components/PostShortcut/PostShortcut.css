@@ -1,13 +1,12 @@
 .PostShortcut{
     width: 800px;
-    height: 900px;
     padding: 2%;
     display: flex;
     flex-flow: column;
-    text-align: center;
+    align-items: center;
     box-shadow: 0 2px 3px #ccc;
 }
 
 .PostShortcut h2{
-    text-align: initial;
+    text-align: start;
 }

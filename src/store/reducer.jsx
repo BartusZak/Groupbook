@@ -2,7 +2,10 @@ import * as actionTypes from './actions';
 
 const initialState = {
     isLogin: false,
-    history: ""
+    history: "",
+    postData: [],
+    startPoint: 0,
+    endPoint: 4
  
 }
 const reducer = (state = initialState, action) => {
@@ -21,7 +24,12 @@ const reducer = (state = initialState, action) => {
             }
 
             break;
+        case actionTypes.GENERATE_NEXT_POSTS:
+            return {
+                ...state,
 
+            }
+            break;
     }
     return state;   
 }

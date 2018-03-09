@@ -19,7 +19,7 @@ class RootContainer extends Component{
                 clicked={this.props.changeLoginState}
                 changeNothing={this.props.helperChanging} />
 
-                <CenterComponent>
+                <CenterComponent >
                     <Route exact path='/' render={() => (
                         <HomeContent clicked={this.props.changeLoginState}/>
                     )}/>
@@ -45,7 +45,6 @@ const mapStateToProps = state => {
         isLogged: state.isLogin
     };
 }
-
 const mapDispatchToProps = dispatch => {
     return {
         changeLoginState: () => dispatch({type: actionTypes.SET_TRUE}),
@@ -53,5 +52,4 @@ const mapDispatchToProps = dispatch => {
 
     };
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
