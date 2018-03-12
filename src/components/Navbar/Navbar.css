@@ -5,10 +5,9 @@
     box-shadow: 0 2px 3px #ccc;
     color: white;
     padding: 0 2%;
-    background: #085078;
-    background: -webkit-linear-gradient(to right,#085078,#85d8ce);
-    background: linear-gradient(to right,#085078,#85d8ce);
-    width: 96%;
+    background: -webkit-linear-gradient(to right,#00924c,#004b2f);
+    background: linear-gradient(to right,#004b2f,#00924c);
+    width: 100%;
     font-size: 24px;
     display: flex;
     justify-content: space-between;

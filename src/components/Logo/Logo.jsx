@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import './Logo.css';
 import Aux from '../../hoc/Auxi';
 import logoImg from '../../assets/img/logo/groupsconnects.png';
 

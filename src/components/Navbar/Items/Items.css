@@ -9,10 +9,6 @@
     vertical-align: middle;
     margin: 0 40px;
 }
-.Items li:hover{
-    color: orangered;
-    cursor: pointer;
-}
 
 #navUl {
     width: 65%;

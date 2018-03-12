@@ -7,6 +7,7 @@ import WebFont from 'webfontloader';
 import  { createStore } from 'redux';
 import reducer from './store/reducer';
 import  { Provider } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 WebFont.load({
