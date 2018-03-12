@@ -8,6 +8,11 @@ import Footer from './Footer/Footer';
 import Aux from '../../hoc/Auxi';
 import { Route } from 'react-router-dom'; 
 import Register from '../Register/Register';
+import {
+    Container,
+    Row,
+    Col,
+  } from 'reactstrap';
 
 const content = (props) => {
  
@@ -16,7 +21,7 @@ const content = (props) => {
         {id: 2,name: "Hasło", placeholder: "Wpisz swoje hasło...", text: "", min: 5, max: 15}
     ]
     return (
-        <main className="Content">
+        <Container>
             <AppDescription/>
                 <Form name="Logowanie" buttonTitle="Zaloguj"
                     loginItems={LoginItems}
@@ -27,7 +32,7 @@ const content = (props) => {
                 <Authors/>
                 <div style={{width: '100%', marginTop: '30px'}}></div>
                 <Footer />
-        </main> 
+        </Container> 
     );
    
 };
