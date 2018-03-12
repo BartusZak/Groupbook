@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300);
-/* button {
+/* .createAccount button {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -7,11 +7,7 @@
           transform: translateX(-50%) translateY(-50%);
 } */
 
-body {
-  background: #111;
-}
-
-button {
+ button.createAccount {
   background: #333;
   color: #ccc;
   width: 200px;
@@ -24,10 +20,10 @@ button {
   transition: .6s;
   overflow: hidden;
 }
-button:focus {
+button.createAccountn:focus {
   outline: 0;
 }
-button:before {
+button.createAccount:before {
   content: '';
   display: block;
   position: absolute;
@@ -42,7 +38,7 @@ button:before {
   -webkit-transform: translateX(-100px) skewX(-15deg);
           transform: translateX(-100px) skewX(-15deg);
 }
-button:after {
+button.createAccount:after {
   content: '';
   display: block;
   position: absolute;
@@ -57,18 +53,18 @@ button:after {
   -webkit-transform: translateX(-100px) skewX(-15deg);
           transform: translateX(-100px) skewX(-15deg);
 }
-button:hover {
+button.createAccount:hover {
   background: #338033;
   cursor: pointer;
 }
-button:hover:before {
+button.createAccount:hover:before {
   -webkit-transform: translateX(300px) skewX(-15deg);
           transform: translateX(300px) skewX(-15deg);
   opacity: 0.6;
   -webkit-transition: .7s;
   transition: .7s;
 }
-button:hover:after {
+button.createAccount:hover:after {
   -webkit-transform: translateX(300px) skewX(-15deg);
           transform: translateX(300px) skewX(-15deg);
   opacity: 1;

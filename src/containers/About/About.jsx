@@ -74,7 +74,7 @@ const about = () => {
               <h3>Dołącz do nas już dziś!</h3>
             </Col>
             <Col sm="5">
-              <Link to="/register"><button>Załóź konto!</button></Link>
+              <Link to="/register"><button className="createAccount">Załóź konto!</button></Link>
             </Col>
           </Row>
         </Container>
