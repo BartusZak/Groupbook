@@ -75,12 +75,12 @@ class MessagesBlock extends Component {
                     <span>Nowa wiadomość</span>
                    
                 </div>
-                {this.state.downSpinnerIsLoading ? <Spinner /> : null}
+               
                 <div className="Messages" ref={(el) => { this.messagesEnd = el; }}>
-                    {Messages}
-                  
+                    {this.state.downSpinnerIsLoading ? <Spinner /> : Messages}
                 </div>
                 
+               
             </div>
         );
     }
