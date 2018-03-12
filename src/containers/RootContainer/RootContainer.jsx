@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Register from '../../components/Register/Register';
 import Aux from '../../hoc/Auxi';
-import Navbar from '../../components/Navbar/Navbar';
-import HomeContent from '../../components/HomeContent/HomeContent';
-import About from '../About/About';
 import CenterComponent from '../CenterComponent/CenterComponent';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
-import UserStart from '../UserStart/UserStart';
+
+import asyncComponent from '../../AsyncComponent';
+
 import NotFound from '../../components/NotFound/NotFound';
+import Register from '../../components/Register/Register';
+import Navbar from '../../components/Navbar/Navbar';
+import HomeContent from '../../components/HomeContent/HomeContent';
+import About from '../About/About';
+import UserStart from '../UserStart/UserStart';
+
+// @bartuszak Przykład użycia code snipping
+// https://scotch.io/tutorials/lazy-loading-routes-in-react 
+// const About = asyncComponent(() =>
+//     import ('../About/About').then(module => module.default)
+// )
+
+// const Register = asyncComponent(() =>
+//     import ('../../components/Register/Register').then(module => module.default)
+// )
 
 class RootContainer extends Component{
     render(){
