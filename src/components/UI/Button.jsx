@@ -12,33 +12,28 @@ const button = (props) => {
         btn = (
             <button 
                 onClick={props.clicked} 
-                className={ButtonClass + InputClass} 
-                disabled={props.isDisable}>
+                className={ButtonClass + InputClass}>
                 {props.title}
             </button>
         );
     }
+
     else{
         btn = (
             <Link to={props.url}>
                 <button 
                     onClick={props.clicked} 
-                    className={ButtonClass + InputClass} 
-                    disabled={props.isDisable}>
+                    className={ButtonClass + InputClass}>
                     {props.title}
                 </button>
              </Link> 
         );
     }
 
-    return (
-       <Aux>{btn}</Aux>
 
-    );
+    return (<Aux>{btn}</Aux>);
+        
   
-   
-
-   
 };
 
 export default button;

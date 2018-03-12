@@ -41,10 +41,6 @@
 .Button:hover{
     box-shadow: 3px 3px 4px #ccc;
 }
-.Button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-}
 .margins{
     margin-bottom: 20px;
 }
