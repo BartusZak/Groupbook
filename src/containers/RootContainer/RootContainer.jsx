@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Register from '../../components/Register/Register';
 import Aux from '../../hoc/Auxi';
 import Navbar from '../../components/Navbar/Navbar';
@@ -9,6 +9,7 @@ import CenterComponent from '../CenterComponent/CenterComponent';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import UserStart from '../UserStart/UserStart';
+import NotFound from '../../components/NotFound/NotFound';
 
 class RootContainer extends Component{
     render(){
@@ -19,6 +20,7 @@ class RootContainer extends Component{
                 clicked={this.props.changeLoginState}
                 changeNothing={this.props.helperChanging} />
 
+<<<<<<< HEAD
                 <CenterComponent>
                     <Route exact path='/' render={() => (
                         <HomeContent clicked={this.props.changeLoginState}/>
@@ -26,12 +28,24 @@ class RootContainer extends Component{
                     <Route exact path='/about' render={() => (
                     <About />
                     )}/>
+=======
+                <CenterComponent >
+                    <Switch> {/*@bartuszak*/}
+                        <Route exact path='/' render={() => (
+                            <HomeContent clicked={this.props.changeLoginState}/>
+                        )}/>
+                        <Route exact path='/about' render={() => (
+                        <About />
+                        )}/>
+>>>>>>> b870165ec189ec693949ece9042e83500937eb36
 
-                    <Route exact path='/register' render={() => (
-                        <Register />
-                    )}/>
+                        <Route exact path='/register' render={() => (
+                            <Register />
+                        )}/>
 
-                    <Route path="/logged" exact component={UserStart} />
+                        <Route path="/logged" exact component={UserStart} />
+                        <Route path="*" component={NotFound} />{/*@bartuszak*/}
+                    </Switch>{/*@bartuszak*/}
                 </CenterComponent>
              
              
