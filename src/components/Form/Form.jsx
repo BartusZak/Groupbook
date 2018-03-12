@@ -3,23 +3,45 @@ import './Form.css';
 import FormItem from './FormItem/FormItem';
 import Button from '../UI/Button';
 import Aux from '../../hoc/Auxi';
-
+import { Redirect, Route } from 'react-router'
 
 class Form extends Component {
     state = {
         loginItems: this.props.loginItems,
-        validation: false,
-
-    
+        itemsErrors: [
+            {id: 1, msg: "", isError: false},
+            {id: 2, msg: "", isError: false}
+        ],
+        validated: false
     }
-    Validate = (event, id) => {
-        const index = this.state.loginItems.findIndex(p => {
-            return p.id === id;
-        });
-        const item = {
-            ...this.state.loginItems[index]
+
+
+    Validate = () => {
+        const errors = [...this.state.itemsErrors];
+        const oldState = [...this.state.loginItems];
+
+        let result = true;
+        for(let key in oldState){
+            errors[key].msg = "";
+            if(oldState[key].text.length < oldState[key].min){
+                errors[key].msg = "Pole " + oldState[key].name + " musi zawierać minimalnie " + oldState[key].min + " znaków";
+                errors[key].isError = true;
+                result = false;
+            }
+            if(oldState[key].text.length > oldState[key].max){
+                errors[key].msg = "Pole " + oldState[key].name + " może zawierać maksymalnie " + oldState[key].max + " znaków";  
+                errors[key].isError = true;
+                result = false;
+            }
         }
-        item.text = event.target.value;
+        
+
+        this.setState({...this.state, itemsErrors: errors, validated: result});
+       
+    }
+    onSubmitHandler = e => { 
+        e.preventDefault();
+        this.Validate();
     }
     onChangeHandler = (event, id) => {
         const index = this.state.loginItems.findIndex(p => {
@@ -29,64 +51,36 @@ class Form extends Component {
             ...this.state.loginItems[index]
         }
         item.text = event.target.value;
-        /*
         const newItems = [...this.state.loginItems];
-        const min = item.min;
-        const max =  item.max; 
-        switch(item.name){
-            default:
-                if(item.text.length < min){
-                    item.text = "Pole " + item.name 
-                    + " powinno zawierać co najmniej " 
-                    + min + " znaków.";
-            
-                
-                }
-                else if(item.text.length > max){
-                    item.text = "Pole " + item.name
-                    + " powinno zawierać co najwyżej " 
-                    + max + " znaków.";
-                }
-                else{
-                    item.text = "";
-                
-                    
-                }
-                break;
-        }
-            newItems[index] = item; 
-            this.setState({loginItems: newItems});
-            */
+
+        newItems[index] = item; 
+        this.setState({loginItems: newItems});    
     }
 
-  
-
     render(){
-      
-        const form = (
-            <Aux>
+        return ( 
+            <form className="Form">
                 <h2>{this.props.name}</h2>
                 {this.state.loginItems.map(item => {
                     return <FormItem title={item.name}
                     key={item.name}
                     placeholder={item.placeholder}
-                    min={item.min}
                     max={item.max}
                     change={(event) => this.onChangeHandler(event, item.id)}
                     text={item.text}
-                    
+                    errorMessage={this.state.itemsErrors[item.id-1].msg}
+
                     />
                 })}
-                <Button title={this.props.buttonTitle}
-                  isValidated={this.state.validation}
-                  clicked={this.Validate}
-                  clicked={this.props.clicked}
-                  url="/logged"/>
-            </Aux>
-        );     
-   
-        return ( <div className="Form">{form}</div> );   
+                <Button
+                    clicked={this.state.validated ? this.props.clicked :  e => this.onSubmitHandler(e)}
+                    title="Zaloguj"
+                    url={this.state.validated ? "/logged" : undefined}
+                />
+                
+            </form> 
+        );   
     }
 }
-//clicked={this.props.clicked}
+
 export default Form;

@@ -7,7 +7,7 @@ const button = (props) => {
     const ButtonClass = "Button";
     const InputClass = " " + props.class;
     let btn = null;
-
+  
     if(props.url === undefined){
         btn = (
             <button 
@@ -17,7 +17,6 @@ const button = (props) => {
             </button>
         );
     }
-
     else{
         btn = (
             <Link to={props.url}>

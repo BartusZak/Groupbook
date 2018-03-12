@@ -20,15 +20,6 @@ class RootContainer extends Component{
                 clicked={this.props.changeLoginState}
                 changeNothing={this.props.helperChanging} />
 
-<<<<<<< HEAD
-                <CenterComponent>
-                    <Route exact path='/' render={() => (
-                        <HomeContent clicked={this.props.changeLoginState}/>
-                    )}/>
-                    <Route exact path='/about' render={() => (
-                    <About />
-                    )}/>
-=======
                 <CenterComponent >
                     <Switch> {/*@bartuszak*/}
                         <Route exact path='/' render={() => (
@@ -37,7 +28,6 @@ class RootContainer extends Component{
                         <Route exact path='/about' render={() => (
                         <About />
                         )}/>
->>>>>>> b870165ec189ec693949ece9042e83500937eb36
 
                         <Route exact path='/register' render={() => (
                             <Register />
@@ -66,4 +56,4 @@ const mapDispatchToProps = dispatch => {
 
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})(RootContainer);
