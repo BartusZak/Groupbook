@@ -7,20 +7,29 @@ import Aux from '../../hoc/Auxi';
 
 class Form extends Component {
     state = {
-        buttonDisabled: false,
-        loginItems: this.props.loginItems
+        loginItems: this.props.loginItems,
+        validation: false,
+
+    
     }
-
-
-    onChangeHandler = (event, id) => {
+    Validate = (event, id) => {
         const index = this.state.loginItems.findIndex(p => {
             return p.id === id;
         });
-
         const item = {
             ...this.state.loginItems[index]
         }
         item.text = event.target.value;
+    }
+    onChangeHandler = (event, id) => {
+        const index = this.state.loginItems.findIndex(p => {
+            return p.id === id;
+        });
+        const item = {
+            ...this.state.loginItems[index]
+        }
+        item.text = event.target.value;
+        /*
         const newItems = [...this.state.loginItems];
         const min = item.min;
         const max =  item.max; 
@@ -47,23 +56,13 @@ class Form extends Component {
         }
             newItems[index] = item; 
             this.setState({loginItems: newItems});
-            this.handlingButtonDisable();
+            */
     }
 
   
 
-    handlingButtonDisable = () => {
-        const loginItems = [...this.state.loginItems];
-        let btnDisable = false;
-        
-        for(let key in loginItems){
-            if(loginItems[key].text.length !== 0)
-                btnDisable = true;
-        }
-
-        this.setState({buttonDisabled: btnDisable});
-    }
     render(){
+      
         const form = (
             <Aux>
                 <h2>{this.props.name}</h2>
@@ -79,21 +78,15 @@ class Form extends Component {
                     />
                 })}
                 <Button title={this.props.buttonTitle}
-                 isDisable={this.state.buttonDisabled}
+                  isValidated={this.state.validation}
+                  clicked={this.Validate}
                   clicked={this.props.clicked}
                   url="/logged"/>
             </Aux>
-        );
-
-
-        return (
-            <div className="Form">
-                {form}
-            </div>
-        );
+        );     
+   
+        return ( <div className="Form">{form}</div> );   
     }
 }
-
-
-
+//clicked={this.props.clicked}
 export default Form;

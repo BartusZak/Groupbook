@@ -85,7 +85,7 @@ class UserStart extends Component {
         data={this.state.data} 
         error={this.state.error}
         clicked={this.generateNextData}/>;
-        console.log(this.state.isSticky);
+  
         if(this.state.error){
             posts = <PostShortcut data={this.state.data} error={this.state.error} clicked={this.generateNextData}/>
         }

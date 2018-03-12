@@ -19,7 +19,7 @@ class RootContainer extends Component{
                 clicked={this.props.changeLoginState}
                 changeNothing={this.props.helperChanging} />
 
-                <CenterComponent >
+                <CenterComponent>
                     <Route exact path='/' render={() => (
                         <HomeContent clicked={this.props.changeLoginState}/>
                     )}/>
