@@ -18,62 +18,68 @@ import {
 
 const about = () => {
   return (
-    <div id="AboutContent">
-      <div className="headerTop">
-        <LogoIcon width="100px" />
-        <Logo />
-        <h1>To Ludzie</h1>
+    <div id="AboutContent" className="container-fluid" style={{padding: "0"}}>
+      <Row>
+        <Col xs="12" sm="12" className="headerTop">
+            <LogoIcon width="100px" />
+            <Logo class="img-fluid"/>
+            <h1>Ludzie z pasją!</h1>
+        </Col>
+      </Row>
+      
+    <Row className="interestsTop">
+      <div>
+          <h1>Wspólne Zainteresowania</h1>
+            <div className="separatedLine">
+            </div>
       </div>
+    </Row>
 
-      <div className="interestsTop">
-        Wspólne Zainteresowania
-        <div className="separatedLine">
-        </div>
-      </div>
-
-    <div className="fourElementsTop">
-      <div className="firstElement">
+    <Row className="fourElementsTop">
+      <Col xs="12" md="4" className="firstElement">
         <div className="img1">
-          <img src={imgOne} />
+          <img src={imgOne} class="img-fluid"/>
         </div>
 
         <h4>Ludzie z całego Świata</h4>
         <p>Dzięki naszemu portalowi, Masz szansę nawiązać kontakt z ludźmi o podobnych zainteresowaniach z całego Świata.</p>
-      </div>
+      </Col>
 
-    <div className="firstElement">
+    <Col xs="12" md="4" className="firstElement">
         <div className="img1">
-          <img src={imgTwo} />
+          <img src={imgTwo} class="img-fluid" />
         </div>
 
         <h4>Wymiana informacji</h4>
         <p>Informację w naszym poraltu możesz wymieniać na bierząco z innymi rozmówcami.</p>
-    </div>
+    </Col>
       
-      <div className="firstElement">
+      <Col xs="12" md="4" className="firstElement">
         <div className="img1">
-          <img src={imgThree} />
+          <img src={imgThree} class="img-fluid" />
         </div>
 
         <h4>Organizuj spotkania</h4>
         <p>Jak dobrze wiadomo, najlepiej rozmiawia się face-face. Sprawdź kalendarz i utwórz wydarzenie!</p>
-      </div>
+      </Col>
 
-	  </div>
+    </Row>
 
-      <div className="peopleTop">
-        Współpraca
-        <div className="separatedLine">
+      <Row className="peopleTop">
+        <div>
+          <h1>Współpraca</h1>
+          <div className="separatedLine">
+          </div>
         </div>
-      </div>
+      </Row>
       
       <div className="beforeFooter">
-        <Container>
+        <Container >
           <Row>
-            <Col sm="7">
+            <Col sm="7" xs="12">
               <h3>Dołącz do nas już dziś!</h3>
             </Col>
-            <Col sm="5">
+            <Col sm="5" xs="12">
               <Link to="/register"><button className="createAccount">Załóź konto!</button></Link>
             </Col>
           </Row>
