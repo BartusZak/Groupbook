@@ -18,18 +18,20 @@ class PostShortcut extends Component{
         showSpinner: false,
         error: false,
         idToShowCommentSection: "",
+
         comments: [],
         commentError: false,
         showCommentsSpinner: false,
         isCommentsWasShowBefore: false,
+        commentsSectionShow: false
+
       
    
     }
 
     hideModal = () => {
-        this.setState({isModalShow: false, isCommentsWasShowBefore: false});
+        this.setState({isModalShow: false, isCommentsWasShowBefore: false, commentsSectionShow: false});
     }
- 
     showModal = (id) => {
         let oldData = [...this.state.data];
         this.setState({isModalShow: true, showSpinner: true, error: false});
@@ -42,17 +44,29 @@ class PostShortcut extends Component{
         });
      
     }
+    hideComments = () => {
+        this.setState({commentsSectionShow: !this.state.commentsSectionShow});
+    }
+
     showCommentSectionClickHandler = () => {
-        let oldData = [...this.state.comments];
-        this.setState({modalTransition: true, showCommentsSpinner: true, commentError: false, isCommentsWasShowBefore: true});
-        axios.get('/posts/' + this.state.idToShowCommentSection + '/comments').then(response => {
-            oldData = response.data;
-            console.log(response.data);
-            this.setState({showCommentsSpinner: false, comments: oldData});
-        }).catch(error => {
-            console.log(error);
-            this.setState({showCommentsSpinner: false, commentError: true});
-        });
+            let oldData = [...this.state.comments];
+            this.setState({modalTransition: true,
+             showCommentsSpinner: true,
+             commentError: false,
+             isCommentsWasShowBefore: true,
+             commentsSectionShow: !this.state.commentsSectionShow });
+
+            axios.get('/posts/' + this.state.idToShowCommentSection + '/comments').then(response => {
+                oldData = response.data;
+                console.log(response.data);
+                this.setState({showCommentsSpinner: false, comments: oldData});
+            }).catch(error => {
+                console.log(error);
+                this.setState({showCommentsSpinner: false, commentError: true, commentsSectionShow: false});
+            });
+       
+ 
+        
         
     }
     render(){
@@ -101,17 +115,23 @@ class PostShortcut extends Component{
                 commentSection = <h4>Wystąpił błąd podczas wczytywania komentarzy</h4>;
             }
             else{
-                commentSection = this.state.showCommentsSpinner ? <Spinner /> : <CommentSection comments={this.state.comments} />;
+                commentSection = this.state.showCommentsSpinner ? <Spinner /> : !this.state.commentsSectionShow ? null : <CommentSection comments={this.state.comments} />;
             }
         }
-        return(
+
+        const CommentsButton = ( this.state.commentsSectionShow ? <p className="Information" onClick={this.hideComments}>Schowaj komentarze</p> :
+        <p className="Information" onClick={this.showCommentSectionClickHandler}>Kliknij, aby wyświetlić komentarze </p>);  
+        
+         return(   
+        
             <Aux>
                 <Modal 
                     show={this.state.isModalShow} 
                     clickedMethod={this.hideModal}>
-                        {postModalContent}
-                        <p className="Information" onClick={this.showCommentSectionClickHandler}>Kliknij, aby wyświetlić komentarze</p>
-                        {commentSection}
+                    {postModalContent}
+
+                    {CommentsButton}
+                    {commentSection}
                         
                 </Modal>
                 <div className="PostShortcut">
