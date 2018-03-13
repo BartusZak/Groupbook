@@ -16,7 +16,7 @@ class Form extends Component {
     Validate = () => {
         const errors = [...this.state.itemsErrors];
         const oldState = [...this.state.loginItems];
-
+  
         let result = true;
         for(let key in oldState){
             errors[key].msg = "";

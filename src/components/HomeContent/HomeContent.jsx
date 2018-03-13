@@ -35,6 +35,7 @@ const content = (props) => {
                     <Form name="Logowanie" buttonTitle="Zaloguj"
                         loginItems={LoginItems}
                         clicked={props.clicked}
+                        errors={errors}
                     />
                 </Col>  
             </Row>
