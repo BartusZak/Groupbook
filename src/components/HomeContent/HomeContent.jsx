@@ -21,6 +21,10 @@ const content = (props) => {
         {id: 1,name: "Login", placeholder: "Wpisz swój login...", text: "", min: 5, max: 15},
         {id: 2,name: "Hasło", placeholder: "Wpisz swoje hasło...", text: "", min: 5, max: 15}
     ]
+    const errors = [
+        {id: 1, msg: "", isError: false},
+        {id: 2, msg: "", isError: false}
+    ]
     return (
         <div className="container-fluid">
             <Row style={{marginTop: "30px"}}>

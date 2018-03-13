@@ -13,13 +13,9 @@ const smallPost = (props) => {
     }   
 
     const isImage = props.image ? <div className="PostMinImage"><img src={props.image} /></div> : null;
-        
-                     
-       
- 
     return (
             
-        <div className="SmallPost">
+        <div className="SmallPost" onClick={props.clicked}>
             <h4>Opublikował: {props.author}</h4>
             <div className="PostContent">
                 <div className="Text">
