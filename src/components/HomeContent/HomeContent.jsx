@@ -2,8 +2,8 @@ import React from 'react';
 import './HomeContent.css';
 import Form from '../Form/Form';
 import AppDescription from './AppDescription/AppDescription';
-import Advert from '../Advert/Advert';
-import Authors from '../Authors/Authors';
+import Advert from './Advert/Advert';
+import Authors from './Authors/Authors';
 import Footer from './Footer/Footer';
 import Aux from '../../hoc/Auxi';
 import { Route } from 'react-router-dom'; 
@@ -12,6 +12,7 @@ import {
     Container,
     Row,
     Col,
+    Grid
   } from 'reactstrap';
 
 const content = (props) => {
@@ -21,18 +22,35 @@ const content = (props) => {
         {id: 2,name: "Hasło", placeholder: "Wpisz swoje hasło...", text: "", min: 5, max: 15}
     ]
     return (
-        <Container>
-            <AppDescription/>
-                <Form name="Logowanie" buttonTitle="Zaloguj"
-                    loginItems={LoginItems}
-                    clicked={props.clicked}
-                />
-                <div style={{width: '100%', marginTop: '30px'}}></div>
-                <Advert/>
-                <Authors/>
-                <div style={{width: '100%', marginTop: '30px'}}></div>
-                <Footer />
-        </Container> 
+        <div className="container-fluid">
+            <Row style={{marginTop: "30px"}}>
+                <Col lg={6} md={12} sm={12} xs={12} className="appDescriptionParent">
+                    <AppDescription/>
+                </Col>
+                <Col lg={6} md={12} sm={12} xs={12}>
+                    <Form name="Logowanie" buttonTitle="Zaloguj"
+                        loginItems={LoginItems}
+                        clicked={props.clicked}
+                    />
+                </Col>  
+            </Row>
+
+            <Row style={{marginTop: "30px"}}>
+                <Col lg={6} md={12} sm={12} xs={12} className="advertParent">
+                    <Advert/>
+                </Col>
+                <Col lg={6} md={12} sm={12} xs={12} className="col-push-12">
+                    <Authors/>
+                </Col>  
+            </Row>
+            
+            <Row>
+                <Col>
+                    <Footer />
+                </Col>
+            </Row>
+                
+        </div> 
     );
    
 };

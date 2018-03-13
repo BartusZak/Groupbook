@@ -8,6 +8,7 @@ import Aux from '../../hoc/Auxi';
 import NavbarButton from '../UI/NavbarButton/NavbarButton';
 import Searcher from '../UI/Searcher/Searcher';
 import Avatar from '../UI/Avatar/Avatar';
+import logoIcon from '../../assets/img/logo/groupsconnectsLogoSmall.png';
 
 const navbar = (props) => {
     let navbarContent = null;
@@ -55,7 +56,12 @@ const navbar = (props) => {
 
         return(
             <nav className="Navbar">
-                <Logo width="300"/>
+                <Logo  anchorClass="navLogo" width="300"/>
+                <span className="logoSubtitle">Ludzie z pasją!</span>
+                
+                <Link to="/" className="navIconLogo">
+                    <img src={logoIcon} alt="logo icon"/>
+                </Link>
                 {navbarContent}
             </nav>
         );
