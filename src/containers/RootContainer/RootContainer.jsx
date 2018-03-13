@@ -36,11 +36,12 @@ class RootContainer extends Component{
                 <CenterComponent >
                     <Switch> {/*@bartuszak*/}
                         <Route exact path='/' render={() => (
-                            <HomeContent clicked={this.props.changeLoginState}/>
-                        )}/>
-                        <Route exact path='/about' render={() => (
                         <About />
                         )}/>
+                        <Route exact path='/logging' render={() => (
+                            <HomeContent clicked={this.props.changeLoginState}/>
+                        )}/>
+                      
 
                         <Route exact path='/register' render={() => (
                             <Register />

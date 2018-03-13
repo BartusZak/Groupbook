@@ -15,8 +15,8 @@ const navbar = (props) => {
 
     if(!props.isLogged){
         items = [
-            {id: 1, name: "O nas", url: "/about"},
-            {id: 2, name: "Rejestracja", url: "/register"} 
+            {id: 2, name: "Rejestracja", url: "/register"},
+            {id: 3, name: "Logowanie", url: "/logging"} 
         ];
     
         navbarContent = (
