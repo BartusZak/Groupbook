@@ -20,12 +20,17 @@ const content = (props) => {
         {id: 1,name: "Login", placeholder: "Wpisz swój login...", text: "", min: 5, max: 15},
         {id: 2,name: "Hasło", placeholder: "Wpisz swoje hasło...", text: "", min: 5, max: 15}
     ]
+    const errors = [
+        {id: 1, msg: "", isError: false},
+        {id: 2, msg: "", isError: false}
+    ]
     return (
         <Container>
             <AppDescription/>
                 <Form name="Logowanie" buttonTitle="Zaloguj"
                     loginItems={LoginItems}
                     clicked={props.clicked}
+                    errors={errors}
                 />
                 <div style={{width: '100%', marginTop: '30px'}}></div>
                 <Advert/>

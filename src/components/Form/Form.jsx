@@ -7,12 +7,9 @@ import { Redirect, Route } from 'react-router'
 
 class Form extends Component {
     state = {
-        loginItems: this.props.loginItems,
-        itemsErrors: [
-            {id: 1, msg: "", isError: false},
-            {id: 2, msg: "", isError: false}
-        ],
-        validated: false
+        loginItems: this.props.loginItems, // Co ma byc wrzucone w formularz
+        itemsErrors: this.props.errors, // Dostepne errory
+        validated: false         // Stan walidacji
     }
 
 

@@ -1,0 +1,45 @@
+.ModalPost{
+    display: flex;
+    flex-flow: column;
+}
+
+.InformationsAboutPost{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+  
+}
+.InformationsAboutPost span{
+    font-weight: bold;
+    font-size: 15px;
+}
+.InformationsAboutPost h4{
+    text-align: justify;
+    width: 50%;
+}
+
+.ModalPostContent{
+    text-align: justify;
+    width: 100%;
+    padding: 0px 30px;
+    box-sizing: border-box;
+    font-size: 17px;
+    display: flex;
+}
+.ModalPostContent span{
+    width: 42%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column;
+    align-content: flex-start
+}
+.ModalPostContent h5{
+    text-align: center;
+    margin: 20px 0 40px 0;
+}
+.ModalPostContent img{
+    width: 55%;
+    height: 45%;
+}
