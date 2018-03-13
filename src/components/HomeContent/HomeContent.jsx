@@ -26,8 +26,8 @@ const content = (props) => {
         {id: 2, msg: "", isError: false}
     ]
     return (
-        <div className="container-fluid">
-            <Row style={{marginTop: "30px"}}>
+        <div className="container-fluid" style={{marginTop: "30px"}}>
+            <Row >
                 <Col lg={6} md={12} sm={12} xs={12} className="appDescriptionParent">
                     <AppDescription/>
                 </Col>
