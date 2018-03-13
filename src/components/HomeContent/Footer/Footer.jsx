@@ -4,9 +4,11 @@ import './Footer.css';
 const footer = () => {
 
     return(
-        <div className="FooterDiv">
-            <p>Copyright by BartusZak, polubis 2018</p>
-        </div>
+    <div class="footer-copyright py-3 text-center">
+        © 2018 Copyright:&nbsp; 
+        <a href="http://bartuszak.pl">bartuszak</a>,&nbsp; 
+        <a href="https://www.facebook.com/profile.php?id=100004388103426polubis">polubis</a>
+    </div>
 
     );
 };

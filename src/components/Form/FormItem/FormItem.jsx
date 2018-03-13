@@ -12,6 +12,8 @@ const formItem = (props) => {
         <div className="form-item">
             <p className="Label">{props.title}</p>
             <input 
+            style={{display: "initial"}}
+            className="form-control"
             maxLength={props.max} 
             type={isPassword} 
             placeholder={props.placeholder}

@@ -8,7 +8,7 @@ import logoImg from '../../assets/img/logo/groupsconnects.png';
 const logo = (props) => {
   return (
         <Aux>
-            <Link to="/">
+            <Link className={props.anchorClass} to="/">
                 <img  className={props.class} src={logoImg} alt="GroupsConnects logo" width={props.width}/>
             </Link>
         </Aux>

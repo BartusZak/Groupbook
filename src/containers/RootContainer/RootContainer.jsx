@@ -13,6 +13,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import HomeContent from '../../components/HomeContent/HomeContent';
 import About from '../About/About';
 import UserStart from '../UserStart/UserStart';
+import Carousel from '../../components/Carousel/Carousel';
 
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
@@ -48,6 +49,8 @@ class RootContainer extends Component{
                         )}/>
 
                         <Route path="/logged" exact component={UserStart} />
+                        
+                        <Route path="/carousel" component={Carousel}/>
                         <Route path="*" component={NotFound} />{/*@bartuszak*/}
                     </Switch>{/*@bartuszak*/}
                 </CenterComponent>
