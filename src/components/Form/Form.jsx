@@ -40,6 +40,7 @@ class Form extends Component {
         e.preventDefault();
         this.Validate();
     }
+    //
     onChangeHandler = (event, id) => {
         const index = this.state.loginItems.findIndex(p => {
             return p.id === id;
