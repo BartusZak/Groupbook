@@ -23,8 +23,9 @@ class PostShortcut extends Component{
         commentError: false,
         showCommentsSpinner: false,
         isCommentsWasShowBefore: false,
-        commentsSectionShow: false
+        commentsSectionShow: false,
 
+     
       
    
     }
@@ -47,7 +48,6 @@ class PostShortcut extends Component{
     hideComments = () => {
         this.setState({commentsSectionShow: !this.state.commentsSectionShow});
     }
-
     showCommentSectionClickHandler = () => {
             let oldData = [...this.state.comments];
             this.setState({modalTransition: true,
@@ -63,12 +63,9 @@ class PostShortcut extends Component{
             }).catch(error => {
                 console.log(error);
                 this.setState({showCommentsSpinner: false, commentError: true, commentsSectionShow: false});
-            });
-       
- 
-        
-        
+            });      
     }
+     
     render(){
         let postModalContent = null;
         const requestData = this.props.data;
@@ -81,7 +78,7 @@ class PostShortcut extends Component{
         else{
             postShortcut = (
                 <Aux>   
-                       <Button title="Dodaj post" class="margins" url="/addpost"/>
+                       <Button title="Dodaj post" class="margins" url="/logged/newpost"/>
                         {requestData.map(item => {
                             return <SmallPost 
                             author={item.id} 
@@ -108,8 +105,6 @@ class PostShortcut extends Component{
             ShowingCommentSection={this.showCommentSectionClickHandler} />
              );
         }
-
-        
         if(this.state.isCommentsWasShowBefore){
             if(this.state.commentError){
                 commentSection = <h4>Wystąpił błąd podczas wczytywania komentarzy</h4>;
@@ -123,17 +118,20 @@ class PostShortcut extends Component{
         <p className="Information" onClick={this.showCommentSectionClickHandler}>Kliknij, aby wyświetlić komentarze </p>);  
         
          return(   
-        
             <Aux>
                 <Modal 
-                    show={this.state.isModalShow} 
-                    clickedMethod={this.hideModal}>
+                    show={this.state.isModalShow} clickedMethod={this.hideModal}>
                     {postModalContent}
-
                     {CommentsButton}
                     {commentSection}
                         
                 </Modal>
+                <Modal show={this.state.showAddPostModal} clickedMethod={this.hideModal}>
+                    <div className="AddNewPost"></div>
+                    <h1>Dodaj nowy post</h1>
+                </Modal>
+
+
                 <div className="PostShortcut">
                     {postShortcut}
                 </div>

@@ -5,7 +5,8 @@ const initialState = {
     history: "",
     postData: [],
     startPoint: 0,
-    endPoint: 4
+    endPoint: 4,
+    groupData: []
  
 }
 const reducer = (state = initialState, action) => {
@@ -25,6 +26,12 @@ const reducer = (state = initialState, action) => {
 
             break;
         case actionTypes.GENERATE_NEXT_POSTS:
+            return {
+                ...state,
+                
+            }
+            break;
+        case actionTypes.GENERATE_GROUPS_FOR_ADDING_POST:
             return {
                 ...state,
                 

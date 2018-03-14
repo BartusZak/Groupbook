@@ -1,9 +1,9 @@
 .NavbarButton {
     position: relative;
-    background-color: #f4511e;
+    background: none;
     border: 0px;
     font-size: 22px;
-    color: #FFFFFF;
+    color: wheat;
     padding: 10px;
     border-radius: 7px;
     outline: none;
