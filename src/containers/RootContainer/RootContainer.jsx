@@ -5,6 +5,7 @@ import CenterComponent from '../CenterComponent/CenterComponent';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
+import Team from '../../containers/Team/Team';
 import asyncComponent from '../../AsyncComponent';
 
 import NotFound from '../../components/NotFound/NotFound';
@@ -14,6 +15,7 @@ import HomeContent from '../../components/HomeContent/HomeContent';
 import About from '../About/About';
 import UserStart from '../UserStart/UserStart';
 import Carousel from '../../components/Carousel/Carousel';
+
 
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
@@ -49,7 +51,7 @@ class RootContainer extends Component{
                         )}/>
 
                         <Route path="/logged" exact component={UserStart} />
-                        
+                        <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
                         <Route path="*" component={NotFound} />{/*@bartuszak*/}
                     </Switch>{/*@bartuszak*/}

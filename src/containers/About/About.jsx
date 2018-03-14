@@ -9,6 +9,7 @@ import FontAwesome from 'react-fontawesome';
 import '../../assets/css/buttonStyles/shiningButton.css';
 import { Link } from 'react-router-dom';
 import '../../assets/css/font-awesome-animation.css';
+import Footer from 'components/Footer/Footer';
 
 import {
   Container,
@@ -85,65 +86,8 @@ const about = () => {
           </Row>
         </Container>
       </div>
-
-      <div className="footer">
-        <Container>
-            <Row>
-              <Col md="3" sm="6" xs="12">
-                <Logo width={"100%"}/>
-
-              </Col>
-              <Col md="3" sm="6" xs="12">
-                <h4>Menu</h4>
-                <ul>
-                  <li>Home</li>
-                  <li>Polityka Prywatności</li>
-                  <li>Kontakt</li>
-                  <li>Social Media</li>
-                  <li>info</li>   
-                </ul>               
-              </Col>
-              <Col md="3" sm="6" xs="12">
-                <h4>Aktulaności</h4>
-              </Col>
-              <Col md="3" sm="6" xs="12">
-                <h4>Kontakt</h4>
-                <ul className="contact">
-                  <li> <FontAwesome
-        className='faa-wrench animated'
-        name='phone'
-
-        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
-      />    +48 000 000 000</li>
-                  <li><FontAwesome
-        className='faa-horizontal animated'
-        name='envelope'
-        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
-      />   kontakt@groupsconnects.pl</li>
-                  
-                  <li><FontAwesome
-        className='faa-float animated'
-        name='globe'
-        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
-      />   www.groupsconnects.pl</li>
-      </ul>
-              </Col>
-            </Row>
-        </Container>
-      </div>
-
-      <div className="afterFooter">
-        <Container>
-          <Row>
-            <p>
-              Portal stworzony na porzeby zaliczenia przedmiotu "Projekt Zespołowy".<br/>
-              Uniwersytet Warmińsko-Mazurski w Olsztynie<br/>
-              Wydział Matematyki i Informatyki<br/>
-              2017/2018
-            </p>
-          </Row>
-        </Container>
-      </div>
+    
+      <Footer/>
     </div>
   );
 }

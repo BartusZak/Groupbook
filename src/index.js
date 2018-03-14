@@ -9,6 +9,8 @@ import reducer from './store/reducer';
 import  { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 
+import './theme/globalStyle';
+
 
 WebFont.load({
     google: {
@@ -18,5 +20,13 @@ WebFont.load({
 
 const store = createStore(reducer);
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+
 registerServiceWorker();
+
+
