@@ -30,7 +30,7 @@ class Footer extends Component {
                         <li><Link to="/">Polityka Prywatności</Link></li>
                         <li><Link to="/">Kontakt</Link></li>
                         <li><Link to="/">Social Media</Link></li>
-                        <li><Link to="/">info</Link></li>   
+                        <li><Link to="/team">Team</Link></li>   
                         </ul>               
                     </Col>
                     <Col md="3" sm="6" xs="12">
