@@ -53,12 +53,12 @@ class Addpost extends Component{
     render(){
         console.log(this.state.groupsToPublic);
         let GroupItems = ( this.state.groupLoadingError ?
-        <h3>Wystąpił problem podczas ładowania treści : ( </h3> : this.state.showSpinner ? <Spinner /> :
+        <h3>Wystąpił problem podczas ładowania treści </h3> : this.state.showSpinner ? <Spinner /> :
         this.state.groupData.map(item => {
             return <li key={item.id} onClick={(id) => this.addGroupToPost(item.id)} className="GroupItem">{item.name} <i className="fa fa-plus-circle"></i></li>
         }) );
 
-        if(this.state.numberOfAdded === this.state.numberOfGroups)
+        if(this.state.numberOfAdded === this.state.numberOfGroups && !this.state.showSpinner)
             GroupItems = <h3 style={{color: 'green'}}>Dodałeś już wszystkie grupy, do których należysz</h3>;
 
         const modalContent = !this.state.numberOfAdded > 0 ? <h2>Nie dodano żadnych grup</h2> : <h3>Dodano następujące grupy: </h3>;
