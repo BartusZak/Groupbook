@@ -1,16 +1,24 @@
 import * as actionTypes from './actionsTypes'
-
-export const saveResult = (res) => {
+import axios from '../../axios-post';
+/*
+export const setGroups = (groups) => {
     return {
-        type: actionTypes.GENERATE_NEXT_POSTS,
-        result: res
+        type: actionTypes.LOAD_GROUPS_DATA,
+        groups: groups
     };
 }
 
-export const storeResult = (res) => {
+
+export const initializeGroups = () => {
     return dispatch => {
-        setTimeout( () => {
-            dispatch(saveResult(res));
-        }, 2000)
-    }
+      
+        axios.get('/posts/1/comments').then(response => {
+            dispatch(setGroups(response.data));
+        }).catch(error => {
+           
+        })
+    };
 }
+
+*/
+

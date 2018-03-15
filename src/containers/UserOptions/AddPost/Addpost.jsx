@@ -5,6 +5,9 @@ import axios from '../../../axios-post';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import 'font-awesome/css/font-awesome.min.css';
 import Modal from '../../../components/UI/Modal/Modal';
+import GroupList from '../../../components/UI/GroupList/GroupList';
+import { connect } from 'react-redux';
+import { changingPostTitle, changingPostContent} from '../Store/actions';
 
 class Addpost extends Component{
     state = {
@@ -14,12 +17,15 @@ class Addpost extends Component{
         groupsToPublic: [],
         numberOfAdded: 0,
         numberOfGroups: 0,
+        showModal: false,
 
-        showModal: false
+ 
+
+
     }
-    componentDidMount(){
-        this.generatingGroups();
-    }
+    componentDidMount(){ this.generatingGroups(); }
+    hideModal = () => { this.setState({showModal: !this.state.showModal}); }
+
     generatingGroups(){
         this.setState({showSpinner: true, groupsToPublic: []});
         let oldData = [...this.state.groupData];
@@ -45,13 +51,17 @@ class Addpost extends Component{
         const concatedArrays = this.state.groupData.concat(this.state.groupsToPublic);
         this.setState({groupsToPublic: concatedArrays, groupData: [], numberOfAdded: concatedArrays.length});     
     }
+    onChangeHandler = (event, name) => {
+        if(name === "postTitle") this.setState({postTitleInput: event.target.value});
+        else this.setState({postContentArea: event.target.value});
 
-    hideModal = () => {
-        this.setState({showModal: !this.state.showModal});
+        return
     }
+  
+ 
 
     render(){
-        console.log(this.state.groupsToPublic);
+
         let GroupItems = ( this.state.groupLoadingError ?
         <h3>Wystąpił problem podczas ładowania treści </h3> : this.state.showSpinner ? <Spinner /> :
         this.state.groupData.map(item => {
@@ -61,40 +71,39 @@ class Addpost extends Component{
         if(this.state.numberOfAdded === this.state.numberOfGroups && !this.state.showSpinner)
             GroupItems = <h3 style={{color: 'green'}}>Dodałeś już wszystkie grupy, do których należysz</h3>;
 
-        const modalContent = !this.state.numberOfAdded > 0 ? <h2>Nie dodano żadnych grup</h2> : <h3>Dodano następujące grupy: </h3>;
+        const modalContent = !this.state.numberOfAdded > 0 ? <h2>Nie dodano żadnych grup</h2> : <GroupList addedGroups={this.state.groupsToPublic} />;
+        
         return (
         <div className="Container">
-             
              <div className="SelectGroupPlace">
                 <h1 style={{marginBottom: '30px'}}>Wybierz grupę docelową</h1>
                 <div className="Buttons">
                     <i onClick={() => this.addAllGroups()} className="fa fa-paw"></i>
                     <i className="fa fa-history" onClick={() => this.generatingGroups()}></i>
                     <i className={this.state.numberOfAdded === 0 ? "Numbers EmptyNumber" : "Numbers"}>+{this.state.numberOfAdded}</i>
-                    
                     <i onClick={this.hideModal} className="fa fa-columns"></i>
                 </div>
                 <ul className="PlaceForGroupItems">
                     {GroupItems}
                 </ul>
-                <button disabled={this.state.numberOfAdded > 0 ? false : true} className="AddPostButton" style={{position: 'initial'}}>Podgląd postu</button>
+                <button disabled={this.state.numberOfAdded > 0 ? false : true} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
              </div>
              <div className="Addpost">
                 <h1 style={{marginBottom: '30px'}}>Dodaj zdjęcie i wypełnij pola</h1>
                 <div className="InputsContainer">
                     <div className="LabelsInputs">
                         <h4>Tytuł postu</h4>
-                        <input type="text" placeholder="Dodaj tytuł postu..."/>
+                        <input onChange={(event) => this.props.changeTitleInput(event.target.value)} type="text" placeholder="Dodaj tytuł postu..."/>
                     </div>
                     <div className="LabelsInputs">
                         <h4>Treść postu</h4>
-                        <textarea placeholder="Dodaj treść postu...">
+                        <textarea onChange={(event) => this.props.changeContentInput(event.target.value)} placeholder="Dodaj treść postu...">
                         </textarea>   
                     </div>
                     <input className="AddPhotoInput" type="file" />
                 </div>
             </div>
-            <Modal heightPosition='40%' show={this.state.showModal} clickedMethod={this.hideModal}>
+            <Modal heightPosition='20%' show={this.state.showModal} clickedMethod={this.hideModal}>
                 {modalContent}
             </Modal>
       
@@ -104,4 +113,20 @@ class Addpost extends Component{
     }
 }
 
-export default Addpost;
+
+
+const mapStateToProps = state => {
+    return {
+        postTitleInput: state.userOptionsRed.postTitleInput,
+        postContentArea: state.userOptionsRed.postContentArea
+    };
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        changeTitleInput: (val) => dispatch(changingPostTitle(val)),
+        changeContentInput: (val) => dispatch(changingPostContent(val))
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Addpost);
+
+

@@ -9,9 +9,7 @@ class Modal extends Component{
     shouldComponentUpdate(nextprops, nextstate){
         return nextprops.show !== this.props.show || nextprops.children !== this.props.children;
     }
-
     render(){
-      
         return(
             <Aux>
                 <Backdrop show={this.props.show} clicked={this.props.clickedMethod}/>

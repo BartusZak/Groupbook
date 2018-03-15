@@ -58,10 +58,8 @@ class PostShortcut extends Component{
 
             axios.get('/posts/' + this.state.idToShowCommentSection + '/comments').then(response => {
                 oldData = response.data;
-                console.log(response.data);
                 this.setState({showCommentsSpinner: false, comments: oldData});
             }).catch(error => {
-                console.log(error);
                 this.setState({showCommentsSpinner: false, commentError: true, commentsSectionShow: false});
             });      
     }

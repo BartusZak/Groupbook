@@ -7,6 +7,7 @@ import WebFont from 'webfontloader';
 import  { createStore, combineReducers, applyMiddleware } from 'redux';
 import logginReducer from './store/reducers/logginAction';
 import asyncReducer from './store/reducers/asyncReducer';
+import userOptionsReducer from './containers/UserOptions/Store/reducer';
 import  { Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import thunk from 'redux-thunk';
@@ -21,17 +22,11 @@ WebFont.load({
 
 const rootReducer = combineReducers({
     asyncRed: asyncReducer,
-    logRed: logginReducer
+    logRed: logginReducer,
+    userOptionsRed: userOptionsReducer
 }); 
-const logger = store => {
-  return next => {
-    return action =>{
-      const result = next(action);
-      return result;
-    }
-  }
-}
-const store = createStore(rootReducer, applyMiddleware(logger, thunk));
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
