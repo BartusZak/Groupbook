@@ -127,16 +127,24 @@
 }
 .Buttons{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
-.fa-history{
+.Buttons i {
+    margin: 0 20px 0 20px;
+}
+.fa{
     color: black;
     font-size: 40px;
     cursor: pointer;
+    background-color: initial;
+    border: none;
+    outline: none;
 }
-
-.fa-history:hover{
+.fa:focus{
+    outline: none;
+}
+.fa:hover{
     color: lightseagreen;
 }
 
@@ -147,3 +155,21 @@
     padding: 10px;
     margin: 0 auto 0 auto;
 }
+
+.Numbers{
+    font-size: 40px;
+    font-weight: bold;
+    color: green;
+}
+.EmptyNumber{
+    color: red !important;
+}
+
+button:disabled{
+    background-color: grey;
+    cursor: not-allowed;
+}
+button:disabled:hover{
+    background-color: grey;
+}
+
