@@ -17,11 +17,7 @@ class Addpost extends Component{
         groupsToPublic: [],
         numberOfAdded: 0,
         numberOfGroups: 0,
-        showModal: false,
-
- 
-
-
+        showModal: false
     }
     componentDidMount(){ this.generatingGroups(); }
     hideModal = () => { this.setState({showModal: !this.state.showModal}); }
@@ -51,15 +47,6 @@ class Addpost extends Component{
         const concatedArrays = this.state.groupData.concat(this.state.groupsToPublic);
         this.setState({groupsToPublic: concatedArrays, groupData: [], numberOfAdded: concatedArrays.length});     
     }
-    onChangeHandler = (event, name) => {
-        if(name === "postTitle") this.setState({postTitleInput: event.target.value});
-        else this.setState({postContentArea: event.target.value});
-
-        return
-    }
-  
- 
-
     render(){
 
         let GroupItems = ( this.state.groupLoadingError ?
