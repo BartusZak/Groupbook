@@ -3,8 +3,8 @@ import CenterComponent from '../../CenterComponent/CenterComponent';
 import './Addpost.css';
 import axios from '../../../axios-post';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import { connect } from 'react-redux';
-import * as actionTypes from '../../../store/actions';
+
+
 
 import 'font-awesome/css/font-awesome.min.css';
 class Addpost extends Component{
@@ -47,7 +47,7 @@ class Addpost extends Component{
         const GroupItems = ( this.state.groupLoadingError ?
         <h3>Wystąpił problem podczas ładowania treści : ( </h3> : this.state.showSpinner ? <Spinner /> :
         this.state.groupData.map(item => {
-            return <li onClick={(id) => this.addGroupToPost(item.id)} className="GroupItem">{item.name} <i class="fa fa-plus-circle"></i></li>
+            return <li key={item.id} onClick={(id) => this.addGroupToPost(item.id)} className="GroupItem">{item.name} <i className="fa fa-plus-circle"></i></li>
         }) );
 
  
@@ -60,7 +60,7 @@ class Addpost extends Component{
                 </ul>
                 <div className="Buttons">
                     <button className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
-                    <i class="fa fa-history" onClick={() => this.generatingGroups()}></i>
+                    <i className="fa fa-history" onClick={() => this.generatingGroups()}></i>
                 </div>
                
              </div>
@@ -88,15 +88,4 @@ class Addpost extends Component{
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        groupData: state.groupData
-    };
-}
-const mapDispatchToProps = dispatch => {
-    return {
-        initialGroupData: () => dispatch({type: actionTypes.GENERATE_GROUPS_FOR_ADDING_POST}),
-        
-    };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Addpost);
+export default Addpost;

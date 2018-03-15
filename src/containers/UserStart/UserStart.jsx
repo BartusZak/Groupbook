@@ -5,10 +5,7 @@ import Avatar from '../../components/UI/Avatar/Avatar';
 import axios from '../../axios-post';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import SpinnerContainer from '../../hoc/SpinnerContainer/SpinnerContainer';
-import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
 import UserBlock from './UserBlock/UserBlock';
-
 
 
 class UserStart extends Component {
@@ -32,6 +29,7 @@ class UserStart extends Component {
     
 
     componentDidMount(){
+
         window.addEventListener('scroll', this.handleScroll);
 
         this.setState({isLoading: true});
@@ -44,6 +42,8 @@ class UserStart extends Component {
             
             this.setState({error: true, isLoading: false});
         });
+   
+      
     }   
 
     componentWillUnmount() {
@@ -89,7 +89,7 @@ class UserStart extends Component {
         if(this.state.error){
             posts = <PostShortcut data={this.state.data} error={this.state.error} clicked={this.generateNextData}/>
         }
-
+ 
         return (
             <SpinnerContainer>
                 {posts}
@@ -101,17 +101,6 @@ class UserStart extends Component {
 }
 
 
-const mapStateToProps = state => {
-    return {
-        data: state.postData,
-        start: state.startPoint,
-        end: state.endPoint
-    };
-}
-const mapDispatchToProps = dispatch => {
-    return {
-        generateNextData: () => dispatch({type: actionTypes.GENERATE_NEXT_POSTS})
-    };
-}
+export default UserStart;
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserStart);
+

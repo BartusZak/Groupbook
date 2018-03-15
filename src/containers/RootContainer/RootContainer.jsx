@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
 import CenterComponent from '../CenterComponent/CenterComponent';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import * as actionTypes from '../../store/actions/actionsTypes';
 
 import Team from '../../containers/Team/Team';
 import asyncComponent from '../../AsyncComponent';
@@ -17,6 +17,9 @@ import UserStart from '../UserStart/UserStart';
 import Carousel from '../../components/Carousel/Carousel';
 
 import Addpost from '../UserOptions/AddPost/Addpost';
+
+import { setTrue } from '../../store/actions/loggingActions';
+
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
 // const About = asyncComponent(() =>
@@ -29,6 +32,7 @@ import Addpost from '../UserOptions/AddPost/Addpost';
 
 class RootContainer extends Component{
     render(){
+     
         return(
             <Aux>
                 <Navbar 
@@ -67,14 +71,12 @@ class RootContainer extends Component{
 }
 const mapStateToProps = state => {
     return {
-        isLogged: state.isLogin
+        isLogged: state.logRed.isLogin
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        changeLoginState: () => dispatch({type: actionTypes.SET_TRUE}),
-        helperChanging: () => dispatch({type: actionTypes.ONLY_TRUE})
-
+        changeLoginState: () => dispatch(setTrue())
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})(RootContainer);
