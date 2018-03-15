@@ -112,12 +112,12 @@
     box-sizing: border-box;
     align-items: center;  
 }
-.GroupItem i{
+.Container .GroupItem i{
     font-size: 35px;
     color: green;
     transition: 0.3s transform linear;
 }
-.GroupItem i:hover{
+.Container .GroupItem i:hover{
     transform: scale(1.2);
     transition: 0.3s transform linear;   
 }
@@ -130,10 +130,10 @@
     justify-content: center;
     align-items: center;
 }
-.Buttons i {
+.Container .Buttons i {
     margin: 0 20px 0 20px;
 }
-.fa{
+.Container .fa{
     color: black;
     font-size: 40px;
     cursor: pointer;
@@ -141,10 +141,10 @@
     border: none;
     outline: none;
 }
-.fa:focus{
+.Container .fa:focus{
     outline: none;
 }
-.fa:hover{
+.Container .fa:hover{
     color: lightseagreen;
 }
 
