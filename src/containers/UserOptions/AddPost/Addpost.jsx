@@ -96,7 +96,7 @@ class Addpost extends Component{
                     <input className="AddPhotoInput" type="file" />
                 </div>
             </div>
-            <Modal heightPosition='20%' show={this.state.showModal} clickedMethod={this.hideModal}>
+            <Modal show={this.state.showModal} clickedMethod={this.hideModal}>
                 {modalContent}
             </Modal>
       

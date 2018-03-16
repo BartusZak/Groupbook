@@ -43,7 +43,7 @@ const navbar = (props) => {
                 <div className="NavbarContainer">
                     <Searcher items={items}/>
                     <Avatar />
-                    <NavLink to="/logged/settings">
+                    <NavLink to="/logged/usersettings">
                         <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
                     </NavLink>
                     <NavbarButton name="Wyloguj" path="/" clicked={props.clicked}/>
