@@ -12,3 +12,5 @@ export const changingPostContent = (value) => {
         val: value
     };
 }
+
+

@@ -173,3 +173,6 @@ button:disabled:hover{
     background-color: grey;
 }
 
+.RedBordersInvalidAlert{
+    border: 1px solid red;
+}

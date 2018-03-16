@@ -7,7 +7,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import Modal from '../../../components/UI/Modal/Modal';
 import GroupList from '../../../components/UI/GroupList/GroupList';
 import { connect } from 'react-redux';
-import { changingPostTitle, changingPostContent} from '../Store/actions';
+import { changingPostTitle, changingPostContent, validatingInputFields} from '../Store/actions';
 
 class Addpost extends Component{
     state = {
@@ -18,10 +18,14 @@ class Addpost extends Component{
         numberOfAdded: 0,
         numberOfGroups: 0,
         showModal: false
-    }
-    componentDidMount(){ this.generatingGroups(); }
-    hideModal = () => { this.setState({showModal: !this.state.showModal}); }
 
+    }
+    componentDidMount(){ this.generatingGroups();}
+    
+  
+   
+    
+    hideModal = () => { this.setState({showModal: !this.state.showModal}); }
     generatingGroups(){
         this.setState({showSpinner: true, groupsToPublic: []});
         let oldData = [...this.state.groupData];
@@ -32,6 +36,7 @@ class Addpost extends Component{
             this.setState({groupLoadingError: error, showSpinner: false});
         })
     }
+
     addGroupToPost = (id) => {
         let oldData = [...this.state.groupData];
         const correctValue = oldData.findIndex(p => {
@@ -42,13 +47,12 @@ class Addpost extends Component{
         oldData.splice(correctValue, 1);
         this.setState({groupData: oldData, groupsToPublic: oldAdded, numberOfAdded: this.state.numberOfAdded+1});
     }
-
     addAllGroups = () => {
         const concatedArrays = this.state.groupData.concat(this.state.groupsToPublic);
         this.setState({groupsToPublic: concatedArrays, groupData: [], numberOfAdded: concatedArrays.length});     
     }
-    render(){
 
+    render(){
         let GroupItems = ( this.state.groupLoadingError ?
         <h3>Wystąpił problem podczas ładowania treści </h3> : this.state.showSpinner ? <Spinner /> :
         this.state.groupData.map(item => {
@@ -60,6 +64,8 @@ class Addpost extends Component{
 
         const modalContent = !this.state.numberOfAdded > 0 ? <h2>Nie dodano żadnych grup</h2> : <GroupList addedGroups={this.state.groupsToPublic} />;
         
+
+        const DisablingButton = !this.state.numberOfAdded > 0 ? true : false;
         return (
         <div className="Container">
              <div className="SelectGroupPlace">
@@ -73,18 +79,18 @@ class Addpost extends Component{
                 <ul className="PlaceForGroupItems">
                     {GroupItems}
                 </ul>
-                <button disabled={this.state.numberOfAdded > 0 ? false : true} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
+                <button disabled={DisablingButton} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
              </div>
              <div className="Addpost">
                 <h1 style={{marginBottom: '30px'}}>Dodaj zdjęcie i wypełnij pola</h1>
                 <div className="InputsContainer">
                     <div className="LabelsInputs">
                         <h4>Tytuł postu</h4>
-                        <input onChange={(event) => this.props.changeTitleInput(event.target.value)} type="text" placeholder="Dodaj tytuł postu..."/>
+                        <input value={this.props.postTitleInput} onChange={ (event) => this.props.changeTitleInput(event)} type="text" placeholder="Dodaj tytuł postu..."/>
                     </div>
                     <div className="LabelsInputs">
                         <h4>Treść postu</h4>
-                        <textarea onChange={(event) => this.props.changeContentInput(event.target.value)} placeholder="Dodaj treść postu...">
+                        <textarea value={this.props.postContentArea} onChange={(event) => this.props.changeContentInput(event)} placeholder="Dodaj treść postu...">
                         </textarea>   
                     </div>
                     <input className="AddPhotoInput" type="file" />
@@ -106,6 +112,7 @@ const mapStateToProps = state => {
     return {
         postTitleInput: state.userOptionsRed.postTitleInput,
         postContentArea: state.userOptionsRed.postContentArea
+   
     };
 }
 const mapDispatchToProps = dispatch => {
@@ -116,4 +123,4 @@ const mapDispatchToProps = dispatch => {
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Addpost);
 
-
+// Zrobic jutro walidacje tych durnych pol wkoncu
