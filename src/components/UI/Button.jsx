@@ -5,7 +5,8 @@ import Aux from '../../hoc/Auxi';
 
 const button = (props) => {
     const ButtonClass = "Button";
-    const InputClass = " " + props.class;
+    let btnClass = (props.class != null) ? props.class : "";
+    const InputClass = " " + btnClass;
     let btn = null;
   
     if(props.url === undefined){

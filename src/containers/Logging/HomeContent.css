@@ -6,6 +6,9 @@
     flex-flow: row wrap;
 }
 
+.advertParent {
+    text-align: center;
+}
 
 @media (min-width: 150px) {
     .appDescriptionParent,

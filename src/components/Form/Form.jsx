@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import './Form.css';
+import { MainForm } from './Form.style'
 import FormItem from './FormItem/FormItem';
 import Button from '../UI/Button';
-import Aux from '../../hoc/Auxi';
-import { Redirect, Route } from 'react-router'
+import { Link } from 'react-router-dom';
+
+
 
 class Form extends Component {
     state = {
@@ -11,7 +12,6 @@ class Form extends Component {
         itemsErrors: this.props.errors, // Dostepne errory
         validated: false         // Stan walidacji
     }
-
 
     Validate = () => {
         const errors = [...this.state.itemsErrors];
@@ -56,27 +56,37 @@ class Form extends Component {
     }
 
     render(){
+        let text = null;
+
+        if(this.props.name.toUpperCase() === "LOGOWANIE")
+        {
+            text = <p className='message'>Nie masz konta? <Link to='/register'>Utwórz konto</Link></p>;
+        }
+        else if (this.props.name.toUpperCase() === "REJESTRACJA")
+        {
+            text = <p className='message'>Masz już konto? <Link to='/logging'>Zaloguj się</Link></p>;
+        }
         return ( 
-            <form className="Form">
+            <MainForm>
                 <h2>{this.props.name}</h2>
                 {this.state.loginItems.map(item => {
-                    return <FormItem title={item.name}
+                    return <FormItem
                     key={item.name}
                     placeholder={item.placeholder}
                     max={item.max}
                     change={(event) => this.onChangeHandler(event, item.id)}
                     text={item.text}
                     errorMessage={this.state.itemsErrors[item.id-1].msg}
-
                     />
                 })}
                 <Button
                     clicked={this.state.validated ? this.props.clicked :  e => this.onSubmitHandler(e)}
-                    title="Zaloguj"
+                    title={this.props.buttonTitle}
                     url={this.state.validated ? "/logged" : undefined}
                 />
-                
-            </form> 
+                {text}
+              
+            </MainForm> 
         );   
     }
 }

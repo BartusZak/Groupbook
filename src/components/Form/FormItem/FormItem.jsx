@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import './FormItem.css';
+import React from 'react';
 
 const formItem = (props) => {
     const isPassword = props.title === "Hasło" || props.title === "Powtórz hasło" ? "password" : "text";

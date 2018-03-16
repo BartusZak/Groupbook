@@ -1,32 +1,34 @@
 import React from 'react';
 import './HomeContent.css';
-import Form from '../Form/Form';
+import Form from '../../components/Form/Form';
 import AppDescription from './AppDescription/AppDescription';
-import Advert from './Advert/Advert';
-import Authors from './Authors/Authors';
+import Advert from '../../components/Carousel/Carousel';
 import Footer from './Footer/Footer';
-import Aux from '../../hoc/Auxi';
-import { Route } from 'react-router-dom'; 
-import Register from '../Register/Register';
 import {
-    Container,
     Row,
     Col,
-    Grid
   } from 'reactstrap';
+
+import {LoggingContent} from './Logging.style';
 
 const content = (props) => {
  
     const LoginItems = [
-        {id: 1,name: "Login", placeholder: "Wpisz swój login...", text: "", min: 5, max: 15},
-        {id: 2,name: "Hasło", placeholder: "Wpisz swoje hasło...", text: "", min: 5, max: 15}
+        {id: 1,name: "Login", placeholder: "Login", text: "", min: 5, max: 15},
+        {id: 2,name: "Hasło", placeholder: "Hasło", text: "", min: 5, max: 15}
     ]
     const errors = [
         {id: 1, msg: "", isError: false},
         {id: 2, msg: "", isError: false}
     ]
+
+    const advertImages = [
+
+        {id: 1, src: require("../../assets/img/homePage/billennium.png"), alt: "logo billennium"},
+        {id: 2, src: require("../../assets/img/homePage/uwmLogo.png"), alt: "logo uwm"}  
+    ]
     return (
-        <div className="container-fluid" style={{marginTop: "30px"}}>
+        <LoggingContent className="container-fluid">
             <Row >
                 <Col lg={6} md={12} sm={12} xs={12} className="appDescriptionParent">
                     <AppDescription/>
@@ -40,12 +42,12 @@ const content = (props) => {
                 </Col>  
             </Row>
 
-            <Row style={{marginTop: "30px"}}>
+            <Row>
                 <Col lg={6} md={12} sm={12} xs={12} className="advertParent">
-                    <Advert/>
+                   
                 </Col>
                 <Col lg={6} md={12} sm={12} xs={12} className="col-push-12">
-                    <Authors/>
+                    <Advert images={advertImages} width="450" height="150"/>
                 </Col>  
             </Row>
             
@@ -55,7 +57,7 @@ const content = (props) => {
                 </Col>
             </Row>
                 
-        </div> 
+        </LoggingContent> 
     );
    
 };

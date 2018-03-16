@@ -11,7 +11,7 @@ import asyncComponent from '../../AsyncComponent';
 import NotFound from '../../components/NotFound/NotFound';
 import Register from '../../components/Register/Register';
 import Navbar from '../../components/Navbar/Navbar';
-import HomeContent from '../../components/HomeContent/HomeContent';
+import Logging from '../Logging/Logging';
 import About from '../About/About';
 import UserStart from '../UserStart/UserStart';
 import Carousel from '../../components/Carousel/Carousel';
@@ -46,7 +46,7 @@ class RootContainer extends Component{
                         <About />
                         )}/>
                         <Route exact path='/logging' render={() => (
-                            <HomeContent clicked={this.props.changeLoginState}/>
+                            <Logging clicked={this.props.changeLoginState}/>
                         )}/>
                       
 
