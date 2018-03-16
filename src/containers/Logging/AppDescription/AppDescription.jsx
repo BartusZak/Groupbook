@@ -1,6 +1,5 @@
 import React from 'react';
-import './AppDescription.css';
-import handsUpPpl from '../../../assets/img/homePage/handsUpPpl.png';
+import { AppDescription } from './AppDescription.style';
 import Typist from 'react-typist';
 import TypistLoop from 'react-typist-loop'
 
@@ -16,7 +15,7 @@ class appDescription  extends React.Component {
       render() {
 
     return(
-        <div className="AppDescription">
+        <AppDescription>
           <div>
             <h4>Szukasz ludzi o podobnych zainteresowaniach?</h4>
             <h5>Załóż konto i&nbsp; 
@@ -30,7 +29,7 @@ class appDescription  extends React.Component {
               </TypistLoop>
             </h5>
           </div>
-        </div>
+        </AppDescription>
     );
 }
 }

@@ -5,11 +5,10 @@ import AppDescription from './AppDescription/AppDescription';
 import Advert from '../../components/Carousel/Carousel';
 import Footer from './Footer/Footer';
 import {
-    Row,
     Col,
   } from 'reactstrap';
 
-import {LoggingContent} from './Logging.style';
+import {LoggingContent, LoggingRow, LoggingRow1, LoggingRow2} from './Logging.style';
 
 const content = (props) => {
  
@@ -29,8 +28,8 @@ const content = (props) => {
     ]
     return (
         <LoggingContent className="container-fluid">
-            <Row >
-                <Col lg={6} md={12} sm={12} xs={12} className="appDescriptionParent">
+            <LoggingRow className="row">
+                <Col lg={6} md={12} sm={12} xs={12}>
                     <AppDescription/>
                 </Col>
                 <Col lg={6} md={12} sm={12} xs={12}>
@@ -40,22 +39,22 @@ const content = (props) => {
                         errors={errors}
                     />
                 </Col>  
-            </Row>
+            </LoggingRow>
 
-            <Row>
+            <LoggingRow1 className="row">
                 <Col lg={6} md={12} sm={12} xs={12} className="advertParent">
                    
                 </Col>
                 <Col lg={6} md={12} sm={12} xs={12} className="col-push-12">
                     <Advert images={advertImages} width="450" height="150"/>
                 </Col>  
-            </Row>
+            </LoggingRow1>
             
-            <Row>
+            <LoggingRow2 className="row">
                 <Col>
                     <Footer />
                 </Col>
-            </Row>
+            </LoggingRow2>
                 
         </LoggingContent> 
     );

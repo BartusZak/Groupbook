@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { MainForm } from './Form.style'
+import { MainForm, ValidationBubble } from './Form.style'
 import FormItem from './FormItem/FormItem';
 import Button from '../UI/Button';
 import { Link } from 'react-router-dom';
@@ -26,12 +26,13 @@ class Form extends Component {
                 result = false;
             }
             if(oldState[key].text.length > oldState[key].max){
-                errors[key].msg = "Pole " + oldState[key].name + " może zawierać maksymalnie " + oldState[key].max + " znaków";  
+                errors[key].msg = "Pole " + oldState[key].name + "</b> może zawierać maksymalnie " + oldState[key].max + " znaków";  
                 errors[key].isError = true;
                 result = false;
             }
+            errors[key].msg = (errors[key].msg !== "") ? <ValidationBubble><span>{errors[key].msg}</span></ValidationBubble>: "";
         }
-        
+
 
         this.setState({...this.state, itemsErrors: errors, validated: result});
        
