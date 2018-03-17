@@ -8,6 +8,9 @@ import Modal from '../../../components/UI/Modal/Modal';
 import GroupList from '../../../components/UI/GroupList/GroupList';
 import { connect } from 'react-redux';
 import { changingPostTitle, changingPostContent, validatingInputFields} from '../Store/actions';
+import secondAxios from '../../../axios-firebase';
+
+
 
 class Addpost extends Component{
     state = {
@@ -17,14 +20,13 @@ class Addpost extends Component{
         groupsToPublic: [],
         numberOfAdded: 0,
         numberOfGroups: 0,
-        showModal: false
+        showModal: false,
+
+        postShowSpinner: false,
+        postShowError: false
 
     }
     componentDidMount(){ this.generatingGroups();}
-    
-  
-   
-    
     hideModal = () => { this.setState({showModal: !this.state.showModal}); }
     generatingGroups(){
         this.setState({showSpinner: true, groupsToPublic: []});
@@ -50,6 +52,21 @@ class Addpost extends Component{
     addAllGroups = () => {
         const concatedArrays = this.state.groupData.concat(this.state.groupsToPublic);
         this.setState({groupsToPublic: concatedArrays, groupData: [], numberOfAdded: concatedArrays.length});     
+    }
+
+    publishPost = () => {
+        //this.setState({showPostModal: true, postShowSpinner: true});
+        const ItemToAdd = {
+            groups: this.state.groupsToPublic,
+            postTitle: this.props.postTitleInput,
+            postContent: this.props.postContentArea
+        };
+        secondAxios.post('/posts.json', ItemToAdd).then(response => {
+            this.setState({postShowError: false, postShowSpinner: false, groupsToPublic: [], numberOfAdded: 0})
+        }).catch(error => {
+                this.setState({postShowError: true, postShowSpinner: false});
+        });
+
     }
 
     render(){
@@ -79,7 +96,7 @@ class Addpost extends Component{
                 <ul className="PlaceForGroupItems">
                     {GroupItems}
                 </ul>
-                <button disabled={DisablingButton} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
+                <button onClick={this.publishPost} disabled={DisablingButton} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
              </div>
              <div className="Addpost">
                 <h1 style={{marginBottom: '30px'}}>Dodaj zdjęcie i wypełnij pola</h1>
@@ -99,7 +116,9 @@ class Addpost extends Component{
             <Modal show={this.state.showModal} clickedMethod={this.hideModal}>
                 {modalContent}
             </Modal>
-      
+            <Modal show={this.state.showPostModal} clickedMethod={this.hideModal}>
+                
+            </Modal> 
         </div>
        
         );
