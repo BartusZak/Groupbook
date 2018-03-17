@@ -25,7 +25,6 @@ const content = (props) => {
                 <Col lg={6} md={12} sm={12} xs={12}>
                     <Form name="Logowanie" buttonTitle="Zaloguj"
                         names={LoginNames}
-                        clicked={props.clicked}
                         errors={LoginErrors}
                     />
                 </Col>  

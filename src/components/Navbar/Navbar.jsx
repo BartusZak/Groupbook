@@ -9,64 +9,74 @@ import NavbarButton from '../UI/NavbarButton/NavbarButton';
 import Searcher from '../UI/Searcher/Searcher';
 import Avatar from '../UI/Avatar/Avatar';
 import logoIcon from '../../assets/img/logo/groupsconnectsLogoSmall.png';
+import { connect } from 'react-redux';
+import { setTrue } from '../../store/actions/loggingActions';
 
-const navbar = (props) => {
-    let navbarContent = null;
-    let items = null;
-
-    if(!props.isLogged){
-        items = [
-            {id: 2, name: "Rejestracja", url: "/register"},
-            {id: 3, name: "Logowanie", url: "/logging"} 
-        ];
+class Navbar extends Component{
+    render(){
+        let navbarContent = null;
+        let items = null;
     
-        navbarContent = (
-            <Aux>
-                <div id="navUl">
-                    <Items changeNothing={props.changeNothing} items={items}/>
-                </div>
-                <div id="socialDiv">
-                    <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
-                        <i className='fa fa-facebook-square'/>
-                    </a>
-                    <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
-                </div>
-            </Aux>
-               
-            );
-        }
-        else{
-            items = ["Grupa", "Post", "Użytkownik"];
-
+        if(!this.props.isLogged){
+            items = [
+                {id: 2, name: "Rejestracja", url: "/register"},
+                {id: 3, name: "Logowanie", url: "/logging"} 
+            ];
+        
             navbarContent = (
-            <Aux>
-                <div className="NavbarContainer">
-                    <Searcher items={items}/>
-                    <Avatar />
-                    <NavLink to="/logged/usersettings">
-                        <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
-                    </NavLink>
-                    <NavbarButton name="Wyloguj" path="/" clicked={props.clicked}/>
+                <Aux>
+                    <div id="navUl">
+                        <Items changeNothing={this.props.changeNothing} items={items}/>
+                    </div>
+                    <div id="socialDiv">
+                        <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
+                            <i className='fa fa-facebook-square'/>
+                        </a>
+                        <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
+                    </div>
+                </Aux>
                    
-                </div>
-            </Aux>
+                );
+            }
+            else{
+                items = ["Grupa", "Post", "Użytkownik"];
+    
+                navbarContent = (
+                <Aux>
+                    <div className="NavbarContainer">
+                        <Searcher items={items}/>
+                        <Avatar />
+                        <NavLink to="/logged/usersettings">
+                            <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
+                        </NavLink>
+                        <NavbarButton name="Wyloguj" path="/" clicked={() => this.props.changeLoginState()}/>
+                       
+                    </div>
+                </Aux>
+                );
+            }
+            return(
+                <nav className="Navbar">
+                    <Logo  anchorClass="navLogo" width="300"/>
+                    <span className="logoSubtitle">Ludzie z pasją!</span>
+                    
+                    <Link to="/" className="navIconLogo">
+                        <img src={logoIcon} alt="logo icon"/>
+                    </Link>
+                    {navbarContent}
+                </nav>
             );
-        }
-
-
-        return(
-            <nav className="Navbar">
-                <Logo  anchorClass="navLogo" width="300"/>
-                <span className="logoSubtitle">Ludzie z pasją!</span>
-                
-                <Link to="/" className="navIconLogo">
-                    <img src={logoIcon} alt="logo icon"/>
-                </Link>
-                {navbarContent}
-            </nav>
-        );
-
+    }
 }
 
-
-export default navbar;
+const mapStateToProps = state => {
+    return {
+        isLogged: state.logRed.isLogin
+    };
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        changeLoginState: () => dispatch(setTrue())
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

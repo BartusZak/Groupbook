@@ -3,14 +3,14 @@ import { MainForm, ValidationBubble } from './Form.style'
 import FormItem from './FormItem/FormItem';
 import Button from '../UI/Button';
 import { Link } from 'react-router-dom';
-
-
+import {withRouter} from "react-router-dom";
+import { connect } from 'react-redux';
+import { logIn } from '../../store/actions/loggingActions';
 
 class Form extends Component {
     state = {
         names: this.props.names, // Co ma byc wrzucone w formularz
         itemsErrors: this.props.errors, // Dostepne errory
-        validated: false         // Stan walidacji
     }
 
     Validate = () => {
@@ -31,7 +31,12 @@ class Form extends Component {
             }
             errors[key].msg = (errors[key].msg !== "") ? <ValidationBubble><span>{errors[key].msg}</span></ValidationBubble>: "";
         }
-        this.setState({...this.state, itemsErrors: errors, validated: result});
+        this.setState({...this.state, itemsErrors: errors});
+
+        if(result){
+            this.props.history.push("/logged");
+            this.props.logIn(result);
+        }
        
     }
     onSubmitHandler = e => { 
@@ -48,14 +53,12 @@ class Form extends Component {
         }
         item.text = event.target.value;
         const newItems = [...this.state.names];
-
         newItems[index] = item; 
         this.setState({names: newItems});    
     }
 
     render(){
         let text = null;
-
         if(this.props.name.toUpperCase() === "LOGOWANIE")
         {
             text = <p className='message'>Nie masz konta? <Link to='/register'>Utwórz konto</Link></p>;
@@ -79,9 +82,9 @@ class Form extends Component {
                     />
                 })}
                 <Button
-                    clicked={this.state.validated ? this.props.clicked :  e => this.onSubmitHandler(e)}
+                    clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
                     title={this.props.buttonTitle}
-                    url={this.state.validated ? "/logged" : undefined}
+                    url={this.props.isLogged ? "/logged" : undefined}
                 />
                 {text}
               
@@ -89,5 +92,14 @@ class Form extends Component {
         );   
     }
 }
-
-export default Form;
+const mapStateToProps = state => {
+    return {
+        isLogged: state.logRed.isLogin
+    };
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        logIn: (value) => dispatch(logIn(value))
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Form));

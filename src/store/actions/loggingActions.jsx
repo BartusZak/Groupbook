@@ -5,3 +5,10 @@ export const setTrue = () => {
         type: actionsTypes.SET_TRUE
     };
 }
+
+export const logIn = (value) => {
+    return {
+        type: actionsTypes.LOG_IN,
+        val: value
+    };
+}

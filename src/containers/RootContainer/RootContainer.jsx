@@ -18,7 +18,6 @@ import Carousel from '../../components/Carousel/Carousel';
 
 import Addpost from '../UserOptions/AddPost/Addpost';
 import UserSettings from '../UserOptions/UserSettings/UserSettings';
-import { setTrue } from '../../store/actions/loggingActions';
 
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
@@ -35,11 +34,7 @@ class RootContainer extends Component{
      
         return(
             <Aux>
-                <Navbar 
-                isLogged={this.props.isLogged}
-                clicked={this.props.changeLoginState}
-                changeNothing={this.props.helperChanging} />
-
+                <Navbar />
                 <CenterComponent >
                     <Switch> {/*@bartuszak*/}
                         <Route exact path='/' render={() => (
@@ -70,14 +65,4 @@ class RootContainer extends Component{
         );
     }
 }
-const mapStateToProps = state => {
-    return {
-        isLogged: state.logRed.isLogin
-    };
-}
-const mapDispatchToProps = dispatch => {
-    return {
-        changeLoginState: () => dispatch(setTrue())
-    };
-}
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})(RootContainer);
+export default RootContainer;

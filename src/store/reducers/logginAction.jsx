@@ -9,6 +9,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_TRUE:
             return updateObject(state, {isLogin: !state.isLogin})
         break;
+        case actionTypes.LOG_IN:
+            return updateObject(state, {isLogin: action.val});
+        break;
     }
     return state;   
 }
