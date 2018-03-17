@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
 import CenterComponent from '../CenterComponent/CenterComponent';
-import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions/actionsTypes';
 
 import Team from '../../containers/Team/Team';
 import asyncComponent from '../../AsyncComponent';
-
+import  { connect } from 'react-redux';
 import NotFound from '../../components/NotFound/NotFound';
 import Register from '../../components/Register/Register';
 import Navbar from '../../components/Navbar/Navbar';
@@ -31,7 +30,15 @@ import UserSettings from '../UserOptions/UserSettings/UserSettings';
 
 class RootContainer extends Component{
     render(){
-     
+        let IsLogged = null;
+        if(this.props.isLogged)
+        IsLogged = (
+                <Aux>
+                    <Route path="/logged" exact component={UserStart} />
+                    <Route path="/logged/newpost" exact component={Addpost} />
+                    <Route path="/logged/usersettings" exact component={UserSettings} />
+                </Aux>
+            );
         return(
             <Aux>
                 <Navbar />
@@ -40,20 +47,18 @@ class RootContainer extends Component{
                         <Route exact path='/' render={() => (
                         <About />
                         )}/>
+
                         <Route exact path='/logging' render={() => (
                             <Logging clicked={this.props.changeLoginState}/>
                         )}/>
-                      
-
                         <Route exact path='/register' render={() => (
                             <Register />
                         )}/>
-
-                        <Route path="/logged" exact component={UserStart} />
-                        <Route path="/logged/newpost" exact component={Addpost} />
-                        <Route path="/logged/usersettings" exact component={UserSettings} />
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
+                        {IsLogged}
+                        
+                        
                        
                         <Route path="*" component={NotFound} />{/*@bartuszak*/}
                     </Switch>{/*@bartuszak*/}
@@ -65,4 +70,10 @@ class RootContainer extends Component{
         );
     }
 }
-export default RootContainer;
+
+const mapStateToProps = state => {
+    return {
+        isLogged: state.logRed.isLogin
+    }
+}
+export default connect(mapStateToProps, null, null, {pure:false})(RootContainer);
