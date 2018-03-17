@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import ValidationBubbleImg from '../../assets/img/validation/validationBubble.png';
 
 export const MainForm = styled.form`
     position: relative;
     z-index: 1;
     background: #FFFFFF;
     max-width: 360px;
-    margin: 0 auto 100px;
+    margin: 0 auto;
     padding: 45px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -52,4 +53,21 @@ export const MainForm = styled.form`
             text-decoration: none;
         }
       }
+`;
+
+export const ValidationBubble = styled.div`
+    position: absolute;
+    right: 314px;
+    width: 50%;
+    font-size: 12px;
+    background: url(${ValidationBubbleImg}) no-repeat center; 
+    background-size: cover;
+    margin-top: -20px;
+
+    span {
+        padding: 9px;
+        display: inline-block;
+        color: white;
+        text-shadow: 1px 1px 1px black;
+    }
 `;
