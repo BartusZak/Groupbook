@@ -1,0 +1,32 @@
+.WholeBlock{
+    list-style: none;
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+    transition: 0.5s;
+}
+.WholeBlock li {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+    box-sizing: border-box;
+    align-items: center;
+    border-bottom: 1px solid antiquewhite;
+}
+.WholeBlock li:hover{
+    background-color: cornsilk;
+    cursor: pointer;
+}
+.WholeBlock li > b{
+    text-align: center;
+    width: 20%;
+}
+.Option{
+    text-align: right !important;
+    font-weight: initial;
+    color: lightseagreen;
+    font-size: 18px;
+}
+.Option:hover{
+    color: blue; 
+}

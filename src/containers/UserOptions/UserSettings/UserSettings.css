@@ -1,0 +1,47 @@
+.UserSettings{
+    width: 100%;
+}
+.UserSettingsBlock{
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    width: 1000px;
+    box-shadow: 0 2px 3px grey;
+}
+.UserSettingsBlock h2{
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.NavList {
+    display: flex;
+    list-style: none;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.NavList li{
+    cursor: pointer;
+    margin-top: 20px;
+    width: 150px;
+    color: lightseagreen;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.NavList > li:hover{
+    background-color: rgba(201, 197, 197, 0.5);
+    cursor: pointer;
+}
+.Active{
+    background-color: lightsalmon !important;
+    border-radius: 5px;
+    color: white !important;
+}
+.Active:hover{
+    background-color: indianred !important;
+}
+
+

@@ -17,7 +17,7 @@ import UserStart from '../UserStart/UserStart';
 import Carousel from '../../components/Carousel/Carousel';
 
 import Addpost from '../UserOptions/AddPost/Addpost';
-
+import UserSettings from '../UserOptions/UserSettings/UserSettings';
 import { setTrue } from '../../store/actions/loggingActions';
 
 // @bartuszak Przykład użycia code snipping
@@ -56,6 +56,7 @@ class RootContainer extends Component{
 
                         <Route path="/logged" exact component={UserStart} />
                         <Route path="/logged/newpost" exact component={Addpost} />
+                        <Route path="/logged/usersettings" exact component={UserSettings} />
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
                        
