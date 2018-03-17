@@ -8,15 +8,14 @@ import { Link } from 'react-router-dom';
 
 class Form extends Component {
     state = {
-        loginItems: this.props.loginItems, // Co ma byc wrzucone w formularz
+        names: this.props.names, // Co ma byc wrzucone w formularz
         itemsErrors: this.props.errors, // Dostepne errory
         validated: false         // Stan walidacji
     }
 
     Validate = () => {
         const errors = [...this.state.itemsErrors];
-        const oldState = [...this.state.loginItems];
-  
+        const oldState = [...this.state.names];
         let result = true;
         for(let key in oldState){
             errors[key].msg = "";
@@ -32,8 +31,6 @@ class Form extends Component {
             }
             errors[key].msg = (errors[key].msg !== "") ? <ValidationBubble><span>{errors[key].msg}</span></ValidationBubble>: "";
         }
-
-
         this.setState({...this.state, itemsErrors: errors, validated: result});
        
     }
@@ -43,17 +40,17 @@ class Form extends Component {
     }
     //
     onChangeHandler = (event, id) => {
-        const index = this.state.loginItems.findIndex(p => {
+        const index = this.state.names.findIndex(p => {
             return p.id === id;
         });
         const item = {
-            ...this.state.loginItems[index]
+            ...this.state.names[index]
         }
         item.text = event.target.value;
-        const newItems = [...this.state.loginItems];
+        const newItems = [...this.state.names];
 
         newItems[index] = item; 
-        this.setState({loginItems: newItems});    
+        this.setState({names: newItems});    
     }
 
     render(){
@@ -70,7 +67,7 @@ class Form extends Component {
         return ( 
             <MainForm>
                 <h2>{this.props.name}</h2>
-                {this.state.loginItems.map(item => {
+                {this.state.names.map(item => {
                     return <FormItem
                     key={item.name}
                     placeholder={item.placeholder}
@@ -78,6 +75,7 @@ class Form extends Component {
                     change={(event) => this.onChangeHandler(event, item.id)}
                     text={item.text}
                     errorMessage={this.state.itemsErrors[item.id-1].msg}
+                    type={item.type}
                     />
                 })}
                 <Button

@@ -1,12 +1,6 @@
 import React from 'react';
 
 const formItem = (props) => {
-    const isPassword = props.title === "Hasło" || props.title === "Powtórz hasło" ? "password" : "text";
-    const isEmail = props.title === "E-mail" ? "email" : "text";
-
-    
-
-
     return(
         <div className="form-item">
             <p className="Label">{props.title}</p>
@@ -14,7 +8,7 @@ const formItem = (props) => {
             style={{display: "initial"}}
             className="form-control"
             maxLength={props.max} 
-            type={isPassword} 
+            type={props.type} 
             placeholder={props.placeholder}
             onChange={props.change}
             name={props.title}

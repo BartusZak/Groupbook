@@ -9,20 +9,10 @@ import {
   } from 'reactstrap';
 
 import {LoggingContent, LoggingRow, LoggingRow1, LoggingRow2} from './Logging.style';
+import { LoginNames, LoginErrors } from '../../components/NamesForForms/Names';
 
 const content = (props) => {
- 
-    const LoginItems = [
-        {id: 1,name: "Login", placeholder: "Login", text: "", min: 5, max: 15},
-        {id: 2,name: "Hasło", placeholder: "Hasło", text: "", min: 5, max: 15}
-    ]
-    const errors = [
-        {id: 1, msg: "", isError: false},
-        {id: 2, msg: "", isError: false}
-    ]
-
     const advertImages = [
-
         {id: 1, src: require("../../assets/img/homePage/billennium.png"), alt: "logo billennium"},
         {id: 2, src: require("../../assets/img/homePage/uwmLogo.png"), alt: "logo uwm"}  
     ]
@@ -34,9 +24,9 @@ const content = (props) => {
                 </Col>
                 <Col lg={6} md={12} sm={12} xs={12}>
                     <Form name="Logowanie" buttonTitle="Zaloguj"
-                        loginItems={LoginItems}
+                        names={LoginNames}
                         clicked={props.clicked}
-                        errors={errors}
+                        errors={LoginErrors}
                     />
                 </Col>  
             </LoggingRow>
