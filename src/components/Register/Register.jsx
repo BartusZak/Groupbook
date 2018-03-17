@@ -1,8 +1,9 @@
 import React from 'react';
 import Form from '../Form/Form';
-import Aux from '../../hoc/Auxi';
 import { RegisterNames, RegisterErrors } from '../NamesForForms/Names';
+import { Register } from './Register.style';
+
 const register = () => {
-    return ( <Aux> <Form name="Rejestracja" names={RegisterNames} errors={RegisterErrors} buttonTitle="Dołącz"/> </Aux> );
+    return ( <Register><Form name="Rejestracja" names={RegisterNames} errors={RegisterErrors} buttonTitle="Dołącz"/> </Register> );
 }
 export default register;

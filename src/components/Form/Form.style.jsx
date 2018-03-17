@@ -55,10 +55,11 @@ export const MainForm = styled.form`
       }
 `;
 
-export const ValidationBubble = styled.div`
+export const ValidationBubble = styled.span`
     position: absolute;
-    right: 314px;
-    width: 50%;
+    right: 306px;
+    width: 200px;
+    height: 58px;
     font-size: 12px;
     background: url(${ValidationBubbleImg}) no-repeat center; 
     background-size: cover;

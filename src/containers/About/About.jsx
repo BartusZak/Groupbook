@@ -23,7 +23,7 @@ const about = () => {
       <Row>
         <Col xs="12" sm="12" className="headerTop">
             <LogoIcon width="100px" />
-            <Logo class="img-fluid"/>
+            <Logo className="img-fluid"/>
             <h1>Ludzie z pasją!</h1>
         </Col>
       </Row>
@@ -39,7 +39,7 @@ const about = () => {
     <Row className="fourElementsTop">
       <Col xs="12" md="4" className="firstElement">
         <div className="img1">
-          <img src={imgOne} class="img-fluid"/>
+          <img src={imgOne} alt="" className="img-fluid"/>
         </div>
 
         <h4>Ludzie z całego Świata</h4>
@@ -48,7 +48,7 @@ const about = () => {
 
     <Col xs="12" md="4" className="firstElement">
         <div className="img1">
-          <img src={imgTwo} class="img-fluid" />
+          <img src={imgTwo} alt="" className="img-fluid" />
         </div>
 
         <h4>Wymiana informacji</h4>
@@ -57,7 +57,7 @@ const about = () => {
       
       <Col xs="12" md="4" className="firstElement">
         <div className="img1">
-          <img src={imgThree} class="img-fluid" />
+          <img src={imgThree} alt="" className="img-fluid" />
         </div>
 
         <h4>Organizuj spotkania</h4>
