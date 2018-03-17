@@ -5,7 +5,7 @@ import {NavLink} from 'react-router-dom';
 
 const avatar = (props) => (
     <div className="Avatar">
-        <NavLink to="/logged/userprofile">
+        <NavLink to="/logged">
             <img src={ProfilePicture} alt="Profilowe" />
         </NavLink>
        

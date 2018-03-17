@@ -13,13 +13,13 @@ class UserSettings extends Component{
             {id: 1, name: "Imie i nazwisko", value: null, option: "Edytuj"},
             {id: 2, name: "Nazwa użytkownika", value: null, option: "Edytuj"},
             {id: 3, name: "Adres email", value: null, option: "Edytuj"},
-            {id: 4, name: "Data założenia", value: null, option: "Edytuj"}            
+            {id: 4, name: "Data urodzenia", value: null, option: "Edytuj"},
+            {id: 5, name: "Płec", value: null, option: "Edytuj"}            
         ];
         const UserSettings = [
             {id: 1, name: "Ogólne"},
-            {id: 2, name: "Statystyki"},
-            {id: 3, name: "Bezpieczeństwo"},
-            {id: 4, name: "Twój wkład"}
+            {id: 2, name: "Bezpieczeństwo"},
+            {id: 3, name: "Społeczności"}
         ];
         
         return (
