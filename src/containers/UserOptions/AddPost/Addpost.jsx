@@ -29,7 +29,7 @@ class Addpost extends Component{
     }
     componentDidMount(){ this.generatingGroups(); }
     openOrCloseModal = () => { this.setState({showModal: !this.state.showModal}) }
-    hideModal = () => { this.setState({showModal: false}); this.props.redirectingToTrue(false); }
+    hideModal = () => { this.setState({showModal: false, groupsToPublic: [], numberOfAdded: 0}); this.props.redirectingToTrue(false);  this.props.changeTitleInput(""); this.props.changeContentInput("");}
     generatingGroups(){
         this.setState({showSpinner: true, groupsToPublic: []});
         let oldData = [...this.state.groupData];

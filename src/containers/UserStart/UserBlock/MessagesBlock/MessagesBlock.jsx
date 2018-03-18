@@ -12,7 +12,8 @@ class MessagesBlock extends Component {
         start: 0,
         end: 15,
         downSpinnerIsLoading: false,
-        scrollStartPoint: 300
+        scrollStartPoint: 300,
+        stopScrollPoint: 0
     }
     componentDidMount(){
         this.takingMessagesFromTheServerAtStart(this.state.start, this.state.end);
@@ -36,10 +37,9 @@ class MessagesBlock extends Component {
         const oldData = this.state.data;
         const oldStart = this.state.start;
         const oldEnd = this.state.end;
-       
         if(this.messagesEnd.scrollTop > oldStartPoint){
 
-             this.setState({downSpinnerIsLoading: true, scrollStartPoint: oldStartPoint+600,start: oldStart+15, end: oldEnd});
+             this.setState({downSpinnerIsLoading: true, scrollStartPoint: oldStartPoint+600,start: oldStart+15, end: oldEnd, stopScrollPoint: this.messagesEnd.scrollTop});
              axios.get('/comments')
              .then(response => {
                  let responseData = response.data.slice(oldStart+15, oldEnd+15);
@@ -49,8 +49,9 @@ class MessagesBlock extends Component {
              }).catch(error => {
                  this.setState({error: true, downSpinnerIsLoading: false});
              });
+           
         }
-       
+        
         
     }
 
@@ -69,14 +70,14 @@ class MessagesBlock extends Component {
         }
       
         return(
-            <div className="MessagesBlock" onScroll={this.onLoadMoreEventHandler}>
+            <div className="MessagesBlock" >
                 <div className="MessagesButtons">
                     <b style={{fontSize: '16px'}}>Twoje wiadomości</b>
                     <span>Nowa wiadomość</span>
                    
                 </div>
                
-                <div className="Messages" ref={(el) => { this.messagesEnd = el; }}>
+                <div className="Messages" ref={(el) => { this.messagesEnd = el; }} onScroll={this.onLoadMoreEventHandler}>
                     {this.state.downSpinnerIsLoading ? <Spinner /> : Messages}
                 </div>
                 
