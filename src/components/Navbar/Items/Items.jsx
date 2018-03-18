@@ -8,7 +8,7 @@ const items = (props) => {
     return(
         <ul className="Items">
             {ItemsToMap.map(item => {
-                return <SingleItem key={item.id} name={item.name} url={item.url} changeNothing={props.changeNothing}/>
+                return <SingleItem key={item.id} name={item.name} url={item.url} />
             })}
         </ul>
     );

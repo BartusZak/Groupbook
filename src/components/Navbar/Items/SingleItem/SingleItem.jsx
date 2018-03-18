@@ -3,10 +3,10 @@ import {NavLink} from 'react-router-dom';
 import './SingleItem.css';
 
 const singleItem = (props) => (
-    <NavLink to={props.url} activeClassName="selected">
-        <li onClick={props.changeNothing}>
+        <NavLink to={props.url} activeClassName="selected">
+        <li>
             {props.name}
         </li>
-    </NavLink>
-);
+        </NavLink>
+    );
 export default singleItem;

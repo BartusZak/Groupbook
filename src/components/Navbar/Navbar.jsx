@@ -19,14 +19,14 @@ class Navbar extends Component{
     
         if(!this.props.isLogged){
             items = [
-                {id: 2, name: "Rejestracja", url: "/register"},
-                {id: 3, name: "Logowanie", url: "/logging"} 
+                {id: 1, name: "Rejestracja", url: "/register"},
+                {id: 2, name: "Logowanie", url: "/logging"} 
             ];
         
             navbarContent = (
                 <Aux>
                     <div id="navUl">
-                        <Items changeNothing={this.props.changeNothing} items={items}/>
+                        <Items items={items}/>
                     </div>
                     <div id="socialDiv">
                         <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
@@ -46,9 +46,9 @@ class Navbar extends Component{
                     <div className="NavbarContainer">
                         <Searcher items={items}/>
                         <Avatar />
-                        <NavLink to="/logged/usersettings">
+                        <Link to="/logged/usersettings">
                             <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
-                        </NavLink>
+                        </Link>
                         <NavbarButton name="Wyloguj" path="/" clicked={() => this.props.changeLoginState()}/>
                        
                     </div>
@@ -79,4 +79,4 @@ const mapDispatchToProps = dispatch => {
         changeLoginState: () => dispatch(setTrue())
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})(Navbar);
