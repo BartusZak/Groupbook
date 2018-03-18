@@ -3,7 +3,8 @@ import { updateObject } from '../../../store/utility';
 
 const initialState = {
     postTitleInput: "",
-    postContentArea: ""
+    postContentArea: "",
+    validationMessage: ""
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -12,6 +13,9 @@ const reducer = (state = initialState, action) => {
         break;
         case actionTypes.CHANGING_POST_CONTENT:
             return updateObject(state, {postContentArea: action.val.target.value})
+        break;
+        case actionTypes.CHANGING_VALIDATION_MESSAGE:
+            return updateObject(state, {validationMessage: action.val})
         break;
       
     }

@@ -41,40 +41,6 @@
     flex-flow: column;
     justify-content: space-around;    
 }
-
-.InputsContainer input[type=text]{
-    border: 1px solid #888;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: inherit;
-    width: 700px;
-    padding: 20px;
-}
-.InputsContainer textarea{
-    border: 1px solid #888;
-    padding: 20px;
-    width: 700px;
-    font-size: 20px;
-    border-radius: 5px;
-    resize: none;
-    font-family: inherit;
-    height: 250px;
-    box-sizing: border-box;
-}
-.InputsContainer textarea:hover, input:hover{
-    border-color: lightseagreen;
-}
-.LabelsInputs{
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.InvalidData, .InvalidData:hover, .InvalidData:active{
-    border-color: red;
-}
-
 .AddPostButton{
     background-color: #f44336;
     border: none;
@@ -86,7 +52,6 @@
     margin: 0 auto 0 auto;
     padding: 20px;
     z-index: 20;
-
 }
 .AddPostButton:hover{
     background-color: #f33225;
@@ -123,7 +88,6 @@
 }
 .GroupItem:hover{
     background-color: wheat;
-
 }
 .Buttons{
     display: flex;
@@ -147,15 +111,6 @@
 .Container .fa:hover{
     color: lightseagreen;
 }
-
-.AddPhotoInput{
-    font-family: inherit;
-    font-size: 18px;
-    box-sizing: border-box;
-    padding: 10px;
-    margin: 0 auto 0 auto;
-}
-
 .Numbers{
     font-size: 40px;
     font-weight: bold;
@@ -171,8 +126,4 @@ button:disabled{
 }
 button:disabled:hover{
     background-color: grey;
-}
-
-.RedBordersInvalidAlert{
-    border: 1px solid red;
 }

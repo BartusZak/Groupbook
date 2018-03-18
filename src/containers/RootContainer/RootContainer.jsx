@@ -30,6 +30,7 @@ import UserSettings from '../UserOptions/UserSettings/UserSettings';
 
 class RootContainer extends Component{
     render(){
+        
         let IsLogged = null;
         if(this.props.isLogged)
         IsLogged = (
@@ -39,6 +40,8 @@ class RootContainer extends Component{
                     <Route path="/logged/usersettings" exact component={UserSettings} />
                 </Aux>
             );
+        
+            
         return(
             <Aux>
                 <Navbar />
@@ -57,6 +60,7 @@ class RootContainer extends Component{
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
                         {IsLogged}
+                        
                         
                         
                        

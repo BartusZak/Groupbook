@@ -13,4 +13,9 @@ export const changingPostContent = (value) => {
     };
 }
 
-
+export const changingValidationMessage = (value) => {
+    return {
+        type: actionsTypes.CHANGING_VALIDATION_MESSAGE,
+        val: value
+    };
+}
