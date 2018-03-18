@@ -50,7 +50,6 @@ class RootContainer extends Component{
                         <Route exact path='/' render={() => (
                         <About />
                         )}/>
-
                         <Route exact path='/logging' render={() => (
                             <Logging clicked={this.props.changeLoginState}/>
                         )}/>
@@ -60,6 +59,7 @@ class RootContainer extends Component{
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
                         {IsLogged}
+
                         
                         
                         

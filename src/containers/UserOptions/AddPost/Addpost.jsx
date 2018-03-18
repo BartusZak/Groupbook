@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import CenterComponent from '../../CenterComponent/CenterComponent';
 import './Addpost.css';
+import Aux from '../../../hoc/Auxi';
 import axios from '../../../axios-post';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import 'font-awesome/css/font-awesome.min.css';
 import Modal from '../../../components/UI/Modal/Modal';
 import GroupList from '../../../components/UI/GroupList/GroupList';
 import { connect } from 'react-redux';
-import { changingPostTitle, changingPostContent, changingValidationMessage} from '../Store/actions';
+import { changingPostTitle, changingPostContent, redirectingToTrue} from '../Store/actions';
 import secondAxios from '../../../axios-firebase';
-import { MainForm, ValidationBubble } from '../../../components/Form/Form.style';
-
-
+import '../../../components/Form/FormStyles.css';
+import { AddingPostsErrors } from '../../../components/NamesForForms/Names';
+import { ValidationBubble } from './Form.style';
 class Addpost extends Component{
     state = {
         groupData: [], 
@@ -27,7 +28,8 @@ class Addpost extends Component{
 
     }
     componentDidMount(){ this.generatingGroups(); }
-    hideModal = () => { this.setState({showModal: !this.state.showModal}); }
+    openOrCloseModal = () => { this.setState({showModal: !this.state.showModal}) }
+    hideModal = () => { this.setState({showModal: false}); this.props.redirectingToTrue(false); }
     generatingGroups(){
         this.setState({showSpinner: true, groupsToPublic: []});
         let oldData = [...this.state.groupData];
@@ -55,27 +57,18 @@ class Addpost extends Component{
     }
 
     publishPost = () => {
-        
-        if(this.props.postTitleInput.length < 5 || this.props.postTitleInput.length > 25)
-        {
-            
-        }
-        else{
+            this.props.redirectingToTrue(true);
+            this.setState({postShowSpinner: true, postShowError: false});
             const ItemToAdd = {
                 groups: this.state.groupsToPublic,
                 postTitle: this.props.postTitleInput,
                 postContent: this.props.postContentArea
             };
             secondAxios.post('/posts.json', ItemToAdd).then(response => {
-                this.setState({postShowError: false, postShowSpinner: false, groupsToPublic: [], numberOfAdded: 0})
-    
+                this.setState({postShowError: false, postShowSpinner: false})
             }).catch(error => {
                     this.setState({postShowError: true, postShowSpinner: false});
             });
-        }
-
-        
-
     }
 
     render(){
@@ -89,9 +82,15 @@ class Addpost extends Component{
             GroupItems = <h3 style={{color: 'green'}}>Dodałeś już wszystkie grupy, do których należysz</h3>;
 
         const modalContent = !this.state.numberOfAdded > 0 ? <h2>Nie dodano żadnych grup</h2> : <GroupList addedGroups={this.state.groupsToPublic} />;
+        const DisablingButton = !this.state.numberOfAdded > 0 ? true : false 
+        || this.props.postTitleInput.length < 5 ? true : false || this.props.postContentArea.length < 5 ? true : false;
+
+        const afterPublishContent = this.state.postShowError ? <h2>Wystąpił błąd podczas przesyłania postu na serwer</h2>:
+        this.state.postShowSpinner ? <Aux><h2>Trwa dodawanie postu...</h2><Spinner /></Aux> : <h2>Post został pomyślnie dodany</h2>;
+        // Dodac dwa przyciski do publikowania postu raz jeszcze oraz do przechodzena do strony z postami
+        
         
 
-        const DisablingButton = !this.state.numberOfAdded > 0 ? true : false || this.props.postTitleInput.length < 5 ? true : false || this.props.postTitleInput > 25 ? true: false;
         return (
         <div className="Container">
              <div className="SelectGroupPlace">
@@ -100,27 +99,29 @@ class Addpost extends Component{
                     <i onClick={() => this.addAllGroups()} className="fa fa-paw"></i>
                     <i className="fa fa-history" onClick={() => this.generatingGroups()}></i>
                     <i className={this.state.numberOfAdded === 0 ? "Numbers EmptyNumber" : "Numbers"}>+{this.state.numberOfAdded}</i>
-                    <i onClick={this.hideModal} className="fa fa-columns"></i>
+                    <i onClick={this.openOrCloseModal} className="fa fa-columns"></i>
                 </div>
                 <ul className="PlaceForGroupItems">
                     {GroupItems}
                 </ul>
                 <button onClick={this.publishPost} disabled={DisablingButton} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
              </div>
-             <div>
-                <MainForm>
+             <div className="MainForm" style={{width: '45%'}}>
                     <h1 style={{marginBottom: '30px'}}>Dodaj zdjęcie i wypełnij pola</h1>
-                    <input value={this.props.postTitleInput} onChange={ (event) => this.props.changeTitleInput(event)} type="text" placeholder="Dodaj tytuł postu..."/>
-                    <textarea value={this.props.postContentArea} onChange={(event) => this.props.changeContentInput(event)} placeholder="Dodaj treść postu...">
-                    </textarea>   
+                    <input maxLength="100" value={this.props.postTitleInput} onChange={ (event) => this.props.changeTitleInput(event.target.value) } type="text" placeholder="Dodaj tytuł postu... (minimalnie 5 znaków)"/>
+                    {this.props.postTitleInput.length < 5 ? <ValidationBubble><span>{AddingPostsErrors[0].msg}</span></ValidationBubble>: ""}
+                    <textarea maxLength="500" value={this.props.postContentArea} onChange={(event) => this.props.changeContentInput(event.target.value)} placeholder="Dodaj treść postu... (minimalnie 5 znaków)">
+                    </textarea> 
+                    {this.props.postContentArea.length < 5 ? <ValidationBubble><span>{AddingPostsErrors[1].msg}</span></ValidationBubble>: ""}
                     <input className="AddPhotoInput" type="file" />
-                </MainForm> 
              </div>
-                    
-
             <Modal show={this.state.showModal} clickedMethod={this.hideModal}>
                 {modalContent}
             </Modal>
+            <Modal show={this.props.isRedirecting} clickedMethod={(!this.state.postShowSpinner || this.state.postShowError) ? this.hideModal : null}>
+                {afterPublishContent}
+            </Modal>
+
         </div>
        
         );
@@ -130,14 +131,14 @@ const mapStateToProps = state => {
     return {
         postTitleInput: state.userOptionsRed.postTitleInput,
         postContentArea: state.userOptionsRed.postContentArea,
-        errorMessage: state.userOptionsRed.validationMessage
+        isRedirecting: state.userOptionsRed.isRedirecting
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
         changeTitleInput: (val) => dispatch(changingPostTitle(val)),
         changeContentInput: (val) => dispatch(changingPostContent(val)),
-        changingValidationMessage: (val) => dispatch(changingValidationMessage(val))
+        redirectingToTrue: (val) => dispatch(redirectingToTrue(val))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Addpost);

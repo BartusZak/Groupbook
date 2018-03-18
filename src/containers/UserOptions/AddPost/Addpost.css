@@ -1,38 +1,15 @@
 .Container{
     width: 100%;
-    padding: 3%;
+    padding: 3% 0;
     display: flex;
     flex-flow: wrap;
-    justify-content: center;
-    box-sizing: border-box;
-}
-
-.Addpost{
-    width: 55%;
-    margin: auto;
-    padding: 1%;
-    box-sizing: border-box;
-    display: flex;
-    flex-flow: column;
-    height: 550px;
-    position: relative;
-    box-shadow: 1px 2px 3px gray;
-}
-.InputsContainer{
-    margin: auto;
-    display: flex;
-    flex-flow: column;
     justify-content: space-around;
-    height: 100%;
-    width: 100%;
-    position: relative;
-    background-color: #FAFAFA;
-
+    box-sizing: border-box;
 }
 .SelectGroupPlace{
-    width: 42%;
+    width: 45%;
+    margin: auto;
     height: 550px;
-    margin-right: 3%;
     padding: 1%;
     box-sizing: border-box;
     box-shadow: 1px 2px 3px gray;

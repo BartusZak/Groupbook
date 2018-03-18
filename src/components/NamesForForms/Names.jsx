@@ -24,3 +24,8 @@ export const LoginErrors = [
     {id: 1, msg: "", isError: false},
     {id: 2, msg: "", isError: false}
 ];
+
+export const AddingPostsErrors = [
+    {msg: "Pole tytuł postu powinno zawierac co najmniej 5 znakow"},
+    {msg: "Pole zawartosc postu powinno zawierac co najmniej 5 znakow"}
+]

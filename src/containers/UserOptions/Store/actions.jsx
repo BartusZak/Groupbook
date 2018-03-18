@@ -13,9 +13,9 @@ export const changingPostContent = (value) => {
     };
 }
 
-export const changingValidationMessage = (value) => {
+export const redirectingToTrue = (value) => {
     return {
-        type: actionsTypes.CHANGING_VALIDATION_MESSAGE,
+        type: actionsTypes.REDIRECTING_TO_TRUE,
         val: value
     };
 }
