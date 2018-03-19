@@ -45,7 +45,7 @@ class RootContainer extends Component{
         return(
             <Aux>
                 <Navbar />
-                <CenterComponent >
+                <CenterComponent currentUrl={window.location.href}>
                     <Switch> {/*@bartuszak*/}
                         <Route exact path='/' render={() => (
                         <About />

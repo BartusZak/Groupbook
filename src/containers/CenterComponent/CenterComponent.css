@@ -1,9 +1,16 @@
 .CenterComponent{
-    display: flex;
+  
     width: 100%;
     /* padding: 0 2%;  ADRIAN NIE DAWAJ PADDINGU BO MI SiE ABOUT ZOZJEZDZA*/
     /* margin-top: 50px; ADRIAN NIE DAWAJ MARGINU BO MI SiE ABOUT ZOZJEZDZA*/
+ 
+}
+.CenterComponent-flex-column{
+    flex-flow: column;
+    display: flex;
+}
+.CenterComponent-flex-row{
     align-items: center;
-    justify-content: space-between;
-    
+    justify-content: space-between;  
+    display: flex;
 }
