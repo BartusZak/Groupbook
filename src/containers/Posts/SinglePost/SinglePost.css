@@ -29,15 +29,15 @@
 .PostSideDesc span{ display: none; } 
 .SinglePost{
     border: 2px solid rgb(20, 124, 158);
-    margin: 25px 0;
+    margin: 75px 0;
     width: 100%;
 }
 .PostHeaders{
     background: rgb(20, 124, 158);
     width: 100%;
     color: white;
-
 }
+
 @media (min-width: 1301px){
     .PostImage {
         width: 800px;
@@ -60,6 +60,7 @@
     }
     .PostHeaders{
         font-size: 32px;
+        padding: 30px;
     }
     .GroupName { font-size: 48px; }
 }
@@ -86,6 +87,7 @@
     }
     .PostHeaders{
         font-size: 25px;
+        padding: 25px;
     }
     .GroupName { font-size: 40px; }
 
@@ -112,6 +114,7 @@
     }
     .PostHeaders{
         font-size: 20px;
+        padding: 15px;
     }
     .GroupName { font-size: 32px; }
 
@@ -137,6 +140,7 @@
     }
     .PostHeaders{
         font-size: initial;
+        padding: 5px;
     }
    
 }

@@ -3,18 +3,10 @@ import './SideMenu.css';
 const sideMenu = (props) => {
     
     return(
-        <div style={props.IsDisplay ? {display: "block"} : {display: "none"}} className="side-menu-container">
-            <ul>
-                <li>
-                    Penetratorzy
-                </li>
-                <li>
-                    Liczy rzepy kalarepy
-                </li>
-                <li>
-                    Wojownicy krola kapcia
-                </li>
-            </ul>
+        <div style={{transform: props.IsDisplay ? 'translateX(0)' : 'translateX(100vh)',
+                 opacity: props.IsDisplay ? '1' : '0'}} className="side-menu-container">
+            {props.children}
+           
         </div>
     );
 }
