@@ -17,7 +17,7 @@ import Carousel from '../../components/Carousel/Carousel';
 
 import Addpost from '../UserOptions/AddPost/Addpost';
 import UserSettings from '../UserOptions/UserSettings/UserSettings';
-
+import Posts from '../Posts/Posts';
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
 // const About = asyncComponent(() =>
@@ -26,7 +26,7 @@ import UserSettings from '../UserOptions/UserSettings/UserSettings';
 
 // const Register = asyncComponent(() =>
 //     import ('../../components/Register/Register').then(module => module.default)
-// )
+// ) <Route path="/posts" exact component={Komponent} />"
 
 class RootContainer extends Component{
     render(){
@@ -56,8 +56,11 @@ class RootContainer extends Component{
                         <Route exact path='/register' render={() => (
                             <Register />
                         )}/>
+                       
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
+                      
+                        <Route path="/logged/posts" exact component={Posts} />
                         {IsLogged}
 
                         

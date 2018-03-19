@@ -1,0 +1,8 @@
+.AddPost-flex{
+    display: flex;
+    height: 400px;
+    flex-flow: column;
+    justify-content: space-around;
+    margin: 0 auto;
+    align-items: center;
+}
