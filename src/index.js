@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.css'; //to 3ba przerzucic do ./theme/globalStyle
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import WebFont from 'webfontloader';
+import WebFont from 'webfontloader'; //to jest do czcionek na stronie
 import  { createStore, combineReducers, applyMiddleware } from 'redux';
 import logginReducer from './store/reducers/logginAction';
 import asyncReducer from './store/reducers/asyncReducer';
 import userOptionsReducer from './containers/UserOptions/Store/reducer';
 import  { Provider} from 'react-redux';
-import 'bootstrap/dist/css/bootstrap.css';
 import thunk from 'redux-thunk';
-import './theme/globalStyle';
+import './theme/globalStyle'; //globalne style css 
 
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 
 WebFont.load({
     google: {

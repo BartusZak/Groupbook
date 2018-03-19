@@ -1,12 +1,11 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
-import './SingleItem.css';
-
+import { NavItem, NavLink} from 'mdbreact';
 const singleItem = (props) => (
-        <NavLink to={props.url} activeClassName="selected">
-        <li>
-            {props.name}
-        </li>
-        </NavLink>
+        
+        <NavItem>
+            <NavLink to={props.url} className="nav-link">
+                {props.name}
+            </NavLink>
+        </NavItem>
     );
 export default singleItem;

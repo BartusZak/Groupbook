@@ -1,82 +1,22 @@
-.Navbar{
-    top: 0;
-    left: 0;
-    z-index: 90;
+.lovedMenu{
+
     box-shadow: 0 2px 3px #ccc;
-    color: white;
-    padding: 0 2%;
-    background: -webkit-linear-gradient(to right,#00924c,#004b2f);
-    background: linear-gradient(to right,#004b2f,#00924c);
-    width: 100%;
     font-size: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     height: 15vh;
 
 }
-
-#socialDiv {
-    width: 10%;
-}
-#socialDiv i{
-    padding: 0 20px;
-    font-size: 40px;
-}
-
-.fa-facebook-square {
-    color: #3B5998;
-}
-
-.fa-twitter-square {
-    color: #00aced;
-}
-
-.NavbarContainer{
-    display: flex;
-    width: 70%;
-    justify-content: space-around;
-    align-items: center;
-    height: 90%;
-   
-}
-
-.SettingsIco{
-    text-decoration: none;
-    color: white;
-    font-size: 24px;
-}
-
-.SettingsIco:hover{
-    color: red;
-  
-}
-
-.logoSubtitle {
-    position: absolute;
-    top: 64px;
-    left: 169px;
-}
-
-@media (min-width: 150px) {
-    .navIconLogo {
-        display: inline;
+@media (max-width: 770px) {
+    .lovedMenu{
+        height: unset;
     }
-    .navLogo, .Navbar:first-child span {
-        display: none;
-    }
-
 }
 
-@media (min-width: 600px) {
-    .navLogo, .Navbar:first-child span{
-        display: inline;
+@media (max-width: 768px) {
+    .ContainerStyles {
+        max-width: unset !important;
     }
-    .navIconLogo {
-        display: none;
-    }
-} 
+}
 
 .navIconLogo img {
-    width: 100px;
+    width: 50px;
 }

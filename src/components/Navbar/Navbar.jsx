@@ -3,7 +3,7 @@ import './Navbar.css';
 import Items from './Items/Items';
 import Logo from '../Logo/Logo';
 import 'font-awesome/css/font-awesome.min.css';
-import {Link, NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
 import NavbarButton from '../UI/NavbarButton/NavbarButton';
 import Searcher from '../UI/Searcher/Searcher';
@@ -11,15 +11,39 @@ import Avatar from '../UI/Avatar/Avatar';
 import logoIcon from '../../assets/img/logo/groupsconnectsLogoSmall.png';
 import { connect } from 'react-redux';
 import { setTrue } from '../../store/actions/loggingActions';
-import { 
-    Navbar,
-    Nav,
-    NavItem,
-    NavDropdown,
-    MenuItem
-} from 'react-bootstrap';
+
+import {Container} from 'reactstrap';
+import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
+
+
+import {
+    NavbarBrandStyled,
+    SocialUl,
+    MenuUl
+} from './Navbar.style';
 
 class NavbarComponent extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            collapse: false,
+            isWideEnough: false,
+            dropdownOpen: false
+        };
+        this.onClick = this.onClick.bind(this);
+        this.toggle = this.toggle.bind(this);
+    }
+    onClick(){
+        this.setState({
+            collapse: !this.state.collapse,
+        });
+    }
+    
+    toggle() {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
+    }
     render(){
         let navbarContent = null;
         let items = null;
@@ -32,15 +56,23 @@ class NavbarComponent extends Component{
         
             navbarContent = (
                 <Aux>
-                    <div id="navUl">
+                <MenuUl>
+                    <NavbarNav className="ml-auto">
                         <Items items={items}/>
-                    </div>
-                    <div id="socialDiv">
-                        <a href="http://facebook.com" rel="noopener noreferrer" target="_blank">
-                            <i className='fa fa-facebook-square'/>
-                        </a>
-                        <a href="http://twitter.com" rel="noopener noreferrer" target="_blank"><i className='fa fa-twitter-square'/></a>
-                    </div>
+                    </NavbarNav>
+                </MenuUl>
+                    <SocialUl className="navbar-nav">
+                        <li className="nav-item">
+                            <a href="http://facebook.com" target="_blank" rel="noopener noreferrer">
+                                <i  className='fa fa-facebook-square'/>
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a href="http://twitter.com" target="_blank" rel="noopener noreferrer">
+                                <i className='fa fa-twitter-square'/>
+                            </a>
+                        </li>
+                    </SocialUl>
                 </Aux>
                    
                 );
@@ -63,49 +95,27 @@ class NavbarComponent extends Component{
                 );
             }
             return(
-                <Navbar inverse collapseOnSelect>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                        <a href="#brand">React-Bootstrap</a>
-                        </Navbar.Brand>
-                        <Navbar.Toggle />
-                    </Navbar.Header>
-                    <Navbar.Collapse>
-                        <Nav>
-                        <NavItem eventKey={1} href="#">
-                            Link
-                        </NavItem>
-                        <NavItem eventKey={2} href="#">
-                            Link
-                        </NavItem>
-                        <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                            <MenuItem eventKey={3.1}>Action</MenuItem>
-                            <MenuItem eventKey={3.2}>Another action</MenuItem>
-                            <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                            <MenuItem divider />
-                            <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                        </NavDropdown>
-                        </Nav>
-                        <Nav pullRight>
-                        <NavItem eventKey={1} href="#">
-                            Link Right
-                        </NavItem>
-                        <NavItem eventKey={2} href="#">
-                            Link Right
-                        </NavItem>
-                        </Nav>
-                    </Navbar.Collapse>
-                    </Navbar>
-
-                // <nav className="Navbar">
-                //     <Logo  anchorClass="navLogo" width="300"/>
-                //     <span className="logoSubtitle">Ludzie z pasją!</span>
-                    
-                //     <Link to="/" className="navIconLogo">
-                //         <img src={logoIcon} alt="logo icon"/>
-                //     </Link>
-                //     {navbarContent}
-                // </nav>
+                <Navbar className="navbar navbar-expand-lg navbar navbar-dark bg-dark lovedMenu" expand="md" scrolling>
+                    <Container className="ContainerStyles">
+                        <NavbarBrandStyled className="navbar-brand">
+                            <div className="smallLogo">
+                                <Link to="/" className="navIconLogo">
+                                    <img src={logoIcon} alt="logo icon"/>
+                                </Link>
+                            </div>
+                            <div className="mainLogo">
+                                <Logo  anchorClass="navLogo" width="300"/>
+                                <span className="logoSubtitle">Ludzie z pasją!</span>
+                            </div>
+                                
+                               
+                        </NavbarBrandStyled>
+                        { !this.state.isWideEnough && <NavbarToggler style={{width:"30%"}} onClick = { this.onClick } />}
+                        <Collapse isOpen = { this.state.collapse } navbar>
+                            {navbarContent}
+                        </Collapse>
+                    </Container>
+                </Navbar>
             );
     }
 }
