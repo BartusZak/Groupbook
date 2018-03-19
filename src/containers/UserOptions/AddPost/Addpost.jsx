@@ -13,6 +13,9 @@ import secondAxios from '../../../axios-firebase';
 import '../../../components/Form/FormStyles.css';
 import { AddingPostsErrors } from '../../../components/NamesForForms/Names';
 import { ValidationBubble } from './Form.style';
+import AddPostAfterSend from './AddPostAfterSend/AddPostAfterSend';
+import {withRouter} from "react-router-dom";
+
 class Addpost extends Component{
     state = {
         groupData: [], 
@@ -29,7 +32,8 @@ class Addpost extends Component{
     }
     componentDidMount(){ this.generatingGroups(); }
     openOrCloseModal = () => { this.setState({showModal: !this.state.showModal}) }
-    hideModal = () => { this.setState({showModal: false, groupsToPublic: [], numberOfAdded: 0}); this.props.redirectingToTrue(false);  this.props.changeTitleInput(""); this.props.changeContentInput("");}
+    hideModal = () => { this.setState({showModal: false});}
+
     generatingGroups(){
         this.setState({showSpinner: true, groupsToPublic: []});
         let oldData = [...this.state.groupData];
@@ -40,6 +44,7 @@ class Addpost extends Component{
             this.setState({groupLoadingError: error, showSpinner: false});
         })
     }
+    goBackAndClear = () => { this.props.redirectingToTrue(false); this.setState({numberOfAdded: 0, groupsToPublic: []} ); this.props.changeTitleInput(""); this.props.changeContentInput("");  this.generatingGroups();}
 
     addGroupToPost = (id) => {
         let oldData = [...this.state.groupData];
@@ -65,12 +70,15 @@ class Addpost extends Component{
                 postContent: this.props.postContentArea
             };
             secondAxios.post('/posts.json', ItemToAdd).then(response => {
-                this.setState({postShowError: false, postShowSpinner: false})
+                this.setState({postShowError: false, postShowSpinner: false});
             }).catch(error => {
-                    this.setState({postShowError: true, postShowSpinner: false});
+                this.setState({postShowError: true, postShowSpinner: false});
             });
     }
 
+    goToPostPage = () => { this.props.history.push("/logged/posts"); }
+
+    
     render(){
         let GroupItems = ( this.state.groupLoadingError ?
         <h3>Wystąpił problem podczas ładowania treści </h3> : this.state.showSpinner ? <Spinner /> :
@@ -85,12 +93,9 @@ class Addpost extends Component{
         const DisablingButton = !this.state.numberOfAdded > 0 ? true : false 
         || this.props.postTitleInput.length < 5 ? true : false || this.props.postContentArea.length < 5 ? true : false;
 
-        const afterPublishContent = this.state.postShowError ? <h2>Wystąpił błąd podczas przesyłania postu na serwer</h2>:
-        this.state.postShowSpinner ? <Aux><h2>Trwa dodawanie postu...</h2><Spinner /></Aux> : <h2>Post został pomyślnie dodany</h2>;
-        // Dodac dwa przyciski do publikowania postu raz jeszcze oraz do przechodzena do strony z postami
+        const afterPublishContent = this.state.postShowError ? <AddPostAfterSend error={true} title="Wystąpił problem podczas przesyłania postu" goToPostPage={() => this.goToPostPage()} SendAgain={() => this.publishPost()} backToAdding={() => this.goBackAndClear()}/>:
+        this.state.postShowSpinner ? <Aux><h2>Trwa dodawanie postu...</h2><Spinner /></Aux> : <AddPostAfterSend error={false} title="Post został dodany" backToAdding={() => this.goBackAndClear()} goToPostPage={() => this.goToPostPage()}/>;
         
-        
-
         return (
         <div className="Container">
              <div className="SelectGroupPlace">
@@ -118,7 +123,7 @@ class Addpost extends Component{
             <Modal show={this.state.showModal} clickedMethod={this.hideModal}>
                 {modalContent}
             </Modal>
-            <Modal show={this.props.isRedirecting} clickedMethod={(!this.state.postShowSpinner || this.state.postShowError) ? this.hideModal : null}>
+            <Modal show={this.props.isRedirecting} clickedMethod={(!this.state.postShowSpinner || this.state.postShowError) ? this.goBackAndClear : null}>
                 {afterPublishContent}
             </Modal>
 
@@ -141,6 +146,6 @@ const mapDispatchToProps = dispatch => {
         redirectingToTrue: (val) => dispatch(redirectingToTrue(val))
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Addpost);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Addpost));
 
 // Zrobic jutro walidacje tych durnych pol wkoncu

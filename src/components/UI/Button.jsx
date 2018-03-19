@@ -4,16 +4,20 @@ import { Link } from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
 
 const button = (props) => {
-    const ButtonClass = "Button";
-    let btnClass = (props.class != null) ? props.class : "";
-    const InputClass = " " + btnClass;
+    console.log(props.overRideClass);
+    let classes = null;
     let btn = null;
-  
+    if(props.overRideClass === undefined){
+        classes = "Button" + " " + props.class;  
+    }
+    else { classes = props.overRideClass; }
+      
+
     if(props.url === undefined){
         btn = (
             <button 
                 onClick={props.clicked} 
-                className={ButtonClass + InputClass}>
+                className={classes}>
                 {props.title}
             </button>
         );
@@ -23,7 +27,7 @@ const button = (props) => {
             <Link to={props.url}>
                 <button 
                     onClick={props.clicked} 
-                    className={ButtonClass + InputClass}>
+                    className={classes}>
                     {props.title}
                 </button>
              </Link> 

@@ -37,14 +37,32 @@
     margin: 0;
     opacity: 1;
     transition: 0s;
- 
 }
-
 .Button:hover{
     box-shadow: 3px 3px 4px #ccc;
 }
 .margins{
     margin-bottom: 20px;
 }
+.Carrot-button {
+    position: relative;
+    vertical-align: top;
+    width: 60%;
+    height: 60px;
+    padding: 0;
+    outline: none;
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    border-radius: 3px;
+    background: #e67e22;
+    border: 0;
+    cursor: pointer;
+}
+.Carrot-button:hover, .Carrot-button:active, .Carrot-button:focus { box-shadow: 3px 3px 4px #ccc; outline: none;}
+
+.Pomangerate { background: #e74c3c !important; }
+.Oranged { background: #f39c12 !important; }
+    
 
 
