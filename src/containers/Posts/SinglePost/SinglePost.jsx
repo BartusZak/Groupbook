@@ -39,7 +39,7 @@ s
                     <span>{this.props.postTitle}</span>
                 </div>
                 <div className="InformationContainer"v>
-                    <b>Tomasz Protesiuk <br/><span style={{color: 'red'}}>(Jaro1994)</span></b>
+                    <b>Tomasz Protesiuk <br/><span style={{color: 'red'}}>({this.props.userName})</span></b>
                     <i className="fa fa-comment"><b className="comments-number">10</b></i>
                     <span className="PostAddDate">
                         {this.props.addDate ? this.props.addDate : "19-12-2016 16:45"}
