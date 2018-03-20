@@ -5,7 +5,7 @@ const checkboxes = (props) => {
     const items = props.items;
 
     return (
-        <div>
+        <div className="SearcherLabels">
             {items.map(item => {
                 return <Checkbox title={item} key={item}/>
             })}

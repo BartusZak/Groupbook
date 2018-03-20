@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
-import './NotFound.css';
-import { Jumbotron, Button } from 'reactstrap';
+import {Error404} from "./NotFound.style";
+import { Jumbotron } from 'reactstrap';
 
 class NotFound extends Component {
     render () {
         return (
-            <div className="error404">
+            <Error404>
                 <div className="container">
                     <Jumbotron >
                     <h1 className="display-3">Error 404</h1>
                         <p>Page not found.</p>
                     </Jumbotron>
                 </div>
-            </div>
+            </Error404>
         )
     }
 }

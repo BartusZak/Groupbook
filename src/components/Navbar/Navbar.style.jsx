@@ -116,3 +116,17 @@ li {
 
 }
 `;
+
+export const MenuAfterLogIn = styled.div`
+    width: 100%;
+    display: flex;
+
+    .LogoutButton {
+        background:none!important;
+        color:inherit;
+        border:none; 
+        padding:0!important;
+        font: inherit;
+        cursor: pointer;
+    }
+`;
