@@ -7,24 +7,16 @@ import SinglePost from './SinglePost/SinglePost';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { fetchingPosts } from '../../containers/UserOptions/Store/actions';
-import SideMenu from '../../components/UI/SideMenu/SideMenu';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
-import SideMenuContent from '../../components/UI/SideMenu/SideMenuContent/SideMenuContent';
+
 
 class Posts extends Component{
-    state = {
-        showSideMenu: false
-    }
     componentDidMount(){
         this.props.initializePosts();
    
     }
-    ShowSideMenu = () => {
-        this.setState({showSideMenu: true});
-    }
-    HideSideMenu = () => {
-        this.setState({showSideMenu: false});
-    }
+    
+
     render(){
         let Items = Object.keys(this.props.posts)
         .map( igKey => {
@@ -55,11 +47,8 @@ class Posts extends Component{
       
         return(
             <main className="PostContainer">
-                <SideMenu IsDisplay={this.state.showSideMenu}>
-                    <SideMenuContent clicked={() => this.HideSideMenu()}/>
-                </SideMenu> 
                 <nav className="PostNavigate">
-                    <b className="GroupName">Poczekalnia</b><i onClick={() => this.ShowSideMenu()} className="fa fa-users"> </i> 
+                    <b className="GroupName">Poczekalnia</b><i className="fa fa-users"> </i> 
                 </nav>
                 <div className="PostMainBlock">
                     {Content}

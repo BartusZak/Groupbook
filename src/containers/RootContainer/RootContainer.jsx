@@ -18,7 +18,8 @@ import Carousel from '../../components/Carousel/Carousel';
 import Addpost from '../UserOptions/AddPost/Addpost';
 import UserSettings from '../UserOptions/UserSettings/UserSettings';
 import Posts from '../Posts/Posts';
-import Sidebar from '../../components/UI/SideMenu/SideMenu';
+import SideMenu from '../../components/UI/SideMenu/SideMenu';
+import SideMenuContent from '../../components/UI/SideMenu/SideMenuContent/SideMenuContent';
 import { RightMenuExpander } from './RootContainer.style.jsx';
 
 // @bartuszak Przykład użycia code snipping
@@ -32,6 +33,21 @@ import { RightMenuExpander } from './RootContainer.style.jsx';
 // ) <Route path="/posts" exact component={Komponent} />"
 
 class RootContainer extends Component{
+    state = {
+        showSideMenu: false
+    }
+    ClickOnSideMenuHandler = () => {
+        this.setState({showSideMenu: !this.state.showSideMenu});
+    }
+    ControlViewPortHandler = () => {
+        window.scroll({
+            top: 0, 
+            left: 0, 
+            behavior: 'smooth' 
+          });
+          
+    }
+
     render(){
         
         let IsLogged = null;
@@ -49,7 +65,7 @@ class RootContainer extends Component{
 
             IsLoggedMenuExpander = (
                 <Aux>
-                    <i style={{marginLeft: "-4px"}} className="fa fa-angle-left" aria-hidden="true"></i>
+                    <i onClick={() => this.ClickOnSideMenuHandler()} style={{marginLeft: "-4px"}} className="fa fa-angle-left" aria-hidden="true"></i>
                 </Aux>
             );
         }
@@ -57,7 +73,7 @@ class RootContainer extends Component{
                 //przewijanie strony do góry (DO ZAIMPLEMENTOWANIA) + dodać aktualizowanie stanu
                 IsLoggedMenuExpander = (
                     <Aux>
-                        <i className="fa fa-angle-up" aria-hidden="true"></i>
+                        <i onClick={() => this.ControlViewPortHandler()} className="fa fa-angle-up" aria-hidden="true"></i>
                     </Aux>
                 );
             }
@@ -67,6 +83,9 @@ class RootContainer extends Component{
         return(
             <Aux>
                 <Navbar />
+                <SideMenu IsDisplay={this.state.showSideMenu}>
+                    <SideMenuContent clicked={() => this.ClickOnSideMenuHandler()} IsLogged={this.props.isLogged}/>
+                </SideMenu> 
                 <CenterComponent currentUrl={window.location.href}>
                     <Switch> {/*@bartuszak*/}
                         <Route exact path='/' render={() => (

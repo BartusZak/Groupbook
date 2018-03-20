@@ -2,7 +2,6 @@
     position: fixed;
     background:#292929;
     font-size: 2.6vh;
-    z-index: 101;
     top: 0;
     color: white;
     right: 0;
@@ -64,19 +63,9 @@
 .messages-place-holder li:hover{
     background-color: #414141;
 }
-
-
-
-.closing-icon{
-    position: absolute;
-    top: 0;
-    right: 5%;
-    font-size: 4vh;
-    color: white;
-    box-sizing: border-box;
-    cursor: pointer;
+.fa-angle-up{
+    z-index: 40;
 }
-.closing-icon:hover{
-  
-    color: red;
+.fa-angle-left{
+    z-index: 40;
 }
