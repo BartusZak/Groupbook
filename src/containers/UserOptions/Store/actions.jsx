@@ -55,6 +55,8 @@ export const fetchingPosts = () => {
 }
 
 
+
+
 export const loadComments = (comments) => {
     return {
         type: actionsTypes.LOAD_COMMENTS,
@@ -62,42 +64,13 @@ export const loadComments = (comments) => {
     };
 }
 
-
-export const fetchingComments = (id, oldComments) => {
+export const fetchingComments = (id) => {
     return dispatch => {
-        if(!isElementInArray(id, oldComments)){
-            let newObjects = {
-                id: null,
-                comments: []
-            }
-            axiosRandom.get('/posts/' + id + '/comments').then(response => {
-                newObjects.id = id;
-                newObjects.comments = response.data;
-                oldComments.push(newObjects);
-                dispatch(loadComments(oldComments));
-                console.log(oldComments);
-         
-            }).catch(error => {
-          
-            });
-        }
-       
-    }
-    
-}
-const isElementInArray = (value, array) => {
-    let result = null;
-    if(array.length === 0){
-        result = false;
-    }
-    else{
-        array.forEach( item => {
-            if(item.id === value)
-            {
-                result = true;
-            }
+        axiosRandom.get('/posts/' + id + '/comments').then(response => {
+            dispatch(loadComments(response.data));
+        }).catch(error => {
+            
         });
     }
-    return result;
- 
+    
 }

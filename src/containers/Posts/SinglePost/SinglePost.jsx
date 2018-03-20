@@ -8,32 +8,23 @@ import { fetchingComments } from '../../UserOptions/Store/actions';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import CommentSection from '../../../components/PostModalContent/CommentSection/CommentSection';
 
-
+ 
 class SinglePost extends Component {
     state = {
-        showComments: false,
-        id: this.props.id,
-        showCommentsSpinner: false
+            showComments: false,
+            id: this.props.id,
+            showCommentsSpinner: false
     }
     showCommentsHandler = () => { 
-        this.setState({showComments: !this.state.showComments}); 
-        this.props.initializeComments(this.state.id, this.props.comments);     
-        this.findingRightComments();
+        let result = null;
+        this.setState({showComments: !this.state.showComments});
+        this.props.initializeComments(this.state.id, this.props.comments);    
     }
-    findingRightComments = () => {
-        if(this.props.comments.length > 0){
-            const itemToReturn = this.props.comments.find(item => {
-                return item.id === this.state.id;
-            });
-           console.log(itemToReturn['id']);
-        }   
-        
-        
-    }
+
 s
     render(){
         let Comments = this.state.showComments ? <CommentSection comments={this.props.comments}/> : null;
-
+        console.log(this.state.find);
         return (
             <div className="SinglePost">
             <h4 className="PostHeaders">Nagłówek postu</h4>

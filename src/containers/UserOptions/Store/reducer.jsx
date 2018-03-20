@@ -7,10 +7,11 @@ const initialState = {
     
     isRedirecting: false,
     posts: [],
+
     errorPostLoading: false,
     spinner: false,
-
-    comments: []
+    comments: [],
+    multipleComments: []
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -34,6 +35,9 @@ const reducer = (state = initialState, action) => {
         break;
         case actionTypes.LOAD_COMMENTS:
             return updateObject(state, {comments: action.comments})
+        break;
+        case actionTypes.LOAD_MULTIPLE_COMMENTS:
+            return updateObject(state, {multipleComments: action.multipleComments})
         break;
     
       
