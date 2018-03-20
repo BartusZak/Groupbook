@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../MessagesBlock/MessagesBlock.css';
 
 class PostsBlock extends Component {
 

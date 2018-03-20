@@ -7,7 +7,10 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import SpinnerContainer from '../../hoc/SpinnerContainer/SpinnerContainer';
 import UserBlock from './UserBlock/UserBlock';
 
-
+import { 
+    PostsDiv,
+    UserBlockDiv
+} from './UserStart.style';
 class UserStart extends Component {
 
    
@@ -89,11 +92,15 @@ class UserStart extends Component {
         if(this.state.error){
             posts = <PostShortcut data={this.state.data} error={this.state.error} clicked={this.generateNextData}/>
         }
- 
+        const isSticky = this.state.isSticky ? "UserBlock Sticky" : "UserBlock"
         return (
             <SpinnerContainer>
-                {posts}
-                <UserBlock isSticky={this.state.isSticky}/>
+                <PostsDiv>
+                    {posts}
+                </PostsDiv>
+                <UserBlockDiv className={isSticky}>
+                    <UserBlock />
+                </UserBlockDiv>
             </SpinnerContainer>
           
         );

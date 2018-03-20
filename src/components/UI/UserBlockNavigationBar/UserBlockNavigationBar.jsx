@@ -1,8 +1,9 @@
 import React from 'react';
 import 'font-awesome/css/font-awesome.min.css';
-import './UserBlockNavigationBar.css';
+import { NavigationBar } from './UserBlockNavigationBar.style';
+
 const userBlockNavigationBar = (props) => (
-    <div className="NavigationBar">
+    <NavigationBar>
         <div onClick={props.clickMessage}>
           <i className='fa fa-envelope-o'/>
         </div>
@@ -13,7 +14,7 @@ const userBlockNavigationBar = (props) => (
         <div onClick={props.clickPosts}>
             <i className='fa fa-newspaper-o'/>
         </div>
-    </div>
+    </NavigationBar>
 );
 
 export default userBlockNavigationBar;

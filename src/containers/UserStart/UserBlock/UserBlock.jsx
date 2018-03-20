@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './UserBlock.css';
 import NavigationBar from '../../../components/UI/UserBlockNavigationBar/UserBlockNavigationBar';
 import MessagesBlock from './MessagesBlock/MessagesBlock';
 import PostsBlock from './PostsBlock/PostsBlock';
 import GroupsBlock from './GroupsBlock/GroupsBlock';
+import Aux from 'hoc/Auxi';
 
 class UserBlock extends Component {
     state = {
@@ -46,15 +46,14 @@ class UserBlock extends Component {
            whatRender = <GroupsBlock />;
         }
 
-        const isSticky = this.props.isSticky ? "UserBlock Sticky" : "UserBlock"
         return (
-            <div className={isSticky}>
+            <Aux>
                 <NavigationBar clickMessage={this.changeShowMessages}
                 clickGroups={this.changeShowGroups}
                 clickPosts={this.changeShowPosts}
                 />
                 {whatRender}
-            </div>
+            </Aux>
         );
     }
 }

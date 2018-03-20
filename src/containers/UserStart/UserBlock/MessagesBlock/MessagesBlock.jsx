@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './MessagesBlock.css';
+import { MessagesBlockDiv } from './MessagesBlock.style';
 import axios from '../../../../axios-post';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Message from './Message/Message';
@@ -70,7 +70,7 @@ class MessagesBlock extends Component {
         }
       
         return(
-            <div className="MessagesBlock" >
+            <MessagesBlockDiv>
                 <div className="MessagesButtons">
                     <b style={{fontSize: '16px'}}>Twoje wiadomości</b>
                     <span>Nowa wiadomość</span>
@@ -82,7 +82,7 @@ class MessagesBlock extends Component {
                 </div>
                 
                
-            </div>
+            </MessagesBlockDiv>
         );
     }
 }

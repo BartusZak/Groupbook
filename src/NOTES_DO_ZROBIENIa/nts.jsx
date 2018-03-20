@@ -4,3 +4,4 @@
 // Zrobic strone z wydarzeniami,
 // Zrobic strone z dodawaniem grup,
 // Zrobic strone z grupami
+// Zrobic transition dla animacji podczas otwierania okna z wiadomościami, grupą, postami.

@@ -1,10 +1,11 @@
 import React from 'react';
-import  './SpinnerContainer.css';
+import { SpinnerDiv } from './SpinnerContainer.style';
+
 const spinnerContainer = (props) => {
     return (
-        <div className="Middle">
+        <SpinnerDiv>
             {props.children}
-        </div>
+        </SpinnerDiv>
     );
 }
 
