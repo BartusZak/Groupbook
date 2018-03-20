@@ -18,6 +18,9 @@ import Carousel from '../../components/Carousel/Carousel';
 import Addpost from '../UserOptions/AddPost/Addpost';
 import UserSettings from '../UserOptions/UserSettings/UserSettings';
 import Posts from '../Posts/Posts';
+
+import { RightMenuExpander } from './RootContainer.style.jsx';
+
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
 // const About = asyncComponent(() =>
@@ -40,6 +43,26 @@ class RootContainer extends Component{
                     <Route path="/logged/usersettings" exact component={UserSettings} />
                 </Aux>
             );
+
+        let IsLoggedMenuExpander = null;
+            if(this.props.isLoggedMenuExpander)
+            {
+                //wysuwanie menu po naciśnięciu (DO ZAIMPLEMENTOWANIA)+ dodać aktualizowanie stanu
+                IsLoggedMenuExpander = (
+                    <Aux>
+                        <i style={{marginLeft: "-4px"}} className="fa fa-angle-left" aria-hidden="true"></i>
+                    </Aux>
+                );
+            }
+            else {
+                //przewijanie strony do góry (DO ZAIMPLEMENTOWANIA) + dodać aktualizowanie stanu
+                IsLoggedMenuExpander = (
+                    <Aux>
+                        <i className="fa fa-angle-up" aria-hidden="true"></i>
+                    </Aux>
+                );
+            }
+           
         
             
         return(
@@ -70,6 +93,11 @@ class RootContainer extends Component{
                         <Route path="*" component={NotFound} />{/*@bartuszak*/}
                     </Switch>{/*@bartuszak*/}
                 </CenterComponent>
+                
+                
+                <RightMenuExpander>
+                    {IsLoggedMenuExpander}
+                </RightMenuExpander>
              
              
                
