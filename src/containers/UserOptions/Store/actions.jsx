@@ -1,5 +1,6 @@
 import * as actionsTypes from './actionTypes';
 import axios from '../../../axios-firebase';
+import axiosRandom from '../../../axios-post';
 
 export const changingPostTitle = (value) => {
     return {
@@ -40,8 +41,7 @@ export const changingSpinnerState = (result) => {
 export const fetchingPosts = () => {
     return dispatch => {
         dispatch(changingSpinnerState(true));
-        let posts = null;
-        axios.get('https://groupbook-6e7d3.firebaseio.com/posts.json').then(response => {
+        axiosRandom.get('').then(response => {
             dispatch(initializePosts(response.data));
             dispatch(changingSpinnerState(false));
         
@@ -52,4 +52,23 @@ export const fetchingPosts = () => {
 
        
     }
+}
+
+
+export const loadComments = (comments) => {
+    return {
+        type: actionsTypes.LOAD_COMMENTS,
+        comments: comments
+    };
+}
+export const fetchingComments = (id) => {
+    return dispatch => {
+        axiosRandom.get('/posts/' + id + '/comments').then(response => {
+            dispatch(loadComments(response.data));
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+    
 }

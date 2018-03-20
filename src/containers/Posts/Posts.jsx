@@ -11,6 +11,7 @@ import SideMenu from '../../components/UI/SideMenu/SideMenu';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import SideMenuContent from '../../components/UI/SideMenu/SideMenuContent/SideMenuContent';
 import UserBlock from './../UserStart/UserBlock/UserBlock';
+import Comments from '../../components/PostModalContent/CommentSection/CommentSection';
 class Posts extends Component{
     state = {
         showSideMenu: false
@@ -31,10 +32,10 @@ class Posts extends Component{
         {
             Content = ( this.props.spinner ? <Spinner /> :
                 <Aux>
-                     <SinglePost />
-                     <SinglePost />
-                     <SinglePost />
-                     <SinglePost />
+                     <SinglePost id={1} />
+                     <SinglePost id={2} />
+                     <SinglePost id={3} />
+                     <SinglePost id={4} />
                     <Button title="Następne" overRideClass="Carrot-button Pomangerate"/>
                 </Aux>
             );
