@@ -41,10 +41,9 @@ export const changingSpinnerState = (result) => {
 export const fetchingPosts = () => {
     return dispatch => {
         dispatch(changingSpinnerState(true));
-        axiosRandom.get('').then(response => {
+        axios.get('/posts.json').then(response => {
             dispatch(initializePosts(response.data));
             dispatch(changingSpinnerState(false));
-        
         }).catch(error => {
             dispatch(fetchingPostsFailed());
             dispatch(changingSpinnerState(false));
@@ -64,12 +63,28 @@ export const loadComments = (comments) => {
     };
 }
 
+
+const fetchingCommentsError = () => {
+    return {
+        type: actionsTypes.FETCHING_COMMENTS_ERROR
+    };
+}
+const changingCommentsSpinner = (value) => {
+    return {
+        type: actionsTypes.CHANGING_COMMENTS_SPINNER,
+        isLoading: value
+    };
+}
 export const fetchingComments = (id) => {
     return dispatch => {
+        dispatch(changingCommentsSpinner(true));
         axiosRandom.get('/posts/' + id + '/comments').then(response => {
             dispatch(loadComments(response.data));
+            dispatch(changingCommentsSpinner(false));
+           
         }).catch(error => {
-            
+            dispatch(fetchingCommentsError());
+            dispatch(changingCommentsSpinner(false));
         });
     }
     

@@ -32,10 +32,11 @@ class Form extends Component {
             errors[key].msg = (errors[key].msg !== "") ? <ValidationBubble><span>{errors[key].msg}</span></ValidationBubble>: "";
         }
         this.setState({...this.state, itemsErrors: errors});
-
+        
         if(result){
+            this.setState({names: null, itemsErrors: null});
             this.props.history.push("/logged");
-            this.props.logIn(result);
+            this.props.logIn(result, this.state.names[0]["text"]);
         }
        
     }
@@ -67,6 +68,8 @@ class Form extends Component {
         {
             text = <p className='message'>Masz już konto? <Link to='/logging'>Zaloguj się</Link></p>;
         }
+
+        
         return ( 
             <MainForm>
                 <h2>{this.props.name}</h2>
@@ -94,12 +97,13 @@ class Form extends Component {
 }
 const mapStateToProps = state => {
     return {
-        isLogged: state.logRed.isLogin
+        isLogged: state.logRed.isLogin,
+
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        logIn: (value) => dispatch(logIn(value))
+        logIn: (value, userName) => dispatch(logIn(value, userName))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Form));

@@ -12,35 +12,41 @@ import CommentSection from '../../../components/PostModalContent/CommentSection/
 class SinglePost extends Component {
     state = {
             showComments: false,
-            id: this.props.id,
-            showCommentsSpinner: false
+            id: this.props.id
     }
     showCommentsHandler = () => { 
         let result = null;
         this.setState({showComments: !this.state.showComments});
-        this.props.initializeComments(this.state.id, this.props.comments);    
+        this.props.initializeComments(this.state.id, this.props.comments);  
+  
     }
 
 s
     render(){
-        let Comments = this.state.showComments ? <CommentSection comments={this.props.comments}/> : null;
-        console.log(this.state.find);
+        let Comments = null;
+        if(this.props.commentsErrorLoading)
+            Comments = <h4>Wystąpił błąd podczas wczytywania komentarzy</h4>;
+        else
+            Comments = this.state.showComments ? this.props.commentsSpinner ? <Spinner /> : <CommentSection comments={this.props.comments}/> : null;
+
+
+     
         return (
             <div className="SinglePost">
             <h4 className="PostHeaders">Nagłówek postu</h4>
             <div className="PostSubHeader">
                 <div className="Tags">
-                    <span>#Dobra spraw, #lepiej #jutro bedzie futro #EloBolbemolo</span>
+                    <span>{this.props.postTitle}</span>
                 </div>
                 <div className="InformationContainer"v>
                     <b>Tomasz Protesiuk <br/><span style={{color: 'red'}}>(Jaro1994)</span></b>
                     <i className="fa fa-comment"><b className="comments-number">10</b></i>
                     <span className="PostAddDate">
-                        2016-12-12 16:45
+                        {this.props.addDate ? this.props.addDate : "19-12-2016 16:45"}
                     </span>           
                 </div>
                 <div className="PostDescription">
-                    <span>Opis postu jaki zostal dodany wczesniej no i tegn tego</span>
+                    <span>{this.props.description}</span>
                 </div>
                 <div className="ImageDescHolder">
                     <div className="PostImage">
@@ -68,7 +74,9 @@ s
 
 const mapStateToProps = state => {
     return {
-        comments: state.userOptionsRed.comments
+        comments: state.userOptionsRed.comments,
+        commentsSpinner: state.userOptionsRed.commentsSpinner,
+        commentsErrorLoading: state.userOptionsRed.commentsErrorLoading
     };
 }
 const mapDispatchToProps = dispatch => {

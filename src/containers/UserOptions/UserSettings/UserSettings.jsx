@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './UserSettings.css';
 import WholeBlock from '../../../components/UserSettingsElements/WholeBlock';
-
+import { connect } from 'react-redux';
 
 class UserSettings extends Component{
     state = { choosenId: 1 }
@@ -11,7 +11,7 @@ class UserSettings extends Component{
         let Content = null;
         const WholeItems = [ // Pamietac zeby dodac do value dane z serwera potem
             {id: 1, name: "Imie i nazwisko", value: null, option: "Edytuj"},
-            {id: 2, name: "Nazwa użytkownika", value: null, option: "Edytuj"},
+            {id: 2, name: "Nazwa użytkownika", value: this.props.userName, option: "Edytuj"},
             {id: 3, name: "Adres email", value: null, option: "Edytuj"},
             {id: 4, name: "Data urodzenia", value: null, option: "Edytuj"},
             {id: 5, name: "Płec", value: null, option: "Edytuj"}            
@@ -21,7 +21,7 @@ class UserSettings extends Component{
             {id: 2, name: "Bezpieczeństwo"},
             {id: 3, name: "Społeczności"}
         ];
-        
+        console.log(this.props.userName);
         return (
             <div className="UserSettings">
                 <div className="UserSettingsBlock">
@@ -39,4 +39,7 @@ class UserSettings extends Component{
     }
 }
 
-export default UserSettings;
+const mapStateToProps = state => {
+    return { userName: state.logRed.userName };
+}
+export default connect(mapStateToProps, null)(UserSettings);
