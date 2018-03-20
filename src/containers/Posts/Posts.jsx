@@ -32,7 +32,8 @@ class Posts extends Component{
                 return <SinglePost key={igKey} id={i=i+1} 
                 description={item.postContent} 
                 postTitle={item.postTitle}
-                addDate={item.addDate}/>    
+                addDate={item.addDate}
+                userName={item.userName}/>    
             });
         })
         let Content = null;

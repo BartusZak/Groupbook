@@ -68,7 +68,8 @@ class Addpost extends Component{
                 groups: this.state.groupsToPublic,
                 postTitle: this.props.postTitleInput,
                 postContent: this.props.postContentArea,
-                addDate: new Date().toLocaleString()
+                addDate: new Date().toLocaleString(),
+                userName: this.props.userName
             };
             secondAxios.post('/posts.json', ItemToAdd).then(response => {
                 this.setState({postShowError: false, postShowSpinner: false});
@@ -137,7 +138,8 @@ const mapStateToProps = state => {
     return {
         postTitleInput: state.userOptionsRed.postTitleInput,
         postContentArea: state.userOptionsRed.postContentArea,
-        isRedirecting: state.userOptionsRed.isRedirecting
+        isRedirecting: state.userOptionsRed.isRedirecting,
+        userName: state.logRed.userName
     };
 }
 const mapDispatchToProps = dispatch => {
