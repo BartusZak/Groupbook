@@ -1,0 +1,82 @@
+.side-menu-container{
+    position: fixed;
+    background:#292929;
+    font-size: 2.6vh;
+    z-index: 101;
+    top: 0;
+    color: white;
+    right: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 250px;
+    transition: all 0.3s ease-out;
+    height: 100%;
+}
+.SideBarTitle {
+    font-size: 19px;
+}
+.groups-place-holder {
+    width: 250px;
+    display: flex;
+    flex-wrap: wrap;       
+}
+.groups-place-holder div{
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+.groups-place-holder div:hover{
+    border: 1px solid white;
+}
+.groups-place-holder img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    cursor: pointer;   
+}
+.messages-place-holder{
+    width: 100%;
+    height: 450px;
+    display: flex;
+    flex-flow: column;
+    list-style: none;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    border: 1px solid white;
+    border-radius: 3px;
+   
+}
+.messages-place-holder li {
+    padding: 10px 20px;
+    margin-bottom: 5px;
+    width: 210px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.messages-place-holder li:hover{
+    background-color: #414141;
+}
+
+
+
+.closing-icon{
+    position: absolute;
+    top: 0;
+    right: 5%;
+    font-size: 4vh;
+    color: white;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.closing-icon:hover{
+  
+    color: red;
+}

@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { fetchingPosts } from '../../containers/UserOptions/Store/actions';
 import SideMenu from '../../components/UI/SideMenu/SideMenu';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
+import SideMenuContent from '../../components/UI/SideMenu/SideMenuContent/SideMenuContent';
+import UserBlock from './../UserStart/UserBlock/UserBlock';
 class Posts extends Component{
     state = {
         showSideMenu: false
@@ -43,19 +45,8 @@ class Posts extends Component{
         return(
             <main className="PostContainer">
                 <SideMenu IsDisplay={this.state.showSideMenu}>
-                    <ul>
-                        <li>
-                            Penetratorzy
-                        </li>
-                        <li>
-                            Liczy rzepy kalarepy
-                        </li>
-                        <li>
-                            Wojownicy krola kapcia
-                        </li>
-                    </ul>
+                    <SideMenuContent clicked={() => this.HideSideMenu()}/>
                 </SideMenu> 
-                <Backdrop show={this.state.showSideMenu} clicked={this.HideSideMenu} backGround="Blank"/>
                 <nav className="PostNavigate">
                     <b className="GroupName">Poczekalnia</b><i onClick={() => this.ShowSideMenu()} className="fa fa-users"> </i> 
                 </nav>
