@@ -6,6 +6,8 @@ import Comments from '../../../components/PostModalContent/CommentSection/Commen
 import { connect } from 'react-redux';
 import { fetchingComments } from '../../UserOptions/Store/actions';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import CommentSection from '../../../components/PostModalContent/CommentSection/CommentSection';
+
 
 class SinglePost extends Component {
     state = {
@@ -14,14 +16,24 @@ class SinglePost extends Component {
         showCommentsSpinner: false
     }
     showCommentsHandler = () => { 
-        this.setState({showComments: true, showCommentsSpinner: true}); 
-        this.props.initializeComments(this.state.id);
-        this.setState({showCommentsSpinner: false});
+        this.setState({showComments: !this.state.showComments}); 
+        this.props.initializeComments(this.state.id, this.props.comments);     
+        this.findingRightComments();
     }
-
-    render(){
+    findingRightComments = () => {
+        if(this.props.comments.length > 0){
+            const itemToReturn = this.props.comments.find(item => {
+                return item.id === this.state.id;
+            });
+           console.log(itemToReturn['id']);
+        }   
         
-        const Comments = this.state.showComments ? <p>Siema</p> : null;
+        
+    }
+s
+    render(){
+        let Comments = this.state.showComments ? <CommentSection comments={this.props.comments}/> : null;
+
         return (
             <div className="SinglePost">
             <h4 className="PostHeaders">Nagłówek postu</h4>
@@ -70,7 +82,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        initializeComments: (id) => dispatch(fetchingComments(id))
+        initializeComments: (id, oldComments) => dispatch(fetchingComments(id, oldComments))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);

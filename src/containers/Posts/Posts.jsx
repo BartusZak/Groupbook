@@ -10,8 +10,7 @@ import { fetchingPosts } from '../../containers/UserOptions/Store/actions';
 import SideMenu from '../../components/UI/SideMenu/SideMenu';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import SideMenuContent from '../../components/UI/SideMenu/SideMenuContent/SideMenuContent';
-import UserBlock from './../UserStart/UserBlock/UserBlock';
-import Comments from '../../components/PostModalContent/CommentSection/CommentSection';
+
 class Posts extends Component{
     state = {
         showSideMenu: false
@@ -54,7 +53,6 @@ class Posts extends Component{
                 <div className="PostMainBlock">
                     {Content}
                 </div>
-                
             </main>
            
         );

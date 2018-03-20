@@ -61,14 +61,43 @@ export const loadComments = (comments) => {
         comments: comments
     };
 }
-export const fetchingComments = (id) => {
+
+
+export const fetchingComments = (id, oldComments) => {
     return dispatch => {
-        axiosRandom.get('/posts/' + id + '/comments').then(response => {
-            dispatch(loadComments(response.data));
-            console.log(response.data);
-        }).catch(error => {
-            console.log(error);
-        });
+        if(!isElementInArray(id, oldComments)){
+            let newObjects = {
+                id: null,
+                comments: []
+            }
+            axiosRandom.get('/posts/' + id + '/comments').then(response => {
+                newObjects.id = id;
+                newObjects.comments = response.data;
+                oldComments.push(newObjects);
+                dispatch(loadComments(oldComments));
+                console.log(oldComments);
+         
+            }).catch(error => {
+          
+            });
+        }
+       
     }
     
+}
+const isElementInArray = (value, array) => {
+    let result = null;
+    if(array.length === 0){
+        result = false;
+    }
+    else{
+        array.forEach( item => {
+            if(item.id === value)
+            {
+                result = true;
+            }
+        });
+    }
+    return result;
+ 
 }

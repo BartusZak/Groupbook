@@ -10,7 +10,6 @@ const initialState = {
     errorPostLoading: false,
     spinner: false,
 
-
     comments: []
 }
 const reducer = (state = initialState, action) => {
