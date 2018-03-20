@@ -8,7 +8,7 @@ const footer = () => {
     return(
     <Footer className="footer-copyright py-3 text-center">
         <Row>
-            <Col xs="12" md="12" lg="8">    
+            <Col className="MenuFooter" xs="12" md="12" lg="8">    
                     <ul>
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/register">Rejestracja</Link></li>

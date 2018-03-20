@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'theme/media';
 
 export const SearcherDiv = styled.div`
 
@@ -8,6 +9,10 @@ export const SearcherDiv = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: column;
+
+    ${media.desktop`
+        margin-left: 10%;
+    `}
 
     .InputContent {
         

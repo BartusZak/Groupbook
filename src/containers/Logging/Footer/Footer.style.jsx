@@ -8,20 +8,34 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    
+
+    li {
+        margin: 0 15px;
+    }
 }
+
+${ media.desktop`
+    li {
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+`}
 
 ${ media.tablet`
     font-size: 10px;
+    ul {
+        display: unset;
+
+        li {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+    }
+    
 `}
 
-${ media.desktop`
-    font-size: 14px;
-    margin-top: 5px;
-`}
 
 
-ul li {
-    margin: 0 15px;
-}
+
 `;

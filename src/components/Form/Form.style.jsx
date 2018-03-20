@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ValidationBubbleImg from '../../assets/img/validation/validationBubble.png';
+import media from 'theme/media';
 
 export const MainForm = styled.form`
     position: relative;
@@ -71,4 +72,21 @@ export const ValidationBubble = styled.span`
         color: white;
         text-shadow: 1px 1px 1px black;
     }
+
+    ${media.phone`
+        position: relative;
+        right: unset;
+        width: unset;
+        height: unset;
+        font-size: 12px;
+        background: unset; 
+        margin-top: unset;
+        
+        span {
+            color: red;
+            text-shadow: unset;
+            padding: 0;
+            font-size: 15px;
+        }
+    `}
 `;
