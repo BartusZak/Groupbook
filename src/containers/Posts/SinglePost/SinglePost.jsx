@@ -1,35 +1,78 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './SinglePost.css';
 import Image from '../../../assets/img/memeExample/meme.png';
-const singlePost = (props) => (
-    <div className="SinglePost">
-        <h4 className="PostHeaders">Nagłówek postu</h4>
-        <div className="PostSubHeader">
-            <div className="Tags">
-                <span>#Dobra spraw, #lepiej #jutro bedzie futro #EloBolbemolo</span>
-            </div>
-            <div className="InformationContainer"v>
-                <b>Tomasz Protesiuk <br/><span style={{color: 'red'}}>(Jaro1994)</span></b>
-                <i className="fa fa-comment"><b className="comments-number">10</b></i>
-                <span className="PostAddDate">
-                    2016-12-12 16:45
-                </span>           
-            </div>
-            <div className="PostDescription">
-                <span>Opis postu jaki zostal dodany wczesniej no i tegn tego</span>
-            </div>
-            <div className="ImageDescHolder">
-                <div className="PostImage">
-                    <img src={Image} alt="Ciekawy jestem co z tego bedzie" />
+import 'font-awesome/css/font-awesome.min.css';
+import Comments from '../../../components/PostModalContent/CommentSection/CommentSection';
+import { connect } from 'react-redux';
+import { fetchingComments } from '../../UserOptions/Store/actions';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+
+class SinglePost extends Component {
+    state = {
+        showComments: false,
+        id: this.props.id,
+        showCommentsSpinner: false
+    }
+    showCommentsHandler = () => { 
+        this.setState({showComments: true, showCommentsSpinner: true}); 
+        this.props.initializeComments(this.state.id);
+        this.setState({showCommentsSpinner: false});
+    }
+
+    render(){
+        
+        const Comments = this.state.showComments ? <p>Siema</p> : null;
+        return (
+            <div className="SinglePost">
+            <h4 className="PostHeaders">Nagłówek postu</h4>
+            <div className="PostSubHeader">
+                <div className="Tags">
+                    <span>#Dobra spraw, #lepiej #jutro bedzie futro #EloBolbemolo</span>
                 </div>
-                <div className="PostSideDesc">
+                <div className="InformationContainer"v>
+                    <b>Tomasz Protesiuk <br/><span style={{color: 'red'}}>(Jaro1994)</span></b>
+                    <i className="fa fa-comment"><b className="comments-number">10</b></i>
+                    <span className="PostAddDate">
+                        2016-12-12 16:45
+                    </span>           
+                </div>
+                <div className="PostDescription">
                     <span>Opis postu jaki zostal dodany wczesniej no i tegn tego</span>
                 </div>
-            </div>
-            
-        </div>
-    </div>
- 
-);
+                <div className="ImageDescHolder">
+                    <div className="PostImage">
+                        <img src={Image} alt="Ciekawy jestem co z tego bedzie" />
+                    </div>
+                </div>
+                <div className="ComentSection">
+                    <p className="CommentOptions"> Sekcja komentarzy</p>
+                    <textarea placeholder="Dodaj komentarz">
+                    </textarea>
+                    <i onClick={this.props.addComment} class="fa fa-plus"></i> 
+                    <i onClick={() => this.showCommentsHandler()} class="fa fa-reply-all"></i>
+                </div>
 
-export default singlePost;
+                {Comments}
+            
+                
+            </div>
+        </div>
+        );
+    }
+}
+
+ 
+
+const mapStateToProps = state => {
+    return {
+        comments: state.userOptionsRed.comments
+    };
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        initializeComments: (id) => dispatch(fetchingComments(id))
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);
+
+

@@ -3,7 +3,7 @@ import './CommentSection.css';
 
 
 const commentSection = (props) => {
-    const comments = props.comments
+    const comments = props.comments;
     return(
         <ul className="CommentSection">
            {comments.map(item => {
@@ -16,8 +16,6 @@ const commentSection = (props) => {
                   <span className="CommentBody">
                     {item.body}
                   </span>
-               
-                 
                </li>
                );
            })}

@@ -7,7 +7,6 @@
     justify-content: space-around;
     margin-bottom: 10px;
     align-items: center;
-    font-weight: bold;
 }
 .comments-number { 
     position: absolute;
@@ -26,7 +25,7 @@
 }
 .PostImage, .PostImage img { margin: auto;}
 
-.PostSideDesc span{ display: none; } 
+
 .SinglePost{
     border: 2px solid rgb(20, 124, 158);
     margin: 75px 0;
@@ -37,8 +36,53 @@
     width: 100%;
     color: white;
 }
+.ComentSection{
+    display: flex;
+    flex-flow: column;
+    padding: 25px 0;
+    box-sizing: border-box;
+    
+}
+.CommentOptions{
+    width: 100%;
+}
+
+.ComentSection{
+    position: relative;
+}
+.ComentSection textarea{
+    font-style: inherit;
+    font-size: 16px;
+    padding: 10px;
+    resize: none;
+    height: 120px;
+    box-sizing: border-box;
+    width: 95%;
+    border-radius: 15px;
+    outline: none;
+}
+.ComentSection textarea:focus { border-color: green; }
+
+
+.ComentSection .fa-reply-all, .ComentSection .fa-plus {  font-size: 32px;  color:  #66a80f;  position: absolute; cursor: pointer;}
+.ComentSection .fa-plus{
+    top: 90%;
+    right: 10%;
+   
+}
+
+.ComentSection .fa-reply-all{ top: 91%; }
+.ComentSection .fa-plus:hover, .ComentSection .fa-reply-all:hover { 
+    color: red; 
+}
 
 @media (min-width: 1301px){
+    .ComentSection textarea{
+        width: 70%;
+    }
+    .ComentSection .fa-plus{
+        right: 20%;
+    }
     .PostImage {
         width: 800px;
         height: 800px;
@@ -94,6 +138,13 @@
 }
 
 @media (max-width: 1100px){
+    .ComentSection textarea{
+        width: 70%;
+        height: initial;
+    }
+    .ComentSection .fa-plus{
+        right: 20%;
+    }
     .PostImage {
         width: 500px;
         height: 500px;

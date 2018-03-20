@@ -8,7 +8,10 @@ const initialState = {
     isRedirecting: false,
     posts: [],
     errorPostLoading: false,
-    spinner: false
+    spinner: false,
+
+
+    comments: []
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -29,6 +32,9 @@ const reducer = (state = initialState, action) => {
         break;
         case actionTypes.CHANGING_SPINNER_STATE:
             return updateObject(state, {spinner: action.isLoading})
+        break;
+        case actionTypes.LOAD_COMMENTS:
+            return updateObject(state, {comments: action.comments})
         break;
     
       
