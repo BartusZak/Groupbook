@@ -1,15 +1,12 @@
 import React from 'react';
-import './Avatar.css';
 import ProfilePicture from '../../../assets/img/profiles/facet.jpg';
 import {NavLink} from 'react-router-dom';
+import {AvatarDiv} from './Avatar.style';
 
 const avatar = (props) => (
-    <div className="Avatar">
-        <NavLink to="/logged">
-            <img src={ProfilePicture} alt="Profilowe" />
-        </NavLink>
-       
-    </div>
+    <AvatarDiv>
+        <img className={props.class} style={props.styles} src={ProfilePicture} alt="Zdjęcie Profilowe" />
+    </AvatarDiv>
 );
 
 export default avatar;

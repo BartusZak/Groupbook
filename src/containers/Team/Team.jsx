@@ -53,7 +53,7 @@ export default class Home extends Component {
                             <RevealPLeft hide={!isInView}>
                                 Adrian został porzucony po narodzinach. W przytułku dla małoletnich developerów w Nowym Jorku, został odnaleziony przez programistę z Warszawy. Razem z nim wrócił do Polski. Tutaj znalazł dom i ciepło w programistycznej rodzienie. 
                                 Tata - Andrzej - Senior Back End developer (jeden z założycieli portalu Nasza-klasa). Mama - Katarzyna - również Back End Developer. Rodzicie byli zadowoleni ze swojego syna, który kontynuował odwieczną tradycję bycia Back End Developerem.
-                                Po wielu latach programowania Back End'u, zgłębiania zagadnień wzorca programowania MVC, kiedy Adrian (właściwie August) dorusł, dowiedział się, że jest synem Mark'a Zuckerberg'a oraz Priscilli Chan.  
+                                Po wielu latach programowania Back End'u, zgłębiania zagadnień wzorca programowania MVC, kiedy Adrian (właściwie August) dorósł, dowiedział się, że jest synem Mark'a Zuckerberg'a oraz Priscilli Chan.  
                                 Wtedy jego życie zmieniło się diametralnie. Postanowił porzucić dotychczasowy tryb życia i zająć się czymś innym. I w taki sposób powstał portal GroupsConnects. Adrian w niecałe pół roku z Back End Dev stał się Front End Dev (czyt. Full Stack Dev).
                             </RevealPLeft>
                         }
@@ -70,7 +70,7 @@ export default class Home extends Component {
                         {({ isInView }) =>
                             <RevealPRight hide={!isInView}>
                                 Siedzi 20 godzin dziennie przed komputerem, wpisuje 10 słów na sekundę, zna Pascal, BASIC, Assembler, Fortran, Logo, APL, Algol, Prolog, wytrzymuje 230V i zna wszystkie książki. Bartłomiej lubi nazywać siebię "urządzeniem peryferyjnym" przetwarzającym kawę, soczek, tonik, pepsi, colę oraz hektolitry napoju energetycznego w linie kodu źródłowego. 
-                                Jest jedynym znanym stworzeniem, które potrafi rozwiązać twój problem, o którym nie miałeś pojęcia, że istnieje, w sposób którego absolutnie nie zrozumiesz. Sami Bartek uważaja siebie za matematyka, a matematycy (jak to mają w zwyczaju) podniecają się pierścieniami, alefami zero, koniunkcyjnymi postaciami normalnymi formuły zdaniowej i innymi ciekawymi zagadnieniami matematyki teoretycznej, nazywając informatyków „matematykami inaczej” i cienkimi bolkami.
+                                Jest jedynym znanym stworzeniem, które potrafi rozwiązać twój problem, o którym nie miałeś pojęcia, że istnieje, w sposób którego absolutnie nie zrozumiesz. Sam Bartłomiej uważa siebie za matematyka, a matematycy (jak to mają w zwyczaju) podniecają się pierścieniami, alefami zero, koniunkcyjnymi postaciami normalnymi formuły zdaniowej i innymi ciekawymi zagadnieniami matematyki teoretycznej, nazywając informatyków „matematykami inaczej” i cienkimi bolkami. Kocha marte
                             </RevealPRight>
                         }
                     </WhenInView>
@@ -98,8 +98,8 @@ export default class Home extends Component {
                     <WhenInView>
                         {({ isInView }) =>
                             <RevealPLeft hide={!isInView}>
-                                Najczęściej analitykami zostają informatycy. Niektórzy mówią, że radzą sobie oni w tym zawodzie najlepiej. Adam to osoba, która miała do czynienia z programowaniem, algorytmami, sieciami lepiej zrozumie co mówią do niej programiści. Kiedy mija wiele lat, a technologia rozwija się jak szalona, to analityk-informatyk, mimo, iż nie zna wszystkich języków programowania, środowisk programistycznych i mnożących się narzędzi wspierających wytwarzanie systemów, to jest w stanie zrozumieć stojące za nimi koncepcje. 
-                                Zbierając wymagania, potrafi sobie wyobrazić, czego programista potrzebuje do pracy. Krążął plotki, że sam kiedyś programował. Potrafi też tak mówić do programistów, żeby przetłumaczyć biznesowy bełkot :) A żargon programistów tłumaczy zafrasowanym ludziom „nietechnicznym” na polski.
+                                Najczęściej analitykami zostają informatycy. Niektórzy mówią, że radzą sobie oni w tym zawodzie najlepiej. Adam to osoba, która miała do czynienia z programowaniem, algorytmami, sieciami, lepiej zrozumie, co mówią do niej programiści. Kiedy mija wiele lat, a technologia rozwija się jak szalona, to analityk-informatyk, mimo iż nie zna wszystkich języków programowania, środowisk programistycznych i mnożących się narzędzi wspierających wytwarzanie systemów, to jest w stanie zrozumieć stojące za nimi koncepcje. 
+                                Zbierając wymagania, potrafi sobie wyobrazić, czego programista potrzebuje do pracy. Krążą plotki, że sam kiedyś programował. Potrafi też tak mówić do programistów, żeby przetłumaczyć biznesowy bełkot :) A żargon programistów tłumaczy zafrasowanym ludziom „nietechnicznym” na polski.
                             </RevealPLeft>
                         }
                     </WhenInView>

@@ -48,7 +48,7 @@ class NavbarComponent extends Component{
         let navbarContent = null;
         let items = null;
     
-        if(!this.props.isLogged){
+        if(this.props.isLogged){
             items = [
                 {id: 1, name: "Rejestracja", url: "/register"},
                 {id: 2, name: "Logowanie", url: "/logging"} 
@@ -82,15 +82,28 @@ class NavbarComponent extends Component{
     
                 navbarContent = (
                 <Aux>
-                    <div className="NavbarContainer">
                         <Searcher items={items}/>
-                        <Avatar />
-                        <Link to="/logged/usersettings">
-                            <i style={{fontSize: '32px', color: 'white'}} className='fa fa-cogs' />
-                        </Link>
-                        <NavbarButton name="Wyloguj" path="/" clicked={() => this.props.changeLoginState()}/>
                        
-                    </div>
+                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                            <DropdownToggle nav>
+                                <Avatar styles={{width: "5vw"}} class="rounded-circle z-depth-0"/>
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem>
+                                    <Link to="/logged/usersettings">
+                                        <i style={{marginRight: "10px"}} className='fa fa-cogs'/>
+                                            Ustawienia
+                                    </Link>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <Link to="/logged/posts">
+                                        Poczekalnia
+                                    </Link>
+                                </DropdownItem>
+                                <DropdownItem><i class="fa fa-sign-out"/><NavbarButton name="Wyloguj" path="/" clicked={() => this.props.changeLoginState()}/></DropdownItem>
+                            </DropdownMenu>
+                            </Dropdown>
+                    
                 </Aux>
                 );
             }
