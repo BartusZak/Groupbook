@@ -35,8 +35,11 @@ class RootContainer extends Component{
     render(){
         
         let IsLogged = null;
+        let IsLoggedMenuExpander = null;
+
         if(this.props.isLogged)
-        IsLogged = (
+        {
+            IsLogged = (
                 <Aux>
                     
                     <Route path="/logged/newpost" exact component={Addpost} />
@@ -44,17 +47,13 @@ class RootContainer extends Component{
                 </Aux>
             );
 
-        let IsLoggedMenuExpander = null;
-            if(this.props.isLoggedMenuExpander)
-            {
-                //wysuwanie menu po naciśnięciu (DO ZAIMPLEMENTOWANIA)+ dodać aktualizowanie stanu
-                IsLoggedMenuExpander = (
-                    <Aux>
-                        <i style={{marginLeft: "-4px"}} className="fa fa-angle-left" aria-hidden="true"></i>
-                    </Aux>
-                );
-            }
-            else {
+            IsLoggedMenuExpander = (
+                <Aux>
+                    <i style={{marginLeft: "-4px"}} className="fa fa-angle-left" aria-hidden="true"></i>
+                </Aux>
+            );
+        }
+        else {
                 //przewijanie strony do góry (DO ZAIMPLEMENTOWANIA) + dodać aktualizowanie stanu
                 IsLoggedMenuExpander = (
                     <Aux>
