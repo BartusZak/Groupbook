@@ -48,13 +48,14 @@ class NavbarComponent extends Component{
     render(){
         let navbarContent = null;
         let items = null;
-    
+        let homePageLink = "/";
+
         if(!this.props.isLogged){
             items = [
                 {id: 1, name: "Rejestracja", url: "/register"},
                 {id: 2, name: "Logowanie", url: "/logging"} 
             ];
-        
+
             navbarContent = (
                 <Aux>
                 <MenuUl>
@@ -80,7 +81,9 @@ class NavbarComponent extends Component{
             }
             else{
                 items = ["Grupa", "Post", "Użytkownik"];
-    
+                
+                homePageLink = "/logged";
+
                 navbarContent = (
                 <MenuAfterLogIn>
                     <Searcher items={items}/>
@@ -117,12 +120,12 @@ class NavbarComponent extends Component{
                     <Container className="ContainerStyles">
                         <NavbarBrandStyled className="navbar-brand">
                             <div className="smallLogo">
-                                <Link to="/" className="navIconLogo">
+                                <Link to={homePageLink} className="navIconLogo">
                                     <img src={logoIcon} alt="logo icon"/>
                                 </Link>
                             </div>
                             <div className="mainLogo">
-                                <Logo  anchorClass="navLogo" width="300"/>
+                                <Logo to={homePageLink} anchorClass="navLogo" width="300"/>
                                 <span className="logoSubtitle">Ludzie z pasją!</span>
                             </div>
                                 
