@@ -130,7 +130,6 @@ class Addpost extends Component{
             </Modal>
 
         </div>
-       
         );
     }
 }

@@ -18,7 +18,7 @@ import Carousel from '../../components/Carousel/Carousel';
 import Addpost from '../UserOptions/AddPost/Addpost';
 import UserSettings from '../UserOptions/UserSettings/UserSettings';
 import Posts from '../Posts/Posts';
-
+import Sidebar from '../../components/UI/SideMenu/SideMenu';
 import { RightMenuExpander } from './RootContainer.style.jsx';
 
 // @bartuszak Przykład użycia code snipping
