@@ -67,7 +67,8 @@ class Addpost extends Component{
             const ItemToAdd = {
                 groups: this.state.groupsToPublic,
                 postTitle: this.props.postTitleInput,
-                postContent: this.props.postContentArea
+                postContent: this.props.postContentArea,
+                addDate: new Date().toLocaleString()
             };
             secondAxios.post('/posts.json', ItemToAdd).then(response => {
                 this.setState({postShowError: false, postShowSpinner: false});

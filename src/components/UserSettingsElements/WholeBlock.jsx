@@ -12,7 +12,7 @@ const wholeBlock = (props) => {
                     <OptionBlock title="Wyglad" icon="fa fa-image" function="Zmien zdjecie profilowe" shortContent="Zmien swoje zdjecie profilowe, tak aby budzic respekt wsrod plci przeciwnej" />
                     <ul className="WholeBlock">
                         {props.wholeItems.map(item => {
-                        return <li key={item.id}> <b style={{fontWeight: 'initial', textAlign: 'left'}}>{item.name}</b> <b>{item + "jakies tam wartosci"}</b> <b className="Option">{item.option}</b></li>;
+                        return <li key={item.id}> <b style={{fontWeight: 'initial', textAlign: 'left'}}>{item.name}</b> <b>{item.value}</b> <b className="Option">{item.option}</b></li>;
                         })}
                     </ul>
                 </Aux>

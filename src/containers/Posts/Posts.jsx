@@ -17,6 +17,7 @@ class Posts extends Component{
     }
     componentDidMount(){
         this.props.initializePosts();
+   
     }
     ShowSideMenu = () => {
         this.setState({showSideMenu: true});
@@ -25,23 +26,32 @@ class Posts extends Component{
         this.setState({showSideMenu: false});
     }
     render(){
+        let Items = Object.keys(this.props.posts)
+        .map( igKey => {
+            return [...Array(this.props.posts[igKey])].map((item, i) => {
+                return <SinglePost key={igKey} id={i=i+1} 
+                description={item.postContent} 
+                postTitle={item.postTitle}
+                addDate={item.addDate}/>    
+            });
+        })
         let Content = null;
-        //console.log(this.props.posts);
+
         if(!this.props.postErrorLoading)
         {
             Content = ( this.props.spinner ? <Spinner /> :
                 <Aux>
-                     <SinglePost id={1} />
-                     <SinglePost id={2} />
-                     <SinglePost id={3} />
-                     <SinglePost id={4} />
+                    {Items}
                     <Button title="Następne" overRideClass="Carrot-button Pomangerate"/>
                 </Aux>
             );
         }
         else   
-            Content = this.props.spinner ? <Spinner /> : <h2>Wystąpił błąd podczas ładowania postu</h2>;
+            Content = this.props.spinner ? <Spinner /> : <h2>Wystąpił błąd podczas ładowania postów</h2>;
+        
        
+  
+      
         return(
             <main className="PostContainer">
                 <SideMenu IsDisplay={this.state.showSideMenu}>
