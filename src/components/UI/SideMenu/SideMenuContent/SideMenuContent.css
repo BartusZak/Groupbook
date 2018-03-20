@@ -1,3 +1,4 @@
+
 .side-menu-container{
     position: fixed;
     background:#292929;
@@ -69,3 +70,14 @@
 .fa-angle-left{
     z-index: 40;
 }
+
+@media(max-height: 800px){
+    .SideBarTitle{
+        font-size: 15px;
+        margin: 5px;
+    }
+    .messages-place-holder{
+        font-size: 13px;
+    }
+}
+
