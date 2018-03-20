@@ -70,7 +70,6 @@ class RootContainer extends Component{
             );
         }
         else {
-                //przewijanie strony do góry (DO ZAIMPLEMENTOWANIA) + dodać aktualizowanie stanu
                 IsLoggedMenuExpander = (
                     <Aux>
                         <i onClick={() => this.ControlViewPortHandler()} className="fa fa-angle-up" aria-hidden="true"></i>
