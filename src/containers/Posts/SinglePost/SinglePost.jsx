@@ -10,10 +10,10 @@ const singlePost = (props) => (
             </div>
             <div className="InformationContainer"v>
                 <b>Tomasz Protesiuk <br/><span style={{color: 'red'}}>(Jaro1994)</span></b>
+                <i className="fa fa-comment"><b className="comments-number">10</b></i>
                 <span className="PostAddDate">
                     2016-12-12 16:45
-                </span>
-                <i className="fa fa-comment"><b className="comments-number">10</b></i>
+                </span>           
             </div>
             <div className="PostDescription">
                 <span>Opis postu jaki zostal dodany wczesniej no i tegn tego</span>
