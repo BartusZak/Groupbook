@@ -1,21 +1,18 @@
 import React from 'react';
 import './Checkboxes/Checkboxes';
-import './Searcher.css';
 import Checkboxes from './Checkboxes/Checkboxes';
-import NavbarButton from '../NavbarButton/NavbarButton';
 import Input from './Input/Input';
 import 'font-awesome/css/font-awesome.min.css';
+import {SearcherDiv} from './Searcher.style';
 
 const searcher = (props) => {
     return(
-        <div className="Searcher">
-            <Checkboxes items={props.items}/>
-            <div className="ForJustifyContent">
+        <SearcherDiv>
+            <div className="InputContent">
                 <Input />
             </div>
-            
-           
-        </div>
+            <Checkboxes items={props.items}/>
+        </SearcherDiv>
     );
 }
 

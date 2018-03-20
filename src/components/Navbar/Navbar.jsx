@@ -19,7 +19,8 @@ import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLi
 import {
     NavbarBrandStyled,
     SocialUl,
-    MenuUl
+    MenuUl,
+    MenuAfterLogIn
 } from './Navbar.style';
 
 class NavbarComponent extends Component{
@@ -48,7 +49,7 @@ class NavbarComponent extends Component{
         let navbarContent = null;
         let items = null;
     
-        if(this.props.isLogged){
+        if(!this.props.isLogged){
             items = [
                 {id: 1, name: "Rejestracja", url: "/register"},
                 {id: 2, name: "Logowanie", url: "/logging"} 
@@ -81,30 +82,34 @@ class NavbarComponent extends Component{
                 items = ["Grupa", "Post", "Użytkownik"];
     
                 navbarContent = (
-                <Aux>
-                        <Searcher items={items}/>
-                       
-                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                            <DropdownToggle nav>
-                                <Avatar styles={{width: "5vw"}} class="rounded-circle z-depth-0"/>
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem>
-                                    <Link to="/logged/usersettings">
-                                        <i style={{marginRight: "10px"}} className='fa fa-cogs'/>
-                                            Ustawienia
-                                    </Link>
-                                </DropdownItem>
-                                <DropdownItem>
-                                    <Link to="/logged/posts">
-                                        Poczekalnia
-                                    </Link>
-                                </DropdownItem>
-                                <DropdownItem><i class="fa fa-sign-out"/><NavbarButton name="Wyloguj" path="/" clicked={() => this.props.changeLoginState()}/></DropdownItem>
-                            </DropdownMenu>
+                <MenuAfterLogIn>
+                    <Searcher items={items}/>
+
+                    <ul className="navbar-nav ml-auto nav-flex-icons">
+                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                                <DropdownToggle nav>
+                                    <Avatar styles={{height: "11vh"}} class="rounded-circle z-depth-0"/>
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem>
+                                        <Link to="/logged/usersettings">
+                                            <i style={{marginRight: "10px"}} className='fa fa-cogs' aria-hidden="true"/>
+                                                Ustawienia
+                                        </Link>
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <Link to="/logged/posts">
+                                        <i style={{marginRight: "10px"}} className="fa fa-clock-o" aria-hidden="true"></i>
+                                                Poczekalnia
+                                        </Link>
+                                    </DropdownItem>
+                                    <DropdownItem><i className="fa fa-sign-out" aria-hidden="true"/><NavbarButton name="Wyloguj" path="/" clicked={() => this.props.changeLoginState()}/></DropdownItem>
+                                </DropdownMenu>
                             </Dropdown>
+                    </ul>
+                       
                     
-                </Aux>
+                </MenuAfterLogIn>
                 );
             }
             return(
