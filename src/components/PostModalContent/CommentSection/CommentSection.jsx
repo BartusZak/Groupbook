@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import './CommentSection.css';
+import { connect } from 'react-redux'; 
 
-const commentSection = (props) => {
-    const comments = props.comments;
-    return(
+class CommentSection extends Component{
+    state = {
+        comments: this.props.comments
+    }
+    render(){
+        
+        
+        return(
         <ul className="CommentSection">
-           {comments.map(item => {
+           {this.state.comments.map(item => {
                return (
-               <li key={item.addDate}>
+               <li key={item.addDate+item.author}>
                   <span className="CommentInfo">
                     <b>{item.author}</b>
                     <b>{item.addDate}</b>
@@ -19,7 +25,9 @@ const commentSection = (props) => {
                );
            })}
         </ul>
-    );
+        );
+    }
 }
 
-export default commentSection;
+
+export default CommentSection;
