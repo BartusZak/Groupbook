@@ -2,11 +2,14 @@ import styled from 'styled-components';
 import media from 'theme/media';
 
 export const PostsDiv = styled.div`
+    width: 50%;
+
     ${media.desktop`
         order: 2;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
     `}
 `;
 

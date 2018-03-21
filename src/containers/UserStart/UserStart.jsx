@@ -85,6 +85,7 @@ class UserStart extends Component {
     
     render(){
         let posts = this.state.isLoading ? <Spinner /> : <PostShortcut 
+        // let posts = this.state.isLoading ? null : <Spinner />
         data={this.state.data} 
         error={this.state.error}
         clicked={this.generateNextData}/>;

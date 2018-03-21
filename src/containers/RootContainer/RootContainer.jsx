@@ -63,14 +63,23 @@ class RootContainer extends Component{
                 </Aux>
             );
 
-            IsLoggedMenuExpander = (
-                <Aux>
-                    <i onClick={() => this.ClickOnSideMenuHandler()} style={{marginLeft: "-4px"}} className="fa fa-angle-left" aria-hidden="true"></i>
-                </Aux>
-            );
+            if(!this.state.showSideMenu)
+            {
+                IsLoggedMenuExpander = (
+                    <Aux>
+                        <i onClick={() => this.ClickOnSideMenuHandler()} style={{marginLeft: "-4px"}} className="fa fa-angle-left" aria-hidden="true"></i>
+                    </Aux>
+                );
+            }else {
+                IsLoggedMenuExpander = (
+                    <Aux>
+                        <i onClick={() => this.ClickOnSideMenuHandler()} className="fa fa-angle-right" aria-hidden="true"></i>
+                    </Aux>
+                );
+            }
+            
         }
         else {
-                //przewijanie strony do góry (DO ZAIMPLEMENTOWANIA) + dodać aktualizowanie stanu
                 IsLoggedMenuExpander = (
                     <Aux>
                         <i onClick={() => this.ControlViewPortHandler()} className="fa fa-angle-up" aria-hidden="true"></i>

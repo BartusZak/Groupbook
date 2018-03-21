@@ -1,5 +1,5 @@
 import React from 'react';
-import './Button.css';
+import { Button } from './Button.style';
 import { Link } from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
 
@@ -15,21 +15,21 @@ const button = (props) => {
 
     if(props.url === undefined){
         btn = (
-            <button 
+            <Button 
                 onClick={props.clicked} 
                 className={classes}>
                 {props.title}
-            </button>
+            </Button>
         );
     }
     else{
         btn = (
             <Link to={props.url}>
-                <button 
+                <Button 
                     onClick={props.clicked} 
                     className={classes}>
                     {props.title}
-                </button>
+                </Button>
              </Link> 
         );
     }

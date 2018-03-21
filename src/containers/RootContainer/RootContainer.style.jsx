@@ -12,4 +12,10 @@ export const RightMenuExpander = styled.div`
     height: 32px;
     justify-content: center;
     color: white;
+
+    i {
+        &:hover {
+            text-shadow: 1px 1px 20px white;
+        }
+    }
 `;
