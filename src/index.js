@@ -11,7 +11,6 @@ import userOptionsReducer from './containers/UserOptions/Store/reducer';
 import  { Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import './theme/globalStyle'; //globalne style css 
-
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';

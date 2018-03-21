@@ -13,7 +13,9 @@ const initialState = {
 
     comments: [],
     commentsSpinner: false,
-    commentsErrorLoading: false
+    commentsErrorLoading: false,
+    newComment: null,
+    addingCommentError: false
 
 
 }
@@ -45,6 +47,9 @@ const reducer = (state = initialState, action) => {
         break;
         case actionTypes.CHANGING_COMMENTS_SPINNER:
             return updateObject(state, {commentsSpinner: action.isLoading})
+        break;
+        case actionTypes.ADD_COMMENT:
+            return updateObject(state, {newComment: action.newComment})
         break;
         
     

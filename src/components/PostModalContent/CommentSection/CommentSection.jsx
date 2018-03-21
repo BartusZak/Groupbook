@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './CommentSection.css';
-
 
 const commentSection = (props) => {
     const comments = props.comments;
@@ -8,13 +7,13 @@ const commentSection = (props) => {
         <ul className="CommentSection">
            {comments.map(item => {
                return (
-               <li key={item.id}>
+               <li key={item.addDate}>
                   <span className="CommentInfo">
-                    <b>{item.email}</b>
-                    <b>19-12-2015 16:45</b>
+                    <b>{item.author}</b>
+                    <b>{item.addDate}</b>
                   </span>
                   <span className="CommentBody">
-                    {item.body}
+                    {item.content}
                   </span>
                </li>
                );

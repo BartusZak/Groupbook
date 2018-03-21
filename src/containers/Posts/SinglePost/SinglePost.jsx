@@ -4,7 +4,7 @@ import Image from '../../../assets/img/memeExample/meme.png';
 import 'font-awesome/css/font-awesome.min.css';
 import Comments from '../../../components/PostModalContent/CommentSection/CommentSection';
 import { connect } from 'react-redux';
-import { fetchingComments } from '../../UserOptions/Store/actions';
+import { fetchingComments, updateComments } from '../../UserOptions/Store/actions';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import CommentSection from '../../../components/PostModalContent/CommentSection/CommentSection';
 
@@ -12,16 +12,15 @@ import CommentSection from '../../../components/PostModalContent/CommentSection/
 class SinglePost extends Component {
     state = {
             showComments: false,
-            id: this.props.id
+            id: this.props.id,
+            commentValue: ""
     }
     showCommentsHandler = () => { 
         let result = null;
         this.setState({showComments: !this.state.showComments});
         this.props.initializeComments(this.state.id, this.props.comments);  
-  
     }
-
-s
+    onChangeHandler = (event) => { this.setState({...this.state, commentValue: event.target.value}) };
     render(){
         let Comments = null;
         if(this.props.commentsErrorLoading)
@@ -54,10 +53,10 @@ s
                     </div>
                 </div>
                 <div className="ComentSection">
-                    <p className="CommentOptions"> Sekcja komentarzy</p>
-                    <textarea placeholder="Dodaj komentarz">
+                    <p className="CommentOptions"> Sekcja komentarzy </p>
+                    <textarea onChange={(event) => this.onChangeHandler(event)} value={this.state.commentValue} placeholder="Dodaj komentarz">
                     </textarea>
-                    <i onClick={this.props.addComment} class="fa fa-plus"></i> 
+                    <i onClick={() => this.props.updateComments(this.state.commentValue, this.state.id, this.props.author === "" ? "Anonim" : this.props.author)} class="fa fa-plus"></i> 
                     <i onClick={() => this.showCommentsHandler()} class="fa fa-reply-all"></i>
                 </div>
 
@@ -76,12 +75,15 @@ const mapStateToProps = state => {
     return {
         comments: state.userOptionsRed.comments,
         commentsSpinner: state.userOptionsRed.commentsSpinner,
-        commentsErrorLoading: state.userOptionsRed.commentsErrorLoading
+        commentsErrorLoading: state.userOptionsRed.commentsErrorLoading,
+        author: state.logRed.userName
+
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        initializeComments: (id, oldComments) => dispatch(fetchingComments(id, oldComments))
+        initializeComments: (id, oldComments) => dispatch(fetchingComments(id, oldComments)),
+        updateComments: (newComment, comments, author) => dispatch(updateComments(newComment, comments, author))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);

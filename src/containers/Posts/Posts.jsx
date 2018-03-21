@@ -13,15 +13,14 @@ import Backdrop from '../../components/UI/Backdrop/Backdrop';
 class Posts extends Component{
     componentDidMount(){
         this.props.initializePosts();
-   
     }
-    
-
     render(){
+  
+        let counter = 0;
         let Items = Object.keys(this.props.posts)
         .map( igKey => {
-            return [...Array(this.props.posts[igKey])].map((item, i) => {
-                return <SinglePost key={igKey} id={i=i+1} 
+            return [...Array(this.props.posts[igKey])].map((item) => {
+                return <SinglePost key={igKey} id={counter=counter+1} 
                 description={item.postContent} 
                 postTitle={item.postTitle}
                 addDate={item.addDate}
@@ -42,9 +41,7 @@ class Posts extends Component{
         else   
             Content = this.props.spinner ? <Spinner /> : <h2>Wystąpił błąd podczas ładowania postów</h2>;
         
-       
-  
-      
+    
         return(
             <main className="PostContainer">
                 <nav className="PostNavigate">
@@ -58,7 +55,7 @@ class Posts extends Component{
         );
     }
 }
-
+//Dodawanie komentarzy
 
 const mapStateToProps = state => {
     return {

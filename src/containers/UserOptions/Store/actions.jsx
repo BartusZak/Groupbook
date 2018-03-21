@@ -53,10 +53,8 @@ export const fetchingPosts = () => {
     }
 }
 
-
-
-
 export const loadComments = (comments) => {
+    
     return {
         type: actionsTypes.LOAD_COMMENTS,
         comments: comments
@@ -77,15 +75,52 @@ const changingCommentsSpinner = (value) => {
 }
 export const fetchingComments = (id) => {
     return dispatch => {
+        let Data = null;
+        let commentsToShow = [];
         dispatch(changingCommentsSpinner(true));
-        axiosRandom.get('/posts/' + id + '/comments').then(response => {
-            dispatch(loadComments(response.data));
+        let Response = null;
+        axios.get('/comments.json').then( response => {
+            Data = Object.keys(response.data).
+                map( igKey => {
+                    return response.data[igKey];
+                });
+         
+            const Result = Data.map(item => item.idOfPost);
+            for(let i = 0; i < Result.length; i++){
+                if(Result[i] === id)
+                    commentsToShow.push(Data[i]);
+            }
             dispatch(changingCommentsSpinner(false));
-           
+            dispatch(loadComments(commentsToShow));
         }).catch(error => {
             dispatch(fetchingCommentsError());
             dispatch(changingCommentsSpinner(false));
-        });
+        })
+      
     }
     
+}
+
+
+export const addComment = (newComment) => {
+    return {
+        type: actionsTypes.ADD_COMMENT,
+        newComment: newComment
+    };
+}
+export const updateComments = (newComment, id, author) => {
+    return dispatch => {
+        const objectsToSend = {
+            addDate: new Date().toLocaleString(),
+            idOfPost: id,
+            content: newComment,
+            author: author
+        }
+        axios.post('/comments.json', objectsToSend)
+        .then( response => {
+            dispatch(addComment(objectsToSend));
+            dispatch(fetchingComments(id));
+        }).catch( error => {
+        })
+    }
 }
