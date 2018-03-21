@@ -100,10 +100,10 @@ class Addpost extends Component{
         
         return (
         // <div className="Container">
-        <Row style={{ padding: "20px"}}>
+        <Row style={{ padding: "20px", height: "80vh"}}>
             <Col xs={12} md={12} lg={6}>
                 <SelectGroup>
-                    <h1 style={{marginBottom: '30px'}}>Wybierz grupę docelową</h1>
+                    <h2 style={{marginBottom: '30px'}}>Wybierz grupę docelową</h2>
                     <div className="Buttons">
                         <div className="selectAllIcons" onClick={() => this.addAllGroups()} title="Wybierz wszystko">
                             <i className="fa fa-square"            style={{position: "absolute", top: "0px", left: "0px"}}/>
@@ -125,7 +125,7 @@ class Addpost extends Component{
                     <button onClick={this.publishPost} disabled={DisablingButton} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
                 </SelectGroup>
             </Col>
-            <Col xs={12} md={12} lg={6}>
+            <Col className="SpaceForDesktop" xs={12} md={12} lg={6}>
                 <MainForm>
                     <h2 style={{marginBottom: '30px'}}>Dodaj zdjęcie i wypełnij pola</h2>
                     <input maxLength="100" value={this.props.postTitleInput} onChange={ (event) => this.props.changeTitleInput(event.target.value) } type="text" placeholder="Tytuł"/>
@@ -133,7 +133,9 @@ class Addpost extends Component{
                     <textarea maxLength="500" value={this.props.postContentArea} onChange={(event) => this.props.changeContentInput(event.target.value)} placeholder="Treść">
                     </textarea> 
                     {this.props.postContentArea.length < 5 ? <span style={{margin: "-10px 0 10px", display: "block", color: 'red'}}>{AddingPostsErrors[1].msg}</span>: ""}
-                    <input className="AddPhotoInput" type="file" />
+                    <label className="btn btn-success">
+                        Dodaj zdjęcie<input type="file" hidden/>
+                    </label>
                 </MainForm>
              </Col>
             <Modal show={this.state.showModal} clickedMethod={this.hideModal}>

@@ -6,6 +6,7 @@ export const SelectGroup = styled.div`
     box-shadow: 1px 2px 3px gray;
     text-align: center; 
     padding: 20px 40px;
+    height: 100%;
 
     .Buttons{
         font-size: 25px;
@@ -41,8 +42,6 @@ export const SelectGroup = styled.div`
         }
     }
 
-
-
     .AddPostButton{
         background-color: #f44336;
         border: none;
@@ -62,7 +61,6 @@ export const SelectGroup = styled.div`
                 background-color: #9E9E9E;
             }
         }   
-
     }
 
     .PlaceForGroupItems{
@@ -71,6 +69,12 @@ export const SelectGroup = styled.div`
         list-style: none;
         font-size: 20px;
         margin: 15px 0;
+        height: 300px;
+        padding: 0;
+
+        h3 {
+            margin-top: 80px;
+        }
 
         .GroupItem{
             cursor: pointer;
@@ -81,6 +85,7 @@ export const SelectGroup = styled.div`
             padding: 5px;
             box-sizing: border-box;
             align-items: center;
+            text-align: left;
 
             &:hover{
                 background-color: wheat;
@@ -97,8 +102,33 @@ export const SelectGroup = styled.div`
                 }
             }
         }
-
     }
+
+    ${media.giant`
+        h2 {
+            font-size: 1.5rem;
+        }
+    `}
+
+    ${media.desktop`
+    margin: 50px;
+    `}
+
+    ${media.tablet`
+    margin: 20px;
+
+    .Buttons {
+        font-size: 20px;
+    }
+    `}
+
+    ${media.phone`
+    margin: 5px;
+
+    .Buttons {
+        font-size: 15px;
+    }
+    `}
 
 `;
 
@@ -107,4 +137,42 @@ export const MainForm = styled.div`
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     height: 100%;
+
+    textarea,
+    input{
+        outline: 0;
+        background: #f2f2f2;
+        width: 100%;
+        border: 0;
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    textarea {
+        height: 200px;
+    }
+
+    ${media.giant`
+        h2 {
+            font-size: 1.5rem;
+        }
+        span {
+            font-size: 13px;
+        }
+    `}
+
+    ${media.desktop`
+    margin: 50px;
+    `}
+
+    ${media.tablet`
+    margin: 20px;
+    `}
+
+    ${media.phone`
+    margin: 5px;
+    `}
+
 `;
