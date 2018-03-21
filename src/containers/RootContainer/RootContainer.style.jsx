@@ -12,6 +12,7 @@ export const RightMenuExpander = styled.div`
     height: 32px;
     justify-content: center;
     color: white;
+    z-index: 9999;
 
     i {
         &:hover {
