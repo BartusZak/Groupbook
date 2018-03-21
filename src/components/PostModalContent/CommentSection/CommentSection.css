@@ -30,6 +30,7 @@
     box-sizing: border-box;
 }
 
+
 @media (max-width: 650px){
     .CommentInfo{
         font-size: 14px;

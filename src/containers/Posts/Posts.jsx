@@ -20,7 +20,7 @@ class Posts extends Component{
         let Items = Object.keys(this.props.posts)
         .map( igKey => {
             return [...Array(this.props.posts[igKey])].map((item) => {
-                return <SinglePost key={igKey} id={counter=counter+1} 
+                return <SinglePost key={igKey+3} id={counter=counter+1} 
                 description={item.postContent} 
                 postTitle={item.postTitle}
                 addDate={item.addDate}

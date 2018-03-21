@@ -41,15 +41,13 @@
     flex-flow: column;
     padding: 25px 0;
     box-sizing: border-box;
+    position: relative;
     
 }
 .CommentOptions{
     width: 100%;
 }
 
-.ComentSection{
-    position: relative;
-}
 .ComentSection textarea{
     font-style: inherit;
     font-size: 16px;
@@ -60,6 +58,7 @@
     width: 95%;
     border-radius: 15px;
     outline: none;
+   
 }
 .ComentSection textarea:focus { border-color: green; }
 
@@ -76,8 +75,9 @@
     color: red; 
 }
 
+
 @media (min-width: 1301px){
-    .ComentSection textarea{
+    .ComentSection textarea, .progressBar{
         width: 70%;
     }
     .ComentSection .fa-plus{
@@ -138,7 +138,7 @@
 }
 
 @media (max-width: 1100px){
-    .ComentSection textarea{
+    .ComentSection textarea, .progressBar{
         width: 70%;
         height: initial;
     }

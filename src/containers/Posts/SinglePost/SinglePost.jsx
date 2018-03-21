@@ -26,23 +26,26 @@ class SinglePost extends Component {
         if(this.props.commentsErrorLoading)
             Comments = <h4>Wystąpił błąd podczas wczytywania komentarzy</h4>;
         else
-            Comments = this.state.showComments ? this.props.commentsSpinner ? <Spinner /> : <CommentSection comments={this.props.comments}/> : null;
-
+            Comments = this.state.showComments ? this.props.commentsSpinner ? <Spinner /> : this.props.comments.length > 0 ? 
+            <CommentSection comments={this.props.comments}/> : 
+            <h4 style={{marginTop: '20px'}}>Brak komentarzy pod postem</h4> : null;
+    
 
      
         return (
             <div className="SinglePost">
-            <h4 className="PostHeaders">Nagłówek postu</h4>
+            <h5 className="PostHeaders">{this.props.postTitle}</h5>
             <div className="PostSubHeader">
                 <div className="Tags">
-                    <span>{this.props.postTitle}</span>
+                    <span>#Problem #Inicjatywa</span>
                 </div>
-                <div className="InformationContainer"v>
-                    <b>Tomasz Protesiuk <br/><span style={{color: 'red'}}>({this.props.userName})</span></b>
-                    <i className="fa fa-comment"><b className="comments-number">10</b></i>
+                <div className="InformationContainer">
+                    <b>{this.props.name === undefined ? null : this.props.name}<span style={{color: 'red'}}>{this.props.userName === undefined ? "Anonim" : this.props.userName}</span></b>
+                    
                     <span className="PostAddDate">
-                        {this.props.addDate ? this.props.addDate : "19-12-2016 16:45"}
-                    </span>           
+                        {this.props.addDate ? this.props.addDate.replace('AM' || 'PM', "") : "19-12-2016 16:45"}
+                    </span> 
+                    <i className="fa fa-comment"><b className="comments-number">10</b></i>          
                 </div>
                 <div className="PostDescription">
                     <span>{this.props.description}</span>
@@ -58,6 +61,8 @@ class SinglePost extends Component {
                     </textarea>
                     <i onClick={() => this.props.updateComments(this.state.commentValue, this.state.id, this.props.author === "" ? "Anonim" : this.props.author)} class="fa fa-plus"></i> 
                     <i onClick={() => this.showCommentsHandler()} class="fa fa-reply-all"></i>
+                    
+
                 </div>
 
                 {Comments}
