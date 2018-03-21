@@ -3,29 +3,26 @@
     z-index: 1;
     background: #FFFFFF;
     margin: 0 auto;
-    padding: 45px;
-    text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
 }
+.MainForm input[type="file"]{
+    background: unset;
+}
+
+.MainForm textarea,
 .MainForm input{
     font-family: "Roboto", sans-serif;
     outline: 0;
     background: #f2f2f2;
     width: 100%;
     border: 0;
-    margin: 0 0 15px;
     padding: 15px;
     box-sizing: border-box;
     font-size: 16px;
+    margin-bottom: 15px;
 }
 .MainForm textarea{
-    width: 100%;
-    box-sizing: border-box;
-    border: 0;
-    outline: 0;
-    padding: 10px;
     height: 50%;
-    font-size: 24px;
 }
 .MainForm button {
     font-family: "Roboto", sans-serif;

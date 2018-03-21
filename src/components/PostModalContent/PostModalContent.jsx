@@ -1,6 +1,8 @@
 import React from 'react';
 import './PostModalContent.css';
 import Meme from '../../assets/img/memeExample/meme.png';
+
+import { ImgDiv } from './PostModalContent.style';
 const postModalContent = (props) => {
     return(
         <article className="ModalPost">
@@ -14,7 +16,10 @@ const postModalContent = (props) => {
                     <h5>Nazwa grupy </h5>
                     {props.content}
                 </span>
-                <img src={Meme} alt="Meme"></img>
+                <ImgDiv>
+                    <img src={Meme} alt="Meme"></img>
+                </ImgDiv>
+                
             </div>
          
         </article>

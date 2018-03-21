@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import CenterComponent from '../../CenterComponent/CenterComponent';
-import './Addpost.css';
 import Aux from '../../../hoc/Auxi';
 import axios from '../../../axios-post';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -10,11 +8,13 @@ import GroupList from '../../../components/UI/GroupList/GroupList';
 import { connect } from 'react-redux';
 import { changingPostTitle, changingPostContent, redirectingToTrue} from '../Store/actions';
 import secondAxios from '../../../axios-firebase';
-import '../../../components/Form/FormStyles.css';
 import { AddingPostsErrors } from '../../../components/NamesForForms/Names';
-import { ValidationBubble } from './Form.style';
 import AddPostAfterSend from './AddPostAfterSend/AddPostAfterSend';
 import {withRouter} from "react-router-dom";
+
+import { Row, Col } from 'react-bootstrap';
+
+import { SelectGroup, MainForm } from './AddPost.style';
 
 class Addpost extends Component{
     state = {
@@ -99,37 +99,52 @@ class Addpost extends Component{
         this.state.postShowSpinner ? <Aux><h2>Trwa dodawanie postu...</h2><Spinner /></Aux> : <AddPostAfterSend error={false} title="Post został dodany" backToAdding={() => this.goBackAndClear()} goToPostPage={() => this.goToPostPage()}/>;
         
         return (
-        <div className="Container">
-             <div className="SelectGroupPlace">
-                <h1 style={{marginBottom: '30px'}}>Wybierz grupę docelową</h1>
-                <div className="Buttons">
-                    <i onClick={() => this.addAllGroups()} className="fa fa-paw"></i>
-                    <i className="fa fa-history" onClick={() => this.generatingGroups()}></i>
-                    <i className={this.state.numberOfAdded === 0 ? "Numbers EmptyNumber" : "Numbers"}>+{this.state.numberOfAdded}</i>
-                    <i onClick={this.openOrCloseModal} className="fa fa-columns"></i>
-                </div>
-                <ul className="PlaceForGroupItems">
-                    {GroupItems}
-                </ul>
-                <button onClick={this.publishPost} disabled={DisablingButton} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
-             </div>
-             <div className="MainForm" style={{width: '45%'}}>
-                    <h1 style={{marginBottom: '30px'}}>Dodaj zdjęcie i wypełnij pola</h1>
-                    <input maxLength="100" value={this.props.postTitleInput} onChange={ (event) => this.props.changeTitleInput(event.target.value) } type="text" placeholder="Dodaj tytuł postu... (minimalnie 5 znaków)"/>
-                    {this.props.postTitleInput.length < 5 ? <ValidationBubble><span>{AddingPostsErrors[0].msg}</span></ValidationBubble>: ""}
-                    <textarea maxLength="500" value={this.props.postContentArea} onChange={(event) => this.props.changeContentInput(event.target.value)} placeholder="Dodaj treść postu... (minimalnie 5 znaków)">
+        // <div className="Container">
+        <Row style={{ padding: "20px"}}>
+            <Col xs={12} md={12} lg={6}>
+                <SelectGroup>
+                    <h1 style={{marginBottom: '30px'}}>Wybierz grupę docelową</h1>
+                    <div className="Buttons">
+                        <div className="selectAllIcons" onClick={() => this.addAllGroups()} title="Wybierz wszystko">
+                            <i className="fa fa-square"            style={{position: "absolute", top: "0px", left: "0px"}}/>
+                            <i className="fa fa-square fa-inverse" style={{position: "absolute", top: "2px", left: "2px"}}/>
+                            <i className="fa fa-check-square"      style={{position: "absolute", top: "3px", left: "3px"}}/>
+                        </div>
+                        <div className="unSelectAllIcons" onClick={() => this.generatingGroups()} title="Odznacz wszystko">
+                            <i className="fa fa-square"            style={{position: "absolute", top: "0px", left: "0px"}}/>
+                            <i className="fa fa-square fa-inverse" style={{position: "absolute", top: "2px", left: "2px"}}/>
+                            <i className="fa fa-check-square"      style={{position: "absolute", top: "3px", left: "3px"}}/>
+                            <i className="fa fa-square"            style={{position: "absolute", top: "3px", left: "3px"}}/>
+                        </div>
+                        <span className={this.state.numberOfAdded === 0 ? "Numbers EmptyNumber" : "Numbers"}>+{this.state.numberOfAdded}</span>
+                        <i onClick={this.openOrCloseModal} className="fa fa-info-circle" title="Dodane grupy"></i>
+                    </div>
+                    <ul className="PlaceForGroupItems">
+                        {GroupItems}
+                    </ul>
+                    <button onClick={this.publishPost} disabled={DisablingButton} className="AddPostButton" style={{position: 'initial'}}>Opublikuj</button>
+                </SelectGroup>
+            </Col>
+            <Col xs={12} md={12} lg={6}>
+                <MainForm>
+                    <h2 style={{marginBottom: '30px'}}>Dodaj zdjęcie i wypełnij pola</h2>
+                    <input maxLength="100" value={this.props.postTitleInput} onChange={ (event) => this.props.changeTitleInput(event.target.value) } type="text" placeholder="Tytuł"/>
+                    {this.props.postTitleInput.length < 5 ? <span style={{margin: "-10px 0 10px", display: "block", color: 'red'}}>{AddingPostsErrors[0].msg}</span>: ""}
+                    <textarea maxLength="500" value={this.props.postContentArea} onChange={(event) => this.props.changeContentInput(event.target.value)} placeholder="Treść">
                     </textarea> 
-                    {this.props.postContentArea.length < 5 ? <ValidationBubble><span>{AddingPostsErrors[1].msg}</span></ValidationBubble>: ""}
+                    {this.props.postContentArea.length < 5 ? <span style={{margin: "-10px 0 10px", display: "block", color: 'red'}}>{AddingPostsErrors[1].msg}</span>: ""}
                     <input className="AddPhotoInput" type="file" />
-             </div>
+                </MainForm>
+             </Col>
             <Modal show={this.state.showModal} clickedMethod={this.hideModal}>
                 {modalContent}
             </Modal>
             <Modal show={this.props.isRedirecting} clickedMethod={(!this.state.postShowSpinner || this.state.postShowError) ? this.goBackAndClear : null}>
                 {afterPublishContent}
             </Modal>
-
-        </div>
+        
+        </Row>
+        // </div>
         );
     }
 }

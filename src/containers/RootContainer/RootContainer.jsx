@@ -58,7 +58,7 @@ class RootContainer extends Component{
             IsLogged = (
                 <Aux>
                     
-                    <Route path="/logged/newpost" exact component={Addpost} />
+                    
                     <Route path="/logged/usersettings" exact component={UserSettings} />
                 </Aux>
             );
@@ -111,6 +111,7 @@ class RootContainer extends Component{
                         <Route path="/carousel" component={Carousel}/>
                       
                         <Route path="/logged/posts" exact component={Posts} />
+                        <Route path="/logged/newpost" exact component={Addpost} />
                         {IsLogged}
 
                         
