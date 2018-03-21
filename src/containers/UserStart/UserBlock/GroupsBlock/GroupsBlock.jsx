@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-
+import { GroupsBlockDiv } from './GroupsBlock.style.jsx';
 class GroupsBlock extends Component {
     render(){
-      
-
+    
         return(
-            <div className="MessagesBlock">
+            <GroupsBlockDiv>
                 <b>Grupy, do których należysz</b>
                 <hr />
-            </div>
+            </GroupsBlockDiv>
         );
     }
 }

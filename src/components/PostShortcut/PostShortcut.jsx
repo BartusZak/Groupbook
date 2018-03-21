@@ -111,7 +111,7 @@ class PostShortcut extends Component{
                 commentSection = this.state.showCommentsSpinner ? <Spinner /> : !this.state.commentsSectionShow ? null : <CommentSection comments={this.state.comments} />;
             }
         }
-
+        console.log(this.state.comments);
         const CommentsButton = ( this.state.commentsSectionShow ? <p className="Information" onClick={this.hideComments}>Schowaj komentarze</p> :
         <p className="Information" onClick={this.showCommentSectionClickHandler}>Kliknij, aby wyświetlić komentarze </p>);  
         

@@ -7,19 +7,17 @@ class CommentSection extends Component{
         comments: this.props.comments
     }
     render(){
-        
-        
         return(
         <ul className="CommentSection">
            {this.state.comments.map(item => {
                return (
                <li key={item.addDate+item.author}>
                   <span className="CommentInfo">
-                    <b>{item.author}</b>
-                    <b>{item.addDate}</b>
+                    <b>{item.author === undefined ? item.email : item.author }</b>
+                    <b>{item.addDate === undefined ? "19-12-2016 16:45" : item.addDate }</b>
                   </span>
                   <span className="CommentBody">
-                    {item.content}
+                    {item.content === undefined ? item.body : item.content}
                   </span>
                </li>
                );
