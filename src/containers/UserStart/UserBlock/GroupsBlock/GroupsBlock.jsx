@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
-import { GroupsBlockDiv } from './GroupsBlock.style.jsx';
+import { GroupBlockDiv } from './Group.style';
+
+import 'font-awesome/css/font-awesome.min.css';
+import Group from './Group/Group';
 class GroupsBlock extends Component {
+    state = {
+        animation: false
+    }
+    iniciateAnimationHandler = () => {this.setState({animation: !this.state.animation})}
     render(){
-    
         return(
-            <GroupsBlockDiv>
-                <b>Grupy, do których należysz</b>
-                <hr />
-            </GroupsBlockDiv>
+            <GroupBlockDiv>
+                <div className="main-cont">
+                    <p><span>Twoje grupy</span><span className="new-group"><i onClick={() => this.iniciateAnimationHandler()} class="fa fa-info-circle"></i>Nowa grupa</span></p>
+                    <Group animation={this.state.animation}/>
+                </div> 
+               
+            </GroupBlockDiv>
         );
     }
 }

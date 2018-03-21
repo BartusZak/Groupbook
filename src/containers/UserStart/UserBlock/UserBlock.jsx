@@ -8,7 +8,7 @@ import Aux from 'hoc/Auxi';
 class UserBlock extends Component {
     state = {
         isShowMessages: false,
-        isShowGroups: false,
+        isShowGroups: true,
         isShowMyPosts: false
     }
 
