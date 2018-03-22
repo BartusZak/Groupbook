@@ -4,10 +4,11 @@
     list-style: none;
     text-align: justify;
     width: 100%;
-    margin-top: 40px 0 0 0;
+    margin: 40px 0 0 0;
     padding: 20px;
     box-sizing: border-box;
-    height: 350px;
+    max-height: 350px;
+
 }
 .CommentInfo {
     display: flex;
@@ -28,6 +29,11 @@
     margin-top: 5px;
     padding: 5px !important; 
     box-sizing: border-box;
+}
+
+
+@media(min-width:  992px){
+    .CommentSection{ max-height: 700px; }
 }
 
 

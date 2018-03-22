@@ -4,6 +4,9 @@ import { MessagesBlockDiv } from './MessagesBlock.style';
 import axios from '../../../../axios-post';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Message from './Message/Message';
+import Modal from '../../../../components/UI/Modal/Modal';
+import OpenedMessage from './OpenedMessage/OpenedMessage';
+
 class MessagesBlock extends Component {
     state = {
         data: [],
@@ -13,7 +16,9 @@ class MessagesBlock extends Component {
         end: 15,
         downSpinnerIsLoading: false,
         scrollStartPoint: 300,
-        stopScrollPoint: 0
+        stopScrollPoint: 0,
+
+        showMessages: false
     }
     componentDidMount(){
         this.takingMessagesFromTheServerAtStart(this.state.start, this.state.end);
@@ -55,6 +60,8 @@ class MessagesBlock extends Component {
         
     }
 
+    showHideMessageOnClickHandler = () => { this.setState({showMessages: !this.state.showMessages}); }
+
     render() {
         let Messages =  this.state.isLoading ? <Spinner /> : this.state.data.map(item => {
             return <Message 
@@ -73,7 +80,7 @@ class MessagesBlock extends Component {
             <MessagesBlockDiv>
                 <div className="MessagesButtons">
                     <b style={{fontSize: '16px'}}>Twoje wiadomości</b>
-                    <span>Nowa wiadomość</span>
+                    <span onClick={this.showHideMessageOnClickHandler}>Nowa wiadomość</span>
                    
                 </div>
                
@@ -81,7 +88,9 @@ class MessagesBlock extends Component {
                     {this.state.downSpinnerIsLoading ? <Spinner /> : Messages}
                 </div>
                 
-               
+                <Modal width={window.innerWidth > 1100 ? "50%" : "90%"} left={window.innerWidth > 1100 ? "20%" : ""} heightPosition="10%" show={this.state.showMessages} clickedMethod={this.showHideMessageOnClickHandler}>
+                    dsadads
+                </Modal>
             </MessagesBlockDiv>
         );
     }
