@@ -1,45 +1,146 @@
 .ModalPost{
-    display: flex;
-    flex-flow: column;
-}
-
-.InformationsAboutPost{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 10px;
-  
-}
-.InformationsAboutPost span{
-    font-weight: bold;
-    font-size: 15px;
-}
-.InformationsAboutPost h4{
-    text-align: justify;
-    width: 50%;
-}
-
-.ModalPostContent{
-    text-align: justify;
-    width: 100%;
-    padding: 0px 30px;
-    box-sizing: border-box;
     font-size: 17px;
-    display: flex;
 }
-.ModalPostContent span{
-    width: 42%;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-flow: column;
-    align-content: flex-start
+.modal-date-title{
+    font-size: 18px;
 }
-.ModalPostContent h5{
+.modal-title{
+    font-size: 20px;
+}
+.name-group{
+    font-size: 18px;
+}
+
+.Information{
+    font-size: 16px;
+}
+
+.ModalPost{
     text-align: center;
-    margin: 20px 0 40px 0;
+    width: 100%;
+ 
 }
-.ModalPostContent img{
-    width: 55%;
-    height: 45%;
+.modal-date-title{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+ 
+}
+
+.modal-user{
+    color: red;
+}
+.modal-date{
+    color: orange;
+}
+.modal-content{
+    text-align: justify;
+    border: none !important;
+    outline: none;
+}
+.image-holder1{
+    margin: 5px auto;
+    width: 400px;
+    height: 400px;
+}
+.image-holder1 img {
+    width: 400px;
+    height: 400px;
+}
+
+.Information{
+    margin-top: 5px;
+    color: orangered;
+    cursor: pointer;
+}
+
+
+@media(min-width: 992px){
+    .Article{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .p-comments-holder{
+        width: 55%;
+       
+    }
+    .ModalPost{
+        font-size: 17px;
+       
+        width: 45%;
+    }
+    .modal-title{
+        font-size: 22px;
+    }
+    .name-group{
+        font-size: 20px;
+    }
+    .image-holder1{
+        width: 100%;
+        height: 100%;
+    }
+    .image-holder1 img{
+        width: 100%;
+        height: 100%;
+    }
+    .Information{
+        font-size: 1.3rem;
+    }
+}
+@media (max-width: 768px){
+    .ModalPost{
+        font-size: 17px;
+    }
+    .modal-date-title{
+        font-size: 18px;
+    }
+    .modal-title{
+        font-size: 20px;
+    }
+    .name-group{
+        font-size: 18px;
+    }
+    .image-holder1{
+        width: 380px;
+        height: 380px;;
+    }
+    .image-holder1 img{
+        width: 380px;
+        height: 380px;
+    }
+    .Information{
+        font-size: 13px;
+    
+    }
+}
+
+
+
+
+@media (max-width: 576px){
+    .ModalPost{
+        font-size: 14px;
+    }
+    .modal-date-title{
+        font-size: 16px;
+    }
+    .modal-title{
+        font-size: 18px;
+    }
+    .name-group{
+        font-size: 17px;
+    }
+    .image-holder1{
+        width: 240px;
+        height: 240px;
+    }
+    .image-holder1 img{
+        width: 240px;
+        height: 240px;
+    }
+    .Information{
+        font-size: 13px;
+    
+    }
 }

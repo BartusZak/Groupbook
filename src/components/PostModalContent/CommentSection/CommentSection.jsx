@@ -6,9 +6,11 @@ class CommentSection extends Component{
     state = {
         comments: this.props.comments
     }
+    
     render(){
+
         return(
-        <ul className="CommentSection">
+        <ul className="CommentSection" style={{height: this.props.specialHeight}}>
            {this.state.comments.map(item => {
                return (
                <li key={item.addDate+item.author}>

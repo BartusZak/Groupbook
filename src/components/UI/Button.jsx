@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
 
 const button = (props) => {
-    console.log(props.overRideClass);
     let classes = null;
     let btn = null;
     if(props.overRideClass === undefined){
