@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from './Button.style';
+import { ButtonDiv } from './Button.style';
+import { Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Aux from '../../hoc/Auxi';
 
@@ -14,7 +15,7 @@ const button = (props) => {
 
     if(props.url === undefined){
         btn = (
-            <Button 
+            <Button color={props.color}
                 onClick={props.clicked} 
                 className={classes}>
                 {props.title}
@@ -24,7 +25,7 @@ const button = (props) => {
     else{
         btn = (
             <Link to={props.url}>
-                <Button 
+                <Button color={props.color}
                     onClick={props.clicked} 
                     className={classes}>
                     {props.title}

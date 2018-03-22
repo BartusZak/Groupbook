@@ -84,7 +84,7 @@ class Form extends Component {
                     type={item.type}
                     />
                 })}
-                <Button
+                <Button color="dark-green"
                     clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
                     title={this.props.buttonTitle}
                     url={this.props.isLogged ? "/logged" : undefined}

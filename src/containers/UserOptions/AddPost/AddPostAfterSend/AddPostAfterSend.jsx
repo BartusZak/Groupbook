@@ -7,15 +7,15 @@ const AddPostAfterSend = (props) => {
     if(props.error)
         Content = (
              <Aux>
-                <Button title="Prześlij ponownie" overRideClass="Carrot-button Pomangerate" clicked={props.SendAgain} />
-                <Button title="Cofnij" overRideClass="Carrot-button" clicked={props.backToAdding}/>
-                <Button title="Przejdź do poczekalni" overRideClass="Carrot-button Oranged" clicked={props.goToPostPage} />
+                <Button title="Prześlij ponownie" clicked={props.SendAgain} />
+                <Button color="info" title="Cofnij" clicked={props.backToAdding}/>
+                <Button title="Przejdź do poczekalni" clicked={props.goToPostPage} />
              </Aux> );
     else
         Content = (
             <Aux>
-                <Button title="Cofnij" overRideClass="Carrot-button" clicked={props.backToAdding}/>
-                <Button title="Przejdź do poczekalni" overRideClass="Carrot-button Oranged" clicked={props.goToPostPage} />
+                <Button color="info" title="Cofnij" clicked={props.backToAdding}/>
+                <Button title="Przejdź do poczekalni"  clicked={props.goToPostPage} />
             </Aux> );
     return (
         <div className="AddPost-flex">

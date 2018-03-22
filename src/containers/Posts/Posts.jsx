@@ -34,7 +34,7 @@ class Posts extends Component{
             Content = ( this.props.spinner ? <Spinner /> :
                 <Aux>
                     {Items}
-                    <Button title="Następne" overRideClass="Carrot-button Pomangerate"/>
+                    <Button color="elegant" title="Następne" overRideClass="Carrot-button Pomangerate"/>
                 </Aux>
             );
         }
