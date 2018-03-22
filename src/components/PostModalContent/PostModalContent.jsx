@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Meme from '../../assets/img/memeExample/meme.png';
-<<<<<<< HEAD
 import Spinner from '../UI/Spinner/Spinner';
 import './PostModalContent.css';
 import Aux from '../../hoc/Auxi';
@@ -15,30 +14,6 @@ class PostModalContent extends Component {
     showComments = () => {
         this.setState({showComments: !this.state.showComments, comments: this.props.initializeComments(1, this.props.comments)});
        
-=======
-
-import { ImgDiv } from './PostModalContent.style';
-const postModalContent = (props) => {
-    return(
-        <article className="ModalPost">
-            <div className="InformationsAboutPost">
-                <h4>{props.name}</h4>
-                <span style={{color: 'red'}}>{props.author}</span>
-                <span style={{color: 'orange'}}>{props.addDate}</span>
-            </div>
-            <div className="ModalPostContent">
-                <span>
-                    <h5>Nazwa grupy </h5>
-                    {props.content}
-                </span>
-                <ImgDiv>
-                    <img src={Meme} alt="Meme"></img>
-                </ImgDiv>
-                
-            </div>
-         
-        </article>
->>>>>>> a5f63bfa1509e22f32526d2d5f0887d650dd11a7
 
     }
     render(){
@@ -51,7 +26,6 @@ const postModalContent = (props) => {
         }
        
         return(
-       
                 <article className="Article">
                     <div className="ModalPost">
                         <div className="InformationsAboutPost">
@@ -75,8 +49,7 @@ const postModalContent = (props) => {
                     <div className="p-comments-holder">
                         <p onClick={this.showComments} className="Information">{this.state.showComments ? "Schowaj sekcję komentarzy" : "Kliknij, aby wyświetlić komentarze"}</p>
                         {Comments}
-                    </div>
-                    
+                    </div> 
             </article>
     
          
