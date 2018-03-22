@@ -76,7 +76,7 @@ class PostShortcut extends Component{
         else{
             postShortcut = (
                 <Aux>   
-                       <Button title="Dodaj post" class="margins" url="/logged/newpost"/>
+                       <Button color="dark-green" title="Dodaj post" class="margins" url="/logged/newpost"/>
                         {requestData.map(item => {
                             return <SmallPost 
                             author={item.id} 
@@ -85,7 +85,7 @@ class PostShortcut extends Component{
                             image={Facet}
                             clicked={(id) => this.showModal(item.id)} />;
                         })}
-                        <Button title="Następne" clicked={this.props.clicked}/>
+                        <Button color="elegant" title="Następne" clicked={this.props.clicked}/>
                 </Aux>
             );
         }
