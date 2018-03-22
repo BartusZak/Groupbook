@@ -1,4 +1,5 @@
 import {injectGlobal} from 'styled-components';
+import media from './media';
 
 /* eslint-disable */
 injectGlobal `
@@ -24,5 +25,11 @@ injectGlobal `
             transition: background 0.2s, color 0.4s;
         }
     }
+
+    ${media.desktop`
+        .SpaceForDesktop {
+            padding-top: 20px;
+        }
+        `}
 
 `;
