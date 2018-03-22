@@ -9,7 +9,7 @@ class UserBlock extends Component {
     state = {
         isShowMessages: false,
         isShowGroups: false,
-        isShowMyPosts: false
+        isShowMyPosts: true
     }
 
     changeShowMessages = () => {
