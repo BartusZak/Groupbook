@@ -26,7 +26,6 @@ class PostModalContent extends Component {
         }
        
         return(
-       
                 <article className="Article">
                     <div className="ModalPost">
                         <div className="InformationsAboutPost">
@@ -50,8 +49,7 @@ class PostModalContent extends Component {
                     <div className="p-comments-holder">
                         <p onClick={this.showComments} className="Information">{this.state.showComments ? "Schowaj sekcję komentarzy" : "Kliknij, aby wyświetlić komentarze"}</p>
                         {Comments}
-                    </div>
-                    
+                    </div> 
             </article>
     
          
