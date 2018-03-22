@@ -59,8 +59,8 @@ class SinglePost extends Component {
                     <p className="CommentOptions"> Sekcja komentarzy </p>
                     <textarea onChange={(event) => this.onChangeHandler(event)} value={this.state.commentValue} placeholder="Dodaj komentarz">
                     </textarea>
-                    <i onClick={() => this.props.updateComments(this.state.commentValue, this.state.id, this.props.author === "" ? "Anonim" : this.props.author)} class="fa fa-plus"></i> 
-                    <i onClick={() => this.showCommentsHandler()} class="fa fa-reply-all"></i>
+                    <i onClick={() => this.props.updateComments(this.state.commentValue, this.state.id, this.props.author === "" ? "Anonim" : this.props.author)} className="fa fa-plus"></i> 
+                    <i onClick={() => this.showCommentsHandler()} className="fa fa-reply-all"></i>
                     
 
                 </div>

@@ -5,7 +5,7 @@ const optionBlock = (props) => (
     <div className="OptionBlock">
             <h5>{props.title}</h5>
             <div>
-                <i class={props.icon}></i>
+                <i className={props.icon}></i>
                 <div className="Informations">
                     <p>{props.function}</p>
                     <b style={{fontWeight: 'initial'}}>{props.shortContent}</b>
