@@ -3,7 +3,7 @@ import media from 'theme/media';
 
 export const ModalDiv = styled.div`
 
-    position: absolute;
+    position: fixed;
     z-index: 500;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px black;
