@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import media from 'theme/media';
 
 export const ModalDiv = styled.div`
-
-    position: fixed;
+    position: absolute;
     z-index: 500;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px black;
@@ -11,6 +10,7 @@ export const ModalDiv = styled.div`
     padding: 10px 30px;
     margin: auto 5%;
     width: 90%;
+    top: 1%;
     min-height: 80%;
     left: 0;
     box-sizing: border-box;

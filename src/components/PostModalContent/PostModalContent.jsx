@@ -22,7 +22,7 @@ class PostModalContent extends Component {
             if(this.props.commentsErrorLoading)
                 Comments = <p>Wystąpił błąd podczas ładowania komentarzy</p>;
             else
-                Comments = this.props.commentsSpinner ? <Spinner /> : <CommentSection specialHeight={this.state.showComments ? "90%" : "initial"} comments={this.state.comments}/>
+                Comments = this.props.commentsSpinner ? <Spinner /> : <CommentSection comments={this.state.comments}/>
         }
        
         return(
