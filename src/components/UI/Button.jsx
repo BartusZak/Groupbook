@@ -1,5 +1,4 @@
 import React from 'react';
-import { ButtonDiv } from './Button.style';
 import { Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Aux from '../../hoc/Auxi';

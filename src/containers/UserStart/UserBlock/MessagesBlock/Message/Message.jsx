@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Message.css';
-const message = (props) => {
-    let contentIsToLength = props.content;
-    if(props.content.length > 60){
-        contentIsToLength = "Skorzystaj z komunikatora,aby porozmawiać :)";
+import Modal from '../../../../../components/UI/Modal/Modal';
+import OpenedMessage from '../OpenedMessage/OpenedMessage';
+class Message extends Component{
+    state = {
+        showMessages: false
     }
 
-    return (
-        <div className="Message">
-            <div className="AuthorAndDate">
-                <b>{props.author}</b>
-                <i>{props.date}</i> 
-                
+    showCommentsHandler = () => { this.setState({showMessages: !this.state.showMessages}); }
+    render(){
+        let contentIsToLength = this.props.content;
+        if(this.props.content.length > 60){
+            contentIsToLength = "Skorzystaj z komunikatora,aby porozmawiać :)";
+        }
+    
+        return (
+            <div className="Message">
+                <div className="AuthorAndDate">
+                    <b>{this.props.author}</b>
+                    <i>{this.props.date}</i> 
+                    
+                </div>
+               
+                <div className="MessageContent"  onClick={this.showCommentsHandler}>{contentIsToLength}</div>
+                   
+                <Modal width={window.innerWidth > 1100 ? "50%" : "90%"} left={window.innerWidth > 1100 ? "20%" : ""} heightPosition="10%" show={this.state.showMessages} clickedMethod={this.showCommentsHandler}>
+                    <OpenedMessage author={this.props.author}/>
+                </Modal>
             </div>
-           
-            <div className="MessageContent">{contentIsToLength}</div>
-
-        </div>
-    );
+        );
+    }
 }
 
-export default message;
+
+
+export default Message;

@@ -1,3 +1,38 @@
 .OpenedMessage{
-    
+    display: flex;
+    flex-flow: column;
+    height: 350px;
+    justify-content: space-around;
 }
+.message-holder{
+    display: flex;
+    flex-flow: column;   
+}
+.message-input-label{
+    font-size: 15px;
+    font-weight: bolder;
+}
+.message-who-textbox{
+    box-shadow: 0 1px 2px grey;
+    font-size: 11px;
+    padding: 10px;
+}
+.message-textarea{
+    box-shadow: 0 1px 2px grey;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 10px;
+    resize: none;
+    height: 100px;
+}
+
+@media(min-width: 450px){
+    .message-textarea, .message-who-textbox{
+        font-size: 15px;
+    }
+    .message-input-label{ 
+        font-size: 21px;
+    }
+  
+}
+
