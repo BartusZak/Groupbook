@@ -99,8 +99,7 @@ class PostShortcut extends Component{
             name={this.state.data.title}
             content={this.state.data.body}
             addDate="19-12-2016 16:45"
-            author="JohnTorpeda2014"
-            ShowingCommentSection={this.showCommentSectionClickHandler} />
+            author="JohnTorpeda2014"/>
              );
         }
         if(this.state.isCommentsWasShowBefore){
@@ -111,16 +110,17 @@ class PostShortcut extends Component{
                 commentSection = this.state.showCommentsSpinner ? <Spinner /> : !this.state.commentsSectionShow ? null : <CommentSection comments={this.state.comments} />;
             }
         }
-        console.log(this.state.comments);
+       /*
         const CommentsButton = ( this.state.commentsSectionShow ? <p className="Information" onClick={this.hideComments}>Schowaj komentarze</p> :
         <p className="Information" onClick={this.showCommentSectionClickHandler}>Kliknij, aby wyświetlić komentarze </p>);  
-        
+        {CommentsButton}
+        */
+     
          return(   
             <Aux>
                 <Modal 
                     show={this.state.isModalShow} clickedMethod={this.hideModal}>
                     {postModalContent}
-                    {CommentsButton}
                     {commentSection}
                         
                 </Modal>

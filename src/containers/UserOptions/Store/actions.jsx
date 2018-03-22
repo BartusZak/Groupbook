@@ -96,6 +96,7 @@ export const fetchingComments = (id) => {
             dispatch(fetchingCommentsError());
             dispatch(changingCommentsSpinner(false));
         })
+        return commentsToShow;
       
     }
     
