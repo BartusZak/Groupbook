@@ -28,6 +28,7 @@
 .CommentBody{
     margin-top: 5px;
     padding: 5px !important; 
+  
     box-sizing: border-box;
 }
 
@@ -40,5 +41,23 @@
 @media (max-width: 650px){
     .CommentInfo{
         font-size: 14px;
+    }
+}
+@media (max-width: 576px){
+    .CommentInfo{
+        font-size: 11px;
+    }
+    .CommentBody{
+        font-size: 10px;
+        text-align: justify;
+        padding: 0 10px !important;
+        margin-top: 0;
+        
+       
+    }
+    .CommentSection li{
+        margin-top: 10px;
+        border: 1px solid grey;
+        padding: 0 !important;
     }
 }

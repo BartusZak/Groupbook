@@ -81,7 +81,7 @@ class MessagesBlock extends Component {
         return(
             <MessagesBlockDiv>
                 <div className="MessagesButtons">
-                    <b style={{fontSize: '16px'}}>Twoje wiadomości</b>
+                    <b>Twoje wiadomości</b>
                     <span onClick={this.showHideMessageOnClickHandler}>Nowa wiadomość</span>
                    
                 </div>

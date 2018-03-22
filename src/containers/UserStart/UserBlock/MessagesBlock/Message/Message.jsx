@@ -16,7 +16,7 @@ class Message extends Component{
     
         return (
             <div className="Message">
-                <div className="AuthorAndDate">
+                <div className="AuthorAndDate" onClick={this.showCommentsHandler}>
                     <b>{this.props.author}</b>
                     <i>{this.props.date}</i> 
                     

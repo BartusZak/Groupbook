@@ -17,6 +17,7 @@ export const PostBlockDiv = styled.div`
     font-weight: bolder;
     border-bottom: 1px solid grey;
 }
+
 .main-post-title-cont{
     box-shadow: 0 2px 3px grey;
     margin-bottom: 20px;
@@ -60,6 +61,7 @@ export const PostBlockDiv = styled.div`
 
 .main-post-date{
     font-size: 14px;
+    text-align: center;
 }
 
 .post-title{
@@ -75,6 +77,8 @@ export const PostBlockDiv = styled.div`
        
    
 }
+@media(max-width: 500px){
 
+}
 
 `;

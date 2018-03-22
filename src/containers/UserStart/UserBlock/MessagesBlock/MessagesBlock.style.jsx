@@ -4,10 +4,9 @@ import media from 'theme/media';
 export const MessagesBlockDiv = styled.div`
 
     width: 96%;
-    padding: 2%;
     height: 420px;
     box-shadow: 0 2px 3px grey;
-    margin: 0 10px;
+    margin: 0 auto;
     -webkit-transition: height 2s; /* For Safari 3.1 to 6.0 */
     transition: height 2s;
 
@@ -43,6 +42,12 @@ export const MessagesBlockDiv = styled.div`
         overflow-y: scroll;
     }
 
-    .Message
+    
+    @media(max-width: 500px){
+        .MessagesButtons b{
+            font-size: 15px;
+        }
+    
+    }
 
 `;

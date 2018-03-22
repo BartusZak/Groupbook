@@ -6,7 +6,7 @@ export const GroupBlockDiv = styled.div`
 .main-cont{
     margin: 0 auto;
     width: 96.5%;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
     box-shadow: 0 2px 3px grey;
 }
@@ -124,10 +124,12 @@ export const GroupBlockDiv = styled.div`
 }
 
 
-@media(max-width: 600px){
-    .group-op{ font-size: 12px; }
-    .group-title{ font-size: 14px; }
-    .group-additional-info span:first-child{ font-size: 12px; }
+@media(max-width: 500px){
+    .group-op{ font-size: 10px; }
+    .group-title{ font-size: 12px; }
+    .group-additional-info span:first-child{ font-size: 10px;
+    padding: 5px; }
+   
 }
 
 `;

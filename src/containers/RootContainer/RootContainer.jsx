@@ -58,8 +58,10 @@ class RootContainer extends Component{
             IsLogged = (
                 <Aux>
                     
-                    
+                    <Route path="/logged" exact component={UserStart} />
                     <Route path="/logged/usersettings" exact component={UserSettings} />
+                    <Route path="/logged/posts" exact component={Posts} />
+                    <Route path="/logged/newpost" exact component={Addpost} />
                 </Aux>
             );
 
@@ -106,12 +108,11 @@ class RootContainer extends Component{
                         <Route exact path='/register' render={() => (
                             <Register />
                         )}/>
-                        <Route path="/logged" exact component={UserStart} />
+                    
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
                       
-                        <Route path="/logged/posts" exact component={Posts} />
-                        <Route path="/logged/newpost" exact component={Addpost} />
+                        
                         {IsLogged}
 
                         

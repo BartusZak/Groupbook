@@ -142,3 +142,29 @@
     
     }
 }
+@media (max-width: 576px){
+    .ModalPost{
+        font-size: 11px;
+    }
+    .modal-date-title{
+        font-size: 12px;
+    }
+    .modal-title{
+        font-size: 14px;
+    }
+    .name-group{
+        font-size: 13px;
+    }
+    .image-holder1{
+        width: 200px;
+        height: 200px;
+    }
+    .image-holder1 img{
+        width: 200px;
+        height: 200px;
+    }
+    .Information{
+        font-size: 12px;
+    
+    }
+}
