@@ -8,9 +8,10 @@ const singleEvent = (props) => {
             <div className="single-event">
                 <div className="single-image-placeholder">
                     <img src={avocado} alt="" />
-                         
+                  
                 </div>
                 <div className="event-desc-holder">
+                    
                     <span className="event-status">
                         Nowe
                     </span>
@@ -24,7 +25,7 @@ const singleEvent = (props) => {
                 <span className="event-date">
                     Pażdziernik 2017 16:56
                 </span>  
-                <span className="load-more-tag">Załaduj więcej</span>
+                <span className="load-more-tag">Weż udział</span>
             </div>
        
            

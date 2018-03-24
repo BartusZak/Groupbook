@@ -4,14 +4,17 @@ import Button from '../../components/UI/Button';
 import Back from '../../assets/img/groupimages/back.jpg';
 import './Group.css';
 import EventsBar from '../../components/EventsBar/EventsBar';
+import GroupPostShortcut from '../../components/Groups/GroupPostShortcut/GroupPostShortcut';
 class Group extends Component{
     render(){
         return(
             <div className="background-container">
+                
+                <GroupPostShortcut />
                 <div className="group-container">
-                    <p className="group-title">Niekompetetni programiści</p>
+                    <p className="group-title-full">Niekompetetni programiści </p>
                     <nav style={{backgroundImage: `url(${Back})`}} className="navigation-bar">
-                    
+                        <span className="group-owner">Należysz <i class="fa fa-check"></i></span>
                     </nav>
                     <div className="navigate">
                         <div className="group-nav-left">
@@ -33,9 +36,11 @@ class Group extends Component{
                         <EventsBar />
                     </div>
                     <div className="btn-container">
-                        <Button title="Następne" color="elegant" margin="initial auto"/>
+                        <Button title="Następne" color="dark-green" margin="initial auto"/>
                     </div>
                 </div>
+                
+               
             </div>
             
         );

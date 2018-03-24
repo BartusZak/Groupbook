@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Image from '../../../../assets/img/404/404.jpg';
 import { PostBlockDiv } from './PostBlockStyle';
+import { Link } from 'react-router-dom';
 class PostsBlock extends Component {
     render(){
         return(

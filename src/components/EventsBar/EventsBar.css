@@ -2,7 +2,7 @@
     background-color: #23232d;
     color: white;
     box-sizing: border-box;
-    margin-bottom: 30px;
+    margin: 30px 0 30px 0;
     width: 100%;
 }
 .events-header{
@@ -15,6 +15,7 @@
     .events-bar{
         width: 165px;
         position: relative;
+       
     }
     .events-header{
         position: absolute;
