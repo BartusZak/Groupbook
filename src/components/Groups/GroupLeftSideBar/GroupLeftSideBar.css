@@ -1,13 +1,19 @@
-
 .left-group-block{
     background-color: #2c2c36;
     color: white;
     height: 100%;
-    position: absolute;
-    top: 150px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     left: 0;
+}
+.absolute-class{
+    top: 150px;
+    position: absolute;
+}
+.fixed-class{
+    position: fixed;
+    top: 0;
+    
 }
 .left-trash-container{
     display: block;

@@ -1,7 +1,4 @@
-.background-container{ 
-    background-color: #23232d; 
-
-}
+.background-container{ background-color: #23232d; }
 .group-container, .navigation-bar, .navigate, .group-nav-right, .group-nav-left, .groups-events-container{  
     display: flex;
 }
