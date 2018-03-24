@@ -4,12 +4,23 @@
     list-style: none;
     text-align: justify;
     width: 100%;
-    margin: 40px 0 0 0;
     padding: 20px;
     box-sizing: border-box;
     max-height: 350px;
-
 }
+
+.add-comment-area textarea { 
+    width: 100%;
+    resize: none;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    height: 110px;
+    
+}
+
+    
+
 .CommentInfo {
     display: flex;
     justify-content: space-between;
@@ -17,6 +28,25 @@
     margin: 0 auto 10px auto !important;
     padding: auto !important;
 }
+.CommentSection li:first-child{ border: none; }
+.add-comment-gr-button{
+   width: 150px;
+   font-size: 14px;
+   background-color: #3CAA50;
+   border: none;
+   height: 45px;
+   outline: none;
+   cursor: pointer;
+   color: white;
+   margin: 10px auto;
+   border-radius: 5px;
+}
+.add-comment-gr-button:hover { background-color: #4CAF50; }
+.add-comment-gr-button:focus{
+    outline: none;
+}
+
+
 .CommentSection li{
     margin-top: 30px;
     border: 2px solid grey;
@@ -28,16 +58,13 @@
 .CommentBody{
     margin-top: 5px;
     padding: 5px !important; 
-  
     box-sizing: border-box;
 }
 
 
-@media(min-width:  992px){
+@media(min-width: 992px){
     .CommentSection{ max-height: 700px; }
 }
-
-
 @media (max-width: 650px){
     .CommentInfo{
         font-size: 14px;
@@ -46,17 +73,18 @@
 @media (max-width: 576px){
     .CommentInfo{
         font-size: 11px;
+        padding-top: 10px;
     }
     .CommentBody{
-        font-size: 10px;
+        font-size: 12px;
         text-align: justify;
-        padding: 0 10px !important;
+        padding-bottom: 10px;
         margin-top: 0;
         
        
     }
     .CommentSection li{
-        margin-top: 10px;
+        margin-top: 5px;
         border: 1px solid grey;
         padding: 0 !important;
     }

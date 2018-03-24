@@ -8,7 +8,7 @@
 .group-container, .navigation-bar{
     flex-flow: column;
 }
-.group-container { background-color: #23232d; }
+.group-container { background-color: #23232d;  overflow: hidden;}
 .navigation-bar{
     background: no-repeat;
     background-size: cover;

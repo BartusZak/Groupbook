@@ -60,24 +60,16 @@ export const loadComments = (comments) => {
         comments: comments
     };
 }
-
-
 const fetchingCommentsError = () => {
     return {
         type: actionsTypes.FETCHING_COMMENTS_ERROR
     };
 }
-const changingCommentsSpinner = (value) => {
-    return {
-        type: actionsTypes.CHANGING_COMMENTS_SPINNER,
-        isLoading: value
-    };
-}
+
 export const fetchingComments = (id) => {
     return dispatch => {
         let Data = null;
         let commentsToShow = [];
-        dispatch(changingCommentsSpinner(true));
         let Response = null;
         axios.get('/comments.json').then( response => {
             Data = Object.keys(response.data).
@@ -90,14 +82,11 @@ export const fetchingComments = (id) => {
                 if(Result[i] === id)
                     commentsToShow.push(Data[i]);
             }
-            dispatch(changingCommentsSpinner(false));
             dispatch(loadComments(commentsToShow));
         }).catch(error => {
             dispatch(fetchingCommentsError());
-            dispatch(changingCommentsSpinner(false));
         })
         return commentsToShow;
-      
     }
     
 }

@@ -1,0 +1,132 @@
+.post-block-container{
+    color: white;
+    padding: 10px;
+    list-style: none;
+    margin: 0;
+    height: 50rem;
+}
+
+.post-block-container li { 
+   display: flex;
+   flex-flow: column;
+}
+.post-block-add-date { 
+    margin: 0;
+    text-align: right;
+    padding-right: 5px;
+} 
+.flex-cont{ display: flex; }
+.post-block-image-holder img{ border-radius: 50%; }
+.post-block-author{ margin: auto 0 auto 25px; }
+.post-block-title{ padding: 10px; margin: 0;}   
+.add-comment-button{ 
+    cursor: pointer;
+    color: green;
+    text-align: right;
+    margin: 0;
+}
+@media (min-width: 751px){
+    .post-two-elements-container{
+        display: flex;
+    }
+    .post-block-container{
+        width: 70%;
+    }
+    .post-block-image-holder{
+        width: 100px;
+        height: 100px;
+    }
+    .post-block-image-holder img{
+        width: 100px;
+        height: 100px;
+    }
+    .flex-cont { 
+        height: 110px;
+        padding: 10px;
+    }
+    .post-block-add-date{ font-size: 16px; }
+    .post-block-author{ font-size: 19px; }
+    .post-block-title{
+        padding: 20px 10px;
+        font-size: 24px;
+    }    
+    .add-comment-button {  
+        font-size: 21px;
+        margin-bottom: 15px;
+       
+    }
+    .post-block-container article{
+        padding: 15px;
+        font-size: 20px;
+    }
+}
+
+
+@media(max-width: 750px){
+    .post-two-elements-container{
+        display: inline-block;
+    }
+    .post-block-image-holder{
+        width: 60px;
+        height: 60px;
+    }
+    .post-block-image-holder img{
+        width: 60px;
+        height: 60px
+    }
+    .flex-cont { 
+        height: 80px;
+        padding: 10px;
+    }
+    .post-block-add-date{ font-size: 14px; }
+    .post-block-author{ font-size: 17px; }
+    .post-block-title{
+        padding: 10px;
+        font-size: 19px;
+    }    
+    .add-comment-button {  
+        font-size: 18px;
+        margin-bottom: 15px;
+       
+    }
+    .post-block-container article{
+        padding: 10px;
+        font-size: 16px;
+    }
+}
+
+
+@media(max-width: 550px){
+    .post-two-elements-container{
+        display: inline-block;
+    }
+    .post-block-image-holder{
+        width: 50px;
+        height: 50px;
+    }
+    .post-block-image-holder img{
+        width: 50px;
+        height: 50px;
+    }
+    .flex-cont { 
+        height: 70px;
+        padding: 10px;
+    }
+    .post-block-add-date{ font-size: 12px; }
+    .post-block-author{ font-size: 16px; }
+    .post-block-title{
+        padding: 10px;
+        font-size: 17px;
+    }    
+    .add-comment-button {  
+        font-size: 16px;
+        margin-bottom: 15px;
+       
+    }
+    .post-block-container article{
+        padding: 10px;
+        font-size: 13px;
+    }
+    
+    
+}

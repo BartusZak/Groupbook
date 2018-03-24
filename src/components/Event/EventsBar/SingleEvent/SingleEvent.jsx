@@ -1,7 +1,7 @@
 import React from 'react';
 import './SingleEvent.css';
-import avocado from '../../../assets/img/groupimages/avocado.jpg';
-import Aux from '../../../hoc/Auxi';
+import avocado from '../../../../assets/img/groupimages/avocado.jpg';
+import Aux from '../../../../hoc/Auxi';
 const singleEvent = (props) => {
     return(
         <Aux>

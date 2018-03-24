@@ -1,21 +1,19 @@
 import React from 'react';
-import './GroupPostShortcut.css';
+import './GroupLastAdded.css';
 import FacetStock from '../../../assets/img/profiles/facet.jpg';
-import GroupPostSingleItem from './GroupPostSingleItem/GroupPostSingleItem';
-const groupPostShortcut = (props) => {
+import GroupSingleLastAdded from './GroupPostSingleItem/GroupSingleLastAdded';
+const groupSingleLastAdded = (props) => {
         return(
             <div className="left-group-block">
                 <p className="left-group-recent-add">
                     Ostatnio dodani
                 </p>
-
-                
                 <ul className="left-group-last-add-block">
-                    <GroupPostSingleItem pic={FacetStock}/>
-                    <GroupPostSingleItem pic={FacetStock}/>
-                    <GroupPostSingleItem pic={FacetStock}/>
-                    <GroupPostSingleItem pic={FacetStock}/>
-                    <GroupPostSingleItem pic={FacetStock}/>
+                    <GroupSingleLastAdded pic={FacetStock}/>
+                    <GroupSingleLastAdded pic={FacetStock}/>
+                    <GroupSingleLastAdded pic={FacetStock}/>
+                    <GroupSingleLastAdded pic={FacetStock}/>
+                    <GroupSingleLastAdded pic={FacetStock}/>
                 </ul>
                 <div className="rotate-icon-users">
                     <i class="fa fa-fast-forward"></i>
@@ -26,4 +24,4 @@ const groupPostShortcut = (props) => {
         );
     }
 
-export default groupPostShortcut;
+export default groupSingleLastAdded;
