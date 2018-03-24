@@ -1,0 +1,37 @@
+.events-bar{
+    background-color: #23232d;
+    color: white;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    width: 100%;
+}
+.events-header{
+    border-bottom: 1px solid white;
+    font-weight: bold;
+    padding: 10px;
+}
+
+@media(min-width: 1201px){
+    .events-bar{
+        width: 165px;
+        position: relative;
+    }
+    .events-header{
+        position: absolute;
+        background-color: #23232d;
+        font-size: 15px;
+        text-align: center;
+    }
+}
+
+@media(max-width: 550px){
+    .events-bar{
+        padding: 5px;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    .events-header{
+        font-size: 15px;
+    }
+   
+}
