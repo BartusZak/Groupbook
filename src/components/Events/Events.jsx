@@ -13,6 +13,9 @@ const events = (props) => {
                 <EventsBar />
                 <EventsBar />
                 <EventsBar />
+                <EventsBar />
+                <EventsBar />
+             
             </div>
             <div className="btn-container">
                 <Button title="Następne" color="dark-green" margin="initial auto"/>

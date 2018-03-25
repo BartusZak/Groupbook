@@ -21,6 +21,19 @@ export const redirectingToTrue = (value) => {
         val: value
     };
 }
+
+
+export const changingSpinnerState = (result) => {
+    return {
+        type: actionsTypes.CHANGING_SPINNER_STATE,
+        isLoading: result
+    };
+}
+
+
+
+
+
 export const initializePosts = (posts) => {
     return {
         type: actionsTypes.LOADING_POSTS,
@@ -32,27 +45,17 @@ export const fetchingPostsFailed = () => {
         type: actionsTypes.FETCHING_POSTS_FAILED
     };
 }
-export const changingSpinnerState = (result) => {
-    return {
-        type: actionsTypes.CHANGING_SPINNER_STATE,
-        isLoading: result
-    };
-}
 export const fetchingPosts = () => {
     return dispatch => {
-        dispatch(changingSpinnerState(true));
         axios.get('/posts.json').then(response => {
             dispatch(initializePosts(response.data));
-            dispatch(changingSpinnerState(false));
         }).catch(error => {
             dispatch(fetchingPostsFailed());
-            dispatch(changingSpinnerState(false));
         });
 
        
     }
 }
-
 export const loadComments = (comments) => {
     
     return {
@@ -60,9 +63,10 @@ export const loadComments = (comments) => {
         comments: comments
     };
 }
-const fetchingCommentsError = () => {
+const fetchingCommentsError = (value) => {
     return {
-        type: actionsTypes.FETCHING_COMMENTS_ERROR
+        type: actionsTypes.FETCHING_COMMENTS_ERROR,
+        val: value
     };
 }
 
@@ -76,7 +80,6 @@ export const fetchingComments = (id) => {
                 map( igKey => {
                     return response.data[igKey];
                 });
-         
             const Result = Data.map(item => item.idOfPost);
             for(let i = 0; i < Result.length; i++){
                 if(Result[i] === id)
@@ -84,7 +87,7 @@ export const fetchingComments = (id) => {
             }
             dispatch(loadComments(commentsToShow));
         }).catch(error => {
-            dispatch(fetchingCommentsError());
+            dispatch(fetchingCommentsError(id));
         })
         return commentsToShow;
     }

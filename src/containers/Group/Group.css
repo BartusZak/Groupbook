@@ -5,7 +5,10 @@
 .group-container, .navigation-bar{
     flex-flow: column;
 }
-.group-container { background-color: #23232d;  overflow: hidden;}
+.group-container { 
+    background-color: #23232d;
+}
+
 .navigation-bar{
     background: no-repeat;
     background-size: cover;
@@ -66,6 +69,8 @@
         display: flex;
         width: 100%;
         justify-content: space-around;
+        flex-wrap: wrap;
+
  
     }
     .group-container{ 

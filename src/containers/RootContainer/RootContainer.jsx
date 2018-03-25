@@ -17,7 +17,6 @@ import Carousel from '../../components/Carousel/Carousel';
 
 import Addpost from '../UserOptions/AddPost/Addpost';
 import UserSettings from '../UserOptions/UserSettings/UserSettings';
-import Posts from '../Posts/Posts';
 import SideMenu from '../../components/UI/SideMenu/SideMenu';
 import SideMenuContent from '../../components/UI/SideMenu/SideMenuContent/SideMenuContent';
 import { RightMenuExpander } from './RootContainer.style.jsx';
@@ -62,7 +61,6 @@ class RootContainer extends Component{
                     <Route path="/logged" exact component={UserStart} />
                     
                     <Route path="/logged/usersettings" exact component={UserSettings} />
-                    <Route path="/logged/posts" exact component={Posts} />
                     <Route path="/logged/newpost" exact component={Addpost} />
                   
                 </Aux>
@@ -115,6 +113,7 @@ class RootContainer extends Component{
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
                         <Route path="/logged/newpost" exact component={Addpost} />
+                        
                         <Route path="/logged/group/:id" exact component={Group} />
                         
                         {IsLogged}

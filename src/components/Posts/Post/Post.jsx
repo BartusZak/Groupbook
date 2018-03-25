@@ -4,45 +4,65 @@ import { fetchingComments } from '../../../containers/UserOptions/Store/actions'
 import CommentSection from '../../../components/PostModalContent/CommentSection/CommentSection';
 import Image from '../../../assets/img/profiles/facet.jpg';
 import 'font-awesome/css/font-awesome.min.css';
+import Backdrop from '../../UI/Backdrop/Backdrop';
+import ImagePost from '../../../assets/img/404/404.jpg';
+// Pamietac, zeby potem tu wrocic i to poprawic - problem z erroramni od komentarzy
 class Post extends Component{
     state = {
         showComments: false,
         loadedComments: [],
+        showPicture: false,
         postId: this.props.postId
     }
+   
     showCommentsClickHandler = () => { 
-        this.setState({showComments: !this.state.showComments, showLoader: true});
-        if(this.state.loadedComments.length === 0 ) this.setState({loadedComments: this.props.fetchingComments(this.state.postId), showLoader: false});
+        const oldState = {
+            ...this.state
+        }
+        if(oldState.loadedComments.length === 0 ) {
+            oldState.loadedComments = this.props.fetchingComments(oldState.postId);
+            this.setState({loadedComments: oldState.loadedComments});
+        }  
+        this.setState({showComments: !oldState.showComments});
     }
-    render(){
-        const Comments = this.state.showComments ? 
-            <CommentSection comments={this.state.loadedComments} /> : null;
 
-        const Result = this.props.commentsErrorLoading ? <h5>Wystąpił błąd </h5> : Comments;
+    showPostPicture = () => { this.setState({showPicture: !this.state.showPicture}); }
+
+    render(){
+        const Content = this.state.showComments ? this.props.commentsErrorLoading ? 
+        <h5 className="loading-error-eessage">Wystąpił błąd podczas ładowania komentarzy</h5> : 
+        <CommentSection comments={this.state.loadedComments} /> : null;   
         return(
             <div className="post-two-elements-container">
                 <ul className="post-block-container">
                     <li>
-                        <p className="post-block-add-date">19 styczeń 2017</p>
+                        <p className="post-block-add-date">{this.props.addDate}</p>
                         <div className="flex-cont">
                             <div className="post-block-image-holder">
                                 <img src={Image} alt="Opis"/>
                             </div>
-                            <p className="post-block-author">Jenkins 1994</p>
+                            <p className="post-block-author">{this.props.userName}</p>
                         </div>    
-                        <p className="post-block-title">
-                                <span>Problem z mlodszym bratem</span> 
-                                <i class="fa fa-image"></i>
-                        </p>
-                        <article>
-                            dsad asd asdsadad asdsa asdasdsa dasdsad asdas asdsad dssadsa saadadsadsadsa
-                            dasdsadsadsadsa aasdsadsad adsad asdsad ssad ad asdsa ad
-                        </article>
-                        <p onClick={this.showCommentsClickHandler} className="add-comment-button">{this.state.showComments ? "Schowaj komentarze" : "Pokaż komentarze"}</p>
-                        {Result}
+                        <div className="post-block-title">
+                            <span>{this.props.postTitle}</span> 
+                            <i onClick={this.showPostPicture} className="fa fa-image"></i>
+                            
+                        </div>
+                        <article>{this.props.description}</article>
+                            
+                        
+                        <p onClick={this.showCommentsClickHandler} 
+                        className="add-comment-button">{  this.state.showComments ? "Schowaj komentarze" : "Pokaż komentarze"
+                        }</p>
+                        {Content}
                     
                     </li>
                 </ul>
+                <Backdrop show={this.state.showPicture} clicked={this.showPostPicture}>
+                    <div className="image-container" style={{display: this.state.showPicture ? 'initial' : 'none'}}>
+                        <img src={ImagePost} alt="" />
+                    </div>
+                </Backdrop>
                 
             </div>
         );

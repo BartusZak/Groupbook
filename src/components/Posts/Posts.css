@@ -2,10 +2,8 @@
     color: white;
     padding: 10px;
     list-style: none;
-    margin: 0;
-   
+    margin: 0;  
 }
-
 .post-block-container li { 
    display: flex;
    flex-flow: column;
@@ -24,19 +22,36 @@
      justify-content: space-between; 
      align-items: center;
 }   
-.post-block-title i{ cursor: pointer; font-size: 26px; }
-   
-
+.post-block-title i{ 
+    cursor: pointer;
+    font-size: 26px;
+}
+.image-container{ 
+      position: fixed;
+      display: none;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 10;
+      bottom: 0;
+}
 .add-comment-button{ 
     cursor: pointer;
-    color: green;
+    color: rgb(146, 197, 114);
     text-align: right;
     margin: 0;
 }
 
+.loading-error-eessage{
+    color: red;
+    text-align: center;
+}
+
+
 @media (min-width: 751px){
     .post-two-elements-container{ display: flex; }
-    .post-block-container{  width: 60%; }
+    .post-block-container{  width: 62%; }
     .post-block-image-holder{
         width: 70px;
         height: 70px;
@@ -60,7 +75,27 @@
         padding: 15px;
         font-size: 15px;
     }
+    .image-container{
+        width: 700px;
+        height: 600px;
+    }
+    .image-container img{
+        width: 700px;
+        height: 600px;
+    }
 }
+
+@media(min-width: 1100px){
+    .image-container{
+        width: 1000px;
+        height: 700px;
+    }
+    .image-container img{
+        width: 1000px;
+        height: 700px;
+    }
+}
+
 
 
 @media(max-width: 750px){
@@ -93,6 +128,14 @@
     .post-block-container article{
         padding: 10px;
         font-size: 16px;
+    }
+    .image-container{
+        width: 500px;
+        height: 400px;
+    }
+    .image-container img{
+        width: 500px;
+        height: 400px;
     }
 }
 
@@ -127,6 +170,15 @@
     .post-block-container article{
         padding: 10px;
         font-size: 13px;
+    }
+
+    .image-container{
+        width: 250px;
+        height: 250px;
+    }
+    .image-container img{
+        width: 250px;
+        height: 250px;
     }
     
     

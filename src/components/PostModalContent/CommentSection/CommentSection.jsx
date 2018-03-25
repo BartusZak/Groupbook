@@ -6,6 +6,7 @@ class CommentSection extends Component{
         comments: this.props.comments
     }
     render(){
+        
         return(
             <ul className="CommentSection">
                 <li className="add-comment-area">

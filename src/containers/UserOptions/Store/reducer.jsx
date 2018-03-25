@@ -12,7 +12,7 @@ const initialState = {
 
 
     comments: [],
-    commentsErrorLoading: false,
+    commentsErrorLoading: "",
     newComment: null,
     addingCommentError: false
 
@@ -44,7 +44,7 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, {comments: action.comments})
         break;
         case actionTypes.FETCHING_COMMENTS_ERROR:
-            return updateObject(state, {commentsErrorLoading: true})
+            return updateObject(state, {commentsErrorLoading: action.val})
         break;
         case actionTypes.ADD_COMMENT:
             return updateObject(state, {newComment: action.newComment})
