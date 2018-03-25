@@ -3,6 +3,7 @@
     padding: 10px;
     list-style: none;
     margin: 0;
+   
 }
 
 .post-block-container li { 
@@ -17,46 +18,47 @@
 .flex-cont{ display: flex; }
 .post-block-image-holder img{ border-radius: 50%; }
 .post-block-author{ margin: auto 0 auto 25px; }
-.post-block-title{ padding: 10px; margin: 0;}   
+.post-block-title{ padding: 10px;
+     margin: 0;
+     display: flex;
+     justify-content: space-between; 
+     align-items: center;
+}   
+.post-block-title i{ cursor: pointer; font-size: 26px; }
+   
+
 .add-comment-button{ 
     cursor: pointer;
     color: green;
     text-align: right;
     margin: 0;
 }
+
 @media (min-width: 751px){
-    .post-two-elements-container{
-        display: flex;
-    }
-    .post-block-container{
-        width: 70%;
-    }
+    .post-two-elements-container{ display: flex; }
+    .post-block-container{  width: 60%; }
     .post-block-image-holder{
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
     }
     .post-block-image-holder img{
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
     }
-    .flex-cont { 
-        height: 110px;
-        padding: 10px;
-    }
-    .post-block-add-date{ font-size: 16px; }
-    .post-block-author{ font-size: 19px; }
-    .post-block-title{
-        padding: 20px 10px;
-        font-size: 24px;
+    .flex-cont {  height: 70px; }
+    .post-block-add-date{ font-size: 14px; }
+    .post-block-author{ font-size: 15px; }
+    .post-block-title{ 
+        font-size: 17px;
+        margin-top: 10px;
     }    
     .add-comment-button {  
-        font-size: 21px;
+        font-size: 17px;
         margin-bottom: 15px;
-       
     }
     .post-block-container article{
         padding: 15px;
-        font-size: 20px;
+        font-size: 15px;
     }
 }
 

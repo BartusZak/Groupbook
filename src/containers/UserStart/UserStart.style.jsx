@@ -3,7 +3,6 @@ import media from 'theme/media';
 
 export const PostsDiv = styled.div`
     width: 50%;
-
     ${media.desktop`
         order: 2;
         display: flex;
@@ -23,7 +22,6 @@ export const UserBlockDiv = styled.div`
     -ms-flex-align: center;
     align-items: center;
     font-size: 20px;
-
     ${media.desktop`
         width: 100%;
         margin: 0;

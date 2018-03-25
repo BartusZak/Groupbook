@@ -10,21 +10,26 @@ export const ModalDiv = styled.div`
     padding: 10px 25px;
     margin: auto 5%;
     width: 90%;
-    top: 0.5%;
+    top: 1%;
     left: 0;
     box-sizing: border-box;
     transition: all 0.3s ease-out;
     text-align: center;
 
+.closeIcon{
+    position: absolute;
+    right: 1%;
+    top: 1%;
+    cursor: pointer;
+    font-size: 32px;
+}
+.closeIcon:hover{
+    color: red;
+}
+@media(min-width: 800px){
+    width: 40%;
+    left: 26%;
+    top: 5%;  
+}
 
-    .closeIcon{
-        position: absolute;
-        right: 1%;
-        top: 1%;
-        cursor: pointer;
-        font-size: 32px;
-    }
-    .closeIcon:hover{
-        color: red;
-    }
 `;

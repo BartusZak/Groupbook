@@ -8,7 +8,6 @@ export const NavigationBar = styled.div`
     padding: 2%;
     width: 96%;
     margin-bottom: 60px;
-
     ${media.desktop`
         width: 100%;
         margin-bottom: 0;

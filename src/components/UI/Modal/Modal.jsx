@@ -15,10 +15,7 @@ class Modal extends Component{
                 <Backdrop show={this.props.show} clicked={this.props.clickedMethod}/>
                 <ModalDiv 
                     style={{transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
-                    opacity: this.props.show ? '1' : '0', 
-                    top: this.props.heightPosition,
-                    width: this.props.width,
-                    left: this.props.left}}>
+                    opacity: this.props.show ? '1' : '0'}}>
                     <i onClick={this.props.clickedMethod} class="fa fa-window-close-o closeIcon" aria-hidden="true"></i>
                     {this.props.children}
                 </ModalDiv>

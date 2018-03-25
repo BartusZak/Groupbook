@@ -26,11 +26,6 @@ class UserStart extends Component {
         }
         this.handleScroll = this.handleScroll.bind(this);
       }
-      
-      
-      
-    
-
     componentDidMount(){
 
         window.addEventListener('scroll', this.handleScroll);
