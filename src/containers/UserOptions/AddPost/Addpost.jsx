@@ -100,7 +100,7 @@ class Addpost extends Component{
         
         return (
         // <div className="Container">
-        <Row style={{ padding: "20px", height: "80vh"}}>
+        <Row style={{ padding: "20px", height: "80vh", backgroundColor: 'white'}}>
             <Col xs={12} md={12} lg={6}>
                 <SelectGroup>
                     <h2 style={{marginBottom: '30px'}}>Wybierz grupę docelową</h2>

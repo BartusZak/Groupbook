@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import media from 'theme/media';
 
 export const MessagesBlockDiv = styled.div`
-
+  
+  
     width: 96%;
     height: 420px;
     box-shadow: 0 2px 3px grey;
@@ -42,6 +43,7 @@ export const MessagesBlockDiv = styled.div`
         height: 350px;
         box-sizing: border-box;
         overflow-y: scroll;
+        
     }
 
     @media (min-width: 751px){

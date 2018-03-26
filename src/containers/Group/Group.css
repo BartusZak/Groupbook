@@ -59,8 +59,6 @@
     color: white;
    
 }
-
-
 @media(min-width: 1201px){
     .event-info { color: white; }
     .group-main-content{
