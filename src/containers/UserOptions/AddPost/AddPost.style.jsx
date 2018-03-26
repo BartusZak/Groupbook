@@ -7,7 +7,7 @@ export const SelectGroup = styled.div`
     text-align: center; 
     padding: 20px 40px;
     height: 100%;
-    background-color: white;
+    
     .Buttons{
         font-size: 25px;
         i {
