@@ -4,6 +4,7 @@ import media from '../../theme/media';
 export const LoggingContent = styled.div`
     height: 84vh;
     padding-top: 4vh;
+    background-color: white;
     // background: url('${require('assets/img/test.jpg')}');
     // background-repeat: no-repeat;
     // background-size: cover;

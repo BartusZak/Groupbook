@@ -1,4 +1,8 @@
-.background-container{ background-color: #23232d; }
+.background-container{ 
+    background-color: #23232d;
+    margin: auto;
+    position: relative;
+}
 .group-container, .navigation-bar, .navigate, .group-nav-right, .group-nav-left, .groups-events-container{  
     display: flex;
 }
@@ -55,13 +59,7 @@
     color: white;
    
 }
-@media(min-width: 1600px){
-    .background-container{ 
-        display: flex;
-        justify-content: space-around;
-        background-color: #23232d;
-    }
-}
+
 
 @media(min-width: 1201px){
     .event-info { color: white; }
@@ -94,6 +92,18 @@
     
    
 }
+@media(min-width: 1600px){
+    .background-container{ 
+        display: flex;
+        justify-content: space-around;
+        background-color: #23232d;
+    }
+}
+@media(min-width: 1700px){
+    .background-container{ width: 1600px;}
+}
+
+
 @media (max-width: 1200px){
     .navigation-bar{ min-height: 270px;  }
     .group-title-full{

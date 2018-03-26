@@ -27,8 +27,10 @@ class Group extends Component{
     render(){
         return(
             <div className="background-container">
-                <div className="left-trash-container"></div>
-                <GroupLeftSideBar />
+                <div className="left-trash-container">
+                    <GroupLeftSideBar />
+                </div>
+                
                 <div className="group-container">
                     <p className="group-title-full">Poczekalnia</p>
                     <nav style={{backgroundImage: `url(${Back})`}} className="navigation-bar">
