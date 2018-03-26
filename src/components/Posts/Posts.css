@@ -2,11 +2,15 @@
     color: white;
     padding: 10px;
     list-style: none;
-    margin: 0;  
+    margin: 20px 0;
 }
 .post-block-container li { 
    display: flex;
    flex-flow: column;
+   border-radius: 10px;
+   background-color: #2c2c36;  
+   margin: 20px 0;
+   padding: 15px;
 }
 .post-block-add-date { 
     margin: 0;
@@ -50,8 +54,12 @@
 
 
 @media (min-width: 751px){
-    .post-two-elements-container{ display: flex; }
-    .post-block-container{  width: 62%; }
+    .post-two-elements-container{ 
+        display: flex;
+     }
+    .post-block-container{  
+        width: 62%;
+    }
     .post-block-image-holder{
         width: 70px;
         height: 70px;
@@ -100,7 +108,8 @@
 
 @media(max-width: 750px){
     .post-two-elements-container{
-        display: inline-block;
+        display: flex;
+        flex-flow: column-reverse;
     }
     .post-block-image-holder{
         width: 60px;
@@ -142,7 +151,8 @@
 
 @media(max-width: 550px){
     .post-two-elements-container{
-        display: inline-block;
+        display: flex;
+        flex-flow: column-reverse;
     }
     .post-block-image-holder{
         width: 50px;

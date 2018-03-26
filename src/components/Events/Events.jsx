@@ -13,8 +13,6 @@ const events = (props) => {
                 <EventsBar />
                 <EventsBar />
                 <EventsBar />
-                <EventsBar />
-                <EventsBar />
              
             </div>
             <div className="btn-container">

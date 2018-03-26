@@ -3,7 +3,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import './Group.css';
 import GroupLeftSideBar from '../../components/GroupLeftSideBar/GroupLeftSideBar';
 import Modal from '../../components/UI/Modal/Modal';
-import OpenedMessage from '../../containers/UserStart/UserBlock/MessagesBlock/OpenedMessage/OpenedMessage';
+import OpenedMessage from '../../components/UI/OpenedMessage/OpenedMessage';
 import Back from '../../assets/img/groupimages/back.jpg';
 import Events from '../../components/Events/Events';
 import Posts from '../../components/Posts/Posts';

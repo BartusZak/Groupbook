@@ -35,7 +35,7 @@ class Form extends Component {
         
         if(result){
             this.setState({names: null, itemsErrors: null});
-            this.props.history.push("/logged");
+            this.props.history.push("/logged/group/poczekalnia");
             this.props.logIn(result, this.state.names[0]["text"]);
         }
        

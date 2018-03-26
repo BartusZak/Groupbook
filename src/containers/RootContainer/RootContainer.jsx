@@ -12,7 +12,6 @@ import Register from '../../components/Register/Register';
 import Navbar from '../../components/Navbar/Navbar';
 import Logging from '../Logging/Logging';
 import About from '../About/About';
-import UserStart from '../UserStart/UserStart';
 import Carousel from '../../components/Carousel/Carousel';
 
 import Addpost from '../UserOptions/AddPost/Addpost';
@@ -57,12 +56,10 @@ class RootContainer extends Component{
         {
             IsLogged = (
                 <Aux>
-                    
-                    <Route path="/logged" exact component={UserStart} />
-                    
+                    <Route path="/logged/group/:id" exact component={Group} />
                     <Route path="/logged/usersettings" exact component={UserSettings} />
-                    <Route path="/logged/newpost" exact component={Addpost} />
-                  
+                    
+                    
                 </Aux>
             );
 
@@ -114,7 +111,7 @@ class RootContainer extends Component{
                         <Route path="/carousel" component={Carousel}/>
                         <Route path="/logged/newpost" exact component={Addpost} />
                         
-                        <Route path="/logged/group/:id" exact component={Group} />
+                        
                         
                         {IsLogged}
                       
