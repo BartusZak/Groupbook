@@ -30,7 +30,7 @@ class Group extends Component{
                 <div className="left-trash-container"></div>
                 <GroupLeftSideBar />
                 <div className="group-container">
-                    <p className="group-title-full">Niekompetetni programiści </p>
+                    <p className="group-title-full">Poczekalnia</p>
                     <nav style={{backgroundImage: `url(${Back})`}} className="navigation-bar">
                         <span className="group-owner">Należysz <i class="fa fa-check"></i></span>
                     </nav>
