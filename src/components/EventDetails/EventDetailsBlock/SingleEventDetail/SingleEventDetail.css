@@ -1,0 +1,17 @@
+.single-event-detail{
+    float: left;
+    margin: 1.5%;
+    height: 100px;
+    width: 30%;
+    display: flex;
+    transition: 0.5s all ease-in-out;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}
+.single-event-detail:hover{
+    transform: rotate(15deg);
+}

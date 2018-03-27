@@ -20,6 +20,9 @@ import SideMenu from '../../components/UI/SideMenu/SideMenu';
 import SideMenuContent from '../../components/UI/SideMenu/SideMenuContent/SideMenuContent';
 import { RightMenuExpander } from './RootContainer.style.jsx';
 import Group from '../Group/Group';
+
+import EventDetails from '../../components/EventDetails/EventDetails';
+
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
 // const About = asyncComponent(() =>
@@ -58,7 +61,8 @@ class RootContainer extends Component{
                 <Aux>
                     <Route path="/logged/group/:id" exact component={Group} />
                     <Route path="/logged/usersettings" exact component={UserSettings} />
-                    
+                    <Route path="/logged/newpost" exact component={Addpost} />
+
                     
                 </Aux>
             );
@@ -109,8 +113,7 @@ class RootContainer extends Component{
                     
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
-                        <Route path="/logged/newpost" exact component={Addpost} />
-                        
+                        <Route path="/logged/event/1" exact component={EventDetails} />
                         
                         
                         {IsLogged}

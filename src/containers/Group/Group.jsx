@@ -13,8 +13,8 @@ import { fetchingPosts } from '../UserOptions/Store/actions';
 
 class Group extends Component{
     state = {
-        showEvents: false,
-        showPosts: true,
+        showEvents: true,
+        showPosts: false,
         showSendMessageToOwnerModal: false
     }
     
