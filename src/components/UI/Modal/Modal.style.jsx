@@ -27,8 +27,8 @@ export const ModalDiv = styled.div`
     color: red;
 }
 @media(min-width: 800px){
-    width: 40%;
-    left: 26%;
+    width: 30%;
+    left: 30%;
     top: 5%;  
 }
 

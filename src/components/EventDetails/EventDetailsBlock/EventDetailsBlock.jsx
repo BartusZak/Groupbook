@@ -7,7 +7,7 @@ const eventDetailsBlock = (props) => {
             <p className="right-events-title">Wydarzenia</p>
             {props.events !== null ? props.events.
             map(item => {
-                return <SingleEventDetail key={item} />
+                return <SingleEventDetail key={item} id={item} />
             }) : null }
         </div>
     );

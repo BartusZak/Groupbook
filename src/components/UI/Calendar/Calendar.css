@@ -1,0 +1,132 @@
+/*Caly blok kalendarza*/
+.calendar-elements-container{
+    z-index: 400;
+    position: absolute;
+    color: #23232d;
+    background-color: white;
+    transition: 0.5s all ease-in-out;
+    overflow: hidden;
+}
+  section.month {
+    overflow: hidden;
+    display: block;
+    float: left;
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,.25);
+    border-radius: 5px;
+  }
+  
+    article b,
+    article span {
+      display: block;
+      float: left;
+      text-align: center;
+    }
+   
+    article span.disable {
+      color: #b6bacc;
+      box-shadow: inset 0 0 1px 1px #f3f4f7;
+    }
+      article span:not(.disable):hover {
+        background: #cdd0dd;
+        box-shadow:
+          inset 0 0 1px 1px #d9dce5,
+          0 1px 3px -1px #cdd0dd;
+      }
+      article span:not(.disable):active {
+        background: #b9becf;
+        box-shadow:
+          inset 0 1px 2px rgba(0,0,0,.18),
+          0 0 0 #cdd0dd;
+      }
+      article span.active,
+      article span.active:hover,
+      article span.active:active {
+        color: #fff;
+        box-shadow:
+          inset 0 0 1px 1px #ff8263,
+          0 1px 3px -1px #ff8263;
+        background: #ff8263;
+      }
+    article div {
+      display: block;
+      overflow: hidden;
+      clear: both;
+    }
+    article b {
+      color: #91d9ff;
+    }
+    article span {
+      color: #4c5373;
+      box-shadow: inset 0 0 1px 1px #d9dce5;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+  
+
+@media(min-width: 601px){
+    .calendar-elements-container{
+        right: 3%;
+        top: -10px;
+    }
+    section.month {
+     
+      width: 420px; height: auto;
+    
+    }
+   
+        .month h1 {
+          margin-left: 30px;
+          line-height: 80px;
+        }
+   
+      article {padding: 6px 0 25px 25px}
+      article b,
+      article span {
+        width: 45px; height: 45px;
+        margin: 4px;
+      }
+      article b {
+        font: 600 16px/45px 'Open Sans';
+      }
+      article span {
+        font: 300 19px/45px 'Open Sans';
+      }
+     
+     
+    
+}
+
+@media(max-width: 600px){
+    .calendar-elements-container{
+        right: 20px;
+        top: 0;
+    }
+    section.month {
+      width: 280px; height: auto;
+      background: #fff;
+      box-shadow: 0 1px 1px rgba(0,0,0,.25);
+      border-radius: 5px;
+    }
+    .month h1 {
+      margin-left: 10px;
+      font-size: 20px;
+      line-height: 40px;
+    }      
+      article {padding: 6px 0 5px 5px}
+      article b,
+      article span {
+        width: 30px; height: 30px;
+        margin: 4px;
+        font-size: 13px !important;
+      }
+      article b {
+        font: 600 1px/2px 'Open Sans';
+      }
+      article span {
+        font: 300 1px/30px 'Open Sans';
+      }
+    
+    
+
+}

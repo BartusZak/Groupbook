@@ -7,12 +7,12 @@ const events = (props) => {
         <Aux> 
             <p className="event-info">Wydarzenia</p>
             <div className="group-main-content">
-                <EventsBar />
-                <EventsBar />
-                <EventsBar />
-                <EventsBar />
-                <EventsBar />
-                <EventsBar />
+                <EventsBar id={1}/>
+                <EventsBar id={2}/>
+                <EventsBar id={3}/>
+                <EventsBar id={4}/>
+                <EventsBar id={5}/>
+                <EventsBar id={6}/>
              
             </div>
             <div className="btn-container">

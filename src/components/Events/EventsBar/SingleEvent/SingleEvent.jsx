@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './SingleEvent.css';
 import avocado from '../../../../assets/img/groupimages/avocado.jpg';
 import Aux from '../../../../hoc/Auxi';
-const singleEvent = (props) => {
-    return(
-        <Aux>
+import { withRouter } from 'react-router-dom';
+class SingleEvent extends Component{
+    state = { 
+        id: this.props.id
+    }
+
+    redirectToEventDetails = () => {
+        if(this.state.id !== null)
+            this.props.history.push("/logged/event/" + this.state.id);
+    }
+    render(){
+        return(
+            <Aux>
             <div className="single-event">
                 <div className="single-image-placeholder">
                     <img src={avocado} alt="" />
@@ -25,14 +35,16 @@ const singleEvent = (props) => {
                 <span className="event-date">
                     Pażdziernik 2017 16:56
                 </span>  
-                <span className="load-more-tag">Weż udział</span>
+                <span onClick={this.redirectToEventDetails} className="load-more-tag">Weż udział</span>
             </div>
        
            
        
         </Aux>
-        
-    );
+        );
+    }
 }
 
-export default singleEvent;
+
+
+export default withRouter(SingleEvent);

@@ -113,7 +113,7 @@ class RootContainer extends Component{
                     
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
-                        <Route path="/logged/event/1" exact component={EventDetails} />
+                        <Route path="/logged/event/:id" exact component={EventDetails} />
                         
                         
                         {IsLogged}

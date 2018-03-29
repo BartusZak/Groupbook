@@ -27,6 +27,8 @@
 .event-name i { color: white; }
 .events-users-number{
     padding: 0 10px;
+    margin-bottom: 10px;
+    position: relative;
 }
 .event-button{
     background-color: #34b399;
@@ -69,6 +71,7 @@
 }
 .event-user-bar-title span:last-child{
     color: orange;
+    cursor: pointer;
 }
 .enjoy-event-block{
     background-color: rgba(0,0,0,0.5);
@@ -80,6 +83,61 @@
     padding: 10px;
 }
 .event-map{ border: none;}
+
+
+/*Modale*/
+
+.users-full-list-header{
+    margin-top: 25px;
+    text-align: left;
+    font-weight: bolder;
+    margin-bottom: 0;
+}
+.who-created-user{
+    margin: 0;
+    padding: 15px 10px;
+    font-weight: lighter;
+    text-align: right;
+}
+.users-full-list{
+    list-style-type: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 0;
+    height: 350px;
+}
+.users-full-list li{
+    display: flex;
+    margin: 10px 0;
+    justify-content: space-around;
+}
+.modal-image-holder{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.modal-text-holder{
+    display: flex;
+    flex-flow: column;
+    padding: 0 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+.users-full-list li p{
+    margin: 0;
+    text-align: left;
+}
+.users-full-list li span{
+    font-weight: bold;
+    text-align: right;
+}
+.users-full-list li i{
+    text-align: right;
+    font-weight: lighter;
+    color: orange;
+    cursor: pointer;
+}
+
 
 
 
@@ -136,8 +194,30 @@
             width: 70px;
             height: 70px;
         }
-     
-       
+        .users-full-list-header{
+            font-size: 17px;
+        }
+        .who-created-user{
+            font-size: 14px;
+        }
+        .modal-image-holder{
+            width: 70px;
+            height: 70px;
+        }
+        .modal-text-holder{
+            padding: 0 30px;
+        }
+        .users-full-list li p{
+            font-size: 14px;
+        }
+        .users-full-list li span{
+            font-size: 13px;
+        }
+        .users-full-list li i{
+            font-size: 12px;
+        }
+               
+
         
 }
 
@@ -145,7 +225,26 @@
     .left-eventdetails-container{
         width: 1200px;
     }
+    .users-full-list{
+        width: 80%;
+        margin: auto;
+    }
+    .users-full-list li p{
+       font-size: 16px;
+    }
+    .users-full-list li span{
+        font-size: 15px;
+    }
+    .users-full-list li i{
+        font-size: 14px;
+    }
  
+    .users-full-list-header{
+        font-size: 25px;
+    }
+    .who-created-user{
+        font-size: 19px;
+    }
     
 }
 
@@ -193,6 +292,25 @@
     }
     .events-users-number{
         font-size: 14px;
+    }
+    .users-full-list-header{
+        font-size: 15px;
+    }
+    .who-created-user{
+        font-size: 12px;
+    }
+    .modal-image-holder{
+        width: 50px;
+        height: 50px;
+    }
+    .users-full-list li p{
+        font-size: 12px;
+    }
+    .users-full-list li span{
+        font-size: 11px;
+    }
+    .users-full-list li i{
+        font-size: 11px;
     }
   
     
@@ -247,4 +365,6 @@
     .events-users-number{
         font-size: 13px;
     }
+
+    
 }

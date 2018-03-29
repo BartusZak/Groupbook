@@ -1,0 +1,36 @@
+.confirm-modal-header{
+    margin-top: 25px;
+}
+.confirm-modal-content{
+    color: white;
+    font-size: 18px;
+    display: flex;
+    margin: 10px auto;
+    justify-content: space-around;
+    width: 300px;
+}
+.confirm-modal-content span:last-child{
+    background-color: orange !important;
+}
+@media(min-width: 551px){
+    .confirm-modal-content span:first-child{
+        margin-right: auto;
+    }
+    .confirm-modal-content span:last-child{
+        margin-left: auto;
+    }
+}
+@media(max-width: 550px){
+    .confirm-modal-header{
+        font-size: 14px;
+    }
+    .confirm-modal-content{
+        width: 100%;
+    }
+    .confirm-modal-content span:first-child{
+        margin-right: 10px;
+    }
+    .confirm-modal-content span:last-child{
+        margin-left: 10px;
+    }
+}

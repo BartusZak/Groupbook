@@ -7,7 +7,7 @@ const eventsBar = (props) => {
             <h5 className="events-header">
                 Spotkanie z matka teresą z kalkuty
             </h5>
-            <SingleEvent />
+            <SingleEvent id={props.id}/>
          
         </div>
     );

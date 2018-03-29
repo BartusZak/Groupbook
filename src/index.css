@@ -8,3 +8,7 @@ body {
 html{
   background-color: #23232d;
 }
+
+i{
+  cursor: pointer;
+}
