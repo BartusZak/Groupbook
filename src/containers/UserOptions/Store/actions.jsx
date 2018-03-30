@@ -95,6 +95,25 @@ export const fetchingComments = (id) => {
 }
 
 
+export const loadGroups = (groups) => {
+    return {
+        type: actionsTypes.LOAD_GROUPS,
+        loadedGroups: groups
+    }
+}
+
+export const fetchingGroups = () => {
+    return dispatch => {
+        axiosRandom.get('post/1/comments').then(response => {
+            dispatch(loadGroups(response.data));
+        });
+      
+    }
+}
+
+
+
+
 export const addComment = (newComment) => {
     return {
         type: actionsTypes.ADD_COMMENT,

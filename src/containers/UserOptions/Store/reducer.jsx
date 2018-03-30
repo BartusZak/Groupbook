@@ -14,8 +14,9 @@ const initialState = {
     comments: [],
     commentsErrorLoading: "",
     newComment: null,
-    addingCommentError: false
+    addingCommentError: false,
 
+    loadedGroups: []
 
 }
 const reducer = (state = initialState, action) => {
@@ -49,7 +50,10 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADD_COMMENT:
             return updateObject(state, {newComment: action.newComment})
         break;
-        
+
+        case actionTypes.LOAD_GROUPS:
+            return updateObject(state, { loadedGroups: action.loadedGroups})
+        break;
     
       
     }

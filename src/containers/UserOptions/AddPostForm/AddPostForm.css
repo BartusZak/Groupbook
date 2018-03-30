@@ -1,0 +1,111 @@
+.add-post-container{
+    height: 100%;
+    color: white;
+    padding-top: 10px;
+    display: flex;
+    flex-flow: column;
+    
+}
+.add-post-container i{
+    color: green;
+}
+.add-post-container p{
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+.form-holder{
+    display: flex;
+    flex-flow: column;
+    font-weight: lighter;
+    position: relative;
+    padding-top: 10px;
+    height: 240px;
+}
+.form-holder input,
+.form-holder textarea{
+    margin: 0 auto;
+    padding: 5px;
+    margin: 6px auto 45px auto;
+    width: 90%;
+}
+.form-holder textarea{
+   resize: none;
+   height: 90px;
+}
+.add-post-button{
+    background-color: #34353d;
+    text-align: center;
+    margin: 30px auto 15px auto;
+    cursor: pointer;
+    padding: 10px;
+}
+.add-post-button:hover{
+    background-color: #45474e;
+}
+.form-holder p{ /*Wiadomosci walidacji*/
+    text-align: center;
+    transition: 1s all ease-in-out;
+    position: absolute;
+    color: rgba(253, 153, 153, 0.9);
+}
+.form-holder p:first-of-type{
+    top: 60px;
+}
+
+.form-holder p:last-of-type{
+    bottom: 7px;
+}
+@media(min-width: 601px){
+    .add-post-container{
+        margin: auto;
+        width: 750px;
+    }
+    .add-post-container h4{
+        padding: 15px;
+        font-size: 25px;
+        font-weight: lighter;
+    }
+    .add-post-container p{
+        font-size: 19px;
+    }
+    .block-header{
+        padding-left: 75px !important;
+    }
+    .add-post-button{
+        font-size: 22px;
+        width: 35%;
+    }
+    .form-holder{
+        margin: auto;
+        width: 70%;
+    }
+    .form-holder p{
+        font-size: 17px;
+
+    }
+  
+}
+
+@media(max-width: 600px){
+    .add-post-container{
+        width: 100%;
+    }
+    .add-post-container h4{
+        padding: 10px;
+        font-size: 20px;
+        font-weight: lighter;
+    }
+    .add-post-button{
+        font-size: 15px;
+        width: 50%;
+    }
+    .form-holder{
+        width: 100%;
+    }
+    .form-holder p{
+        font-size: 15px;
+    }
+  
+ 
+}
