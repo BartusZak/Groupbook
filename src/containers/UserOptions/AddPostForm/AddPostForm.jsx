@@ -53,7 +53,6 @@ class AddPostForm extends Component{
 
         oldState[1].content = this.validateInput(1,250,this.state.postContent, "", "treśc postu");
 
-        oldState[2].content = "";
         if(this.state.addedGroups.length === 0)
             oldState[2].content = "Zanim opublikujesz post, wybierz grupe";
 

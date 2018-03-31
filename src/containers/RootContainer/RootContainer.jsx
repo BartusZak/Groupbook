@@ -22,6 +22,7 @@ import Group from '../Group/Group';
 
 import EventDetails from '../../components/EventDetails/EventDetails';
 import AddPostForm from '../UserOptions/AddPostForm/AddPostForm';
+import AddEventForm from '../UserOptions/AddEventForm/AddEventForm';
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
 // const About = asyncComponent(() =>
@@ -61,6 +62,7 @@ class RootContainer extends Component{
                     <Route path="/logged/group/:id" exact component={Group} />
                     <Route path="/logged/usersettings" exact component={UserSettings} />
                     <Route path="/logged/event/:id" exact component={EventDetails} />
+                    <Route path="/logged/addpost" exact component={AddPostForm} />
 
                     
                 </Aux>
@@ -112,8 +114,7 @@ class RootContainer extends Component{
                     
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
-                        <Route path="/logged/addpost" exact component={AddPostForm} />
-                        
+                        <Route path="/logged/addevent" exact component={AddEventForm} />
                         {IsLogged}
                       
                         

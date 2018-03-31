@@ -1,4 +1,5 @@
-.add-post-container ul{
+.add-post-container ul,
+.event-blocks-container ul{
     list-style-type: none;
     box-shadow: 0 2px 3px black;
     overflow-y: scroll;
@@ -6,7 +7,8 @@
     padding: 0;
     margin: auto;
 }
-.add-post-container ul > li{
+.add-post-container ul > li,
+.event-blocks-container ul > li{
     display: flex;
     width: 100%;
     padding: 5px;
@@ -14,7 +16,8 @@
     justify-content: space-between;
     align-items: center;
 }
-.add-post-container ul > li:hover{
+.add-post-container ul > li:hover,
+.event-blocks-container ul > li:hover{
     background-color: #43434e;
     cursor: pointer;
 }
@@ -35,31 +38,37 @@
 }
 
 @media(min-width: 601px){
-    .add-post-container ul{
+    .add-post-container ul,
+    .event-blocks-container ul{
         width: 70%;
         margin-bottom: 30px;
     }
-    .add-post-container ul > li{
+    .add-post-container ul > li,
+    .event-blocks-container ul > li{
         padding-left: 30px;
     }
-    .add-post-container ul > li i {
+    .add-post-container ul > li i,
+    .event-blocks-container ul > li i{
         font-size: 24px;
         margin-right: 50px;
     }
 }
 
 @media(max-width: 600px){
-    .add-post-container ul{
+    .add-post-container ul,
+    .event-blocks-container ul{
         width: 90%;
         padding: 10px;
         margin: 0 auto 20px auto;
         height: 150px;
     }
-    .add-post-container ul > li{
+    .add-post-container ul > li,
+    .event-blocks-container ul > li{
        font-size: 13px;
        
     }
-    .add-post-container ul > li i{
-        font-size: 18px;
+    .add-post-container ul > li i,
+    .event-blocks-container ul > li i{
+        font-size: 14px;
     }
 }

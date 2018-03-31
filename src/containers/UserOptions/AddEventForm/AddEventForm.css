@@ -1,0 +1,129 @@
+.add-event-form-container{
+    color: white;
+    margin: auto;
+}
+.add-event-form-container h4{
+    padding: 10px;
+    font-weight: lighter;
+}
+.add-event-form-container nav{
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around;
+}
+.add-event-form-container nav button{
+    background-color: rgba(140, 255, 70, 0.5);
+    display: flex;
+    border-radius: 50%;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    transition: 1s all ease-in-out;
+    box-shadow: 0 2px 3px black;
+}
+.add-event-form-container nav button:focus{
+    outline: none;
+}
+.add-event-form-container nav button:hover{
+    opacity: 1;
+}
+.unactive-circle{
+    opacity: 0.5;
+}
+.add-event-form-container nav button:first-child::after,
+.add-event-form-container nav button:last-child::before
+{
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border: 2px solid white;
+    top: 50%;
+
+}
+.add-event-form-container nav button:last-child::before{
+    right: 100%;
+}
+.add-event-form-container nav button:first-child::after{
+    left: 100%;
+}
+.event-blocks-container{
+    position: relative;
+    width: 100%;
+    height: 450px;
+}
+.event-blocks-container div{
+    transition: 1s all ease-in-out;
+    position: absolute;
+    height: 450px;
+    width: 100%;
+    padding: 10px;
+}
+.event-blocks-container i{
+    color: green;
+}
+.hidden-block{
+    left: -100%;
+    opacity: 0;
+}
+.visible-block{
+    left: 0;
+    opacity: 1;
+}
+.continue-button{
+    color: orange;
+    letter-spacing: 1px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 30px;
+    position: relative;
+}
+
+
+.user-informations{
+    width: 90%;
+    text-align: right;
+    font-style: italic;
+    color: green;
+
+}
+@media(min-width: 601px){
+    .add-event-form-container{
+        width: 750px;
+    }
+    .add-event-form-container nav{
+        font-size: 19px;
+        width: 450px;
+    }
+    .add-event-form-container nav button{
+        width: 75px;
+        height: 75px;
+    }
+    .add-event-form-container nav button:first-child::after,
+    .add-event-form-container nav button:last-child::before{
+        width: 75px;
+    }
+    
+}
+@media(max-width: 600px){
+    .add-event-form-container{
+        width: 100%;
+
+    }
+    .add-event-form-container nav{
+        font-size: 16px;
+        width: 300px;
+    }
+    .add-event-form-container nav button{
+        width: 50px;
+        height: 50px;
+    }
+    .add-event-form-container nav button:first-child::after,
+    .add-event-form-container nav button:last-child::before{
+        width: 50px;
+    }
+}
