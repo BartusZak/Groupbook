@@ -82,7 +82,7 @@ class NavbarComponent extends Component{
             else{
                 items = ["Grupa", "Post", "Użytkownik"];
                 
-                homePageLink = "/logged";
+                homePageLink = "/logged/group/poczekalnia";
 
                 navbarContent = (
                 <MenuAfterLogIn>

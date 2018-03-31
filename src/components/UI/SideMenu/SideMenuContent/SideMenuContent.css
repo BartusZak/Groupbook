@@ -1,52 +1,68 @@
-
 .side-menu-container{
     position: fixed;
-    background:#292929;
-    font-size: 2.6vh;
+    background-color: rgba(0,0,0,0.9);
     top: 0;
     color: white;
     right: 0;
     padding: 15px;
     box-sizing: border-box;
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
     width: 250px;
     transition: all 0.3s ease-out;
     height: 100%;
 }
+.side-bar-groups{
+    height: 100px;
+   
+}
+.side-bar-groups,
+.side-bar-messages,
+.sidebar-buttons{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+.side-bar-messages{
+    height: 320px;
+}
+.sidebar-buttons{
+    height: 120px;
+}
+.side-menu-container p{
+    padding: 0;
+    margin: 0;
+}
 .SideBarTitle {
-    font-size: 19px;
+    font-size: 17px;
 }
 .groups-place-holder {
-    width: 250px;
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;       
-}
-.groups-place-holder div{
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
+    justify-content: space-around;     
     margin-bottom: 10px;
 }
+.groups-place-holder div,
+.groups-place-holder img{
+    width: 50px;
+    height: 50px;
+}
+.groups-place-holder div{
+    border-radius: 50%;
+}
 .groups-place-holder div:hover{
-    border: 1px solid white;
+    opacity: 0.5;
 }
 .groups-place-holder img {
-    width: 70px;
-    height: 70px;
     border-radius: 50%;
     cursor: pointer;   
 }
 .messages-place-holder{
     width: 100%;
-    height: 450px;
+    height: 280px;
     display: flex;
     flex-flow: column;
     list-style: none;
     flex-wrap: wrap;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-y: auto;
     margin: 0;
     padding: 0;
     font-size: 14px;
@@ -57,7 +73,7 @@
 .messages-place-holder li {
     padding: 10px 20px;
     margin-bottom: 5px;
-    width: 210px;
+    width: 100%;
     box-sizing: border-box;
     cursor: pointer;
 }
@@ -70,14 +86,59 @@
 .fa-angle-left{
     z-index: 40;
 }
+.sidebar-butt{
+    font-size: 18px;
+    margin-left: 5px;
+    cursor: pointer;
+    width: 70%;
+    left: 0;
+    transition: 1s left ease-in-out;
+    border-width: 0;
+    position: relative;
+}
+.sidebar-butt:hover{
+    color: indianred;
+}
+.overline-butt{
+    color: indianred;
+    left: 20px;
+}
+.overline-butt::after{
+    content: '';
+    border: 4px solid indianred;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;
+}
+
+@media(min-height: 801px){
+    .sidebar-buttons{
+        margin-top: 20px;
+    }
+}
 
 @media(max-height: 800px){
+    .side-menu-container{
+        letter-spacing: 1px;
+    }
     .SideBarTitle{
         font-size: 15px;
         margin: 5px;
     }
     .messages-place-holder{
         font-size: 13px;
+    }
+    .sidebar-butt{
+        margin: 10px;
+        font-size: 14px;
+        width: 160px;
+        height: 30px;
+    }
+    .overline-butt::after{
+        top: 1px;
     }
 }
 

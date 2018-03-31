@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './AddPostForm.css';
 import { connect } from 'react-redux';
 import { fetchingGroups, loadGroups } from '../Store/actions';
-import 'font-awesome/css/font-awesome.min.css';
 import GroupsBar from './GroupsBar/GroupsBar';
 class AddPostForm extends Component{
     state = {
@@ -10,7 +9,11 @@ class AddPostForm extends Component{
         postContent: "",
 
         addedGroups: [],
-        validationResult: []
+        validationResult: [
+            {id: "postTitle", content: ""},
+            {id: "postContent", content: ""},
+            {id: "addedGroups", content: ""}
+        ]
     }
     componentDidMount(){ 
         this.props.fetchingGroups();
@@ -20,17 +23,18 @@ class AddPostForm extends Component{
 
         if(min !== ""){
             if(lengthOfInput < min)
-                return "Pole " + inputType + " zawiera mniej niż " + min + " znaków";
+                return "Pole " + inputType + " zawiera za mało znaków" + " (min " + min + ")";
             if(lengthOfInput > max)
-                return "Pole " + inputType + " zawiera wiecej niż " + max + " znaków";
+                return "Pole " + inputType + " zawiera za dużo znaków " + "(max " + max + ")";
         }
         if(specialKeys !== ""){
-            for(let key in specialKeys){
-                if(inputText.includes(key))
+            for(let items in specialKeys){
+                if(inputText.includes(specialKeys[items]))
                 {
                     return "Pole " + inputType + " nie powinno zawierac znaku: " + specialKeys;
                 }
             }
+           
         }
         return "";
     }
@@ -42,20 +46,19 @@ class AddPostForm extends Component{
     }
     onSubmitHandler = e => {
         e.preventDefault();
-        let oldState = [];
+        let oldState = [...this.state.validationResult];
 
-        const inputResult = this.validateInput(5,15,this.state.postTitle, "", "tytuł postu");
-        const textAreaResult = this.validateInput(1,250,this.state.postContent, "", "treśc postu");
         
-        if(inputResult !== "")
-        oldState.push({id: 1, content: inputResult});
-        
-        if(textAreaResult !== "")
-        oldState.push({id: 2, content: textAreaResult});
-        
-        console.log(inputResult);
+        oldState[0].content = this.validateInput(5,15,this.state.postTitle, ["kurcze"], "tytuł postu");
+
+        oldState[1].content = this.validateInput(1,250,this.state.postContent, "", "treśc postu");
+
+        oldState[2].content = "";
+        if(this.state.addedGroups.length === 0)
+            oldState[2].content = "Zanim opublikujesz post, wybierz grupe";
+
         this.setState({validationResult: oldState});
-        // Dokonczyc jutro ;/
+        
         
     }
     addGroup = (event) => {
@@ -82,37 +85,36 @@ class AddPostForm extends Component{
         return(
             <div className="add-post-container">
                 <h4>Formularz dodawania postów</h4>
-                <p className="block-header">Grupy do wybrania</p>
-                <GroupsBar 
-                targetClass="loaded-groups"
-                clicked={(event) => this.addGroup(event)}
-                groups={this.props.loadedGroups}
-                icon={<i className="fa fa-plus"></i>} />
-                
-                <p className="block-header">Wybrane grupy</p>
-                <GroupsBar 
-                targetClass="added-groups"
-                groups={this.state.addedGroups}
-                icon={<i className="fa fa-trash"></i>}
-                clicked={(event) => this.deleteGroup(event)} />
-
+                    <p className="block-header">Grupy do wybrania</p>
+                    <GroupsBar 
+                    targetClass="loaded-groups"
+                    clicked={(event) => this.addGroup(event)}
+                    groups={this.props.loadedGroups}
+                    icon={<i className="fa fa-plus"></i>} />
+                    <p className="block-header">Wybrane grupy</p>
+                    <GroupsBar 
+                    targetClass="added-groups"
+                    groups={this.state.addedGroups}
+                    icon={<i className="fa fa-trash"></i>}
+                    clicked={(event) => this.deleteGroup(event)} />
+              
                 <p className="block-header">Wypełnij poniższe pola</p>
                 <div className="form-holder">
                     <input onChange={(event) => this.onChangeHandlerTitle(event)} 
                     value={this.state.postTitle} type="text" placeholder="Dodaj tytuł postu" />
 
                     <p style={{
-                    width: this.state.validationResult.length === 0 ? '0' : '100%',
-                    opacity: this.state.validationResult ? '0' : '1'
-                    }}>Pole tytul jest nie prawidlowe</p>  
+                    width: this.state.validationResult[0].content === "" ? '0' : '100%',
+                    opacity: this.state.validationResult[0].content === "" ? '0' : '1'
+                    }}>{this.state.validationResult[0].content}</p>  
 
                     <textarea onChange={(event) => this.onChangeHandlerContent(event)} 
                     placeholder="Dodaj treśc postu" value={this.state.postContent}></textarea>
 
                     <p style={{
-                    width: this.state.validationResult.length === 0 ? '0' : '100%',
-                    opacity: this.state.validationResult ? '0' : '1'
-                    }}>Pole tresc postu jest nie prawidlowe</p> 
+                    width: this.state.validationResult[1].content === "" ? '0' : '100%',
+                    opacity: this.state.validationResult[1].content === "" ? '0' : '1'
+                    }}>{this.state.validationResult[1].content}</p> 
                 </div>
                 <span onClick={e => this.onSubmitHandler(e)} className="add-post-button">
                     Opublikuj

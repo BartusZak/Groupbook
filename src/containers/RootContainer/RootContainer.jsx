@@ -14,7 +14,6 @@ import Logging from '../Logging/Logging';
 import About from '../About/About';
 import Carousel from '../../components/Carousel/Carousel';
 
-import Addpost from '../UserOptions/AddPost/Addpost';
 import UserSettings from '../UserOptions/UserSettings/UserSettings';
 import SideMenu from '../../components/UI/SideMenu/SideMenu';
 import SideMenuContent from '../../components/UI/SideMenu/SideMenuContent/SideMenuContent';
@@ -61,7 +60,6 @@ class RootContainer extends Component{
                 <Aux>
                     <Route path="/logged/group/:id" exact component={Group} />
                     <Route path="/logged/usersettings" exact component={UserSettings} />
-                    <Route path="/logged/newpost" exact component={Addpost} />
                     <Route path="/logged/event/:id" exact component={EventDetails} />
 
                     
