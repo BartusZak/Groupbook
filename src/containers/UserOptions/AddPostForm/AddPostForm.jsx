@@ -3,6 +3,7 @@ import './AddPostForm.css';
 import { connect } from 'react-redux';
 import { fetchingGroups, loadGroups } from '../Store/actions';
 import GroupsBar from './GroupsBar/GroupsBar';
+import { validateInput } from '../Validation/Validation';
 class AddPostForm extends Component{
     state = {
         postTitle: "",
@@ -18,26 +19,7 @@ class AddPostForm extends Component{
     componentDidMount(){ 
         this.props.fetchingGroups();
     }
-    validateInput = (min, max, inputText, specialKeys, inputType) => {
-        const lengthOfInput = inputText.length;
-
-        if(min !== ""){
-            if(lengthOfInput < min)
-                return "Pole " + inputType + " zawiera za mało znaków" + " (min " + min + ")";
-            if(lengthOfInput > max)
-                return "Pole " + inputType + " zawiera za dużo znaków " + "(max " + max + ")";
-        }
-        if(specialKeys !== ""){
-            for(let items in specialKeys){
-                if(inputText.includes(specialKeys[items]))
-                {
-                    return "Pole " + inputType + " nie powinno zawierac znaku: " + specialKeys;
-                }
-            }
-           
-        }
-        return "";
-    }
+   
     onChangeHandlerTitle = event => {
         this.setState({postTitle: event.target.value});
     }
@@ -49,9 +31,9 @@ class AddPostForm extends Component{
         let oldState = [...this.state.validationResult];
 
         
-        oldState[0].content = this.validateInput(5,15,this.state.postTitle, ["kurcze"], "tytuł postu");
+        oldState[0].content = validateInput(5,15,this.state.postTitle, ["kurcze"], "tytuł postu");
 
-        oldState[1].content = this.validateInput(1,250,this.state.postContent, "", "treśc postu");
+        oldState[1].content = validateInput(1,250,this.state.postContent, "", "treśc postu");
 
         if(this.state.addedGroups.length === 0)
             oldState[2].content = "Zanim opublikujesz post, wybierz grupe";

@@ -11,7 +11,6 @@ import secondAxios from '../../../axios-firebase';
 import { AddingPostsErrors } from '../../../components/NamesForForms/Names';
 import AddPostAfterSend from './AddPostAfterSend/AddPostAfterSend';
 import {withRouter} from "react-router-dom";
-
 import { Row, Col } from 'react-bootstrap';
 
 import { SelectGroup, MainForm } from './AddPost.style';

@@ -3,7 +3,15 @@ import './AddEventForm.css';
 import { connect } from 'react-redux';
 import GroupsBar from '../AddPostForm/GroupsBar/GroupsBar';
 import { fetchingGroups, loadGroups } from '../Store/actions';
+import EventContentBlock from './EventContentBlock/EventContentBlock';
+import UniversalForm from '../../../components/UniversalForm/UniversalForm';
+
 const helpArray = [1,2,3];
+const array = [
+    {id: 0, name: "Nazwa wydarzenia", placeholder: "Wprowadz nazwe wydarzenia...", type: "text", value: "", error: ""},
+    {id: 1, name: "Opis wydarzenia", placeholder: "Wprowadz opis wydarzenia...", type: "textarea", value: "", error: ""},
+    {id: 2, name: "Data wydarzenia", placeholder: "Wprowadz date wydarzenia...", type: "date", value: "", error: ""}
+]
 class AddEventForm extends Component{
     state = {
         actualBlock: 1,
@@ -36,6 +44,9 @@ class AddEventForm extends Component{
         this.setState({addedGroups: newGroups});
     }
 
+
+
+
     render(){
         return(
             <div className="add-event-form-container">
@@ -49,11 +60,9 @@ class AddEventForm extends Component{
                     })}
                 </nav>
                 <div className="event-blocks-container">
-                    <div className={this.state.actualBlock === 1 ? 
-                        "visible-block" : "hidden-block"}>
-                        <p className="user-informations">
-                            Etap 1: Wybieranie grup
-                        </p>
+                    <EventContentBlock actualBlock={this.state.actualBlock}
+                    title="Etap 1: Wybierz grupe"
+                    number={1}>
                         <p className="block-header">Grupy do wybrania</p>
                          <GroupsBar 
                         targetClass="loaded-groups"
@@ -66,24 +75,29 @@ class AddEventForm extends Component{
                         groups={this.state.addedGroups}
                         icon={<i className="fa fa-trash"></i>}
                         clicked={(event) => this.deleteGroup(event)} />
-                    </div>
-                    <div className={this.state.actualBlock === 2 ? 
-                        "visible-block" : "hidden-block"}>
-                        elo
-                    </div>
-                    <div className={this.state.actualBlock === 3 ? 
-                        "visible-block" : "hidden-block"}>
-                        elo1
-                    </div>
+
+                    <p className="continue-button" onClick={this.state.actualBlock <=3 ? 
+                        () => this.changeActualBlock(this.state.actualBlock+1) :
+                        alert("Przekierowuje")}>
+                        Dalej
+                    </p>
+                    </EventContentBlock>
+                    <EventContentBlock actualBlock={this.state.actualBlock}
+                    title="Etap 2: Wypełnij formularz"
+                    number={2}>
+                        <UniversalForm array={array}/>
+                    </EventContentBlock>
+                    
+                    <EventContentBlock actualBlock={this.state.actualBlock}
+                    title="Etap 3: Ustaw wygląd"
+                    number={3}>
+                        
+                    </EventContentBlock>
+                    
                     
                 </div>
              
                 
-                <p className="continue-button" onClick={this.state.actualBlock <=3 ? 
-                    () => this.changeActualBlock(this.state.actualBlock+1) :
-                    alert("Przekierowuje")}>
-                    Dalej
-                </p>
                 
             </div>
         );
