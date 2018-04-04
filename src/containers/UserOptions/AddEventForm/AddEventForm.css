@@ -3,7 +3,7 @@
     margin: auto;
 }
 .add-event-form-container h4{
-    padding: 10px;
+    padding: 15px 10px 10px 10px;
     font-weight: lighter;
 }
 .add-event-form-container nav{
@@ -11,6 +11,15 @@
     display: flex;
     justify-content: space-around;
 }
+.add-event-form-container .fa-arrow-left{
+    cursor: pointer;
+    transition: 1s left ease-in-out;
+    position: relative;
+}
+.add-event-form-container .fa-arrow-left:hover{
+    color: rgba(140, 255, 70, 0.5);
+}
+
 .add-event-form-container nav button{
     background-color: rgba(140, 255, 70, 0.5);
     display: flex;
@@ -21,15 +30,8 @@
     border: none;
     outline: none;
     position: relative;
-    cursor: pointer;
     transition: 1s all ease-in-out;
     box-shadow: 0 2px 3px black;
-}
-.add-event-form-container nav button:focus{
-    outline: none;
-}
-.add-event-form-container nav button:hover{
-    opacity: 1;
 }
 .unactive-circle{
     opacity: 0.5;
@@ -94,9 +96,46 @@
 .block-header{
     padding-left: 10px;
 }
-@media(min-width: 601px){
+.modal-validate-error{
+    color: black;
+    width: 90%;
+    font-size: 18px;
+    margin: auto;
+    position: relative;
+}
+.modal-validate-error::before{
+    content: '!';
+    font-size: 38px;
+    border-radius: 50%;
+    padding: 0 6px;
+    color: rgba(206, 55, 55, 0.9);
+    top: -15px;
+    left: -25px;
+    height: 50px;
+    position: absolute;
+}
+.modal-validate-error-confirm-button{
+    margin-top: 15px;
+    border: 2px solid rgba(206,55,55,0.9);
+    font-size: 20px;
+    outline: none;
+    border-radius: 2px;
+    background: white;
+}
+.modal-validate-error-confirm-button:hover{
+    background-color: rgba(206,55,55,0.9);
+    cursor: pointer;
+    color: white;
+}
+.modal-validate-error-confirm-button:focus{
+    outline: none;
+}
+@media(min-width: 991px){
     .add-event-form-container{
         width: 750px;
+    }
+    .add-event-form-container h4{
+        padding-left: 150px;
     }
     .add-event-form-container nav{
         font-size: 19px;
@@ -110,8 +149,35 @@
     .add-event-form-container nav button:last-child::before{
         width: 75px;
     }
+    .add-event-form-container .fa-arrow-left{
+        padding-left: 215px;
+        font-size: 24px;
+    }
     
 }
+@media(max-width: 990px){
+    .add-event-form-container{
+        width: 450px;
+    }
+    .add-event-form-container nav{
+        font-size: 19px;
+        width: 450px;
+    }
+    .add-event-form-container nav button{
+        width: 60px;
+        height: 60px;
+    }
+    .add-event-form-container nav button:first-child::after,
+    .add-event-form-container nav button:last-child::before{
+        width: 90px;
+    }
+    .add-event-form-container .fa-arrow-left{
+        padding-left: 65px;
+        font-size: 22px;
+    }
+}
+
+
 @media(max-width: 600px){
     .add-event-form-container{
         width: 100%;
@@ -128,5 +194,9 @@
     .add-event-form-container nav button:first-child::after,
     .add-event-form-container nav button:last-child::before{
         width: 50px;
+    }
+    .add-event-form-container .fa-arrow-left{
+        padding: 0 20px;
+        font-size: 20px;
     }
 }

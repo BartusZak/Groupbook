@@ -1,0 +1,122 @@
+.universal-form{
+   display: flex;
+   flex-flow: column;
+}
+.input-holders{
+    display: flex;
+    flex-flow: column;
+    margin: auto;
+    box-sizing: border-box;
+    transition: 1s all ease-in-out;
+}
+.input-holders textarea{
+    resize: none;
+}
+.invalid-inputs{
+    border: 2px solid red !important;
+}
+.universal-form p{
+    color: rgba(253, 153, 153, 0.9);
+    position: relative;
+    transition: 1s opacity ease-in-out;
+    box-sizing: border-box;
+}
+.invisible-message{
+    opacity: 0;
+}
+.invalid-message{
+    opacity: 1;
+}
+.input-holders input,
+.input-holders textarea{
+    outline: none;
+    border: 2px solid rgba(253, 153, 153, 0);
+    border-radius: 6px;
+}
+.submit-button{
+    border: none;
+    outline: none;
+    background-color: #23232d;
+    color: orange;
+    cursor: pointer;
+}
+@media(min-width: 991px){
+    .input-holders{
+        width: 50%;
+    }
+    .input-holders textarea,
+    .input-holders input{
+        padding: 10px;
+    }
+    .universal-form p{
+        height: 40px;
+    }
+    .invalid-message{
+        padding: 5px;
+        font-size: 14px;
+    }
+    .submit-button{
+        font-size: 18px;
+        padding: 10px;
+    }
+
+}
+@media(max-width: 990px){
+    .input-holders{
+        width: 75%;
+    }
+    .input-holders textarea,
+    .input-holders input{
+        padding: 10px;
+    }
+    .invalid-message{
+        padding: 5px;
+        font-size: 15px;
+    }
+    .input-holders input[type="date"]{
+        font-size: 16px;
+    }
+    .input-holders textarea{
+        font-size: 18px;
+    }
+    .submit-button{
+        font-size: 18px;
+        padding: 10px;
+    }
+    .universal-form p{
+        height: 50px;
+    }
+
+}
+@media(max-width: 600px){
+    .submit-button{
+        padding: 10px;
+        font-size: 18px;
+        margin: 0 auto 0 auto;
+        width: 75%;
+    }
+    .input-holders{
+        width: 100%;
+        padding: 0 10px;
+    }
+    .input-holders input[type="submit"]{
+        width: 75%;
+    }
+    .input-holders label{
+        padding-left: 10px;
+    }
+    .input-holders input,
+    .input-holders textarea{
+        padding: 10px;
+        font-size: 12px;
+    }
+    .invalid-message{
+        font-size: 14px;
+    }
+    .universal-form p{
+        height: 60px;
+        width: 100%;
+        padding: 5px;
+    }
+    
+}

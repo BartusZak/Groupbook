@@ -21,6 +21,10 @@ class SideMenuContent extends Component{
         this.clearState();
         this.props.history.push("/logged/group/" + groupId);
     }
+    redirectToAddEvent = () => {
+        this.setState({addPost: false, addEvent: true, addGroup: false});
+        this.props.history.push("/logged/addevent");
+    }
     render(){
         return(
         <Aux>
@@ -54,7 +58,11 @@ class SideMenuContent extends Component{
                 <span 
                 onClick={this.redirectToAddPost} 
                 className={this.state.addPost ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj post</span>
-                <span className="sidebar-butt">Dodaj wydarzenie</span>
+                
+                <span  
+                onClick={this.redirectToAddEvent} className="sidebar-butt"
+                className={this.state.addEvent ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj wydarzenie</span>
+
                 <span className="sidebar-butt">Stwórz grupe</span>
             </div>   
             </Aux>

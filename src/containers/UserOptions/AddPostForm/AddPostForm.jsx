@@ -30,10 +30,10 @@ class AddPostForm extends Component{
         e.preventDefault();
         let oldState = [...this.state.validationResult];
 
-        
-        oldState[0].content = validateInput(5,15,this.state.postTitle, ["kurcze"], "tytuł postu");
 
-        oldState[1].content = validateInput(1,250,this.state.postContent, "", "treśc postu");
+        oldState[0].content = validateInput(5,15,this.state.postTitle, ["kurcze"], "", "", "tytuł postu");
+
+        oldState[1].content = validateInput(1,250,this.state.postContent, "", "", "","","treśc postu");
 
         if(this.state.addedGroups.length === 0)
             oldState[2].content = "Zanim opublikujesz post, wybierz grupe";
@@ -61,6 +61,7 @@ class AddPostForm extends Component{
         this.setState({addedGroups: newGroups});
 
     }
+    
     render(){
 
         return(

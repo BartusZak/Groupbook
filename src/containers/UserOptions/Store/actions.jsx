@@ -1,6 +1,7 @@
 import * as actionsTypes from './actionTypes';
 import axios from '../../../axios-firebase';
 import axiosRandom from '../../../axios-post';
+import trueAxios from '../../../axios-groupsconnects';
 
 export const changingPostTitle = (value) => {
     return {
@@ -106,6 +107,8 @@ export const fetchingGroups = () => {
     return dispatch => {
         axiosRandom.get('post/1/comments').then(response => {
             dispatch(loadGroups(response.data));
+        }).catch(error => {
+            console.log(error);
         });
       
     }
