@@ -8,7 +8,7 @@ import './UniversalForm.css';
 import { validateInput } from '../Validation/Validation';
 import Modal from '../../../components/UI/Modal/Modal';
 import 'font-awesome/css/font-awesome.min.css';
-
+import {withRouter} from 'react-router-dom';
 
 const helpArray = [1,2,3];
 const array = [
@@ -29,6 +29,10 @@ class AddEventForm extends Component{
     componentDidMount(){
         this.props.fetchingGroups();
     }
+    confirmAddEventHandler = () => {
+        this.props.history.push("/logged/group/poczekalnia");
+    }
+
     toogleValidationModal = () => {
         this.setState({showValidateModal: !this.state.showValidateModal});
     }
@@ -152,7 +156,17 @@ class AddEventForm extends Component{
                     <EventContentBlock actualBlock={this.state.actualBlock}
                     title="Etap 3: Ustaw wygląd"
                     number={3}>
-                        
+                        <div className="view-block">
+                            <p>Dodaj zdjecie <b>(opcjonalne)</b></p>
+                            <input type="file" />
+                            <i>lub</i>
+                            <p className="drag-drop-place">
+                                przeciągnij i upuśc
+                            </p>
+                            <button onClick={this.confirmAddEventHandler}>
+                                Dodaj wydarzenie
+                            </button>
+                        </div>                   
                     </EventContentBlock>
                     
                     
@@ -182,4 +196,4 @@ const mapDispatchToProps = dispatch => {
         loadGroups: (groups) => loadGroups(groups)
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AddEventForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddEventForm));

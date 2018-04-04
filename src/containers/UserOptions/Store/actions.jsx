@@ -105,7 +105,8 @@ export const loadGroups = (groups) => {
 
 export const fetchingGroups = () => {
     return dispatch => {
-        axiosRandom.get('post/1/comments').then(response => {
+        trueAxios.get('/api/groups').then(response => {
+            console.log(response.data);
             dispatch(loadGroups(response.data));
         }).catch(error => {
             console.log(error);
