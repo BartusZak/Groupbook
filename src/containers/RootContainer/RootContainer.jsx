@@ -59,11 +59,6 @@ class RootContainer extends Component{
         {
             IsLogged = (
                 <Aux>
-                    <Route path="/logged/group/:id" exact component={Group} />
-                    <Route path="/logged/usersettings" exact component={UserSettings} />
-                    <Route path="/logged/event/:id" exact component={EventDetails} />
-                    <Route path="/logged/addpost" exact component={AddPostForm} />
-
                     
                 </Aux>
             );
@@ -116,6 +111,12 @@ class RootContainer extends Component{
                         <Route path="/carousel" component={Carousel}/>
                         <Route path="/logged/addevent" exact component={AddEventForm} />
                         {IsLogged}
+                        {/*@TESTING*/}
+                        <Route path="/logged/group/:id" exact component={Group} />
+                        <Route path="/logged/usersettings" exact component={UserSettings} />
+                        <Route path="/logged/event/:id" exact component={EventDetails} />
+                        <Route path="/logged/addpost" exact component={AddPostForm} />
+    
                       
                         
                         

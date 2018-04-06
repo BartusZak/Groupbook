@@ -15,7 +15,6 @@ import { setTrue } from '../../store/actions/loggingActions';
 import {Container} from 'reactstrap';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
 
-
 import {
     NavbarBrandStyled,
     SocialUl,
@@ -51,7 +50,7 @@ class NavbarComponent extends Component{
         let items = null;
         let homePageLink = "/";
 
-        if(!this.props.isLogged){
+        if(this.props.isLogged){
             items = [
                 {id: 1, name: "Rejestracja", url: "/register"},
                 {id: 2, name: "Logowanie", url: "/logging"} 
@@ -92,7 +91,7 @@ class NavbarComponent extends Component{
                     <ul className="navbar-nav ml-auto nav-flex-icons">
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                 <DropdownToggle nav>
-                                    <Avatar styles={{height: "11vh"}} className="rounded-circle z-depth-0"/>
+                                        <Avatar styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/>
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem>
