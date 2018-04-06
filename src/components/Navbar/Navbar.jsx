@@ -45,6 +45,7 @@ class NavbarComponent extends Component{
             dropdownOpen: !this.state.dropdownOpen
         });
     }
+    
     render(){
         let navbarContent = null;
         let items = null;
@@ -117,7 +118,7 @@ class NavbarComponent extends Component{
             }
             return(
                 <Navbar className="navbar navbar-expand-lg navbar navbar-dark bg-dark lovedMenu" expand="md" scrolling>
-                    <Container className="ContainerStyles">
+                    <Container fluid={true}>
                         <NavbarBrandStyled className="navbar-brand">
                             <div className="smallLogo">
                                 <Link to={homePageLink} className="navIconLogo">

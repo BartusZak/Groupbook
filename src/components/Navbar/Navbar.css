@@ -2,8 +2,6 @@
 
     box-shadow: 0 2px 3px #ccc;
     font-size: 24px;
-    height: 15vh;
-
 }
 @media (max-width: 770px) {
     .lovedMenu{
