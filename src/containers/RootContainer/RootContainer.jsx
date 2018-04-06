@@ -5,7 +5,7 @@ import CenterComponent from '../CenterComponent/CenterComponent';
 import * as actionTypes from '../../store/actions/actionsTypes';
 
 import Team from '../../containers/Team/Team';
-import asyncComponent from '../../AsyncComponent';
+//import asyncComponent from '../../AsyncComponent';// @bartuszak Przykład użycia code snipping
 import  { connect } from 'react-redux';
 import NotFound from '../../components/NotFound/NotFound';
 import Register from '../../components/Register/Register';
@@ -23,6 +23,7 @@ import Group from '../Group/Group';
 import EventDetails from '../../components/EventDetails/EventDetails';
 import AddPostForm from '../UserOptions/AddPostForm/AddPostForm';
 import AddEventForm from '../UserOptions/AddEventForm/AddEventForm';
+import UserDetails from '../UserDetails/UserDetails';
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
 // const About = asyncComponent(() =>
@@ -59,7 +60,7 @@ class RootContainer extends Component{
         {
             IsLogged = (
                 <Aux>
-                    
+                
                 </Aux>
             );
 
@@ -110,15 +111,18 @@ class RootContainer extends Component{
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
                         <Route path="/logged/addevent" exact component={AddEventForm} />
+                        
                         {IsLogged}
                         {/*@TESTING*/}
                         <Route path="/logged/group/:id" exact component={Group} />
                         <Route path="/logged/usersettings" exact component={UserSettings} />
                         <Route path="/logged/event/:id" exact component={EventDetails} />
                         <Route path="/logged/addpost" exact component={AddPostForm} />
-    
-                      
                         
+                        <Route path='/logged/user/:id' component={UserDetails} />
+
+                        
+                       
                         
                         
                        

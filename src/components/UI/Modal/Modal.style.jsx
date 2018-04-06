@@ -15,6 +15,7 @@ export const ModalDiv = styled.div`
     box-sizing: border-box;
     transition: all 0.3s ease-out;
     text-align: center;
+    color: black;
 
 .closeIcon{
     position: absolute;

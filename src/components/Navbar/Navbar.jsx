@@ -50,7 +50,7 @@ class NavbarComponent extends Component{
         let items = null;
         let homePageLink = "/";
 
-        if(this.props.isLogged){
+        if(!this.props.isLogged){
             items = [
                 {id: 1, name: "Rejestracja", url: "/register"},
                 {id: 2, name: "Logowanie", url: "/logging"} 
