@@ -23,7 +23,7 @@ const about = () => {
       <Row>
         <Col xs="12" sm="12" className="headerTop">
             <LogoIcon width="100px" />
-            <Logo class="img-fluid"/>
+            <Logo className="img-fluid"/>
             <h1>Ludzie z pasją!</h1>
         </Col>
       </Row>

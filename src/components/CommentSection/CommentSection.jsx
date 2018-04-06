@@ -12,7 +12,7 @@ class CommentSection extends Component{
                 <li className="add-comment-area">
                     <textarea placeholder="Dodaj nowy komentarz..."></textarea>
                     <button className="add-comment-gr-button">
-                        Dodaj komentarz <i class="fa fa-plus"></i>
+                        Dodaj komentarz <i className="fa fa-plus"></i>
                     </button>
                   
                 </li>

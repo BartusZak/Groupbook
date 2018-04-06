@@ -11,7 +11,7 @@ class GroupsBlock extends Component {
         return(
             <GroupBlockDiv>
                 <div className="main-cont">
-                    <p><span>Twoje grupy</span><span className="new-group"><i onClick={() => this.iniciateAnimationHandler()} class="fa fa-info-circle"></i>Nowa grupa</span></p>
+                    <p><span>Twoje grupy</span><span className="new-group"><i onClick={() => this.iniciateAnimationHandler()} className="fa fa-info-circle"></i>Nowa grupa</span></p>
                     <Group animation={this.state.animation}/>
                 </div> 
                

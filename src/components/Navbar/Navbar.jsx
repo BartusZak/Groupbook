@@ -92,7 +92,7 @@ class NavbarComponent extends Component{
                     <ul className="navbar-nav ml-auto nav-flex-icons">
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                 <DropdownToggle nav>
-                                    <Avatar styles={{height: "11vh"}} class="rounded-circle z-depth-0"/>
+                                    <Avatar styles={{height: "11vh"}} className="rounded-circle z-depth-0"/>
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem>

@@ -34,16 +34,16 @@ class Group extends Component{
                 <div className="group-container">
                     <p className="group-title-full">Poczekalnia</p>
                     <nav style={{backgroundImage: `url(${Back})`}} className="navigation-bar">
-                        <span className="group-owner">Należysz <i class="fa fa-check"></i></span>
+                        <span className="group-owner">Należysz <i className="fa fa-check"></i></span>
                     </nav>
                     <div className="navigate">
                         <div className="group-nav-left">
-                            <i onClick={this.showPostsClickHandler} class="fa fa-clipboard"></i>
-                            <i onClick={this.showEventsClickHandler} class="fa fa-calendar"></i>
+                            <i onClick={this.showPostsClickHandler} className="fa fa-clipboard"></i>
+                            <i onClick={this.showEventsClickHandler} className="fa fa-calendar"></i>
                         </div>
                         <div className="group-nav-right">
-                            <i onClick={this.modalShowClickHandler} class="fa fa-envelope"></i>
-                            <i onClick={this.modalShowClickHandler} class="fa fa-user-plus"></i>
+                            <i onClick={this.modalShowClickHandler} className="fa fa-envelope"></i>
+                            <i onClick={this.modalShowClickHandler} className="fa fa-user-plus"></i>
                         </div>                               
                     </div>
                     {this.state.showEvents ? <Events /> : 

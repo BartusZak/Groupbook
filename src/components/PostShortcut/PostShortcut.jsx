@@ -76,7 +76,7 @@ class PostShortcut extends Component{
         else{
             postShortcut = (
                 <Aux>   
-                       <Button color="dark-green" title="Dodaj post" class="margins" url="/logged/newpost"/>
+                       <Button color="dark-green" title="Dodaj post" className="margins" url="/logged/newpost"/>
                         {requestData.map(item => {
                             return <SmallPost 
                             author={item.id} 
