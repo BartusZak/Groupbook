@@ -7,7 +7,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 
 class UserDetailsLogo extends Component {
         state = { 
-                img250x400: null,
+            img250x400: false,
             loading: true
          }
 
@@ -42,10 +42,8 @@ class UserDetailsLogo extends Component {
                 }
                 if ( this.state.img250x400 ) {
                         let imgPath = this.state.img250x400;
-                        img250x400 = (
-                                        
+                        img250x400 = (        
                         <ImgDiv>
-                        {imgPath}
                                 <IMG className="img-responsive" src="" alt="Zdjęcie Profilowe" />
                         </ImgDiv>
         

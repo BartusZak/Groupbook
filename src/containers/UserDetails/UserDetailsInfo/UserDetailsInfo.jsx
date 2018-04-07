@@ -51,7 +51,7 @@ class UserDetailsInfo extends Component {
             user = (
 
                 <UserDetailsInfoDiv>
-                        <h1><u>{this.state.user.firstName + ' ' + this.state.user.lastname}</u> ({this.state.user.username})</h1>
+                        <h1><u>{this.state.user.firstName} {this.state.user.lastname}</u> ({this.state.user.username} #{this.props.id})</h1>
                         <Button title="Wyślij wiadomość"/>
                         <Button title="Dodaj do grupy"/>
                         <ul>
