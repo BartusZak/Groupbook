@@ -10,10 +10,9 @@ import {fetchingLogingIn } from '../../store/actions/loggingActions';
 class Form extends Component {
     state = {
         names: this.props.names, // Co ma byc wrzucone w formularz
-        itemsErrors: this.props.errors, // Dostepne errory,
-        isLogged: false
+        itemsErrors: this.props.errors,
+        isRedirect: false
     }
-
     Validate = () => {
         const errors = [...this.state.itemsErrors];
         const oldState = [...this.state.names];
@@ -35,25 +34,12 @@ class Form extends Component {
         this.setState({...this.state, itemsErrors: errors});
         
         if(result){
-            
-            
             this.props.fetchingLogingIn(this.state.names[0].text,
-                this.state.names[1].text);
-            
-            
-            this.setState({isLogged: this.props.token !== "" ? true : false});
-
-            
-            if(this.state.isLogged){
-                this.setState({names: null, itemsErrors: null});
-                this.props.history.push("/logged/group/poczekalnia");
-            }
-            
-          
-            
+                this.state.names[1].text,this.props.history);
         }
        
     }
+   
     onSubmitHandler = e => { 
         e.preventDefault();
         this.Validate();
@@ -116,13 +102,12 @@ const mapStateToProps = state => {
         token: state.logRed.token,
         logingError: state.logRed.logingError,
         loggingObject: state.logRed.loggingObject
-
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        //logIn: (value, userName) => dispatch(logIn(value, userName))
-        fetchingLogingIn: (username, password) => dispatch(fetchingLogingIn(username, password))
+        
+        fetchingLogingIn: (username, password, router) => dispatch(fetchingLogingIn(username, password, router))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Form));
