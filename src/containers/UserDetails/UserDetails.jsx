@@ -13,11 +13,15 @@ import Spinner from 'components/UI/Spinner/Spinner';
 
 class UserDetails extends Component{
     state = {
-        user: null
+        user: null,
+        groupsIds : [],
+        groups: [],
+        render: false
     }
 
     componentDidMount () {
         this.loadData();
+        this.loadGroupsIdsOfUser();
     }
 
     loadData () {
@@ -25,26 +29,77 @@ class UserDetails extends Component{
             if ( !this.state.user) {
                 axios.get( '/users/' + this.props.match.params.id + '.json')
                     .then( response => {
-                        console.log(response);
                         this.setState({user: response.data});
                     })
                     .catch(err => {
                         this.setState({user: null});
-                        console.log("error");
                     });
+            }
+        }
+        
+    }
+    loadGroupsIdsOfUser () {
+        
+        if ( this.props.match.params.id) {
+            if ( this.state.groupsIds.length == 0 || this.state.groupsIds === undefined) {
+                axios.get( '/usersGroups.json')
+                .then( response => {
+                    this.setState({test: 100});
+                    for (var i = 0; i < response.data.length; i++) {
+                        if(response.data[i] != null){
+                            if(response.data[i].userId == this.props.match.params.id){
+                                this.setState({ groupsIds: [...this.state.groupsIds, response.data[i].groupId]})
+                            }
+                        }
+                    }
+                    this.loadGroups();
+                })
+                .catch(err => {
+                    this.setState({groupsIds: null});
+                });
             }
         }
     }
 
+    loadGroups(){
+
+        axios.get ('/groups.json')
+            .then( response => {
+
+                for( let y in this.state.groupsIds){
+                    for (var x in response.data) {
+                        
+                        if(response.data[x] != null){
+                            if( x == this.state.groupsIds[y]){
+                                this.setState({ groups: [...this.state.groups, response.data[x]]});
+                                
+                            }
+                        }
+                    }
+                        if( y == (this.state.groupsIds.length-1)){
+                            this.setState({render: true});
+                        }
+                }
+                
+            })
+            .catch(err => {
+                this.setState({groups: null});
+            });
+
+    }
+
     render(){
+        
         let user = <p>Error</p>;
         if ( this.props.match.params.id) {
-            user = <Aux>
-                        <Spinner/>
-                        <p style={{ textAlign: 'center' }}>Ładowanie...!</p>
-                    </Aux>
+            user = <UserDetailsDiv style={{paddingTop: "60px"}}>
+                <div style={{backgroundColor: "#2c2c36", margin: "0 200px", padding: "30px 0"}}>
+                        <Spinner marginTop="unset"/>
+                        <p style={{ textAlign: 'center', color: 'white' }}>Ładowanie...!</p>
+                </div>
+                    </UserDetailsDiv>
         }
-        if ( this.state.user ){
+        if ( this.state.user && this.state.render ){
             user = 
                 <UserDetailsDiv>
                     <Container fluid={true}>
@@ -72,14 +127,14 @@ class UserDetails extends Component{
                         </Row>
                         <RowBottom className="row">
                             
-                            <UserGroups/>
+                            <UserGroups user={this.state.user} groups={this.state.groups} groupsIds={this.state.groupsIds}/>
                             
                         </RowBottom>
                         
                     </Container>
                 </UserDetailsDiv>
         }
-        else{
+        else if(!this.state.user){
             user = 
             <Alert color="info">
                 Brak takiego użytkownika!

@@ -12,7 +12,7 @@ class UserDetailsLogo extends Component {
          }
 
          componentDidMount () {
-                console.log(this.props);
+                // console.log(this.props);
                 this.loadData();
             }
 
@@ -21,7 +21,7 @@ class UserDetailsLogo extends Component {
                     if ( !this.state.img250x400) {
                         axios.get( '/users/' + this.props.id + '.json')
                             .then( response => {
-                                console.log(response.data);
+                                // console.log(response.data);
                                 this.setState({loading: false, img250x400: response.data.img250x400});
                             })
                             .catch(err => {
@@ -33,6 +33,7 @@ class UserDetailsLogo extends Component {
             }
         
             render() {
+                console.log()
                 let img250x400 = <p style={{ textAlign: 'center' }}>Brak danych :(</p>;
                 if ( this.props.id) {
                         img250x400 = <ImgDiv>
@@ -41,10 +42,9 @@ class UserDetailsLogo extends Component {
                             </ImgDiv>
                 }
                 if ( this.state.img250x400 ) {
-                        let imgPath = this.state.img250x400;
                         img250x400 = (        
                         <ImgDiv>
-                                <IMG className="img-responsive" src="" alt="Zdjęcie Profilowe" />
+                                <IMG className="img-responsive" src={this.state.img250x400} alt="Zdjęcie Profilowe" />
                         </ImgDiv>
         
                     );

@@ -27,7 +27,7 @@ class UserDetailsInfo extends Component {
             if ( !this.state.user) {
                 axios.get( '/users/' + this.props.id + '.json')
                     .then( response => {
-                        console.log(response.data);
+                        // console.log(response.data);
                         this.setState({loading: false, user: response.data});
                     })
                     .catch(err => {
