@@ -10,7 +10,7 @@ import Searcher from '../UI/Searcher/Searcher';
 import Avatar from '../UI/Avatar/Avatar';
 import logoIcon from '../../assets/img/logo/groupsconnectsLogoSmall.png';
 import { connect } from 'react-redux';
-import { setTrue } from '../../store/actions/loggingActions';
+import { loggingOut } from '../../store/actions/loggingActions';
 
 import {Container} from 'reactstrap';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
@@ -50,7 +50,7 @@ class NavbarComponent extends Component{
         let items = null;
         let homePageLink = "/";
 
-        if(!this.props.isLogged){
+        if(this.props.token === ""){
             items = [
                 {id: 1, name: "Rejestracja", url: "/register"},
                 {id: 2, name: "Logowanie", url: "/logging"} 
@@ -106,7 +106,7 @@ class NavbarComponent extends Component{
                                                 Poczekalnia
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem><i className="fa fa-sign-out" aria-hidden="true"/><NavbarButton name="Wyloguj" path="/" clicked={() => this.props.changeLoginState()}/></DropdownItem>
+                                    <DropdownItem><i className="fa fa-sign-out" aria-hidden="true"/><NavbarButton name="Wyloguj" path="/" clicked={() => this.props.loggingOut()}/></DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                     </ul>
@@ -143,12 +143,12 @@ class NavbarComponent extends Component{
 
 const mapStateToProps = state => {
     return {
-        isLogged: state.logRed.isLogin
+        token: state.logRed.token
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        changeLoginState: () => dispatch(setTrue())
+        loggingOut: () => dispatch(loggingOut())
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})( NavbarComponent);

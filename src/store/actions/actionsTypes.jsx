@@ -1,6 +1,3 @@
-export const SET_TRUE = 'SET_TRUE';
-export const LOAD_GROUPS_DATA = 'LOAD_GROUPS_DATA';
-export const LOAD_POST_DATA = 'LOAD_POST_DATA';
-export const LOG_IN = 'LOG_IN';
-export const CHANGE_SELECTED = 'CHANGE_SELECTED';
-
+export const LOGING_IN = 'LOGING_IN';
+export const LOGING_ERROR = 'LOGING_ERROR';
+export const LOGING_OUT = 'LOGING_OUT';
