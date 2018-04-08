@@ -21,7 +21,7 @@ class UserDetailsLogo extends Component {
                     if ( !this.state.img250x400) {
                         axios.get( 'http://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.id + '/avatar', {responseType: "blob"})
                             .then( response => {
-                                console.log(response);
+                               // console.log(response);
                                 this.setState({loading: false, img250x400: URL.createObjectURL(response.data)});
                             })
                             .catch(err => {
@@ -33,7 +33,7 @@ class UserDetailsLogo extends Component {
             }
         
             render() {
-                console.log()
+                //console.log()
                 let img250x400 = <p style={{ textAlign: 'center' }}>Brak danych :(</p>;
                 if ( this.props.id) {
                         img250x400 = <ImgDiv>

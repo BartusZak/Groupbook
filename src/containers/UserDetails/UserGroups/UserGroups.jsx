@@ -9,6 +9,7 @@ class UserGroups extends Component {
         groups: this.props.groups,
     }
     render() {
+        console.log(this.props);
         let groups = this.state.groups.map((group, index) => {
             return (
                 <Col key={index} lg="4">
@@ -21,15 +22,16 @@ class UserGroups extends Component {
                             <div className="header-text">
                                 <div className="panel panel-success" style={{height: "247px"}}>
                                     <div className="panel-heading">
-                                        <h3>{group.name}</h3>
+                                        <h3>{group.group.name}</h3>
                                     </div>
                                     <div className="panel-body">
                                         <div className="form-group">
-                                            Ilość członków:<b>10</b>
+                                        Data utworzenia:<br/>
+                                        <b>{new Date(group.group.creationDate).toISOString().replace('-', '/').split('T')[0].replace('-', '/')}</b>
                                         </div>
                                         <div className="form-group">
                                             Informacje o grupie:<br/>
-                                            <b>{group.description}</b>
+                                            <b>{group.group.description}</b>
                                         </div>
                                     </div>
                                 </div>

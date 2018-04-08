@@ -92,6 +92,7 @@ class UserDetails extends Component{
     
 
     render(){
+        //console.log(this.state.user)
         let userGroups = (this.state.render)?  
             <UserGroups user={this.state.user} groups={this.state.groups} groupsIds={this.state.groupsIds}/> : 
             <p>Użytkownik nie należy do żadnej grupy</p>;
@@ -132,7 +133,7 @@ class UserDetails extends Component{
                             
                         </Row>
                         <RowBottom className="row">
-                            {userGroups}
+                            <UserGroups groups={this.state.user.userGroups}/>
                         </RowBottom>
                         
                     </Container>
