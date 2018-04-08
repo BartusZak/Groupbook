@@ -1,5 +1,6 @@
 import * as actionsTypes from './actionsTypes';
 import axios from '../../axios-groupsconnects';
+
 export const logingIn = (token, responseObject) => {
     return {
         type: actionsTypes.LOGING_IN,
@@ -13,18 +14,17 @@ export const errorInLoggingProcedure = (logingError) => {
         logingError: logingError
     }
 }
-export const fetchingLogingIn = (username, password) => {
+export const fetchingLogingIn = (username, password, router) => {
     return dispatch => {
         const loginData = {
             Username: username,
             Password: password
         }
         axios.post('/api/account/login', loginData).then(response => {
-            
             const responseObject = response.data.successResult;
             dispatch(logingIn(responseObject.token, responseObject));
             dispatch(errorInLoggingProcedure(""));
-            return true;
+            router.push('logged/group/poczekalnia');
         }).catch( error => {
             dispatch(errorInLoggingProcedure("Zły login lub hasło"));
             dispatch(logingIn("", "", "", ""));
