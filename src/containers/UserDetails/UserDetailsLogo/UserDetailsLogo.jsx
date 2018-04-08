@@ -19,10 +19,10 @@ class UserDetailsLogo extends Component {
             loadData () {
                 if ( this.props.id) {
                     if ( !this.state.img250x400) {
-                        axios.get( '/users/' + this.props.id + '.json')
+                        axios.get( 'http://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.id + '/avatar')
                             .then( response => {
-                                // console.log(response.data);
-                                this.setState({loading: false, img250x400: response.data.img250x400});
+                                console.log(response);
+                                this.setState({loading: false, img250x400: response.data});
                             })
                             .catch(err => {
                                 this.setState({loading: false});
