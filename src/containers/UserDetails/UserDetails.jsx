@@ -19,7 +19,7 @@ class UserDetails extends Component{
         render: false
     }
 
-    componentDidMount () {
+    componentWillMount () {
         this.loadData();
         this.loadGroupsIdsOfUser();
     }
@@ -27,7 +27,7 @@ class UserDetails extends Component{
     loadData () {
         if ( this.props.match.params.id) {
             if ( !this.state.user) {
-                axios.get( '/users/' + this.props.match.params.id + '.json')
+                axios.get( 'http://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.match.params.id)
                     .then( response => {
                         this.setState({user: response.data});
                     })
@@ -62,34 +62,40 @@ class UserDetails extends Component{
     }
 
     loadGroups(){
+        if(this.state.groupsIds.length != 0){
+            axios.get ('/groups.json')
+                .then( response => {
 
-        axios.get ('/groups.json')
-            .then( response => {
-
-                for( let y in this.state.groupsIds){
-                    for (var x in response.data) {
-                        
-                        if(response.data[x] != null){
-                            if( x == this.state.groupsIds[y]){
-                                this.setState({ groups: [...this.state.groups, response.data[x]]});
-                                
+                    for( let y in this.state.groupsIds){
+                        for (var x in response.data) {
+                            
+                            if(response.data[x] != null){
+                                if( x == this.state.groupsIds[y]){
+                                    this.setState({ groups: [...this.state.groups, response.data[x]]});
+                                    
+                                }
                             }
                         }
+                            if( y == (this.state.groupsIds.length-1)){
+                                this.setState({render: true});
+                            }
                     }
-                        if( y == (this.state.groupsIds.length-1)){
-                            this.setState({render: true});
-                        }
-                }
-                
-            })
-            .catch(err => {
-                this.setState({groups: null});
-            });
+                    
+                })
+                .catch(err => {
+                    this.setState({groups: null});
+                });
+        }
 
     }
 
+    
+
     render(){
-        
+        let userGroups = (this.state.render)?  
+            <UserGroups user={this.state.user} groups={this.state.groups} groupsIds={this.state.groupsIds}/> : 
+            <p>Użytkownik nie należy do żadnej grupy</p>;
+
         let user = <p>Error</p>;
         if ( this.props.match.params.id) {
             user = <UserDetailsDiv style={{paddingTop: "60px"}}>
@@ -99,7 +105,7 @@ class UserDetails extends Component{
                 </div>
                     </UserDetailsDiv>
         }
-        if ( this.state.user && this.state.render ){
+        if ( this.state.user ){
             user = 
                 <UserDetailsDiv>
                     <Container fluid={true}>
@@ -113,7 +119,7 @@ class UserDetails extends Component{
                                     <UserDetailsLogo id={this.props.match.params.id}/>
                             </Col>
                             <Col md="6">
-                                <UserDetailsInfo id={this.props.match.params.id}/>
+                                <UserDetailsInfo user={this.state.user} />
                             </Col>
                         </Row>
                         
@@ -126,9 +132,7 @@ class UserDetails extends Component{
                             
                         </Row>
                         <RowBottom className="row">
-                            
-                            <UserGroups user={this.state.user} groups={this.state.groups} groupsIds={this.state.groupsIds}/>
-                            
+                            {userGroups}
                         </RowBottom>
                         
                     </Container>

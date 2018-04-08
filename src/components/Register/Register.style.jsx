@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Register = styled.div`
     width: 100%;
-    margin-top: 30px;
+    padding: 30px 0;
     background-color: white;
+
 `;

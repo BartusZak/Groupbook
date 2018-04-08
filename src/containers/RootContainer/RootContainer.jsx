@@ -60,7 +60,12 @@ class RootContainer extends Component{
         {
             IsLogged = (
                 <Aux>
-                
+                    <Route path="/logged/group/:id" exact component={Group} />
+                    <Route path="/logged/usersettings" exact component={UserSettings} />
+                    <Route path="/logged/event/:id" exact component={EventDetails} />
+                    <Route path="/logged/addpost" exact component={AddPostForm} />
+                    
+                    <Route path='/logged/user/:id' component={UserDetails} />
                 </Aux>
             );
 
@@ -114,12 +119,6 @@ class RootContainer extends Component{
                         
                         {IsLogged}
                         {/*@TESTING*/}
-                        <Route path="/logged/group/:id" exact component={Group} />
-                        <Route path="/logged/usersettings" exact component={UserSettings} />
-                        <Route path="/logged/event/:id" exact component={EventDetails} />
-                        <Route path="/logged/addpost" exact component={AddPostForm} />
-                        
-                        <Route path='/logged/user/:id' component={UserDetails} />
 
                         
                        

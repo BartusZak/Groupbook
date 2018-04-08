@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <Router>
         <ScrollFixer>
-            <div className="App">
+            <div className="App" style={{paddingBottom: "50px"}}>
               <RootContainer />
             </div>
         </ScrollFixer>

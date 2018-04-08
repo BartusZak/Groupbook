@@ -9,13 +9,13 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 
 class UserDetailsInfo extends Component {
     state = { 
-        user: null,
+        user: this.props.user,
         loading: true
      }
 
     componentDidMount () {
         //console.log(this.props);
-        this.loadData();
+        //this.loadData();
     }
 
     // componentDidUpdate() {
@@ -25,7 +25,7 @@ class UserDetailsInfo extends Component {
     loadData () {
         if ( this.props.id) {
             if ( !this.state.user) {
-                axios.get( '/users/' + this.props.id + '.json')
+                axios.get( 'http://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.id)
                     .then( response => {
                         // console.log(response.data);
                         this.setState({loading: false, user: response.data});
@@ -39,6 +39,15 @@ class UserDetailsInfo extends Component {
     }
 
     render() {
+        let birthDateObject = new Date(this.state.user.birthDate);
+        let years = ~~((Date.now() - birthDateObject) / (31557600000))
+
+        let month = birthDateObject.getUTCMonth() + 1; //months from 1-12
+        let day = birthDateObject.getUTCDate();
+        let year = birthDateObject.getUTCFullYear();
+
+        let newdate = year + "/" + month + "/" + day;
+
         let user = <p style={{ textAlign: 'center' }}>Brak danych :(</p>;
         if ( this.props.id) {
             user = <UserDetailsInfoDiv>
@@ -51,7 +60,7 @@ class UserDetailsInfo extends Component {
             user = (
 
                 <UserDetailsInfoDiv>
-                        <h1><u>{this.state.user.firstName} {this.state.user.lastname}</u> ({this.state.user.username} #{this.props.id})</h1>
+                        <h1><u>{this.state.user.firstName} {this.state.user.lastName}</u> ({this.state.user.username} #{this.state.user.id})</h1>
                         <Button title="Wyślij wiadomość"/>
                         <Button title="Dodaj do grupy"/>
                         <ul>
@@ -60,7 +69,7 @@ class UserDetailsInfo extends Component {
                             <li>Płeć</li>
                             <li>{gender}</li>
                             <li>Wiek</li>
-                            <li>{this.state.user.birthDate}</li>
+                            <li>{newdate} ({years} lat)</li>
                         </ul>
                 </UserDetailsInfoDiv>
 
