@@ -17,8 +17,8 @@ export const RegisterErrors = [
 
 ];
 export const LoginNames = [
-    {id: 1,name: "Login", placeholder: "Login", text: "", min: 5, max: 15, type:"Text"},
-    {id: 2,name: "Hasło", placeholder: "Hasło", text: "", min: 5, max: 15, type:"Password"}
+    {id: 1,name: "Login", placeholder: "Login", text: "", min: 4, max: 15, type:"Text"},
+    {id: 2,name: "Hasło", placeholder: "Hasło", text: "", min: 4, max: 15, type:"Password"}
 ];
 export const LoginErrors = [
     {id: 1, msg: "", isError: false},

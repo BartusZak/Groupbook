@@ -5,12 +5,13 @@ import Button from '../UI/Button';
 import { Link } from 'react-router-dom';
 import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
-import { logIn } from '../../store/actions/loggingActions';
+import {fetchingLogingIn } from '../../store/actions/loggingActions';
 
 class Form extends Component {
     state = {
         names: this.props.names, // Co ma byc wrzucone w formularz
-        itemsErrors: this.props.errors, // Dostepne errory
+        itemsErrors: this.props.errors, // Dostepne errory,
+        isLogged: false
     }
 
     Validate = () => {
@@ -34,17 +35,31 @@ class Form extends Component {
         this.setState({...this.state, itemsErrors: errors});
         
         if(result){
-            this.setState({names: null, itemsErrors: null});
-            this.props.history.push("/logged/group/poczekalnia");
-            this.props.logIn(result, this.state.names[0]["text"]);
+            
+            
+            this.props.fetchingLogingIn(this.state.names[0].text,
+                this.state.names[1].text);
+            
+            
+            this.setState({isLogged: this.props.token !== "" ? true : false});
+
+            
+            if(this.state.isLogged){
+                this.setState({names: null, itemsErrors: null});
+                this.props.history.push("/logged/group/poczekalnia");
+            }
+            
+          
+            
         }
        
     }
     onSubmitHandler = e => { 
         e.preventDefault();
         this.Validate();
+        
     }
-    //
+
     onChangeHandler = (event, id) => {
         const index = this.state.names.findIndex(p => {
             return p.id === id;
@@ -59,6 +74,7 @@ class Form extends Component {
     }
 
     render(){
+        
         let text = null;
         if(this.props.name.toUpperCase() === "LOGOWANIE")
         {
@@ -97,13 +113,16 @@ class Form extends Component {
 }
 const mapStateToProps = state => {
     return {
-        isLogged: state.logRed.isLogin,
+        token: state.logRed.token,
+        logingError: state.logRed.logingError,
+        loggingObject: state.logRed.loggingObject
 
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        logIn: (value, userName) => dispatch(logIn(value, userName))
+        //logIn: (value, userName) => dispatch(logIn(value, userName))
+        fetchingLogingIn: (username, password) => dispatch(fetchingLogingIn(username, password))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Form));

@@ -56,7 +56,7 @@ class RootContainer extends Component{
         let IsLogged = null;
         let IsLoggedMenuExpander = null;
 
-        if(this.props.isLogged)
+        if(this.props.token !== "")
         {
             IsLogged = (
                 <Aux>
@@ -143,7 +143,7 @@ class RootContainer extends Component{
 
 const mapStateToProps = state => {
     return {
-        isLogged: state.logRed.isLogin
+        token: state.logRed.token
     }
 }
 export default connect(mapStateToProps, null, null, {pure:false})(RootContainer);

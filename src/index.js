@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import WebFont from 'webfontloader'; //to jest do czcionek na stronie
 import  { createStore, combineReducers, applyMiddleware } from 'redux';
 import logginReducer from './store/reducers/logginAction';
-import asyncReducer from './store/reducers/asyncReducer';
+
 import userOptionsReducer from './containers/UserOptions/Store/reducer';
 import  { Provider} from 'react-redux';
 import thunk from 'redux-thunk';
@@ -22,7 +22,6 @@ WebFont.load({
   });
 
 const rootReducer = combineReducers({
-    asyncRed: asyncReducer,
     logRed: logginReducer,
     userOptionsRed: userOptionsReducer
 }); 
