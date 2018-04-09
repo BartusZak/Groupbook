@@ -4,7 +4,7 @@ import './index.css'; //to 3ba przerzucic do ./theme/globalStyle
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import WebFont from 'webfontloader'; //to jest do czcionek na stronie
-import  { createStore, combineReducers, applyMiddleware } from 'redux';
+import  { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import logginReducer from './store/reducers/logginAction';
 
 import userOptionsReducer from './containers/UserOptions/Store/reducer';
@@ -14,6 +14,7 @@ import './theme/globalStyle'; //globalne style css
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 WebFont.load({
     google: {
@@ -25,8 +26,7 @@ const rootReducer = combineReducers({
     logRed: logginReducer,
     userOptionsRed: userOptionsReducer
 }); 
-
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <Provider store={store}>

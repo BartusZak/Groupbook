@@ -33,16 +33,7 @@
    resize: none;
    height: 90px;
 }
-.add-post-button{
-    background-color: #34353d;
-    text-align: center;
-    margin: 30px auto 15px auto;
-    cursor: pointer;
-    padding: 10px;
-}
-.add-post-button:hover{
-    background-color: #45474e;
-}
+
 .form-holder p{ /*Wiadomosci walidacji*/
     text-align: center;
     transition: 1s all ease-in-out;
@@ -72,10 +63,6 @@
     .block-header{
         padding-left: 75px !important;
     }
-    .add-post-button{
-        font-size: 22px;
-        width: 35%;
-    }
     .form-holder{
         margin: auto;
         width: 70%;
@@ -96,10 +83,7 @@
         font-size: 20px;
         font-weight: lighter;
     }
-    .add-post-button{
-        font-size: 15px;
-        width: 50%;
-    }
+   
     .form-holder{
         width: 100%;
     }

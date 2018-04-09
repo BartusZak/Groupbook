@@ -9,7 +9,8 @@ import { validateInput } from '../Validation/Validation';
 import Modal from '../../../components/UI/Modal/Modal';
 import 'font-awesome/css/font-awesome.min.css';
 import {withRouter} from 'react-router-dom';
-
+import AddPictureBlock from '../../../components/UI/AddPictureBlock/AddPictureBlock';
+import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
 const helpArray = [1,2,3];
 const array = [
     {id: 0, name: "Nazwa wydarzenia", placeholder: "Wprowadz nazwe wydarzenia...", type: "text", value: "", error: ""},
@@ -23,7 +24,10 @@ class AddEventForm extends Component{
         validateError: "",
         showValidateModal: false,
         inputValues: array,
-        redirectToThree: false
+        redirectToThree: false,
+
+        files: [],
+        incorrectPictureError: ""
 
     }
     componentDidMount(){
@@ -85,12 +89,28 @@ class AddEventForm extends Component{
         
         if(newItems[0].error === "" && newItems[1].error === "" && newItems[2].error === "")
             this.setState({redirectToThree: true, inputValues: newItems, actualBlock: 3});
-        
-
     }
 
     comeBackEventHandler = () => {
         this.setState({actualBlock: this.state.actualBlock-1});
+    }
+    onDrop = (files) => {
+        const correctFormats = ['jpg','jpeg','png'];
+        let counter = 0;
+        for(let key in correctFormats){
+            if(files[0].type === "image/" + correctFormats[key]){
+                counter = counter+1;
+            }
+        }
+        if(counter > 0){
+            this.setState({files: files});
+        }
+        else{
+            this.setState({incorrectPictureError: "Dodane zdjęcie posiada niedopuszczalny format"});
+        }
+    }
+    deleteFiles = () => {
+        this.setState({files: []});
     }
     render(){
         return(
@@ -156,30 +176,23 @@ class AddEventForm extends Component{
                     <EventContentBlock actualBlock={this.state.actualBlock}
                     title="Etap 3: Ustaw wygląd"
                     number={3}>
-                        <div className="view-block">
-                            <p>Dodaj zdjecie <b>(opcjonalne)</b></p>
-                            <input type="file" />
-                            <i>lub</i>
-                            <p className="drag-drop-place">
-                                przeciągnij i upuśc
-                            </p>
-                            <button onClick={this.confirmAddEventHandler}>
-                                Dodaj wydarzenie
-                            </button>
-                        </div>                   
+                     <AddPictureBlock
+                        buttonTitle="Dodaj wydarzenie"
+                        clicked={this.confirmAddEventHandler}
+                        onDropped={e => this.onDrop(e)}
+                        files={this.state.files}
+                        deleteFiles={this.deleteFiles}
+                        incorrectPictureError={this.state.incorrectPictureError}
+                        />  
                     </EventContentBlock>
                     
                     
                 </div>
-             
-                
-                <Modal show={this.state.showValidateModal} clickedMethod={
-                    () => this.toogleValidationModal()}>
-                    <p className="modal-validate-error">{this.state.validateError}</p>
-                    <button onClick={this.toogleValidationModal} className="modal-validate-error-confirm-button">
-                        Potwierdzam
-                    </button>
-                </Modal>
+                <EmptyGroupsModal 
+                showValidateModal={this.state.showValidateModal}
+                toogleValidationModal={this.toogleValidationModal}
+                validateError={this.state.validateError}
+                />
             </div>
         );
     }

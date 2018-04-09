@@ -11,7 +11,7 @@ class Form extends Component {
     state = {
         names: this.props.names, // Co ma byc wrzucone w formularz
         itemsErrors: this.props.errors,
-        isRedirect: false
+        isError: false
     }
     Validate = () => {
         const errors = [...this.state.itemsErrors];
@@ -36,14 +36,13 @@ class Form extends Component {
         if(result){
             this.props.fetchingLogingIn(this.state.names[0].text,
                 this.state.names[1].text,this.props.history);
+           
         }
-       
     }
    
     onSubmitHandler = e => { 
         e.preventDefault();
         this.Validate();
-        
     }
 
     onChangeHandler = (event, id) => {
@@ -60,7 +59,6 @@ class Form extends Component {
     }
 
     render(){
-        
         let text = null;
         if(this.props.name.toUpperCase() === "LOGOWANIE")
         {

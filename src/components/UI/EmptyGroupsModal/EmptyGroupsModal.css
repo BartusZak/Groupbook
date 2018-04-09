@@ -1,0 +1,34 @@
+.modal-validate-error{
+    color: black;
+    width: 90%;
+    font-size: 18px;
+    margin: auto;
+    position: relative;
+}
+.modal-validate-error::before{
+    content: '!';
+    font-size: 38px;
+    border-radius: 50%;
+    padding: 0 6px;
+    color: rgba(206, 55, 55, 0.9);
+    top: -15px;
+    left: -25px;
+    height: 50px;
+    position: absolute;
+}
+.modal-validate-error-confirm-button{
+    margin-top: 15px;
+    border: 2px solid rgba(206,55,55,0.9);
+    font-size: 20px;
+    outline: none;
+    border-radius: 2px;
+    background: white;
+}
+.modal-validate-error-confirm-button:hover{
+    background-color: rgba(206,55,55,0.9);
+    cursor: pointer;
+    color: white;
+}
+.modal-validate-error-confirm-button:focus{
+    outline: none;
+}

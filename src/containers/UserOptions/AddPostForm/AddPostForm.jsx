@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { fetchingGroups, loadGroups } from '../Store/actions';
 import GroupsBar from './GroupsBar/GroupsBar';
 import { validateInput } from '../Validation/Validation';
+import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
+import AddPictureBlock from '../../../components/UI/AddPictureBlock/AddPictureBlock';
+
 class AddPostForm extends Component{
     state = {
         postTitle: "",
@@ -14,33 +17,59 @@ class AddPostForm extends Component{
             {id: "postTitle", content: ""},
             {id: "postContent", content: ""},
             {id: "addedGroups", content: ""}
-        ]
+        ],
+        showModalError: false,
+        files: [],
+        incorrectPictureError: ""
     }
     componentDidMount(){ 
         this.props.fetchingGroups();
     }
-   
+    
+    toogleValidationModal = () => {
+        this.setState({showModalError: !this.state.showModalError});
+    }
     onChangeHandlerTitle = event => {
         this.setState({postTitle: event.target.value});
     }
     onChangeHandlerContent = event => {
         this.setState({postContent: event.target.value});
     }
-    onSubmitHandler = e => {
-        e.preventDefault();
+    Validate = () => {
         let oldState = [...this.state.validationResult];
-
-
         oldState[0].content = validateInput(5,15,this.state.postTitle, ["kurcze"], "", "", "tytuł postu");
 
         oldState[1].content = validateInput(1,250,this.state.postContent, "", "", "","","treśc postu");
 
-        if(this.state.addedGroups.length === 0)
+        if(this.state.addedGroups.length === 0){
             oldState[2].content = "Zanim opublikujesz post, wybierz grupe";
-
+            this.setState({showModalError: true});
+        }
+    
         this.setState({validationResult: oldState});
+     
         
+    }
+    AddPostOnServer = () => {
+        const result = {
+            ...this.state.validationResult
+        }
+        let booleanResult = true;
+        for(let key in result){
+            if(result[key].content !== ""){
+                booleanResult = false;
+            }
+        }
+        if(booleanResult){
+            alert("Siema");
+        }
         
+    }
+    onSubmitHandler = e => {
+        e.preventDefault();
+        this.Validate();  
+        this.AddPostOnServer(); 
+
     }
     addGroup = (event) => {
         const index = this.props.loadedGroups.findIndex(item => {
@@ -61,9 +90,25 @@ class AddPostForm extends Component{
         this.setState({addedGroups: newGroups});
 
     }
-    
+    OnDrop = (files) => {
+        const correctFormats = ['jpg','jpeg','png'];
+        let counter = 0;
+        for(let key in correctFormats){
+            if(files[0].type === "image/" + correctFormats[key]){
+                counter = counter+1;
+            }
+        }
+        if(counter > 0){
+            this.setState({files: files});
+        }
+        else{
+            this.setState({incorrectPictureError: "Dodane zdjęcie posiada niedopuszczalny format"});
+        }
+    }
+    deleteFiles = () => {
+        this.setState({files: []});
+    }
     render(){
-
         return(
             <div className="add-post-container">
                 <h4>Formularz dodawania postów</h4>
@@ -98,9 +143,22 @@ class AddPostForm extends Component{
                     opacity: this.state.validationResult[1].content === "" ? '0' : '1'
                     }}>{this.state.validationResult[1].content}</p> 
                 </div>
-                <span onClick={e => this.onSubmitHandler(e)} className="add-post-button">
-                    Opublikuj
-                </span>
+
+                <AddPictureBlock
+                buttonTitle="Dodaj post"
+                clicked={e => this.onSubmitHandler(e)}
+                onDropped={e => this.OnDrop(e)}
+                files={this.state.files}
+                deleteFiles={this.deleteFiles}
+                incorrectPictureError={this.state.incorrectPictureError}
+                />
+                
+
+                <EmptyGroupsModal 
+                showValidateModal={this.state.showModalError}
+                toogleValidationModal={this.toogleValidationModal}
+                validateError="Powinieneś dodać przynajmniej jedną grupę"
+               />
             </div>
         );
     }

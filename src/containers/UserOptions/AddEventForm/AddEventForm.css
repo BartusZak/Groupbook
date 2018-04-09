@@ -96,105 +96,8 @@
 .block-header{
     padding-left: 10px;
 }
-.modal-validate-error{
-    color: black;
-    width: 90%;
-    font-size: 18px;
-    margin: auto;
-    position: relative;
-}
-.modal-validate-error::before{
-    content: '!';
-    font-size: 38px;
-    border-radius: 50%;
-    padding: 0 6px;
-    color: rgba(206, 55, 55, 0.9);
-    top: -15px;
-    left: -25px;
-    height: 50px;
-    position: absolute;
-}
-.modal-validate-error-confirm-button{
-    margin-top: 15px;
-    border: 2px solid rgba(206,55,55,0.9);
-    font-size: 20px;
-    outline: none;
-    border-radius: 2px;
-    background: white;
-}
-.modal-validate-error-confirm-button:hover{
-    background-color: rgba(206,55,55,0.9);
-    cursor: pointer;
-    color: white;
-}
-.modal-validate-error-confirm-button:focus{
-    outline: none;
-}
 
-.view-block{
-    display: flex;
-    flex-flow: column;
-    padding: 10px;
-}
-.view-block input[type="file"]{
-    border: 2px solid rgba(255,255,255,0.1);
-    border-radius: 4px;
-    width: 90%;
-    margin: 10px auto;   
-    font-size: 16px;
-}
-.view-block button{
-    width: 60%;
-    padding: 10px;
-    font-size: 16px;
-    margin: 30px auto 0 auto;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    background-color: rgba(140, 255, 70, 0.1);
-    border: 4px solid rgba(255,255,255,0.1);
-}
-.view-block button:hover{
-    cursor: pointer;
-    background-color: rgba(140, 255, 70, 0.5);
-}
-.view-block button:focus{
-    outline: none;
-}
-.view-block i {
-    color: white;
-    margin: 10px auto;
-    font-weight: lighter;
-}
-.view-block .drag-drop-place{
-    padding: 20px;
-    width: 90%;
-    height: 150px;
-    font-size: 22px;
-    border: 4px dashed rgba(255,255,255,0.1);
-    transition: 1s all ease-in-out;
-    font-weight: lighter;
-    margin: 10px auto 30px auto;
-    color: rgba(255,255,255,0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} 
-.view-block .drag-drop-place:hover,
-.view-block .drag-drop-place:focus{
-    border-color: rgba(255, 255, 255,0.9);
-    cursor: pointer;
-    color: rgba(255,255,255,0.9);
-}
 @media(min-width: 991px){
-    .view-block{
-        width: 630px !important;
-        margin-left: 50px;
-    }
-    .view-block button{
-        width: 40%;
-    }
     .add-event-form-container{
         width: 750px;
     }
@@ -220,9 +123,7 @@
     
 }
 @media(max-width: 990px){
-    .view-block{
-        width: 100%;
-    }
+  
     .add-event-form-container{
         width: 450px;
     }
@@ -246,9 +147,7 @@
 
 
 @media(max-width: 600px){
-    .view-block{
-        width: 100%;
-    }
+   
     .add-event-form-container{
         width: 100%;
     }
