@@ -8,7 +8,7 @@ import Team from '../../containers/Team/Team';
 //import asyncComponent from '../../AsyncComponent';// @bartuszak Przykład użycia code snipping
 import  { connect } from 'react-redux';
 import NotFound from '../../components/NotFound/NotFound';
-import Register from '../../components/Register/Register';
+import Register from '../../containers/Register/Register';
 import Navbar from '../../components/Navbar/Navbar';
 import Logging from '../Logging/Logging';
 import About from '../About/About';

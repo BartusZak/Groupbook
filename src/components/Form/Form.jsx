@@ -7,6 +7,9 @@ import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
 import {fetchingLogingIn } from '../../store/actions/loggingActions';
 
+import axios from 'axios';
+
+
 class Form extends Component {
     state = {
         names: this.props.names, // Co ma byc wrzucone w formularz
@@ -60,13 +63,28 @@ class Form extends Component {
 
     render(){
         let text = null;
+        let button = null;
         if(this.props.name.toUpperCase() === "LOGOWANIE")
         {
-            text = <p className='message'>Nie masz konta? <Link to='/register'>Utwórz konto</Link></p>;
+            text = <p className="message">Nie masz konta? <Link to="/register">Utwórz konto</Link></p>;
+            button = (
+                <Button color="dark-green"
+                    //clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
+                    title={this.props.buttonTitle}
+                    url={this.props.isLogged ? "/logged" : undefined}/>
+
+            );
         }
         else if (this.props.name.toUpperCase() === "REJESTRACJA")
         {
-            text = <p className='message'>Masz już konto? <Link to='/logging'>Zaloguj się</Link></p>;
+            text = <p className="message">Masz już konto? <Link to="/logging">Zaloguj się</Link></p>;
+            button = (
+                <Button color="dark-green"
+                    //clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
+                    title={this.props.buttonTitle}
+                    url={this.props.isLogged ? "/logged" : undefined}/>
+
+            );
         }
 
         
@@ -84,11 +102,7 @@ class Form extends Component {
                     type={item.type}
                     />
                 })}
-                <Button color="dark-green"
-                    clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
-                    title={this.props.buttonTitle}
-                    url={this.props.isLogged ? "/logged" : undefined}
-                />
+                {button}
                 {text}
               
             </MainForm> 

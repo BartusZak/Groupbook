@@ -1,10 +1,8 @@
 export const RegisterNames = [
-    {id: 1, name: "Login", placeholder: "Login", min: 5, max: 15, type: "Text", text:""},
-    {id: 2, name: "Hasło", placeholder: "Hasło", min: 5, max: 15, type: "Password", text:""},
-    {id: 3, name: "Powtórz hasło", placeholder: "Powtórz Swoje hasło...", min: 5, max: 15, type: "Password", text:""},
-    {id: 4, name: "Imię", placeholder: "Wpisz Swoje imię...", min: 5, max: 15, type: "Text", text:""},
-    {id: 5, name: "Nazwisko", placeholder: "Wpisz Swoje Nazwisko...", min: 5, max: 15, type: "Text", text:""}, 
-    {id: 6, name: "Adres e-mail", placeholder: "Wpisz Swój e-mail...", min: 5, max: 15, type: "Text", text:""}
+    {id: 1, name: "Login", placeholder: "Login", min: 5, max: 15, type: "Text", text:"", autoComplete: "off"},
+    {id: 2, name: "Adres e-mail", placeholder: "Wpisz Swój e-mail...", min: 5, max: 15, type: "Text", text:"", autoComplete: "off"},
+    {id: 3, name: "Hasło", placeholder: "Hasło", min: 5, max: 15, type: "Password", text:"", autoComplete: "off"},
+    {id: 4, name: "Powtórz hasło", placeholder: "Powtórz Swoje hasło...", min: 5, max: 15, type: "Password", text:"", autoComplete: "off"},
 ];
 
 export const RegisterErrors = [

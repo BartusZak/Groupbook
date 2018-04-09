@@ -1,6 +1,6 @@
 import React from 'react';
-import Form from '../Form/Form';
-import { RegisterNames, RegisterErrors } from '../NamesForForms/Names';
+import Form from 'components/Form/Form';
+import { RegisterNames, RegisterErrors } from 'components/NamesForForms/Names';
 import { Register } from './Register.style';
 
 const register = () => {

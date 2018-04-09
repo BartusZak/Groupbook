@@ -12,7 +12,8 @@ const formItem = (props) => {
             placeholder={props.placeholder}
             onChange={props.change}
             name={props.title}
-            value={props.text}/>
+            value={props.text}
+            autoComplete={props.autoComplete}/>
             <p className="errorMessage">{props.errorMessage}</p>
         
         </div>
