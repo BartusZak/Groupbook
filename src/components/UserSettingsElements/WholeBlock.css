@@ -11,7 +11,7 @@
     padding: 20px 0;
     box-sizing: border-box;
     align-items: center;
-    border-bottom: 1px solid antiquewhite;
+    border-bottom: 5px solid #23232f;
 }
 .WholeBlock li:hover{
     background-color: #23232d;

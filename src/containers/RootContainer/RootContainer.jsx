@@ -23,6 +23,7 @@ import Group from '../Group/Group';
 import EventDetails from '../../components/EventDetails/EventDetails';
 import AddPostForm from '../UserOptions/AddPostForm/AddPostForm';
 import AddEventForm from '../UserOptions/AddEventForm/AddEventForm';
+import AddGroupForm from '../UserOptions/AddGroupForm/AddGroupForm';
 import UserDetails from '../UserDetails/UserDetails';
 // @bartuszak Przykład użycia code snipping
 // https://scotch.io/tutorials/lazy-loading-routes-in-react 
@@ -61,9 +62,11 @@ class RootContainer extends Component{
             IsLogged = (
                 <Aux>
                     <Route path="/logged/group/:id" exact component={Group} />
-                    <Route path="/logged/usersettings" exact component={UserSettings} />
                     <Route path="/logged/event/:id" exact component={EventDetails} />
                     <Route path="/logged/addevent" exact component={AddEventForm} />
+                    <Route path="/logged/addpost" exact component={AddPostForm} />
+                    <Route path="/logged/usersettings" exact component={UserSettings} />
+                    
                 </Aux>
             );
 
@@ -113,12 +116,12 @@ class RootContainer extends Component{
                     
                         <Route path="/team"  component={Team} />
                         <Route path="/carousel" component={Carousel}/>
-                        <Route path="/logged/addpost" exact component={AddPostForm} />
+                        
 
                         {IsLogged}
                         {/*@TESTING*/}
                         <Route path='/logged/user/:id' component={UserDetails} />
-                        
+                        <Route path='/logged/addgroup' component={AddGroupForm} />
 
                        
                         
