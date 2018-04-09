@@ -1,14 +1,14 @@
-.UserSettings{
-    width: 100%;
-    background-color: white;
+.UserSettings{ 
+    color: white;
 }
 .UserSettingsBlock{
     margin: 20px auto;
     display: flex;
     align-items: center;
     flex-flow: column;
-    width: 1000px;
-    box-shadow: 0 2px 3px grey;
+    background-color: #32323f;
+    border-radius: 5px;
+  
 }
 .UserSettingsBlock h2{
     width: 100%;
@@ -24,7 +24,6 @@
 .NavList li{
     cursor: pointer;
     margin-top: 20px;
-    width: 150px;
     color: lightseagreen;
     text-align: center;
     font-weight: bold;
@@ -33,11 +32,11 @@
     box-sizing: border-box;
 }
 .NavList > li:hover{
-    background-color: rgba(201, 197, 197, 0.5);
+    background-color: indianred;
     cursor: pointer;
 }
 .Active{
-    background-color: lightsalmon !important;
+    background-color: indianred;
     border-radius: 5px;
     color: white !important;
 }
@@ -46,3 +45,34 @@
 }
 
 
+
+
+@media(min-width: 601px){
+    .UserSettingsBlock{
+        width: 100%;
+    }
+    .NavList li{
+        font-size: 18px;
+        width: 150px;
+    }
+    .NavList{
+        justify-content: unset;
+    }
+}
+@media(min-width: 1110px){
+    .UserSettingsBlock{
+        width: 1000px;
+    }
+}
+@media(max-width: 600px){
+    UserSettingsBlock{
+        width: 100% !important;
+    }
+    .NavList li{
+        font-size: 14px;
+    }
+    .NavList{
+        justify-content: space-around;
+        width: 100%;
+    }
+}

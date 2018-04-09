@@ -14,7 +14,7 @@
     border-bottom: 1px solid antiquewhite;
 }
 .WholeBlock li:hover{
-    background-color: cornsilk;
+    background-color: #23232d;
     cursor: pointer;
 }
 .WholeBlock li > b{
@@ -26,9 +26,6 @@
     font-weight: initial;
     color: lightseagreen;
     font-size: 18px;
-}
-.Option:hover{
-    color: blue; 
 }
 
 
