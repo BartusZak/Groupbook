@@ -4,6 +4,8 @@ import Aux from '../../hoc/Auxi';
 import OptionBlock from './OptionBlock/OptionBlock';
 
 const wholeBlock = (props) => {
+    let userDetailsList = props.wholeItems;
+   
     let Content = null;
     switch(props.itemNumber){
         case 1:
@@ -11,8 +13,13 @@ const wholeBlock = (props) => {
                 <Aux>
                     <OptionBlock title="Wyglad" icon="fa fa-image" function="Zmien zdjecie profilowe" shortContent="Zmien swoje zdjecie profilowe, tak aby budzic respekt wsrod plci przeciwnej" />
                     <ul className="WholeBlock">
-                        {props.wholeItems.map(item => {
-                        return <li key={item.id}> <b style={{fontWeight: 'initial', textAlign: 'left'}}>{item.name}</b> <b>{item.value}</b> <b className="Option">{item.option}</b></li>;
+                        {userDetailsList.map(item => {
+                        return <li key={item.id}>
+                        <b style={{fontWeight: 'initial', textAlign: 'left'}}>
+                        {item.name}</b> 
+                        <b>{item.value === null ? "Brak" : item.value}</b> 
+                        <b className="Option">{item.option}</b>
+                        </li>;
                         })}
                     </ul>
                 </Aux>

@@ -32,7 +32,7 @@
     box-sizing: border-box;
 }
 .NavList > li:hover{
-    background-color: indianred;
+    background-color: #23232f;
     cursor: pointer;
 }
 .Active{
