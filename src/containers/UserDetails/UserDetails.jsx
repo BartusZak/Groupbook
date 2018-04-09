@@ -27,7 +27,7 @@ class UserDetails extends Component{
     loadData () {
         if ( this.props.match.params.id) {
             if ( !this.state.user) {
-                axios.get( 'http://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.match.params.id)
+                axios.get( 'https://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.match.params.id)
                     .then( response => {
                         this.setState({user: response.data});
                     })
