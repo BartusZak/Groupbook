@@ -135,7 +135,8 @@ class AddGroupForm extends Component{
                     <div className="left-form-content">
                         <div className="group-form-section">
                             <label>Nazwa grupy</label>
-                            <input onChange={(e) => this.onChangeHandler(e, 0)} 
+                            <input className={this.state.formContent[0].groupNameError !== "" ?
+                            "validation-input-error" : null} onChange={(e) => this.onChangeHandler(e, 0)} 
                             value={this.state.formContent[0].value} 
                             type="text" 
                             placeholder="wpisz nazwę grupy..." />
@@ -144,7 +145,8 @@ class AddGroupForm extends Component{
                         </div>
                         <div className="group-form-section">
                             <label>Opis grupy</label>
-                            <textarea onChange={(e) => this.onChangeHandler(e, 1)} 
+                            <textarea className={this.state.formContent[1].groupDescError !== "" ?
+                            "validation-input-error" : null} onChange={(e) => this.onChangeHandler(e, 1)} 
                             value={this.state.formContent[1].value} 
                             placeholder="wpisz opis grupy..."></textarea>
                             <p className={this.state.formContent[1].groupDescError !== "" ?

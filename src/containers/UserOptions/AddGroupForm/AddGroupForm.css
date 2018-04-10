@@ -75,6 +75,12 @@
     letter-spacing: 1px;
     transition: 0.4s all ease-in-out;
 }
+.validation-input-error{
+    border: 1px solid red !important; 
+    background-color: #FDA49A;
+    color: white;
+    letter-spacing: 2px;
+}
 .right-form-content{
     box-sizing: border-box;
     position: relative;
@@ -178,7 +184,7 @@
     left: -20px;
 }
 .loaded-users input[type="text"]{
-    padding: 8px;
+    padding: 15px;
     width: 90%;
     margin: 5px 0 15px 0;
     font-size: 17px;
@@ -249,10 +255,12 @@
     .group-form-section label{
         font-size: 18px;
     }
-    .group-form-section input[type="text"],
     .validation-error-group,
     .group-form-section label{
         padding: 5px 10px;
+    }
+    .group-form-section input[type="text"]{
+        padding: 15px;
     }
     .validation-error-group{
         height: 30px;
