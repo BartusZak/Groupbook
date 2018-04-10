@@ -10,3 +10,8 @@ export const FETCHING_COMMENTS_ERROR = 'FETCHING_COMMENTS_ERROR';
 export const ADD_COMMENT = 'ADD_COMMENT';
 
 export const LOAD_GROUPS = 'LOAD_GROUPS';
+
+
+// Funkcje do dodawania grup
+export const FETCHING_USERS = 'FETCHING_USERS';
+export const FETCHING_USERS_ERROR = 'FETCHING_USERS_ERROR';

@@ -4,8 +4,7 @@ import Aux from '../../hoc/Auxi';
 import OptionBlock from './OptionBlock/OptionBlock';
 
 const wholeBlock = (props) => {
-    let userDetailsList = props.wholeItems;
-   
+    let userDetailsList = [...props.wholeItems];
     let Content = null;
     switch(props.itemNumber){
         case 1:
@@ -17,7 +16,7 @@ const wholeBlock = (props) => {
                         return <li key={item.id}>
                         <b style={{fontWeight: 'initial', textAlign: 'left'}}>
                         {item.name}</b> 
-                        <b>{item.value === null ? "Brak" : item.value}</b> 
+                        <b>{(item.value === null || item.value === undefined) ? "Brak" : item.value}</b> 
                         <b className="Option">{item.option}</b>
                         </li>;
                         })}

@@ -1,0 +1,298 @@
+/* animacje */
+.animate-in {
+    animation: enableErrors 0.4s ease-out forwards;
+}
+.animate-out{
+    animation: closeErrors 0.4s ease-out forwards;
+}
+@keyframes enableErrors{
+    0%{
+        opacity: 0;
+        transform: translateX(-100vh);
+    }
+    50%{
+        transform: translateX(10vh);
+        opacity: 1;
+    }
+    100%{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes closeErrors{
+    0%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+    50%{
+        transform: translateX(10vh);
+        opacity: 1;
+    }
+    100%{
+        transform: translateX(-100vh);
+        opacity: 0;
+    }
+}
+
+/* Style scrollbarow */
+
+
+
+/* Kontent widoku */
+.add-group-form-main-div{
+    margin: 20px auto 0 auto;
+    color: white;
+    display: flex;
+    flex-flow: column;
+}
+.add-group-form-main-div h4{
+    padding: 10px 0 0 10px;
+}
+.add-group-content-container{
+    margin-top: 20px;
+    display: flex;
+    background: #32323f;
+    border-radius: 5px;
+}
+.group-form-section{
+    display: flex;
+    flex-flow: column;
+}
+
+.group-form-section input[type="text"],
+.group-form-section textarea,
+.loaded-users input[type="text"]{
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    resize: none;
+}
+.validation-error-group{
+    margin: 0;
+    word-break: break-all;
+    white-space: normal;
+    color: rgba(253, 153, 153, 0.9);
+    letter-spacing: 1px;
+    transition: 0.4s all ease-in-out;
+}
+.right-form-content{
+    box-sizing: border-box;
+    position: relative;
+}
+.add-group-drop-zone{
+    position: relative;
+    word-break: break-all;
+    text-align: center;
+    white-space: normal;
+    
+}
+.add-group-drop-zone:focus,
+.add-group-drop-zone:hover{
+    cursor: pointer;
+    opacity: 1;
+}
+.add-group-drop-zone-before-add{
+    border: 5px dashed white;
+    opacity: 0.5;
+    transition: 1s opacity ease-in-out;
+}
+.add-group-drop-zone-after-add{
+    opacity: 1;
+    border: none;
+}
+
+.right-form-content button{
+    outline: none;
+    position: absolute;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    background-color: rgba(140, 255, 70, 0.1);
+    border: 4px solid rgba(255,255,255,0.1);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.right-form-content button:hover{
+    cursor: pointer;
+    background-color: rgba(140, 255, 70, 0.5);
+}
+.right-form-content button:focus{
+    outline: none;
+}
+.loaded-users-cont{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    text-align: center;
+}
+.loaded-users-cont ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0 20px 0 20px;
+    text-align: left;
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.loaded-users-cont ul{
+    margin-top: 10px;
+}
+.loaded-users-cont ul > li {
+    margin: 5px 0;
+    padding: 5px;
+    position: relative;
+}
+
+.loaded-users-cont li:hover{
+    cursor: pointer;
+    background-color: #23232d;
+}
+
+.loaded-users,
+.added-users{
+    background-color: #32323f;
+    border-radius: 5px;
+    padding: 10px;
+}
+.loaded-users ul > li::before{
+    content: '+';
+    color: rgba(140, 255, 70, 0.5);
+    font-weight: bold;
+    font-size: 30px;
+    position: absolute;
+    top: -5px;
+    left: -20px;
+}
+
+.added-users ul{ 
+    height: 300px;
+}
+.added-users ul > li::before{
+    content: '-';
+    color: red;
+    font-weight: bold;
+    font-size: 30px;
+    position: absolute;
+    top: -5px;
+    left: -20px;
+}
+.loaded-users input[type="text"]{
+    padding: 8px;
+    width: 90%;
+    margin: 5px 0 15px 0;
+    font-size: 17px;
+}
+.delete-added-pic{
+    color: orange;
+    position: absolute;
+}
+
+.add-group-drop-zone div{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.after-add-desc{
+    background-color: rgba(0,0,0,0.7);
+}
+.add-group-drop-zone div span{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 10px;
+}
+.add-group-drop-zone div img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 0;
+}
+@media(min-width: 1000px){
+    .add-users-into-group-container{
+        width: 900px;
+        margin: 40px auto 0 auto;
+    }
+    .loaded-users-cont{
+        padding: 20px 30px 10px 30px;
+    }
+    .loaded-users{
+        width: 45%;
+    }
+    .added-users{
+        width: 45%;
+    }
+    .loaded-users-cont label{
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .loaded-users-cont li {
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+    .delete-added-pic{
+        bottom: -40px;
+        right: 15px;
+        font-size: 16px;
+    }
+    /*Style forma*/
+    .add-group-form-main-div{
+        width: 1100px;
+    }
+    .group-form-section{
+        width: 500px;
+        padding: 10px;
+    }
+    .group-form-section label{
+        font-size: 18px;
+    }
+    .group-form-section input[type="text"],
+    .validation-error-group,
+    .group-form-section label{
+        padding: 5px 10px;
+    }
+    .validation-error-group{
+        height: 30px;
+    }
+    .group-form-section input[type="text"],
+    .group-form-section textarea{
+        font-size: 18px;
+    }
+    .group-form-section textarea{
+        padding: 10px;
+        height: 150px;
+    }
+    .right-form-content{
+        padding: 10px;
+        width: 100%;
+    }
+    .right-form-content label{
+        font-size: 18px;
+        padding: 5px;
+    }
+    .add-group-drop-zone{
+        height: 70%;
+        font-size: 26px;   
+    }
+    
+    .right-form-content button{
+        width: 50%;
+        padding: 10px;
+        font-size: 20px;
+        bottom: -25px;
+    }
+
+    /*Style containera od dodawania userow odrazu*/
+   
+}
+/* responsywnosc potem dokonczyc
+@media(max-width: 999px){
+
+}
+@media(max-width: 600px){
+    
+}
+*/

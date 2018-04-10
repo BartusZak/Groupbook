@@ -30,7 +30,7 @@ const addPictureBlock = (props) => {
             <Dropzone style={{color: filesCount === 0 
             ? 'rgba(255,255,255,0.4)' : 'rgb(255,255,255)',
             border: filesCount === 0 ? '4px dashed rgba(255,255,255,0.4)' :
-            '4px dashed rgb(255,255,255)' }} accept="image/jpeg, image/png" className="drag-drop-place" onDrop={props.onDropped}
+            '4px dashed rgb(255,255,255)' }} accept="image/jpeg, image/png, image/jpg" className="drag-drop-place" onDrop={props.onDropped}
             disabled={filesCount === 0 ? false : true}>
             
             {correctContent}

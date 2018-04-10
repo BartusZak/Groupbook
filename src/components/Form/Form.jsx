@@ -69,7 +69,7 @@ class Form extends Component {
             text = <p className="message">Nie masz konta? <Link to="/register">Utwórz konto</Link></p>;
             button = (
                 <Button color="dark-green"
-                    //clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
+                    clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
                     title={this.props.buttonTitle}
                     url={this.props.isLogged ? "/logged" : undefined}/>
 

@@ -1,6 +1,23 @@
-export const validateInput = (min, max, inputText, specialKeys, inputType, isZeroAble, inputName) => {
+export const validateInput = (min, max, inputText, specialKeys, inputType, isZeroAble, inputName, regularExpType) => {
     const lengthOfInput = inputText.length;
-
+    if(lengthOfInput === 0 && min !== ""){
+        return "Pole " + inputName + " nie powinno być puste";
+    }
+    switch(regularExpType){
+        case "standard":
+            const pattern = /^([a-zA-Z0-9 _-]+)$/;
+            if(!pattern.test(inputText)){
+                return "Pole " + inputName + " zawiera niedozwolone znaki";
+            }
+            break;
+        case "email":
+            const emailPattern = /\S+@\S+\.\S+/;
+            if(!emailPattern.test(inputText)){
+                return "Adres email posiada niedozwolone znaki";
+            }
+            break;
+    }
+   
     switch(inputType){
         case "groups":
             if(isZeroAble === 0)
@@ -51,4 +68,20 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
             break;
     }
     return "";
+}
+
+export const validatePictures = (fileType, maxSize, fileSize) => {
+    if(fileSize > maxSize){
+        return "Rozmiar zdjęcia nie może przekraczać " + maxSize;
+    }
+    const correctFormats = ["image/jpg", "image/jpeg", "image/png"];
+    let result = "Zdjęcie powinno być formatu jpg, jpeg lub png";
+    for(let key in correctFormats){
+        if(correctFormats[key] === fileType){
+            
+            result = "";
+        }
+    }    
+    return result;    
+    
 }

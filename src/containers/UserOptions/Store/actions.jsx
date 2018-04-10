@@ -140,3 +140,33 @@ export const updateComments = (newComment, id, author) => {
         })
     }
 }
+
+
+
+// Dodawanie grup
+
+export const fetchingUsers = (fetchedUsers) => {
+    return{
+        type: actionsTypes.FETCHING_USERS,
+        fetchedUsers: fetchedUsers
+    };
+}
+export const fetchingUsersError = () => {
+    return {
+        type: actionsTypes.FETCHING_USERS_ERROR
+    };
+}
+export const fetchingUsersHandler = () => {
+    return dispatch => {
+        
+        axiosRandom.get('/comments').then(response => {
+            
+            dispatch(fetchingUsers(response.data));
+        }).catch(error => {
+            fetchingUsersError();
+        })
+        
+            
+        
+    }
+}
