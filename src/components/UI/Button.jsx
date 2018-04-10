@@ -10,13 +10,12 @@ const button = (props) => {
         classes = "Button" + " " + props.class;  
     }
     else { classes = props.overRideClass; }
-      
-
     if(props.url === undefined){
         btn = (
             <Button color={props.color}
                 onClick={props.clicked} 
-                className={classes}>
+                className={classes}
+                disabled={props.disabled}>
                 {props.title}
             </Button>
         );

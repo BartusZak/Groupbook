@@ -32,4 +32,11 @@ injectGlobal `
         }
         `}
 
+    .whiteSpinner {
+        color: #2c2c36 !important;
+        &:before,
+        &:after{
+            background: #ffffff !important;
+        }
+    }
 `;

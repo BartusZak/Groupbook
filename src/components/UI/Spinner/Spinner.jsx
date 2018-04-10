@@ -1,9 +1,11 @@
 import React from 'react';
-import './Spinner.css';
+import {Loader} from './Spinner.style';
 
 const spinner = (props) => (
-    
-    <div className="Loader" style={{marginLeft: props.margin, marginTop: props.marginTop}}></div>
-);
+
+    <Loader className={props.className} style={{marginLeft: props.margin, marginTop: props.marginTop}}></Loader>
+
+)
+
 
 export default spinner;
