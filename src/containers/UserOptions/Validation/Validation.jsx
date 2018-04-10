@@ -12,7 +12,7 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
                     return "Data wydarzenia musi zostac ustawiona";
 
                 if(inputText.length > 10)
-                    return "Data posiada nie prawidłowy format";
+                    return "Data posiada nieprawidłowy format";
                 
                 const today = new Date();
 

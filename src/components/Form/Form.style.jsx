@@ -54,6 +54,14 @@ export const MainForm = styled.form`
             text-decoration: none;
         }
       }
+      .invalid{
+          border: 1px solid red;
+          background-color: #FDA49A;
+      }
+      .ValidationError {
+        color: red;
+        margin: 0;
+    } 
 `;
 
 export const ValidationBubble = styled.span`

@@ -1,8 +1,8 @@
 export const RegisterNames = [
-    {id: 1, name: "Login", placeholder: "Login", min: 5, max: 15, type: "Text", text:"", autoComplete: "off"},
-    {id: 2, name: "Adres e-mail", placeholder: "Wpisz Swój e-mail...", min: 5, max: 15, type: "Text", text:"", autoComplete: "off"},
-    {id: 3, name: "Hasło", placeholder: "Hasło", min: 5, max: 15, type: "Password", text:"", autoComplete: "off"},
-    {id: 4, name: "Powtórz hasło", placeholder: "Powtórz Swoje hasło...", min: 5, max: 15, type: "Password", text:"", autoComplete: "off"},
+    {id: 1, name: "Username", placeholder: "Login", type: "Text", text:"", autoComplete: "off", validation: { required: true, min: 5, max: 15 }, valid: false, touched: false,},
+    {id: 2, name: "Email", placeholder: "Wpisz Swój e-mail...", type: "Text", text:"", autoComplete: "off", validation: { required: true, min: 5, max: 35, email: true, emailError: "Niepoprawny adres email." }, valid: false, touched: false,},
+    {id: 3, name: "Password", placeholder: "Hasło", type: "Password", text:"", autoComplete: "off", validation: { required: true, min: 5, max: 15, password: true }, valid: false, touched: false,},
+    {id: 4, name: "ConfirmedPassword", placeholder: "Powtórz Swoje hasło...", type: "Password", text:"", autoComplete: "off", validation: { required: true, min: 5, max: 15, passwordConfirmation: true, confirmedPasswordError: "Powtórzone hasło jest inne niż hasło." }, valid: false, touched: false,}
 ];
 
 export const RegisterErrors = [
