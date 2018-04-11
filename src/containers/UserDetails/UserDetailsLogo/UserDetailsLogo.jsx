@@ -7,7 +7,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 
 class UserDetailsLogo extends Component {
         state = { 
-            img250x400: false,
+            profilePicture: false,
             loading: true
          }
 
@@ -18,11 +18,11 @@ class UserDetailsLogo extends Component {
 
             loadData () {
                 if ( this.props.id) {
-                    if ( !this.state.img250x400) {
-                        axios.get( 'https://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.id + '/avatar', {responseType: "blob"})
+                    if ( !this.props.profilePicture && this.props.profilePicture != null) {
+                        axios.get( 'https://groupsconnectsapi.azurewebsites.net/pictures/' + this.props.profilePicture, {responseType: "blob"})
                             .then( response => {
                                // console.log(response);
-                                this.setState({loading: false, img250x400: URL.createObjectURL(response.data)});
+                                this.setState({loading: false, profilePicture: URL.createObjectURL(response.data)});
                             })
                             .catch(err => {
                                 this.setState({loading: false});
@@ -41,13 +41,21 @@ class UserDetailsLogo extends Component {
                                 <p style={{ textAlign: 'center' }}>Ładowanie...!</p>
                             </ImgDiv>
                 }
-                if ( this.state.img250x400 ) {
+                if ( !this.props.profilePicture && this.props.profilePicture != null ) {
                         img250x400 = (        
                         <ImgDiv>
-                                <IMG className="img-responsive" src={this.state.img250x400} alt="Zdjęcie Profilowe" />
+                                <IMG className="img-responsive" src={this.state.profilePicture} alt="Zdjęcie Profilowe" />
                         </ImgDiv>
         
                     );
+                }
+
+                if (this.props.profilePicture == null){
+                    img250x400 = (   
+                        <ImgDiv>     
+                            <p style={{margin: "0"}}>Brak zdjęcia profilowego</p>
+                        </ImgDiv>
+                    )
                 }
                 return img250x400;
             }

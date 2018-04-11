@@ -18,6 +18,8 @@ class Form extends Component {
         loading: false,
         formIsValid: false,
         password: null,
+        registredSuccesfully: false,
+        error: false,
     }
     Validate = () => {
         const errors = [...this.state.itemsErrors];
@@ -59,7 +61,6 @@ class Form extends Component {
             Email: this.state.names[1].text,
             Password: this.state.names[2].text,
             ConfirmedPassword: this.state.names[3].text,
-            
         };
         console.log(registerData);
         //axios.post('https://react-groupsconnects.firebaseio.com/users.json', registerData)
@@ -67,10 +68,11 @@ class Form extends Component {
         .then(response => {
                 console.log(response)
                 this.setState({loading: false});
+                this.setState({registredSuccesfully: true});
             })
         .catch(error => {
                 console.log(error);
-                this.setState({loading: false});
+                this.setState({error: true});
             })
     }
 
@@ -155,7 +157,15 @@ class Form extends Component {
         if(this.state.loading){
             content = <MainForm><Spinner className="whiteSpinner"/></MainForm>
         }
-        
+        console.log(this.state.registredSuccesfully);
+        if(this.state.registredSuccesfully){
+            content = (
+                <MainForm>
+                    <p>Użytkownik pomyślnie zarejestrowany.</p>
+                    <p>Prosimy się zalogować</p>
+                </MainForm>
+            );
+        }
         else{
             content = (
                     <MainForm autoComplete="off">
