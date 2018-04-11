@@ -1,0 +1,153 @@
+.right-form-content{
+    box-sizing: border-box;
+    position: relative;
+    
+}
+.add-group-drop-zone{
+    position: relative;
+    word-break: break-all;
+    text-align: center;
+    white-space: normal;
+    
+}
+.add-group-drop-zone:focus,
+.add-group-drop-zone:hover{
+    cursor: pointer;
+    opacity: 1;
+}
+.add-group-drop-zone-before-add{
+    border: 5px dashed white;
+    opacity: 0.5;
+    transition: 1s opacity ease-in-out;
+}
+.add-group-drop-zone-after-add{
+    opacity: 1;
+    border: none;
+}
+.right-form-content button{
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    background-color: rgba(140, 255, 70, 0.1);
+    border: 4px solid rgba(255,255,255,0.1);
+    margin: 0 auto;
+}
+.add-new-other{
+    position: absolute;
+    left: 0;
+    width: 260px;
+    padding: 10px;
+    font-size: 20px;
+    right: 0;
+}
+.add-new-group-button{
+    position: absolute;
+    width: 50%;
+    padding: 10px;
+    font-size: 20px;
+    left: 0;
+    right: 0;
+}
+.right-form-content button:hover{
+    cursor: pointer;
+    background-color: rgba(140, 255, 70, 0.5);
+}
+.right-form-content button:focus{
+    outline: none;
+}
+.delete-added-pic{
+    color: orange;
+    position: absolute;
+    bottom: -40px;
+    right: 15px;
+    font-size: 16px;
+}
+.after-add-desc{
+    background-color: rgba(0,0,0,0.7);
+}
+.add-group-drop-zone div{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.add-group-drop-zone div span{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 10px;
+}
+.add-group-drop-zone div img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 0;
+}
+@media(min-width: 1000px){
+    .right-form-content{
+        padding: 10px;
+        width: 100%;
+    }
+    .right-form-content label{
+        font-size: 18px;
+        padding: 5px;
+    }
+    .add-group-drop-zone{
+        height: 70%;
+        font-size: 26px;   
+    }
+    
+    .add-new-group-button{
+        bottom: -25px;
+    }
+    .add-new-other{
+        bottom: -150px;
+    }
+   
+}
+
+@media(max-width: 999px){
+    .right-form-content label{
+        font-size: 18px;
+    }
+    .right-form-content{
+        width: 50%;
+    }
+    .add-new-group-button{
+        bottom: -100px;
+        font-size: 16px;
+    }
+    .add-new-other{
+        bottom: -160px;
+    }
+    .add-group-drop-zone{
+        height: 90%;
+        font-size: 20px;   
+    }
+    
+}
+@media(max-width: 600px){
+    .add-new-other{
+        bottom: -160px;
+    }
+    .right-form-content label{
+        font-size: 18px;
+        padding: 5px;
+    }
+    .add-group-drop-zone{
+        height: 90%;
+        font-size: 17px;   
+    }
+    .right-form-content{
+        width: 100%;
+        height: 200px;
+        margin-bottom: 60px;
+    }
+    .add-new-group-button{
+        bottom: -120px;
+    }
+   
+}

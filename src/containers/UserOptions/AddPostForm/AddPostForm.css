@@ -4,7 +4,6 @@
     padding-top: 10px;
     display: flex;
     flex-flow: column;
-    
 }
 .add-post-container i{
     color: green;
@@ -47,7 +46,15 @@
 .form-holder p:last-of-type{
     bottom: 7px;
 }
+.picture-holder-group-block{
+    display: flex;
+    justify-content: center; 
+}
 @media(min-width: 601px){
+    .picture-holder-group-block{
+        height: 350px;
+        width: 100%;   
+    }
     .add-post-container{
         margin: auto;
         width: 750px;
@@ -75,6 +82,10 @@
 }
 
 @media(max-width: 600px){
+    .picture-holder-group-block{
+        height: 350px;
+        width: 100%;   
+    }
     .add-post-container{
         width: 100%;
     }

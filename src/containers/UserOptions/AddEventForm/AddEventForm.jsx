@@ -9,8 +9,9 @@ import { validateInput } from '../Validation/Validation';
 import Modal from '../../../components/UI/Modal/Modal';
 import 'font-awesome/css/font-awesome.min.css';
 import {withRouter} from 'react-router-dom';
-import AddPictureBlock from '../../../components/UI/AddPictureBlock/AddPictureBlock';
+import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
+
 const helpArray = [1,2,3];
 const array = [
     {id: 0, name: "Nazwa wydarzenia", placeholder: "Wprowadz nazwe wydarzenia...", type: "text", value: "", error: ""},
@@ -103,7 +104,7 @@ class AddEventForm extends Component{
             }
         }
         if(counter > 0){
-            this.setState({files: files});
+            this.setState({files: files, incorrectPictureError: ""});
         }
         else{
             this.setState({incorrectPictureError: "Dodane zdjęcie posiada niedopuszczalny format"});
@@ -123,7 +124,7 @@ class AddEventForm extends Component{
                         key={item}>{item}</button>
                     })}
                 </nav>
-                <i style={{left: this.state.actualBlock <= 1 ? '-100vh' : '0'}} 
+                <i style={{left: this.state.actualBlock <= 1 ? '-100vh' : '10px'}} 
                  onClick={this.state.actualBlock > 1 ? this.comeBackEventHandler : null}
                  className="fa fa-arrow-left"></i>
                 <div className="event-blocks-container">
@@ -176,14 +177,18 @@ class AddEventForm extends Component{
                     <EventContentBlock actualBlock={this.state.actualBlock}
                     title="Etap 3: Ustaw wygląd"
                     number={3}>
-                     <AddPictureBlock
+                     <AddPictureBar
+                        mainLabelTitle="Dodaj zdjęcie(opcjonalne)"
                         buttonTitle="Dodaj wydarzenie"
-                        clicked={this.confirmAddEventHandler}
-                        onDropped={e => this.onDrop(e)}
+                        filesLength={this.state.files.length}
+                        onDropHandler={file => this.onDrop(file)}
+                        filesErrorType={this.state.incorrectPictureError}
                         files={this.state.files}
-                        deleteFiles={this.deleteFiles}
-                        incorrectPictureError={this.state.incorrectPictureError}
-                        />  
+                        deleteAddedPictureHandler={this.deleteFiles}
+                        onSubmitHandler={e => this.onSubmitHandler(e)}
+                        isGroupForm={false} 
+                        height="100%"
+                        />
                     </EventContentBlock>
                     
                     

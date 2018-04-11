@@ -5,7 +5,7 @@ import { fetchingGroups, loadGroups } from '../Store/actions';
 import GroupsBar from './GroupsBar/GroupsBar';
 import { validateInput } from '../Validation/Validation';
 import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
-import AddPictureBlock from '../../../components/UI/AddPictureBlock/AddPictureBlock';
+import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 
 class AddPostForm extends Component{
     state = {
@@ -143,16 +143,21 @@ class AddPostForm extends Component{
                     opacity: this.state.validationResult[1].content === "" ? '0' : '1'
                     }}>{this.state.validationResult[1].content}</p> 
                 </div>
-
-                <AddPictureBlock
-                buttonTitle="Dodaj post"
-                clicked={e => this.onSubmitHandler(e)}
-                onDropped={e => this.OnDrop(e)}
-                files={this.state.files}
-                deleteFiles={this.deleteFiles}
-                incorrectPictureError={this.state.incorrectPictureError}
-                />
-                
+                <div className="picture-holder-group-block">
+                    <AddPictureBar
+                    mainLabelTitle="Dodaj zdjęcie(opcjonalne)"
+                    buttonTitle="Dodaj post"
+                    filesLength={this.state.files.length}
+                    onDropHandler={file => this.OnDrop(file)}
+                    filesErrorType={this.state.incorrectPictureError}
+                    files={this.state.files}
+                    deleteAddedPictureHandler={this.deleteFiles}
+                    onSubmitHandler={e => this.onSubmitHandler(e)}
+                    isGroupForm={false}
+                    height="90%"
+                    />  
+                </div>
+                   
 
                 <EmptyGroupsModal 
                 showValidateModal={this.state.showModalError}

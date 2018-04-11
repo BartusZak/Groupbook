@@ -30,12 +30,25 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
 
                 if(inputText.length > 10)
                     return "Data posiada nieprawidłowy format";
-                
+                // sprawdzam czy rok jest mniejszy // potem czy 
                 const today = new Date();
-
+               
                 if(Number(inputText.slice(0,4)) < Number(today.getFullYear()))
                     return "Rok wydarzenia nie może odnosic sie do przeszlosci";
-                
+                else{
+                    if(Number(inputText.slice(5,7) < Number(today.getMonth()+1))){
+                        return "Miesiąc wydarzenia nie może odnosić się do przeszłości";
+                    }
+                    else{
+                        if(Number(inputText.slice(8,10) < Number(today.getDate())) &&
+                    inputType.slice(5,7) < Number(today.getMonth()+1 &&
+                    inputType.slice(8,10) < Number(today.getFullYear()))){
+                            return "Dzień wydarzenia nie może odnosić się do przeszlości";
+                        }
+                    }
+
+                }
+                /*
                 if(Number(inputText.slice(0,4)) === Number(today.getFullYear())){
                     
                     if((inputText.slice(5,6) === "0" ? Number(inputText.slice(6,7)) : 
@@ -43,10 +56,10 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
                         return "Miesiac wydarzenia nie moze odnosic sie do przeszlosci";
             
                     if((inputText.slice(8,9) === "0" ? Number(inputText.slice(9,10)) : 
-                    Number(inputText.slice(8,10))) < today.getDate())
+                    Number(inputText.slice(8,10))) < today.getDay())
                         return "Dzien wydarzenia nie moze odnosic sie do przeszlosci";
                 }
-
+                */
             }
             break;
         default:

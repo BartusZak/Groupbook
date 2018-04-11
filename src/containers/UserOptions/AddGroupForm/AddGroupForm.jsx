@@ -8,7 +8,7 @@ import { fetchingUsersHandler } from '../Store/actions';
 import { withRouter } from 'react-router-dom';
 import axios from '../../../axios-groupsconnects';
 import Modal from '../../../components/UI/Modal/Modal';
-
+import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 class AddGroupForm extends Component{
     state = {
         fetchedUsers: null,
@@ -194,38 +194,22 @@ class AddGroupForm extends Component{
                             "validation-error-group animate-in" : "validation-error-group animate-out"}>{this.state.formContent[1].groupDescError}</p>
                         </div>
                     </div>
-                    <div className="right-form-content">
-                        <label>Dodaj zdjęcie (opcjonalne)</label>
+                    <AddPictureBar
+                    mainLabelTitle="Dodaj zdjęcie(opcjonalne)"
+                    buttonTitle="Dodaj grupę"
+                    filesLength={filesLength}
+                    onDropHandler={file => this.onDropHandler(file)}
+                    filesErrorType={this.state.filesErrorType}
+                    files={this.state.files}
+                    deleteAddedPictureHandler={this.deleteAddedPictureHandler}
+                    onSubmitHandler={e => this.onSubmitHandler(e)}
+                    isGroupForm={true}
+                    height="410px"                  
+                    /> 
                         
-                        <Dropzone
-                        disabled={filesLength === 0 ? false : true} 
-                        onDrop={file => this.onDropHandler(file)}
-                        className={filesLength === 0 ? 
-                        "add-group-drop-zone add-group-drop-zone-before-add" : "add-group-drop-zone add-group-drop-zone-after-add"}
-                        >
-                            <div>
-                                <span className={filesLength === 0 ?
-                                 null : "after-add-desc"}>{this.state.filesErrorType !== "" ?
-                                 this.state.filesErrorType : filesLength === 0 ? 
-                                 "przeciągnij i upuść zdjęcie" 
-                                 : "Dodałeś zdjęcie " + this.state.files[0].name +
-                                 " " + this.state.files[0].size + " bitów"} </span>
-
-                                 {this.state.files.length > 0 ? <img 
-                                 src={this.state.files[0].preview} 
-                                 alt={this.state.files[0].name} /> : null }
-                            </div>
-                            {filesLength > 0 ? <span
-                            onClick={this.deleteAddedPictureHandler} 
-                            className="delete-added-pic">
-                            Usuń zdjęcie</span> : null}
-
-                            
-                        </Dropzone>
-                        <button onClick={e => this.onSubmitHandler(e)} className="add-new-group-button">Dodaj grupę</button> 
-                    </div>
                    
                      
+                        
                 </div>
                 
                 <div className="add-users-into-group-container">

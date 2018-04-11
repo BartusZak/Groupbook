@@ -60,7 +60,7 @@
 .event-blocks-container div{
     transition: 1s all ease-in-out;
     position: absolute;
-    height: 450px;
+    height: 300px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -84,14 +84,12 @@
     margin-top: 30px;
     position: relative;
 }
-
-
 .user-informations{
     width: 90%;
     text-align: right;
     font-style: italic;
     color: green;
-
+    font-size: 18px;
 }
 .block-header{
     padding-left: 10px;
@@ -99,7 +97,7 @@
 
 @media(min-width: 991px){
     .add-event-form-container{
-        width: 750px;
+        width: 750px
     }
     .add-event-form-container h4{
         padding-left: 80px;
@@ -120,6 +118,8 @@
         padding-left: 215px;
         font-size: 24px;
     }
+   
+    
     
 }
 @media(max-width: 990px){
@@ -143,6 +143,7 @@
         padding-left: 65px;
         font-size: 22px;
     }
+  
 }
 
 
@@ -167,4 +168,5 @@
         padding: 0 20px;
         font-size: 20px;
     }
+   
 }
