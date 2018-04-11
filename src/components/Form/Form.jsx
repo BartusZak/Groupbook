@@ -19,7 +19,7 @@ class Form extends Component {
         formIsValid: false,
         password: null,
         registredSuccesfully: false,
-        error: false,
+        errors: null,
     }
     Validate = () => {
         const errors = [...this.state.itemsErrors];
@@ -71,8 +71,8 @@ class Form extends Component {
                 this.setState({registredSuccesfully: true});
             })
         .catch(error => {
-                console.log(error);
-                this.setState({error: true});
+                console.log(error.response);
+                this.setState({errors: error.response.data.errors});
             })
     }
 
@@ -132,6 +132,7 @@ class Form extends Component {
         let text = null;
         let button = null;
         let content = <p>Tu powinien być formularz - "{this.props.name}"</p>
+        let summaryErrors = (this.state.errors !== null)? this.state.errors.map(error =>{return <p key={error} className="ValidationError">{error}</p>}): null;
         if(this.props.name.toUpperCase() === "LOGOWANIE")
         {
             text = <p className="message">Nie masz konta? <Link to="/register">Utwórz konto</Link></p>;
@@ -157,7 +158,6 @@ class Form extends Component {
         if(this.state.loading){
             content = <MainForm><Spinner className="whiteSpinner"/></MainForm>
         }
-        console.log(this.state.registredSuccesfully);
         if(this.state.registredSuccesfully){
             content = (
                 <MainForm>
@@ -169,8 +169,8 @@ class Form extends Component {
         else{
             content = (
                     <MainForm autoComplete="off">
-                    {console.log()}
                         <h2>{this.props.name}</h2>
+                        {summaryErrors}
                         {this.state.names.map(item => {
                             return <FormItem
                             key={item.id}
