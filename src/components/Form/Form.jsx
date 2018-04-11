@@ -212,4 +212,4 @@ const mapDispatchToProps = dispatch => {
         fetchingLogingIn: (username, password, router) => dispatch(fetchingLogingIn(username, password, router))
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withErrorHandler(Form), axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Form));

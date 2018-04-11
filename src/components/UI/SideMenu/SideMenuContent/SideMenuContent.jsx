@@ -13,10 +13,10 @@ class SideMenuContent extends Component{
         profile: false
     }
     clearState = () => {
-        this.setState({addPost: false, addEvent: false, addGroup: false});
+        this.setState({addPost: false, addEvent: false, addGroup: false, profile: false});
     }
     redirectToAddPost = () => {
-        this.setState({addPost: true, addEvent: false, addGroup: false});
+        this.setState({addPost: true, addEvent: false, addGroup: false, profile: false});
         this.props.history.push("/logged/addpost");
     }
     redirectToGroup = (groupId) => {
@@ -24,12 +24,16 @@ class SideMenuContent extends Component{
         this.props.history.push("/logged/group/" + groupId);
     }
     redirectToAddEvent = () => {
-        this.setState({addPost: false, addEvent: true, addGroup: false});
+        this.setState({addPost: false, addEvent: true, addGroup: false, profile: false});
         this.props.history.push("/logged/addevent");
     }
     redirectToProfile = () => {
         this.setState({addPost: false, addEvent: false, addGroup: false, profile: true});
         this.props.history.push("/logged/user/" + this.props.user.id);
+    }
+    redirectToAddGroup = () => {
+        this.setState({addPost: false, addEvent: false, addGroup: true, profile: false});
+        this.props.history.push("/logged/addgroup");
     }
     render(){
         console.log(this.props.user);
