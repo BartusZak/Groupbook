@@ -74,11 +74,13 @@ class SideMenuContent extends Component{
                 onClick={this.redirectToAddEvent} className="sidebar-butt"
                 className={this.state.addEvent ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj wydarzenie</span>
 
-                <span className="sidebar-butt">Stwórz grupe</span>
-
+                <span
+                onClick={this.redirectToAddGroup} className={this.state.addGroup ?
+                     "sidebar-butt overline-butt" : "sidebar-butt"}>Stwórz grupe</span>
                 <span
                 onClick={this.redirectToProfile} 
-                className={this.state.profile ? "sidebar-butt overline-butt" : "sidebar-butt"}>Twój profil</span>
+                className={this.state.profile ? "sidebar-butt overline-butt"
+                : "sidebar-butt"}>Twój profil</span>
             </div>  
             </Aux>
         );
