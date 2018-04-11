@@ -17,6 +17,7 @@ const initialState = {
     addingCommentError: false,
 
     loadedGroups: [],
+    loadingGroupsError: false,
 
 
     //dodawanie grup
@@ -57,7 +58,10 @@ const reducer = (state = initialState, action) => {
         break;
 
         case actionTypes.LOAD_GROUPS:
-            return updateObject(state, { loadedGroups: action.loadedGroups})
+            return updateObject(state, { loadedGroups: action.loadedGroups, loadingGroupsError: false})
+        break;
+        case actionTypes.LOADING_GROUPS_ERROR:
+            return updateObject(state, { loadingGroupsError: true})
         break;
 
         case actionTypes.FETCHING_USERS:

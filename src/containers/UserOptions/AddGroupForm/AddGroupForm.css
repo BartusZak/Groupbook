@@ -73,7 +73,7 @@
 .validation-input-error{
     border: 1px solid red !important; 
     background-color: #FDA49A;
-    color: white;
+    color: #23232f;
     letter-spacing: 2px;
 }
 .loaded-users-cont{

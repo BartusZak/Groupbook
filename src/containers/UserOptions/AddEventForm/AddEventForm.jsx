@@ -81,8 +81,10 @@ class AddEventForm extends Component{
     onSubmitHandler = e => {
         e.preventDefault();
         let newItems = [...this.state.inputValues];
-        newItems[0].error = validateInput(5,15,newItems[0].value,"", "", "","nazwa wydarzenia");
-        newItems[1].error = validateInput(5,200,newItems[1].value, "", "", "", "opis wydarzenia");
+        newItems[0].error = validateInput(2,20, 
+            newItems[0].value, ["przeklenstwo"], "", "", "nazwa wydarzenia", "standard");
+        newItems[1].error = validateInput(5, 255, 
+            newItems[1].value, ["przeklenstwo"], "", "", "opis wydarzenia", "standard");
         newItems[2].error = validateInput("","",newItems[2].value, "", "date", "", "");
         
         if(newItems[0].error !== "" || newItems[1].error !== "" || newItems[2].error !== "")
@@ -136,12 +138,11 @@ class AddEventForm extends Component{
                         targetClass="loaded-groups"
                         clicked={(event) => this.addGroup(event)}
                         groups={this.props.loadedGroups}
-                        icon={<i className="fa fa-plus"></i>} />
+                        />
                         <p className="block-header">Wybrane grupy</p>
                         <GroupsBar 
                         targetClass="added-groups"
                         groups={this.state.addedGroups}
-                        icon={<i className="fa fa-trash"></i>}
                         clicked={(event) => this.deleteGroup(event)} />
 
                     <p className="continue-button" onClick={() => this.changeActualBlock(this.state.actualBlock+1)}>
@@ -156,14 +157,14 @@ class AddEventForm extends Component{
                         return (<section key={item.id} className="input-holders">
                         <label>{item.name}</label>
                         {item.type === "textarea" ? 
-                        <textarea onChange={(event) => this.onChangeHandlerInput(event, item.id)}
-                        className={this.state.inputValues[item.id].error === "" ? "" : "invalid-inputs"}
+                        <textarea className={this.state.inputValues[item.id].error !== "" ?
+                        "validation-input-error" : null} onChange={(event) => this.onChangeHandlerInput(event, item.id)}
                         value={this.state.inputValues[item.id].value}
                         placeholder={item.placeholder}>
                         </textarea> : 
-                        <input max="2050-12-31" onChange={(event) => this.onChangeHandlerInput(event, item.id)} 
-                        className={this.state.inputValues[item.id].error === "" ? "" : 
-                        "invalid-inputs"} value={this.state.inputValues[item.id].value} 
+                        <input className={this.state.inputValues[item.id].error !== "" ?
+                        "validation-input-error" : null} max="2050-12-31" onChange={(event) => this.onChangeHandlerInput(event, item.id)} 
+                        value={this.state.inputValues[item.id].value} 
                         type={item.type} placeholder={item.placeholder} />}
                         <p className={this.state.inputValues[item.id].error === "" ?
                         "invisible-message" : "invalid-message"}>

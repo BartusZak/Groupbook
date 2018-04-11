@@ -102,14 +102,18 @@ export const loadGroups = (groups) => {
         loadedGroups: groups
     }
 }
-
+export const loadingGroupsError = () => {
+    return {
+        type: actionsTypes.LOADING_GROUPS_ERROR
+    }
+}
 export const fetchingGroups = () => {
     return dispatch => {
         trueAxios.get('/api/groups').then(response => {
             console.log(response.data);
             dispatch(loadGroups(response.data));
         }).catch(error => {
-            console.log(error);
+            dispatch(loadingGroupsError());
         });
       
     }

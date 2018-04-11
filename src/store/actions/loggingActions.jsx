@@ -22,7 +22,6 @@ export const fetchingLogingIn = (username, password, router) => {
         }
         axios.post('/api/account/login', loginData).then(response => {
             const responseObject = response.data.successResult;
-            console.log(response);
             dispatch(logingIn(responseObject.token, responseObject));
             dispatch(errorInLoggingProcedure(""));
             router.push('logged/group/poczekalnia');

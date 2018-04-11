@@ -9,17 +9,34 @@
 }
 .add-post-container ul > li,
 .event-blocks-container ul > li{
-    display: flex;
     width: 100%;
     padding: 5px;
     margin: 5px 0;
-    justify-content: space-between;
-    align-items: center;
 }
 .add-post-container ul > li:hover,
 .event-blocks-container ul > li:hover{
     background-color: #43434e;
     cursor: pointer;
+}
+.loaded-groups li,
+.added-groups li{
+    position: relative;
+}
+.loaded-groups li::after,
+.added-groups li::after{
+    position: absolute;
+    bottom: -5px;
+    font-size: 30px;
+    right: 30px;
+    font-weight: bold;
+}
+.loaded-groups  li::after{
+    content: '+';
+    color: green;
+}
+.added-groups  li::after{
+    content: '-';
+    color: red;
 }
 .loaded-groups{
     background-color: #32323d;

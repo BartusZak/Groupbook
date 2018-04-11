@@ -24,7 +24,7 @@
 .form-holder input,
 .form-holder textarea{
     margin: 0 auto;
-    padding: 5px;
+    padding: 10px 5px 10px 5px;
     margin: 6px auto 45px auto;
     width: 90%;
 }
@@ -76,7 +76,6 @@
     }
     .form-holder p{
         font-size: 17px;
-
     }
   
 }
