@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import { fetchingUsersHandler } from '../Store/actions';
 import { withRouter } from 'react-router-dom';
+import axios from '../../../axios-groupsconnects';
+import Modal from '../../../components/UI/Modal/Modal';
 
 class AddGroupForm extends Component{
     state = {
@@ -20,12 +22,25 @@ class AddGroupForm extends Component{
         ],
 
         files: [],
-        filesErrorType: ""
+        filesErrorType: "",
+        showSpinner: false,
+
+        addingGroupSpinner: false,
+        showGroupAddingModal: false,
+        addGroupError: ""
     }
     
     componentDidMount(){
+        this.changeSpinnerStateHandler();
         this.props.fetchingUsersHandler();
     }
+    componentDidUpdate(prevProps, prevState){
+        if (prevProps.fetchedUsers !== this.props.fetchedUsers 
+            || prevProps.fetchingUsersError !== this.props.fetchingUsersError) {
+            this.setState({showSpinner: false});
+        }
+    }
+    changeSpinnerStateHandler = () => this.setState({showSpinner: !this.state.showSpinner});
     onChangeHandler = (e, id) => {
         let formContentCopy = [
             ...this.state.formContent
@@ -37,7 +52,7 @@ class AddGroupForm extends Component{
         let formContentCopy = [
             ...this.state.formContent
         ]
-        let result = true; //(min, max, inputText, specialKeys, inputType, isZeroAble, inputName)
+        let result = true;
         formContentCopy[0].groupNameError = validateInput(2,20, 
             formContentCopy[0].value, ["przeklenstwo"], "", "", "Nazwa grupy", "standard");
 
@@ -54,14 +69,27 @@ class AddGroupForm extends Component{
         this.setState({formContent: formContentCopy});
         return result;
     }
+
+    addGroupHandler = () => {
+        this.setState({addingGroupSpinner: true, showGroupAddingModal: true});
+        const newGroup = {
+            Name: this.state.formContent[0].value,
+            Description: this.state.formContent[1].value
+        }
+        axios.post('/api/groups/add', newGroup).then(response => {
+            this.setState({addingGroupSpinner: false, addGroupError: ""});
+            this.props.history.push("/logged/group/"+ newGroup.Name);
+        }).catch(error => {
+            this.setState({addingGroupSpinner: false, addGroupError: "Wystąpił błąd podczas dodawania postu"});
+        })
+    }
+    closeModalHandler = () => {
+        this.setState({showGroupAddingModal: false});
+    }
     onSubmitHandler = e => {
-        if(this.Validate())
-            console.log("jest okej");
-            // Przekieruj co tam chcesz
-        
-        else
-            console.log("Nie jest okej");
-            // Nie przekieruj 
+        if(this.Validate()){
+            this.addGroupHandler();
+        }
     }
     onDropHandler = file => {
         const result = validatePictures(file[0].type, 200000, file[0].size);
@@ -97,8 +125,6 @@ class AddGroupForm extends Component{
             alert(containsError);
             
         }
-        
-
         const wholeList = [...this.state.fetchedUsers === null 
             ? this.props.fetchedUsers : this.state.fetchedUsers];
 
@@ -124,12 +150,27 @@ class AddGroupForm extends Component{
     }
 
     render(){
-        
         const filesLength = this.state.files.length;
         const fetchedUsers = this.state.fetchedUsers === null ? 
               this.props.fetchedUsers : this.state.fetchedUsers;
+
+        const trueContent = this.state.showSpinner ? <Spinner /> : (this.props.fetchingUsersError ? 
+            <p>Błąd podczas ładowania danych</p> : <ul>
+            {fetchedUsers.map(item => {
+                return (<li 
+                onClick={() => this.addUserHandler(item.id, item)} 
+                key={item.id}>
+                {item.email}
+                </li>);
+            })}
+        </ul>);
         return(
             <div className="add-group-form-main-div">
+                <Modal show={this.state.showGroupAddingModal} clickedMethod={this.closeModalHandler}>
+                    {this.state.addingGroupSpinner ? <Spinner /> : this.state.addGroupError !== "" ?
+                    this.state.addGroupError : "Dodano grupe"}
+                </Modal>
+
                 <h4>Tworzenie nowej grupy</h4>
                 <div className="add-group-content-container">
                     <div className="left-form-content">
@@ -161,7 +202,7 @@ class AddGroupForm extends Component{
                         onDrop={file => this.onDropHandler(file)}
                         className={filesLength === 0 ? 
                         "add-group-drop-zone add-group-drop-zone-before-add" : "add-group-drop-zone add-group-drop-zone-after-add"}
-                        accept="image/jpeg, image/png, image/jpg">
+                        >
                             <div>
                                 <span className={filesLength === 0 ?
                                  null : "after-add-desc"}>{this.state.filesErrorType !== "" ?
@@ -195,15 +236,8 @@ class AddGroupForm extends Component{
                             <input onChange={(event) => this.selectUsers(event)} 
                             value={this.state.searchInput}
                             type="text" placeholder="znajdź użytkownika..."/>
-                            <ul>
-                                {fetchedUsers.map(item => {
-                                    return (<li 
-                                    onClick={() => this.addUserHandler(item.id, item)} 
-                                    key={item.id}>
-                                    {item.email}
-                                    </li>);
-                                })}
-                            </ul>
+                            {trueContent}
+                            
                         </div>
                         <div className="added-users">
                             <label>Aktualnie dodani</label>
@@ -227,7 +261,6 @@ class AddGroupForm extends Component{
         );
     }
 }
-
 const mapStateToProps = state => {
     return {
         fetchedUsers: state.userOptionsRed.fetchedUsers,

@@ -158,15 +158,10 @@ export const fetchingUsersError = () => {
 }
 export const fetchingUsersHandler = () => {
     return dispatch => {
-        
-        axiosRandom.get('/comments').then(response => {
-            
+        trueAxios.get('/api/users').then(response => {
             dispatch(fetchingUsers(response.data));
         }).catch(error => {
-            fetchingUsersError();
+            dispatch(fetchingUsersError());
         })
-        
-            
-        
     }
 }
