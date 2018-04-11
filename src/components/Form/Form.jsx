@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import {fetchingLogingIn } from '../../store/actions/loggingActions';
 import Spinner from '../UI/Spinner/Spinner';
 import axios from 'axios';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 
 class Form extends Component {
@@ -211,4 +212,4 @@ const mapDispatchToProps = dispatch => {
         fetchingLogingIn: (username, password, router) => dispatch(fetchingLogingIn(username, password, router))
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Form));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withErrorHandler(Form), axios));
