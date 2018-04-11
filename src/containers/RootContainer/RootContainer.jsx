@@ -120,9 +120,8 @@ class RootContainer extends Component{
 
                         {IsLogged}
                         {/*@TESTING*/}
-                        <Route path='/logged/user/:id' component={UserDetails} />
                         <Route path='/logged/addgroup' component={AddGroupForm} />
-
+                        <Route path='/logged/user/:id' component={UserDetails} />
                        
                         
                         

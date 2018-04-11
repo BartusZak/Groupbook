@@ -3,12 +3,14 @@ import Aux from '../../../../hoc/Auxi';
 import './SideMenuContent.css';
 import { withRouter } from 'react-router-dom'
 import Image from '../../../../assets/img/404/404.jpg';
+import {connect} from 'react-redux';
 
 class SideMenuContent extends Component{
     state = {
         addPost: false,
         addEvent: false,
-        addGroup: false
+        addGroup: false,
+        profile: false
     }
     clearState = () => {
         this.setState({addPost: false, addEvent: false, addGroup: false});
@@ -25,7 +27,12 @@ class SideMenuContent extends Component{
         this.setState({addPost: false, addEvent: true, addGroup: false});
         this.props.history.push("/logged/addevent");
     }
+    redirectToProfile = () => {
+        this.setState({addPost: false, addEvent: false, addGroup: false, profile: true});
+        this.props.history.push("/logged/user/" + this.props.user.id);
+    }
     render(){
+        console.log(this.props.user);
         return(
         <Aux>
             <div className="side-bar-groups">
@@ -64,10 +71,18 @@ class SideMenuContent extends Component{
                 className={this.state.addEvent ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj wydarzenie</span>
 
                 <span className="sidebar-butt">Stwórz grupe</span>
-            </div>   
+
+                <span
+                onClick={this.redirectToProfile} 
+                className={this.state.profile ? "sidebar-butt overline-butt" : "sidebar-butt"}>Twój profil</span>
+            </div>  
             </Aux>
         );
     }
 }
-
-export default withRouter(SideMenuContent);
+const mapStateToProps = state => {
+    return {
+        user: state.logRed.loggingObject,
+    };
+}
+export default connect( mapStateToProps, null)(withRouter(SideMenuContent));
