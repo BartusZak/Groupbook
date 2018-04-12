@@ -4,19 +4,33 @@ import WholeBlock from '../../../components/UserSettingsElements/WholeBlock';
 import { connect } from 'react-redux';
 
 class UserSettings extends Component{
-    state = { choosenId: 1 }
+    state = { 
+        choosenId: 1,
+        wholeItems : []
+
+    }
+    componentDidMount(){
+        const loggingObject = (
+            JSON.parse(localStorage.getItem('responseObject')) !== null ? 
+            JSON.parse(localStorage.getItem('responseObject')) :
+            this.props.loggingObject
+        );
+        const WholeItems = [ // Pamietac zeby dodac do value dane z serwera potem
+            {id: 1, name: "Imię", value: loggingObject.firstName, option: "Edytuj"},
+            {id: 2, name: "Nazwisko", value: loggingObject.LastName, option: "Edytuj"},
+            {id: 3, name: "Nazwa użytkownika", value: loggingObject.username, option: "Edytuj"},
+            {id: 4, name: "Adres email", value: loggingObject.email, option: "Edytuj"},
+            {id: 5, name: "Data urodzenia", value: loggingObject.birthDate, option: "Edytuj"},
+            {id: 6, name: "Płec", value: loggingObject.sex ? 
+            "Mężczyzna" : "Kobieta", option: "Edytuj"}            
+        ];
+        this.setState({ wholeItems: WholeItems })
+    }
     changingChoosenBlock = (id) => { this.setState({choosenId: id}); }
 
     render(){
         let Content = null;
-        const WholeItems = [ // Pamietac zeby dodac do value dane z serwera potem
-            {id: 1, name: "Imię", value: this.props.loggingObject.firstName, option: "Edytuj"},
-            {id: 2, name: "Nazwisko", value: this.props.loggingObject.LastName, option: "Edytuj"},
-            {id: 3, name: "Nazwa użytkownika", value: this.props.loggingObject.username, option: "Edytuj"},
-            {id: 4, name: "Adres email", value: this.props.loggingObject.email, option: "Edytuj"},
-            {id: 5, name: "Data urodzenia", value: this.props.loggingObject.birthDate, option: "Edytuj"},
-            {id: 6, name: "Płec", value: this.props.loggingObject.sex ? "Mężczyzna" : "Kobieta", option: "Edytuj"}            
-        ];
+        
         const UserSettings = [
             {id: 1, name: "Ogólne"},
             {id: 2, name: "Bezpieczeństwo"},
@@ -33,7 +47,7 @@ class UserSettings extends Component{
                       
                     </ul>
                     <WholeBlock
-                     wholeItems={WholeItems}
+                     wholeItems={this.state.wholeItems}
                      itemNumber={this.state.choosenId}
                      loggingObject={this.props.loggingObject} />
                 </div>

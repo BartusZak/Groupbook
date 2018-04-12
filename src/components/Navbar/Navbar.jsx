@@ -10,7 +10,6 @@ import Searcher from '../UI/Searcher/Searcher';
 import Avatar from '../UI/Avatar/Avatar';
 import logoIcon from '../../assets/img/logo/groupsconnectsLogoSmall.png';
 import { connect } from 'react-redux';
-import { loggingOut } from '../../store/actions/loggingActions';
 
 import {Container} from 'reactstrap';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
@@ -21,7 +20,6 @@ import {
     MenuUl,
     MenuAfterLogIn
 } from './Navbar.style';
-
 class NavbarComponent extends Component{
     constructor(props) {
         super(props);
@@ -33,6 +31,7 @@ class NavbarComponent extends Component{
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
     }
+   
     onClick(){
         this.setState({
             collapse: !this.state.collapse,
@@ -44,13 +43,11 @@ class NavbarComponent extends Component{
             dropdownOpen: !this.state.dropdownOpen
         });
     }
-    
     render(){
         let navbarContent = null;
         let items = null;
         let homePageLink = "/";
-
-        if(this.props.token === ""){
+        if(this.props.token === "" && this.props.responseObject === null){
             items = [
                 {id: 1, name: "Rejestracja", url: "/register"},
                 {id: 2, name: "Logowanie", url: "/logging"} 
@@ -106,7 +103,8 @@ class NavbarComponent extends Component{
                                                 Poczekalnia
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem><i className="fa fa-sign-out" aria-hidden="true"/><NavbarButton name="Wyloguj" path="/" clicked={() => this.props.loggingOut()}/></DropdownItem>
+                                    <DropdownItem><i className="fa fa-sign-out" aria-hidden="true"/><NavbarButton name="Wyloguj" path="/" 
+                                    clicked={this.props.loggingOut}/></DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                     </ul>
@@ -146,9 +144,5 @@ const mapStateToProps = state => {
         token: state.logRed.token
     };
 }
-const mapDispatchToProps = dispatch => {
-    return {
-        loggingOut: () => dispatch(loggingOut())
-    };
-}
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})( NavbarComponent);
+
+export default connect(mapStateToProps, null, null, {pure:false})( NavbarComponent);

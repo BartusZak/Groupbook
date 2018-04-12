@@ -48,18 +48,6 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
                     }
 
                 }
-                /*
-                if(Number(inputText.slice(0,4)) === Number(today.getFullYear())){
-                    
-                    if((inputText.slice(5,6) === "0" ? Number(inputText.slice(6,7)) : 
-                    Number(inputText.slice(5,7))) < Number(today.getMonth()+1))
-                        return "Miesiac wydarzenia nie moze odnosic sie do przeszlosci";
-            
-                    if((inputText.slice(8,9) === "0" ? Number(inputText.slice(9,10)) : 
-                    Number(inputText.slice(8,10))) < today.getDay())
-                        return "Dzien wydarzenia nie moze odnosic sie do przeszlosci";
-                }
-                */
             }
             break;
         default:
@@ -85,7 +73,7 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
 
 export const validatePictures = (fileType, maxSize, fileSize) => {
     if(fileSize > maxSize){
-        return "Rozmiar zdjęcia nie może przekraczać bitów" + maxSize;
+        return "Rozmiar zdjęcia nie może przekraczać " + maxSize + " bitów";
     }
     const correctFormats = ["image/jpg", "image/jpeg", "image/png"];
     let result = "Zdjęcie powinno być formatu jpg, jpeg lub png";

@@ -11,7 +11,25 @@ export const MainForm = styled.form`
     padding: 45px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-
+    p {
+        transition: 1s all ease-in-out;
+    }
+    .loging-error{
+        color: orangered;
+        font-size: 22px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .loging-error::before{
+        content: '!';
+        padding: 0 10px 0 10px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+    
     input {
         font-family: "Roboto", sans-serif;
         outline: 0;

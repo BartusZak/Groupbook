@@ -34,14 +34,19 @@ class AddPostForm extends Component{
 
         showBackdrop: false
     }
-    componentDidMount(){ 
+    componentDidMount(){
+        const userGroups = (
+            JSON.parse(localStorage.getItem('responseObject')) !== null ? 
+            JSON.parse(localStorage.getItem('responseObject')) :
+            this.props.userObject
+        );
         this.setState({
-            loadedGroups: this.mappingFunction(this.props.userObject.userGroups)
+            loadedGroups: this.mappingFunction(userGroups.userGroups)
         })
     }
     mappingFunction = (objectArray) => {
         let resultArray = Object.keys(objectArray).map(item => {
-            return this.props.userObject.userGroups[item].group;
+            return objectArray[item].group;
         });
         return resultArray;
     }
@@ -134,12 +139,18 @@ class AddPostForm extends Component{
             }
         }
         if(booleanResult){
+            const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
+            JSON.parse(localStorage.getItem('responseObject')) : this.props.userObject;
             this.setState({sendingPostSpinner: true, showBackdrop: true});
+            
+            const addedGroupsIds = this.state.addedGroups.map(item => {
+                return item.id;
+            })
             const newPost = {
                 Title: this.state.postTitle,
                 Content: this.state.postContent,
-                GroupId: this.state.addedGroups[0].id,
-                AuthorId: this.props.userObject.id
+                GroupsIds: addedGroupsIds,
+                AuthorId: responseObject.id
             }
             axios.post('/api/posts/add', newPost).then(response => {
                 this.setState({responsePostId: response.data.successResult.id,
@@ -149,8 +160,7 @@ class AddPostForm extends Component{
                 this.state.files.length ? null : this.redirectToAddedPostGroup();
                
             }).catch(error => {
-                console.log(error);
-                this.setState({addingPostError: "Wystąpił błąd podczas dodawania postu",
+                 this.setState({addingPostError: "Wystąpił błąd podczas dodawania postu",
                  sendingPostSpinner: false, responsePostId: null });
             })
         }   
@@ -170,7 +180,6 @@ class AddPostForm extends Component{
                 this.setState({sendingPictureSpinner: false, addingPictureError: ""});
                 this.redirectToAddedPostGroup();
             }).catch(error => {
-                console.log(error);
                 this.setState({sendingPictureSpinner: false,
                      addingPictureError: "Wystąpił błąd podczas dodawania zdjęcia"});
             })

@@ -50,8 +50,8 @@
     justify-content: center; 
 }
 .backdrop-container p{
-    font-size: 22px !important;
-    padding-top: 18px;
+    font-size: 20px !important;
+    padding: 18px;
 }
 .backdrop-error{
     color: orangered;

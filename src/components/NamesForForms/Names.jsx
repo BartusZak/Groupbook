@@ -15,12 +15,12 @@ export const RegisterErrors = [
 
 ];
 export const LoginNames = [
-    {id: 1,name: "Login", placeholder: "Login", text: "", min: 4, max: 15, type:"Text"},
-    {id: 2,name: "Hasło", placeholder: "Hasło", text: "", min: 4, max: 15, type:"Password"}
+    {id: 1,name: "Login", placeholder: "Login", text: "", type:"Text"},
+    {id: 2,name: "Hasło", placeholder: "Hasło", text: "", type:"Password"}
 ];
 export const LoginErrors = [
-    {id: 1, msg: "", isError: false},
-    {id: 2, msg: "", isError: false}
+    {id: 1, msg: ""},
+    {id: 2, msg: ""}
 ];
 
 export const AddingPostsErrors = [

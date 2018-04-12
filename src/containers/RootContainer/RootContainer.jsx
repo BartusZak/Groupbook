@@ -35,10 +35,16 @@ import UserDetails from '../UserDetails/UserDetails';
 //     import ('../../components/Register/Register').then(module => module.default)
 // ) <Route path="/posts" exact component={Komponent} />"
 //<Route path="/repos/:userName/:repoName" component={Repo}/>
+import { loggingOut } from '../../store/actions/loggingActions';
 
 class RootContainer extends Component{
     state = {
-        showSideMenu: false
+        showSideMenu: false,
+        localStorage: null
+    }
+    componentDidMount(){
+        this.setState({localStorage: 
+            JSON.parse(localStorage.getItem('responseObject'))})
     }
     ClickOnSideMenuHandler = () => {
         this.setState({showSideMenu: !this.state.showSideMenu});
@@ -51,13 +57,15 @@ class RootContainer extends Component{
           });
           
     }
-
+    loggout = () => {
+        localStorage.clear();
+        this.setState({localStorage: null});
+        this.props.loggingOut();
+    }
     render(){
-        
         let IsLogged = null;
         let IsLoggedMenuExpander = null;
-
-        if(this.props.token !== "")
+        if(this.props.token || this.state.localStorage !== null)
         {
             IsLogged = (
                 <Aux>
@@ -100,7 +108,8 @@ class RootContainer extends Component{
             
         return(
             <Aux>
-                <Navbar />
+                <Navbar loggingOut={() => this.loggout()} 
+                responseObject={JSON.parse(localStorage.getItem('responseObject'))}/>
                 <SideMenu IsDisplay={this.state.showSideMenu}>
                     <SideMenuContent clicked={() => this.ClickOnSideMenuHandler()} IsLogged={this.props.isLogged}/>
                 </SideMenu> 
@@ -149,4 +158,9 @@ const mapStateToProps = state => {
         token: state.logRed.token
     }
 }
-export default connect(mapStateToProps, null, null, {pure:false})(RootContainer);
+const mapDispatchToProps = dispatch => {
+    return {
+        loggingOut: () => dispatch(loggingOut())
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})(RootContainer);
