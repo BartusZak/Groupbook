@@ -14,6 +14,13 @@ export const errorInLoggingProcedure = (logingError) => {
         logingError: logingError
     }
 }
+export const settingLocalStorageSupport = (lsSupport) => {
+    return {
+        type: actionsTypes.SETTING_LOCAL_STORAGE_SUPPORT_ERROR,
+        lsSupport: lsSupport
+    }
+}
+
 export const fetchingLogingIn = (username, password, router) => {
     return dispatch => {
         const loginData = {
@@ -22,9 +29,16 @@ export const fetchingLogingIn = (username, password, router) => {
         }
         axios.post('/api/account/login', loginData).then(response => {
             const responseObject = response.data.successResult;
+            if (typeof(Storage) !== "undefined") {
+                dispatch(settingLocalStorageSupport(true));
+                localStorage.setItem('responseObject', JSON.stringify(responseObject));
+            } else {
+                dispatch(settingLocalStorageSupport(false));
+            }
             dispatch(logingIn(responseObject.token, responseObject));
             dispatch(errorInLoggingProcedure(""));
             router.push('logged/group/poczekalnia');
+            
         }).catch( error => {
             dispatch(errorInLoggingProcedure("Zły login lub hasło"));
             dispatch(logingIn("", "", "", ""));

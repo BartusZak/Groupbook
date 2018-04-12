@@ -9,7 +9,7 @@ import {fetchingLogingIn } from '../../store/actions/loggingActions';
 import Spinner from '../UI/Spinner/Spinner';
 import axios from 'axios';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-
+import { validateInput } from '../../containers/UserOptions/Validation/Validation';
 
 class Form extends Component {
     state = {
@@ -21,39 +21,47 @@ class Form extends Component {
         password: null,
         registredSuccesfully: false,
         errors: null,
+        logingError: ""
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.logingError !== this.props.logingError){
+            this.setState({logingError: this.props.logingError});
+        }
+       
     }
     Validate = () => {
+
         const errors = [...this.state.itemsErrors];
         const oldState = [...this.state.names];
         let result = true;
+        errors[0].msg = validateInput(4,25, 
+            this.state.names[0].text, "", "", "", "login", "");
+        errors[1].msg = validateInput(4,25, 
+            this.state.names[1].text, "", "", "", "hasło", "");
+
         for(let key in oldState){
-            errors[key].msg = "";
-            if(oldState[key].text.length < oldState[key].min){
-                errors[key].msg = "Pole " + oldState[key].name + " musi zawierać minimalnie " + oldState[key].min + " znaków";
-                errors[key].isError = true;
+            if(errors[key].msg !== ""){
                 result = false;
             }
-            if(oldState[key].text.length > oldState[key].max){
-                errors[key].msg = "Pole " + oldState[key].name + "</b> może zawierać maksymalnie " + oldState[key].max + " znaków";  
-                errors[key].isError = true;
-                result = false;
-            }
-            errors[key].msg = (errors[key].msg !== "") ? <ValidationBubble><span>{errors[key].msg}</span></ValidationBubble>: "";
+            errors[key].msg = (errors[key].msg !== "") ? 
+            <ValidationBubble><span>{errors[key].msg}</span></ValidationBubble>: "";
         }
-        this.setState({...this.state, itemsErrors: errors});
+        this.setState({...this.state, itemsErrors: errors, logingError: ""});
 
         if(result){
             this.props.fetchingLogingIn(this.state.names[0].text,
-                this.state.names[1].text,this.props.history);
-           
+                this.state.names[1].text, this.props.history);
         }
+        
+        
+        
     }
    
     onSubmitHandler = e => { 
         e.preventDefault();
         this.Validate();
     }
-
     onRegisterHandler= (event) => {
         event.preventDefault();
         this.setState({loading: true});
@@ -124,13 +132,14 @@ class Form extends Component {
 
         let formIsValid = true;
 
-        for ( let e in newItems){
+        for(let e in newItems){
             formIsValid = newItems[e].valid && formIsValid;
         }
         this.setState({names: newItems, formIsValid: formIsValid});    
     }
    
     render(){
+        console.log(this.state.logingError);
         let text = null;
         let button = null;
         let content = <p>Tu powinien być formularz - "{this.props.name}"</p>
@@ -143,8 +152,7 @@ class Form extends Component {
                     type="submit"
                     clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
                     title={this.props.buttonTitle}
-                    url={this.props.isLogged ? "/logged" : undefined}/>
-
+                    />
             );
         }
         else if (this.props.name.toUpperCase() === "REJESTRACJA")
@@ -196,6 +204,12 @@ class Form extends Component {
                         })}
                         {button}
                         {text}
+                        {this.state.logingError ?
+                        <p className="loging-error">
+                            {this.state.logingError}
+                        </p> :
+                        null
+                        }
                     </MainForm> 
                     );
         }
@@ -205,14 +219,11 @@ class Form extends Component {
 }
 const mapStateToProps = state => {
     return {
-        token: state.logRed.token,
-        logingError: state.logRed.logingError,
-        loggingObject: state.logRed.loggingObject
+        logingError: state.logRed.logingError
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        
         fetchingLogingIn: (username, password, router) => dispatch(fetchingLogingIn(username, password, router))
     };
 }

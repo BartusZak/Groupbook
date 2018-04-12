@@ -10,7 +10,14 @@ class SideMenuContent extends Component{
         addPost: false,
         addEvent: false,
         addGroup: false,
-        profile: false
+        profile: false,
+        userObject: null
+
+    }
+    componentDidMount(){
+        const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
+            JSON.parse(localStorage.getItem('responseObject')) : this.props.user;
+        this.setState({userObject: responseObject});
     }
     clearState = () => {
         this.setState({addPost: false, addEvent: false, addGroup: false, profile: false});
@@ -29,14 +36,13 @@ class SideMenuContent extends Component{
     }
     redirectToProfile = () => {
         this.setState({addPost: false, addEvent: false, addGroup: false, profile: true});
-        this.props.history.push("/logged/user/" + this.props.user.id);
+        this.props.history.push("/logged/user/" + this.state.userObject.id);
     }
     redirectToAddGroup = () => {
         this.setState({addPost: false, addEvent: false, addGroup: true, profile: false});
         this.props.history.push("/logged/addgroup");
     }
     render(){
-        console.log(this.props.user);
         return(
         <Aux>
             <div className="side-bar-groups">

@@ -5,7 +5,7 @@ const initialState = {
     token: "",
     loggingObject: null, 
     logingError: "", // blad 400 podczas logowania czyli zle pasy,
-
+    localStorageSupport: false
 
 }
 const reducer = (state = initialState, action) => {
@@ -19,6 +19,9 @@ const reducer = (state = initialState, action) => {
        break;
        case actionTypes.LOGING_OUT:
             return updateObject(state, {token: "", loggingObject: null, logingError: ""})
+       break;
+       case actionTypes.SETTING_LOCAL_STORAGE_SUPPORT_ERROR:
+            return updateObject(state, { localStorageSupport: action.lsSupport })
        break;
     }
     return state;   
