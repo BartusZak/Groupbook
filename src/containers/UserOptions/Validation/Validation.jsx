@@ -85,13 +85,12 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
 
 export const validatePictures = (fileType, maxSize, fileSize) => {
     if(fileSize > maxSize){
-        return "Rozmiar zdjęcia nie może przekraczać " + maxSize;
+        return "Rozmiar zdjęcia nie może przekraczać bitów" + maxSize;
     }
     const correctFormats = ["image/jpg", "image/jpeg", "image/png"];
     let result = "Zdjęcie powinno być formatu jpg, jpeg lub png";
     for(let key in correctFormats){
         if(correctFormats[key] === fileType){
-            
             result = "";
         }
     }    

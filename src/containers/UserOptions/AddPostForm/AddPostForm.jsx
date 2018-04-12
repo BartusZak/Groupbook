@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './AddPostForm.css';
 import { connect } from 'react-redux';
-import { fetchingGroups, loadGroups } from '../Store/actions';
 import GroupsBar from './GroupsBar/GroupsBar';
-import { validateInput } from '../Validation/Validation';
+import { validateInput, validatePictures } from '../Validation/Validation';
 import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 import axios from '../../../axios-groupsconnects';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+import { withRouter } from 'react-router-dom';
 
 class AddPostForm extends Component{
     state = {
@@ -30,7 +30,9 @@ class AddPostForm extends Component{
         sendingPostSpinner: false,
 
         addingPictureError: "",
-        sendingPictureSpinner: false
+        sendingPictureSpinner: false,
+
+        showBackdrop: false
     }
     componentDidMount(){ 
         this.setState({
@@ -44,12 +46,11 @@ class AddPostForm extends Component{
         return resultArray;
     }
     componentDidUpdate(prevProps, prevState){
-        if (prevState.responsePostId !== this.state.responsePostId) {
+        if (prevState.responsePostId !== this.state.responsePostId &&
+        this.state.files.length > 0 && this.state.responsePostId !== null) {
             this.AddingPictureOnServer();
         }
     }
-    
-
     addGroup = (event) => {
         const loadedGroups = [...this.state.loadedGroups];
         const index = loadedGroups.findIndex(item => {
@@ -108,19 +109,13 @@ class AddPostForm extends Component{
         this.setState({validationResult: oldState});
     }
 
-    OnDrop = (files) => {
-        const correctFormats = ['jpg','jpeg','png'];
-        let counter = 0;
-        for(let key in correctFormats){
-            if(files[0].type === "image/" + correctFormats[key]){
-                counter = counter+1;
-            }
-        }
-        if(counter > 0){
-            this.setState({files: files});
+    OnDrop = files => {
+        const validationResult = validatePictures(files[0].type, 300000, files[0].size);
+        if(!validationResult){
+            this.setState({files: files, incorrectPictureError: ""});
         }
         else{
-            this.setState({incorrectPictureError: "Dodane zdjęcie posiada niedopuszczalny format"});
+            this.setState({incorrectPictureError: validationResult});
         }
     }
     deleteFiles = () => {
@@ -139,7 +134,7 @@ class AddPostForm extends Component{
             }
         }
         if(booleanResult){
-            this.setState({sendingPostSpinner: true});
+            this.setState({sendingPostSpinner: true, showBackdrop: true});
             const newPost = {
                 Title: this.state.postTitle,
                 Content: this.state.postContent,
@@ -147,15 +142,21 @@ class AddPostForm extends Component{
                 AuthorId: this.props.userObject.id
             }
             axios.post('/api/posts/add', newPost).then(response => {
-                this.setState({responsePostId: response.data.successResult.id, addingPostError: "",
-            sendingPostSpinner: false});
+                this.setState({responsePostId: response.data.successResult.id,
+                    addingPostError: "", sendingPostSpinner: false});    
+                
+                
+                this.state.files.length ? null : this.redirectToAddedPostGroup();
+               
             }).catch(error => {
-                this.setState({addingPostError: "Wystąpił błąd podczas ładowania", sendingPostSpinner: false});
+                console.log(error);
+                this.setState({addingPostError: "Wystąpił błąd podczas dodawania postu",
+                 sendingPostSpinner: false, responsePostId: null });
             })
-            
         }   
     }
     AddingPictureOnServer = () => {
+        this.setState({sendingPictureSpinner: true});
         if(this.state.files.length !== 0 && this.state.responsePostId !== null){
             let formData = new FormData();
             formData.set("postId", this.state.responsePostId);
@@ -166,17 +167,43 @@ class AddPostForm extends Component{
                 data: formData,
                 config: { headers: {'Content-Type': 'multipart/form-data' }}
             }).then(response => {
-                
+                this.setState({sendingPictureSpinner: false, addingPictureError: ""});
+                this.redirectToAddedPostGroup();
             }).catch(error => {
-                
+                console.log(error);
+                this.setState({sendingPictureSpinner: false,
+                     addingPictureError: "Wystąpił błąd podczas dodawania zdjęcia"});
             })
         }
+    }
+
+    closeBackdrop = () => {
+        this.setState({showBackdrop: false});
+    }
+    redirectToAddedPostGroup = () => {
+        this.props.history.push('/logged/group/' + 
+            this.state.addedGroups[0].name.toLowerCase());
     }
     render(){
         return(
             <div className="add-post-container">
-                <Backdrop show={this.state.sendingPostSpinner}>
-                    <Spinner />
+                <Backdrop show={this.state.showBackdrop} 
+                clicked={(this.state.addingPostError !== ""
+                || this.state.addingPictureError !== "") ? this.closeBackdrop : null}>
+                    <div className="backdrop-container">
+                        {this.state.sendingPostSpinner ? <Spinner /> :
+                        this.state.addingPostError ? 
+                        <p className="backdrop-error">
+                            {this.state.addingPostError}
+                        </p> : null}
+
+                        {this.state.sendingPictureSpinner ? <Spinner /> :
+                        this.state.addingPictureError ? 
+                        <p className="backdrop-error">
+                            {this.state.addingPictureError}
+                        </p> : null}
+                    </div>
+                    
                 </Backdrop>
                 <h4>Formularz dodawania postów</h4>
                     <p className="block-header">Grupy do wybrania</p>
@@ -242,10 +269,4 @@ const mapStateToProps = state => {
         userObject: state.logRed.loggingObject
     };
 }
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchingGroups: (groups) => dispatch(fetchingGroups(groups)),
-        loadGroups: (groups) => loadGroups(groups)
-    };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(AddPostForm);
+export default connect(mapStateToProps, null)(withRouter(AddPostForm));

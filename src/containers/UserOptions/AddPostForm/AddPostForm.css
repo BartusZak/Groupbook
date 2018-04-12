@@ -42,13 +42,20 @@
 .form-holder p:first-of-type{
     top: 60px;
 }
-
 .form-holder p:last-of-type{
     bottom: 7px;
 }
 .picture-holder-group-block{
     display: flex;
     justify-content: center; 
+}
+.backdrop-container p{
+    font-size: 22px !important;
+    padding-top: 18px;
+}
+.backdrop-error{
+    color: orangered;
+    background-color: rgba(233, 58, 35, 0.5);
 }
 @media(min-width: 601px){
     .picture-holder-group-block{
