@@ -15,7 +15,8 @@ const button = (props) => {
             <Button color={props.color}
                 onClick={props.clicked} 
                 className={classes}
-                disabled={props.disabled}>
+                disabled={props.disabled}
+                type={props.type}>
                 {props.title}
             </Button>
         );
@@ -25,7 +26,8 @@ const button = (props) => {
             <Link to={props.url}>
                 <Button color={props.color}
                     onClick={props.clicked} 
-                    className={classes}>
+                    className={classes}
+                    type={props.type}>
                     {props.title}
                 </Button>
              </Link> 

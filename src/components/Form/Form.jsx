@@ -106,6 +106,7 @@ class Form extends Component {
         return isValid;
     }
     onChangeHandler = (event, id) => {
+        if (!event.isTrusted) return;
         const index = this.state.names.findIndex(p => {
             return p.id === id;
         });
@@ -139,6 +140,7 @@ class Form extends Component {
             text = <p className="message">Nie masz konta? <Link to="/register">Utwórz konto</Link></p>;
             button = (
                 <Button color="dark-green"
+                    type="submit"
                     clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
                     title={this.props.buttonTitle}
                     url={this.props.isLogged ? "/logged" : undefined}/>
@@ -150,6 +152,7 @@ class Form extends Component {
             text = <p className="message">Masz już konto? <Link to="/logging">Zaloguj się</Link></p>;
             button = (
                 <Button color="dark-green"
+                    type="submit"
                     clicked={this.onRegisterHandler}
                     title={this.props.buttonTitle}
                     disabled={!this.state.formIsValid}/>
@@ -169,7 +172,7 @@ class Form extends Component {
         }
         else{
             content = (
-                    <MainForm autoComplete="off">
+                    <MainForm>
                         <h2>{this.props.name}</h2>
                         {summaryErrors}
                         {this.state.names.map(item => {
@@ -188,6 +191,7 @@ class Form extends Component {
                             errorConfirmationPassword={(item.validation)?item.validation.confirmedPasswordError:null}
                             errorMessage={this.state.itemsErrors[item.id-1].msg}
                             type={item.type}
+                            dropdownOptions={item.dropdownOptions}
                             />
                         })}
                         {button}
