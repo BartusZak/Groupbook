@@ -3,7 +3,6 @@ import ValidationBubbleImg from '../../assets/img/validation/validationBubble.pn
 import media from 'theme/media';
 
 export const MainForm = styled.form`
-    min-height: 800px;
     position: relative;
     z-index: 1;
     background: #FFFFFF;
