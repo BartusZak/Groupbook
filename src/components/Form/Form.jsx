@@ -107,7 +107,6 @@ class Form extends Component {
         if(rules.passwordConfirmation){
             isValid = (this.state.names[2].text == value)  && isValid;
         }
-
         return isValid;
     }
     onChangeHandler = (event, id) => {
@@ -169,7 +168,7 @@ class Form extends Component {
         else if(this.state.registredSuccesfully){
             content = (
                 <MainForm>
-                    <p>Użytkownik pomyślnie zarejestrowany.</p>
+                    <p style={{ marginTop: "300px"}}>Użytkownik pomyślnie zarejestrowany.</p>
                     <p>Prosimy się zalogować</p>
                 </MainForm>
             );

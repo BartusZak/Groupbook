@@ -3,6 +3,7 @@ import ValidationBubbleImg from '../../assets/img/validation/validationBubble.pn
 import media from 'theme/media';
 
 export const MainForm = styled.form`
+    min-height: 800px;
     position: relative;
     z-index: 1;
     background: #FFFFFF;
@@ -29,7 +30,18 @@ export const MainForm = styled.form`
         font-size: 26px;
         font-weight: bold;
     }
-    
+    select {
+        font-family: "Roboto", sans-serif;
+        outline: 0;
+        background: #f2f2f2;
+        margin: 0 0 15px;
+
+        option {
+            font-family: "Roboto", sans-serif;
+            background: #f2f2f2;
+        }
+    }
+
     input {
         font-family: "Roboto", sans-serif;
         outline: 0;

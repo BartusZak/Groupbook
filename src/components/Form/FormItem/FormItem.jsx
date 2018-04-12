@@ -18,12 +18,12 @@ const formItem = (props) => {
                 className={inputClasses.join(' ')}
                 value={props.text}
                 onChange={props.change}>
+                <option value=''>wybierz..</option>
                     {props.dropdownOptions.options.map(option => (
                         <option key={option.value} value={option.value}>
                             {option.displayValue}
                         </option>
                     ))}
-                    <option></option>
             </select>
         );
     }
