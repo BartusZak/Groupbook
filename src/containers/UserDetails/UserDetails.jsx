@@ -98,14 +98,6 @@ class UserDetails extends Component{
             <p>Użytkownik nie należy do żadnej grupy</p>;
 
         let user = <p>Error</p>;
-        if ( this.props.match.params.id) {
-            user = <UserDetailsDiv style={{paddingTop: "60px"}}>
-                <div style={{backgroundColor: "#2c2c36", margin: "0 200px", padding: "30px 0"}}>
-                        <Spinner marginTop="unset"/>
-                        <p style={{ textAlign: 'center', color: 'white' }}>Ładowanie...!</p>
-                </div>
-                    </UserDetailsDiv>
-        }
         if ( this.state.user ){
             user = 
                 <UserDetailsDiv>
@@ -144,6 +136,14 @@ class UserDetails extends Component{
             <Alert color="info">
                 Brak takiego użytkownika!
             </Alert>
+        }
+        else if ( this.props.match.params.id) {
+            user = <UserDetailsDiv style={{paddingTop: "60px"}}>
+                <div style={{backgroundColor: "#2c2c36", margin: "0 200px", padding: "30px 0"}}>
+                        <Spinner marginTop="unset"/>
+                        <p style={{ textAlign: 'center', color: 'white' }}>Ładowanie...!</p>
+                </div>
+                    </UserDetailsDiv>
         }
 
         return user;

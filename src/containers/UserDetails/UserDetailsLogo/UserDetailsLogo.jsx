@@ -34,22 +34,23 @@ class UserDetailsLogo extends Component {
         
             render() {
                 //console.log()
+                
+                
                 let img250x400 = <p style={{ textAlign: 'center' }}>Brak danych :(</p>;
-                if ( this.props.id) {
-                        img250x400 = <ImgDiv>
-                                <Spinner/>
-                                <p style={{ textAlign: 'center' }}>Ładowanie...!</p>
-                            </ImgDiv>
-                }
-                if ( !this.props.profilePicture && this.props.profilePicture != null ) {
+                if (this.props.profilePicture !== null ) {
                         img250x400 = (        
                         <ImgDiv>
-                                <IMG className="img-responsive" src={this.state.profilePicture} alt="Zdjęcie Profilowe" />
+                                <IMG className="img-responsive" src={"https://groupsconnectsapi.azurewebsites.net/pictures/" + this.props.profilePicture.profile} alt="Zdjęcie Profilowe" />
                         </ImgDiv>
         
                     );
                 }
-
+                else if ( this.props.id) {
+                    img250x400 = <ImgDiv>
+                            <Spinner/>
+                            <p style={{ textAlign: 'center' }}>Ładowanie...!</p>
+                        </ImgDiv>
+                 }
                 if (this.props.profilePicture == null){
                     img250x400 = (   
                         <ImgDiv>     
