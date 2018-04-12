@@ -12,7 +12,6 @@ const formItem = (props) => {
         validationError = <span>{emailError} {passwordError}To pole nie może być puste oraz musi zawierać od {props.min} - {props.max} znaków.</span>
         
     }
-console.log(props);
     if (props.type === "dropdown"){
         content = (
             <select

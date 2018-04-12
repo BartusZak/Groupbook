@@ -27,10 +27,6 @@ class UserGroups extends Component {
                                         </div>
                                         <div className="panel-body">
                                             <div className="form-group">
-                                            Data utworzenia:<br/>
-                                            <b>{new Date(group.group.creationDate).toISOString().replace('-', '/').split('T')[0].replace('-', '/')}</b>
-                                            </div>
-                                            <div className="form-group">
                                                 Informacje o grupie:<br/>
                                                 <b>{group.group.description}</b>
                                             </div>

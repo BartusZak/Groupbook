@@ -71,17 +71,15 @@ class Form extends Component {
             Password: this.state.names[2].text,
             ConfirmedPassword: this.state.names[3].text,
         };
-        console.log(registerData);
         //axios.post('https://react-groupsconnects.firebaseio.com/users.json', registerData)
         axios.post('https://groupsconnectsapi.azurewebsites.net/api/account/register', registerData)
         .then(response => {
-                console.log(response)
                 this.setState({loading: false});
                 this.setState({registredSuccesfully: true});
             })
         .catch(error => {
-                console.log(error.response);
                 this.setState({errors: error.response.data.errors});
+                this.setState({loading: false});
             })
     }
 
@@ -107,8 +105,7 @@ class Form extends Component {
         }
 
         if(rules.passwordConfirmation){
-            isValid = (this.state.names[2].text == value)  && isValid
-            console.log(isValid);
+            isValid = (this.state.names[2].text == value)  && isValid;
         }
 
         return isValid;
@@ -139,7 +136,6 @@ class Form extends Component {
     }
    
     render(){
-        console.log(this.state.logingError);
         let text = null;
         let button = null;
         let content = <p>Tu powinien być formularz - "{this.props.name}"</p>
@@ -170,7 +166,7 @@ class Form extends Component {
         if(this.state.loading){
             content = <MainForm><Spinner className="whiteSpinner"/></MainForm>
         }
-        if(this.state.registredSuccesfully){
+        else if(this.state.registredSuccesfully){
             content = (
                 <MainForm>
                     <p>Użytkownik pomyślnie zarejestrowany.</p>

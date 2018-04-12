@@ -155,9 +155,10 @@ class AddPostForm extends Component{
             axios.post('/api/posts/add', newPost).then(response => {
                 this.setState({responsePostId: response.data.successResult.id,
                     addingPostError: "", sendingPostSpinner: false});    
+                if(this.state.files.length === 0){
+                    this.redirectToAddedPostGroup();
+                }
                 
-                
-                this.state.files.length ? null : this.redirectToAddedPostGroup();
                
             }).catch(error => {
                  this.setState({addingPostError: "Wystąpił błąd podczas dodawania postu",

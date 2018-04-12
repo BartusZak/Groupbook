@@ -24,17 +24,20 @@ const withErrorHandler = ( WrappedComponent, axios ) => {
             axios.interceptors.response.eject(this.resInterceptor);
         }
 
+        hideModalSetStateToFalse() {
+            this.setState({error: false});
+        }
         errorConfirmedHandler = () => {
             this.setState({error: null});
         }
 
         render () {
-            let clickedMethod = (this.state.error == null)? true: false; 
+            const result = this.state.error ? true : false;
             return (
                 <Aux>
                     <Modal
-                        show={this.state.error}
-                        clickedMethod={clickedMethod}>
+                        show={result}
+                        clickedMethod={this.hideModalSetStateToFalse}>
                         {this.state.error ? this.state.error.message : null}
                     </Modal>
                     <WrappedComponent {...this.props} />

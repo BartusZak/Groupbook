@@ -85,8 +85,9 @@ class SideMenuContent extends Component{
                      "sidebar-butt overline-butt" : "sidebar-butt"}>Stwórz grupe</span>
                 <span
                 onClick={this.redirectToProfile} 
-                className={this.state.profile ? "sidebar-butt overline-butt"
-                : "sidebar-butt"}>Twój profil</span>
+                className={this.state.profile ? "sidebar-butt overline-butt": "sidebar-butt"}>
+                    Twój profil
+                </span>
             </div>  
             </Aux>
         );
