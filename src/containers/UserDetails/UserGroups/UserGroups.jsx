@@ -10,11 +10,17 @@ class UserGroups extends Component {
     }
     render() {
         let groups = <p>Użytkownik nie należy do żadnej grupy</p>;
+        let img = ProfilePicture;
+
         if(this.state.groups != null){
             groups = this.state.groups.map((group, index) => {
+                
+                if (group.group.picture != null){
+                    img = "https://groupsconnectsapi.azurewebsites.net/pictures/" + group.group.picture.mediumResolutionPicName;
+                }
                 return (
                     <Col key={index} lg="4">
-                        <div className="form_hover " style={{ backgroundImage: `url(${ProfilePicture})`, backgroundSize: 'contain'}}>
+                        <div className="form_hover " style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover'}}>
                         <p style={{textAlign: "center", marginTop: "20px"}}>
                             <i className="fa fa-user" style={{fontSize: "147px"}}></i>
                         </p>

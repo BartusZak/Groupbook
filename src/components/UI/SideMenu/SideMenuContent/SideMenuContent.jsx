@@ -11,16 +11,22 @@ class SideMenuContent extends Component{
         addEvent: false,
         addGroup: false,
         profile: false,
-        userObject: null
-
+        userObject: null,
+    }
+    componentWillMount(){
+        console.log("WillMount this.state.userObject ",this.state.userObject);
+        console.log("JSON.parse(localStorage ", JSON.parse(localStorage.getItem('responseObject')));
     }
     componentDidMount(){
         const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
             JSON.parse(localStorage.getItem('responseObject')) : this.props.user;
-        this.setState({userObject: responseObject});
+                this.setState({userObject: responseObject}); // nie dziala!  
+
+                console.log("DidMount this.state.userObject ",this.state.userObject);
+                console.log("localStorage ", responseObject);
     }
     clearState = () => {
-        this.setState({addPost: false, addEvent: false, addGroup: false, profile: false});
+        this.setState({addPost: false, addEvent: false, addGroup: false, profile: false, userObject: null});
     }
     redirectToAddPost = () => {
         this.setState({addPost: true, addEvent: false, addGroup: false, profile: false});
@@ -35,8 +41,10 @@ class SideMenuContent extends Component{
         this.props.history.push("/logged/addevent");
     }
     redirectToProfile = () => {
+        console.log("Redirect to profile this.state.userObjecct ", this.state.userObject);
         this.setState({addPost: false, addEvent: false, addGroup: false, profile: true});
         this.props.history.push("/logged/user/" + this.state.userObject.id);
+        //this.props.history.push("/logged/user" + localStorage.getItem('responseObject').id);
     }
     redirectToAddGroup = () => {
         this.setState({addPost: false, addEvent: false, addGroup: true, profile: false});

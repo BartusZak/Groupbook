@@ -107,7 +107,6 @@ class Form extends Component {
         if(rules.passwordConfirmation){
             isValid = (this.state.names[2].text == value)  && isValid;
         }
-
         return isValid;
     }
     onChangeHandler = (event, id) => {
@@ -164,12 +163,12 @@ class Form extends Component {
             );
         }
         if(this.state.loading){
-            content = <MainForm><Spinner className="whiteSpinner"/></MainForm>
+            content = <MainForm style={{minHeight: "800px"}}><Spinner className="whiteSpinner"/></MainForm>
         }
         else if(this.state.registredSuccesfully){
             content = (
-                <MainForm>
-                    <p>Użytkownik pomyślnie zarejestrowany.</p>
+                <MainForm style={{minHeight: "800px"}}>
+                    <p style={{ marginTop: "300px"}}>Użytkownik pomyślnie zarejestrowany.</p>
                     <p>Prosimy się zalogować</p>
                 </MainForm>
             );

@@ -29,7 +29,18 @@ export const MainForm = styled.form`
         font-size: 26px;
         font-weight: bold;
     }
-    
+    select {
+        font-family: "Roboto", sans-serif;
+        outline: 0;
+        background: #f2f2f2;
+        margin: 0 0 15px;
+
+        option {
+            font-family: "Roboto", sans-serif;
+            background: #f2f2f2;
+        }
+    }
+
     input {
         font-family: "Roboto", sans-serif;
         outline: 0;
