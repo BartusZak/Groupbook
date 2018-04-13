@@ -57,8 +57,7 @@ class Group extends Component{
 
 
     render(){
-        console.log()
-        console.log(this.state.loadedPosts);
+        console.log(this.state.loadedData);
         return(
             <div className="background-container">
                 <div className="left-trash-container">
@@ -74,8 +73,9 @@ class Group extends Component{
                     <p className="group-title-full">{this.state.loadedData.name}</p>
                     {this.state.loadingGroupDataError ? 
                     <p className="backdropo-error">Wystąpił błąd podczas ładowania danych grupy</p> :
-                        <nav style={{backgroundImage: `url(${!this.state.loadedData.picture ? 
-                            Back : this.state.loadedData.picture})`}} className="navigation-bar">
+                        <nav style={{backgroundImage: `url(${this.state.loadedData.picture ? 
+                            "https://groupsconnectsapi.azurewebsites.net/pictures/" + 
+                            this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
                             <span className="group-owner">Należysz <i className="fa fa-check"></i></span>
                         </nav>
                     }

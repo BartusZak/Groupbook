@@ -101,6 +101,7 @@ class AddGroupForm extends Component{
     deleteAddedPictureHandler = () => { this.setState({files: []}); }
 
     selectUsers = event => {
+        console.log(this.props.fetchedUsers);
         const fetchedUsers = [...this.props.fetchedUsers];
         let newListFetchedUsers = [];
         for(let key in fetchedUsers){
@@ -120,8 +121,8 @@ class AddGroupForm extends Component{
             addedUsers.push(item);
         }
         else{
-            containsError = "Użytkownik " + this.props.fetchedUsers[id].email + 
-            " już istnieje";
+            containsError = "Użytkownik " + item.email + 
+            " już jest dodany";
             alert(containsError);
             
         }

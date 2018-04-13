@@ -60,7 +60,7 @@ class CommentSection extends Component{
                     </textarea>
 
 
-                    <span style={{fontSize: '16px', padding: '10px',
+                    <span style={{fontSize: '16px', padding: '10px', height: '40px',
                     opacity: !(this.state.sendingCommentError || this.state.commentValidation) ? '0' : '1'}} 
                     className="backdropo-error">{this.state.sendingCommentError ? this.state.sendingCommentError : 
                     this.state.commentValidation ? this.state.commentValidation : null}</span>         
