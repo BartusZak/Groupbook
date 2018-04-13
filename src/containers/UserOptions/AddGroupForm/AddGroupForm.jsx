@@ -7,7 +7,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import { fetchingUsersHandler } from '../Store/actions';
 import { withRouter } from 'react-router-dom';
 import axios from '../../../axios-groupsconnects';
-import Modal from '../../../components/UI/Modal/Modal';
+import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 class AddGroupForm extends Component{
     state = {
@@ -53,7 +53,7 @@ class AddGroupForm extends Component{
             ...this.state.formContent
         ]
         let result = true;
-        formContentCopy[0].groupNameError = validateInput(2,20, 
+        formContentCopy[0].groupNameError = validateInput(2,120, 
             formContentCopy[0].value, ["przeklenstwo"], "", "", "Nazwa grupy", "standard");
 
         formContentCopy[1].groupDescError = validateInput(5, 255, 
@@ -80,7 +80,7 @@ class AddGroupForm extends Component{
             this.setState({addingGroupSpinner: false, addGroupError: ""});
             this.props.history.push("/logged/group/"+ newGroup.Name);
         }).catch(error => {
-            this.setState({addingGroupSpinner: false, addGroupError: "Wystąpił błąd podczas dodawania postu"});
+            this.setState({addingGroupSpinner: false, addGroupError: "Wystąpił błąd podczas dodawania grupy"});
         })
     }
     closeModalHandler = () => {
@@ -166,10 +166,11 @@ class AddGroupForm extends Component{
         </ul>);
         return(
             <div className="add-group-form-main-div">
-                <Modal show={this.state.showGroupAddingModal} clickedMethod={this.closeModalHandler}>
+                <Backdrop show={this.state.showGroupAddingModal} clicked={this.closeModalHandler}>
                     {this.state.addingGroupSpinner ? <Spinner /> : this.state.addGroupError !== "" ?
-                    this.state.addGroupError : "Dodano grupe"}
-                </Modal>
+                    <p className="backdropo-error">{this.state.addGroupError}</p> 
+                    : <p className="backdropo-error">"Dodano grupe"</p>}
+                </Backdrop>
 
                 <h4>Tworzenie nowej grupy</h4>
                 <div className="add-group-content-container">

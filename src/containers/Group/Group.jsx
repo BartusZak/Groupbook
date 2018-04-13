@@ -8,34 +8,78 @@ import Back from '../../assets/img/groupimages/back.jpg';
 import Events from '../../components/Events/Events';
 import Posts from '../../components/Posts/Posts';
 import { connect } from 'react-redux';
-import { fetchingPosts } from '../UserOptions/Store/actions';
-
+import axios from '../../axios-groupsconnects';
+import { withRouter } from 'react-router-dom';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import { concatingUrlTitle } from '../../helperMethods/helperMethods';
 
 class Group extends Component{
+   
     state = {
-        showEvents: true,
-        showPosts: false,
-        showSendMessageToOwnerModal: false
+        showEvents: false,
+        showPosts: true,
+        showSendMessageToOwnerModal: false,
+
+        loadingGroupDataSpinner: false,
+        loadingGroupDataError: false,
+        loadedData: [],
+
+        loadingPostsError: false,
+        loadingPostsSpinner: false,
+        loadedPosts: []        
     }
-    
-    componentDidMount(){ this.props.fetchingPosts(); }
+    componentDidMount(){ 
+        this.fetchingPosts();
+    }
+    fetchingPosts = () => {
+        this.setState({loadingGroupDataSpinner: true});
+        const url = concatingUrlTitle(this.props.location);
+
+        axios.get('/api/groups' + url).then(response => {
+            this.setState({loadingGroupDataSpinner: false, loadingGroupDataError: "", 
+                loadedData: response.data, loadedPosts: response.data.posts
+                });
+        }).catch(error => {
+            this.setState({loadingGroupDataSpinner: false,
+                 loadingGroupDataError: "Wystąpił błąd podczas ładowania danych", 
+                 loadingPostsError: "Wystąpił błąd podczas ładowania postów"
+                });
+        })
+    }
     showEventsClickHandler = () => { this.setState({showEvents: true, showPosts: false}); }
-    showPostsClickHandler = () => { this.setState({showEvents: false, showPosts: true}); }
+    showPostsClickHandler = () => { 
+        this.setState({showEvents: false, showPosts: true});
+        this.fetchingPosts();
+    }
     modalShowClickHandler = () => { this.setState({showSendMessageToOwnerModal: 
         !this.state.showSendMessageToOwnerModal}); }
-    
+
+
+
     render(){
+        console.log()
+        console.log(this.state.loadedPosts);
         return(
             <div className="background-container">
                 <div className="left-trash-container">
-                    <GroupLeftSideBar />
+                    {this.state.loadingGroupDataSpinner ? 
+                    <Spinner /> 
+                    : <GroupLeftSideBar 
+                    users={this.state.loadedData.userGroups}
+                    loadingUsersError={this.state.loadingGroupDataError} />}
+                    
                 </div>
                 
                 <div className="group-container">
-                    <p className="group-title-full">Poczekalnia</p>
-                    <nav style={{backgroundImage: `url(${Back})`}} className="navigation-bar">
-                        <span className="group-owner">Należysz <i className="fa fa-check"></i></span>
-                    </nav>
+                    <p className="group-title-full">{this.state.loadedData.name}</p>
+                    {this.state.loadingGroupDataError ? 
+                    <p className="backdropo-error">Wystąpił błąd podczas ładowania danych grupy</p> :
+                        <nav style={{backgroundImage: `url(${!this.state.loadedData.picture ? 
+                            Back : this.state.loadedData.picture})`}} className="navigation-bar">
+                            <span className="group-owner">Należysz <i className="fa fa-check"></i></span>
+                        </nav>
+                    }
+                    
                     <div className="navigate">
                         <div className="group-nav-left">
                             <i onClick={this.showPostsClickHandler} className="fa fa-clipboard"></i>
@@ -46,9 +90,11 @@ class Group extends Component{
                             <i onClick={this.modalShowClickHandler} className="fa fa-user-plus"></i>
                         </div>                               
                     </div>
+                    <p className="group-desc-title">Opis grupy</p>
+                    <p className="group-desc">{this.state.loadedData.description} </p>
                     {this.state.showEvents ? <Events /> : 
-                    <Posts errorPostLoading={this.props.errorPostLoading}
-                    posts={this.props.posts} />}
+                    <Posts groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
+                    posts={this.state.loadedPosts} />}
                      
                 </div>
                 <Modal
@@ -63,16 +109,11 @@ class Group extends Component{
 }
 const mapStateToProps = state => {
     return {
-        posts: state.userOptionsRed.posts,
-        errorPostLoading: state.userOptionsRed.errorPostLoading
+        loggedObject: state.logRed.loggedObject
     };
 }
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchingPosts: () => dispatch(fetchingPosts())
-    };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Group);
+
+export default connect(mapStateToProps, null,)(withRouter(Group));
 
 
 

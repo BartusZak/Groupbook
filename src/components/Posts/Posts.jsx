@@ -1,32 +1,86 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Posts.css';
 import Post from './Post/Post';
 import Aux from '../../hoc/Auxi';
 import UserNavbar from '../UserNavbar/UserNavbar';
+import axios from '../../axios-groupsconnects';
+import SmallSpinner from '../UI/SmallSpinner/SmallSpinner';
 
-const posts = (props) => {
-    return(
-        <Aux>
+class Posts extends Component{
+    state = {
+        posts: [],
+        loadingMorePostsSpinner: false,
+        loadingMorePostsError: "",
+        actualId: 0
+    }
+    componentDidMount() {
+        this.postEnd.addEventListener("scroll", () => {
+            if (
+                this.postEnd.scrollTop + this.postEnd.clientHeight >=
+                this.postEnd.scrollHeight
+            ) {
+              this.loadMoreItems();
+            }
+          });
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.posts !== this.props.posts){
+            this.setState({posts: this.props.posts, actualId: this.props.posts.length-1});
+        }
+    }
+    
+    loadMoreItems = () => {
+        this.setState({ loadingMorePostsSpinner: true });
+        const oldPosts = [...this.state.posts];
+            axios.get('/api/posts/' + this.props.groupName + '/get10/' + oldPosts[this.state.actualId].id).then(response => {
+                const data = oldPosts.concat(response.data);
+                this.setState({loadingMorePostsSpinner: false, 
+                    loadingMorePostsError: "", posts: data, actualId: this.state.actualId + response.data.length-1});
+            }).catch(error => {
+                this.setState({loadingMorePostsSpinner: false, loadingMorePostsError: "Błąd podczas ładowania"});
+            })
+    }
+    render(){
+        return(
+            <Aux>
             <p className="event-info">Posty</p>
             <div className="post-two-elements-container">
-                <ul className="post-block-container">
-                    {Object.keys(props.posts)
-                    .map( igKey => {
-                        return [...Array(props.posts[igKey])].map((item,i) => {
-                            return <Post key={igKey} postId={1} 
-                            description={item.postContent} 
-                            postTitle={item.postTitle}
-                            addDate={item.addDate}
-                            userName={item.userName}/>    
-                        });
-                    })}
-                </ul>
+                <ul className="post-block-container" 
+                    ref={(el) => { this.postEnd = el; }} 
+                    >
+                    {this.props.loadingPostsError ? 
+                        <p className="backdropo-error">{this.props.loadingPostsError}</p> : 
+                        this.state.posts.map( item => {
+                            return <Post 
+                            key={item.id}
+                            postId={item.id}
+                            description={item.content}
+                            postTitle={item.title}
+                            addDate={item.creationDate}
+                            userName={item.author.username}
+                            authorAvatar={item.author.profilePicture}
+                            sex={item.author.sex}
+                            comments={item.comments}
+                            postPicture={item.postPictures} />
+                        })
+                    }
+                        
+                        {!this.state.loadingMorePostsError ? <li className="spinner-cont"><SmallSpinner /></li>
+                        : <li className="backdropo-error">{this.state.loadingMorePostsError}</li>}
+                </ul>   
                 <UserNavbar></UserNavbar>
             </div>
-        </Aux>
+            
+                
+            
+            
+            </Aux>
         );
+    }
 }
-export default posts;
+
+
+export default Posts;
 
 
 

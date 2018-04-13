@@ -48,15 +48,13 @@
 .add-comment-gr-button:focus{
     outline: none;
 }
-
-
 .CommentSection li{
     margin-top: 30px;
     border: 2px solid grey;
     padding: 5px;
     box-sizing: border-box;
     display: flex;
-    flex-flow: column;
+    flex-flow: column-reverse;
 }
 .CommentBody{
     margin-top: 5px;

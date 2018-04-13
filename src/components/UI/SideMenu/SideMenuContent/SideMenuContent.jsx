@@ -48,16 +48,16 @@ class SideMenuContent extends Component{
             <div className="side-bar-groups">
                 <p className="SideBarTitle">Twoje grupy </p>
                 <div className="groups-place-holder">
-                    <div onClick={() => this.redirectToGroup(1)}>
+                    <div onClick={() => this.redirectToGroup(2)}>
                         <img src={Image} alt="Nazwa grupy" />
                     </div>    
                     <div onClick={() => this.redirectToGroup(1)}>
                         <img src={Image} alt="Nazwa grupy" />
                     </div>                
-                    <div onClick={() => this.redirectToGroup(1)}>
+                    <div onClick={() => this.redirectToGroup(3)}>
                         <img src={Image} alt="Nazwa grupy" />
                     </div>                
-                    <div onClick={() => this.redirectToGroup(1)}>
+                    <div onClick={() => this.redirectToGroup(4)}>
                         <img src={Image} alt="Nazwa grupy" />
                     </div>                                                         
                 </div>
