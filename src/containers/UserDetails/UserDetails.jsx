@@ -109,7 +109,7 @@ class UserDetails extends Component{
                                 justifyContent: 'center',
                                 alignItems: 'center',
                             }}>
-                                    <UserDetailsLogo profilePicture={this.state.user.profilePicture} id={this.props.match.params.id}/>
+                                    <UserDetailsLogo sex={this.state.user.sex} profilePicture={this.state.user.profilePicture} id={this.props.match.params.id}/>
                             </Col>
                             <Col md="6">
                                 <UserDetailsInfo user={this.state.user} />
@@ -132,19 +132,25 @@ class UserDetails extends Component{
                 </UserDetailsDiv>
         }
         else if ( this.props.match.params.id) {
+            console.log(this.props.match);
             user = <UserDetailsDiv style={{paddingTop: "60px"}}>
                 <div style={{backgroundColor: "#2c2c36", margin: "0 200px", padding: "30px 0"}}>
                         <Spinner marginTop="unset"/>
                         <p style={{ textAlign: 'center', color: 'white' }}>Ładowanie...!</p>
                 </div>
                     </UserDetailsDiv>
+
+                    if(!this.state.user){
+                        user = 
+                        <Alert color="info">
+                            Brak takiego użytkownika!
+                        </Alert>
+                    }
         }
-        else if(!this.state.user){
-            user = 
-            <Alert color="info">
-                Brak takiego użytkownika!
-            </Alert>
+        else{
+            user = <p>ERROR</p>;
         }
+       
         
 
         return user;

@@ -4,22 +4,28 @@ import Button from 'components/UI/Button';
 import axios from '../../../axios-users';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-
+import { withRouter } from 'react-router-dom'
+import {connect} from 'react-redux';
+import Aux from '../../../hoc/Auxi';
 
 
 class UserDetailsInfo extends Component {
     state = { 
         user: this.props.user,
-        loading: true
+        loading: true,
+        userObject: null,
      }
+     componentWillMount(){
+        console.log(this.props);
+        console.log( JSON.parse(localStorage.getItem('responseObject')).id);
+     }
+    // componentDidMount(){
+    //     const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
+    //         JSON.parse(localStorage.getItem('responseObject')) : this.props.user;
+    //             this.setState({userObject: responseObject}); // nie dziala!  
 
-    componentDidMount () {
-        //console.log(this.props);
-        //this.loadData();
-    }
-
-    // componentDidUpdate() {
-    //     this.loadData();
+    //             console.log("DidMount this.state.userObject ",this.state.userObject);
+    //             console.log("localStorage ", responseObject);
     // }
 
     loadData () {
@@ -39,37 +45,39 @@ class UserDetailsInfo extends Component {
     }
 
     render() {
-        let birthDateObject = new Date(this.state.user.birthDate);
+        let birthDateObject = (this.state.user != null) ? new Date(this.state.user.birthDate) : new Date();
         let years = ~~((Date.now() - birthDateObject) / (31557600000))
+
+        
 
         let month = birthDateObject.getUTCMonth() + 1; //months from 1-12
         let day = birthDateObject.getUTCDate();
         let year = birthDateObject.getUTCFullYear();
 
         let newdate = year + "/" + month + "/" + day;
-
+        let wiek = (years >= 100)? null : <Aux><li>Wiek</li><li>{newdate} ({years} lat)</li></Aux>;
         let user = <p style={{ textAlign: 'center' }}>Brak danych :(</p>;
+
+        let buttons = (JSON.parse(localStorage.getItem('responseObject')).id !== this.state.user.id)? <Aux><Button title="Wyślij wiadomość"/><Button title="Dodaj do grupy"/></Aux>:null;
         if ( this.props.id) {
             user = <UserDetailsInfoDiv>
                         <Spinner/>
                         <p style={{ textAlign: 'center' }}>Ładowanie...!</p>
                     </UserDetailsInfoDiv>
         }
-        if ( this.state.user ) {
+        else if ( this.state.user ) {
             let gender = (this.state.user.sex === true)? <p>Mężczyzna</p> : <p>Kobieta</p>;
             user = (
 
                 <UserDetailsInfoDiv>
                         <h1><u>{this.state.user.firstName} {this.state.user.lastName}</u> ({this.state.user.username} #{this.state.user.id})</h1>
-                        <Button title="Wyślij wiadomość"/>
-                        <Button title="Dodaj do grupy"/>
+                        {buttons}
                         <ul>
                             <li>Adres e-mail</li>
                             <li><a href={"mailto:" + this.state.user.email} obfuscate="true">{this.state.user.email}</a></li>
                             <li>Płeć</li>
                             <li>{gender}</li>
-                            <li>Wiek</li>
-                            <li>{newdate} ({years} lat)</li>
+                            {wiek}
                         </ul>
                 </UserDetailsInfoDiv>
 
@@ -78,5 +86,10 @@ class UserDetailsInfo extends Component {
         return user;
     }
 }
-
+// const mapStateToProps = state => {
+//     return {
+//         user: state.logRed.loggingObject,
+//     };
+// }
+// export default connect( mapStateToProps, null)(withRouter( withErrorHandler(UserDetailsInfo, axios)));
 export default withErrorHandler(UserDetailsInfo, axios);

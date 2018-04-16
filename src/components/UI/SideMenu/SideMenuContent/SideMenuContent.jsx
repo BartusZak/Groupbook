@@ -14,16 +14,16 @@ class SideMenuContent extends Component{
         userObject: null,
     }
     componentWillMount(){
-        console.log("WillMount this.state.userObject ",this.state.userObject);
-        console.log("JSON.parse(localStorage ", JSON.parse(localStorage.getItem('responseObject')));
+        //console.log("WillMount this.state.userObject ",this.state.userObject);
+        //console.log("JSON.parse(localStorage ", JSON.parse(localStorage.getItem('responseObject')));
     }
     componentDidMount(){
         const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
             JSON.parse(localStorage.getItem('responseObject')) : this.props.user;
-                this.setState({userObject: responseObject}); // nie dziala!  
+                this.setState({userObject: responseObject}); 
 
-                console.log("DidMount this.state.userObject ",this.state.userObject);
-                console.log("localStorage ", responseObject);
+                //console.log("DidMount this.state.userObject ",this.state.userObject);
+                //console.log("localStorage ", responseObject);
     }
     clearState = () => {
         this.setState({addPost: false, addEvent: false, addGroup: false, profile: false, userObject: null});

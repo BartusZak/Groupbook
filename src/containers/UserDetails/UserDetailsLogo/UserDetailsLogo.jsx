@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import axios from '../../../axios-users';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import EmptyAvatarMan from 'assets/img/empty_avatars/empty_avatar_man.jpg';
+import EmptyAvatarWoman from 'assets/img/empty_avatars/empty-avatar-girl.jpg';
 
 class UserDetailsLogo extends Component {
         state = { 
@@ -12,7 +14,7 @@ class UserDetailsLogo extends Component {
          }
 
          componentDidMount () {
-                // console.log(this.props);
+                console.log(this.props);
                 this.loadData();
             }
 
@@ -33,9 +35,6 @@ class UserDetailsLogo extends Component {
             }
         
             render() {
-                //console.log()
-                
-                
                 let img250x400 = <p style={{ textAlign: 'center' }}>Brak danych :(</p>;
                 if (this.props.profilePicture !== null ) {
                         img250x400 = (        
@@ -53,8 +52,9 @@ class UserDetailsLogo extends Component {
                  }
                 if (this.props.profilePicture == null){
                     img250x400 = (   
-                        <ImgDiv>     
-                            <p style={{margin: "0"}}>Brak zdjęcia profilowego</p>
+                        <ImgDiv> 
+                            <IMG className="img-responsive" src={(this.props.sex)? require('assets/img/empty_avatars/empty_avatar_man.jpg'): require('assets/img/empty_avatars/empty-avatar-girl.jpg')} alt="Avatar Placeholder" />
+                       
                         </ImgDiv>
                     )
                 }
