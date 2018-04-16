@@ -10,7 +10,7 @@ import Searcher from '../UI/Searcher/Searcher';
 import Avatar from '../UI/Avatar/Avatar';
 import logoIcon from '../../assets/img/logo/groupsconnectsLogoSmall.png';
 import { connect } from 'react-redux';
-
+import axios from 'axios';
 import {Container} from 'reactstrap';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
 
@@ -26,12 +26,23 @@ class NavbarComponent extends Component{
         this.state = {
             collapse: false,
             isWideEnough: false,
-            dropdownOpen: false
+            dropdownOpen: false,
+            user: null,
+            avatarImg: null
         };
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
     }
-   
+   componentWillMount(){
+        //console.log(this.props.responseObject.id);
+        axios.get( 'https://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.responseObject.id)
+            .then( response => {
+                this.setState({user: response.data});
+            })
+            .catch(err => {
+                this.setState({user: null});
+            });
+   }
     onClick(){
         this.setState({
             collapse: !this.state.collapse,
@@ -44,9 +55,36 @@ class NavbarComponent extends Component{
         });
     }
     render(){
+        let avatar = null;
+        if(this.state.user !== null){
+            avatar = (this.state.user.profilePicture)? this.state.user.profilePicture.smallResolutionPicName: null;
+
+            if(avatar !== null){
+                axios.get( 'https://groupsconnectsapi.azurewebsites.net/pictures/' + avatar, {responseType: "blob"})
+                .then( response => {
+                   // console.log(response);
+                    this.setState({ avatarImg: URL.createObjectURL(response.data)});
+                })
+                .catch(err => {
+                   
+                });
+            }
+        }
+        
+        //console.log(avatar);
         let navbarContent = null;
         let items = null;
         let homePageLink = "/";
+        let renderAvatar = null;
+
+        if(this.state.avatarImg !== null){
+            renderAvatar= <Avatar avatarImg={this.state.avatarImg} styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/>
+        }
+        else if (this.state.user !== null){
+            renderAvatar = <Avatar avatarImg={(this.state.user.sex)?require('assets/img/empty_avatars/empty_avatar_man.jpg'):require('assets/img/empty_avatars/empty-avatar-girl.jpg')} styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/> 
+            
+        }
+
         if(this.props.token === "" && this.props.responseObject === null){
             items = [
                 {id: 1, name: "Rejestracja", url: "/register"},
@@ -88,7 +126,7 @@ class NavbarComponent extends Component{
                     <ul className="navbar-nav ml-auto nav-flex-icons">
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                 <DropdownToggle nav>
-                                        <Avatar styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/>
+                                {renderAvatar}
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem>

@@ -132,7 +132,7 @@ class UserDetails extends Component{
                 </UserDetailsDiv>
         }
         else if ( this.props.match.params.id) {
-            console.log(this.props.match);
+            //console.log(this.props.match);
             user = <UserDetailsDiv style={{paddingTop: "60px"}}>
                 <div style={{backgroundColor: "#2c2c36", margin: "0 200px", padding: "30px 0"}}>
                         <Spinner marginTop="unset"/>

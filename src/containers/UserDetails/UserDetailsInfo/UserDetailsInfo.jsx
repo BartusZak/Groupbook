@@ -16,8 +16,8 @@ class UserDetailsInfo extends Component {
         userObject: null,
      }
      componentWillMount(){
-        console.log(this.props);
-        console.log( JSON.parse(localStorage.getItem('responseObject')).id);
+        //console.log(this.props);
+        //console.log( JSON.parse(localStorage.getItem('responseObject')).id);
      }
     // componentDidMount(){
     //     const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
