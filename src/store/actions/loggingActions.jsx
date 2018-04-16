@@ -38,6 +38,7 @@ export const fetchingLogingIn = (username, password, router) => {
             dispatch(logingIn(responseObject.token, responseObject));
             dispatch(errorInLoggingProcedure(""));
             router.push('logged/group/poczekalnia');
+            window.location.reload();
             
         }).catch( error => {
             dispatch(errorInLoggingProcedure("Zły login lub hasło"));
