@@ -131,12 +131,6 @@ class UserDetails extends Component{
                     </Container>
                 </UserDetailsDiv>
         }
-        else if(!this.state.user){
-            user = 
-            <Alert color="info">
-                Brak takiego użytkownika!
-            </Alert>
-        }
         else if ( this.props.match.params.id) {
             user = <UserDetailsDiv style={{paddingTop: "60px"}}>
                 <div style={{backgroundColor: "#2c2c36", margin: "0 200px", padding: "30px 0"}}>
@@ -145,6 +139,13 @@ class UserDetails extends Component{
                 </div>
                     </UserDetailsDiv>
         }
+        else if(!this.state.user){
+            user = 
+            <Alert color="info">
+                Brak takiego użytkownika!
+            </Alert>
+        }
+        
 
         return user;
     }
