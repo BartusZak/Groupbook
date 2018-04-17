@@ -4,6 +4,7 @@ import './OptionBlock.css';
 import Modal from '../../UI/Modal/Modal';
 import AddPictureBar from '../../UI/AddPictureBar/AddPictureBar';
 import Aux from 'hoc/Auxi';
+import axios from 'axios';
 
 class optionBlock extends Component{
     state={
@@ -32,6 +33,21 @@ class optionBlock extends Component{
     deleteFiles = () => {
         this.setState({files: []});
     }
+
+    onSubmitHandler = e => {
+        e.preventDefault();
+        let f = new FormData();
+            f.append('userId', JSON.parse(localStorage.getItem('responseObject')).id);
+            f.append('avatar', this.state.files[0]);
+    
+        axios.post("https://groupsconnectsapi.azurewebsites.net/api/account/AddAvatar", f)
+            .then(response => console.log(response))
+            .catch(error =>{
+                console.log(error);
+                console.log(error.response)
+            });
+    }
+    
     render(){
         return(
         <Aux>

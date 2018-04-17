@@ -35,7 +35,7 @@ class NavbarComponent extends Component{
     }
    componentWillMount(){
        if(this.props.responseObject !== null){
-        console.log(this.props.responseObject);
+        //console.log(this.props.responseObject);
         axios.get( 'https://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.responseObject.id)
             .then( response => {
                 this.setState({user: response.data});
