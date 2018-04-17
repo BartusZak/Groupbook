@@ -13,10 +13,11 @@ class Modal extends Component{
         return(
             <Aux>
                 <Backdrop show={this.props.show} clicked={this.props.clickedMethod}/>
-                <ModalDiv 
+                <ModalDiv
+                    className={this.props.modalClass} 
                     style={{transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
                     opacity: this.props.show ? '1' : '0'}}>
-                    <i onClick={this.props.clickedMethod} className="fa fa-window-close-o closeIcon" aria-hidden="true"></i>
+                    <i onClick={this.props.clickedMethod} className="fa fa-times closeIcon" aria-hidden="true"></i>
                     {this.props.children}
                 </ModalDiv>
             </Aux>

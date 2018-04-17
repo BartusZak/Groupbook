@@ -34,10 +34,38 @@
 }
 .Informations p:hover{ cursor: pointer; }
 
+.minWidth800 {
+    background-color: #32323f;
+    border: none;
+    color: white;
+
+   
+}
+.minWidth800 .right-form-content {
+    height: 400px;  
+}
+
+.minWidth800 .after-add-desc {
+    margin: 20% 0;
+}
+
+.minWidth800 .add-group-drop-zone {
+    height: 300px;
+}
 
 @media(min-width: 601px){
     .OptionBlock{
         width: 70%;
+    }
+}
+
+@media(min-width: 801px){
+    .minWidth800{
+        width: 50%;
+        left: 25%;
+        top: 15%;
+        padding: 25px 30px 40px;
+        min-height: 270px;
     }
 }
 

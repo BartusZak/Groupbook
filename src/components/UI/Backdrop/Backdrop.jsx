@@ -5,7 +5,7 @@ import './Backdrop.css';
 
 const backdrop = (props) => (
     props.show ? <div style={{backgroundColor: props.backGround === "Blank" ? 
-    "rgba(0,0,0,0)" : null}} className="Backdrop" onClick={props.clicked}>
+    "rgba(0,0,0,0)" : null, width: "100%"}} className="Backdrop" onClick={props.clicked}>
     {props.children}</div> : null   
 );
 export default backdrop;
