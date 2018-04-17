@@ -57,7 +57,7 @@ class NavbarComponent extends Component{
     render(){
         let avatar = null;
         if(this.state.user !== null){
-            avatar = (this.state.user.profilePicture)? this.state.user.profilePicture.smallResolutionPicName: null;
+            avatar = (this.state.user.profilePicture)? this.state.user.profilePicture.avatar: null;
 
             if(avatar !== null){
                 axios.get( 'https://groupsconnectsapi.azurewebsites.net/pictures/' + avatar, {responseType: "blob"})
@@ -70,19 +70,21 @@ class NavbarComponent extends Component{
                 });
             }
         }
-        
-        //console.log(avatar);
+
         let navbarContent = null;
         let items = null;
         let homePageLink = "/";
         let renderAvatar = null;
+        let renderNickname = null;
 
-        if(this.state.avatarImg !== null){
-            renderAvatar= <Avatar avatarImg={this.state.avatarImg} styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/>
-        }
-        else if (this.state.user !== null){
+        
+        if (this.state.user !== null){
+            renderNickname =  this.state.user.username;
             renderAvatar = <Avatar avatarImg={(this.state.user.sex)?require('assets/img/empty_avatars/empty_avatar_man.jpg'):require('assets/img/empty_avatars/empty-avatar-girl.jpg')} styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/> 
             
+        }
+        if(this.state.avatarImg !== null){
+            renderAvatar= <Avatar avatarImg={this.state.avatarImg} styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/>
         }
 
         if(this.props.token === "" && this.props.responseObject === null){
@@ -124,6 +126,11 @@ class NavbarComponent extends Component{
                     <Searcher items={items}/>
 
                     <ul className="navbar-nav ml-auto nav-flex-icons">
+                    <div style={{margin: "auto", textAlign: "right"}}>
+                        <span style={{color: "#898989", fontSize: "small"}}>Zalogowano jako:</span><br/>
+                        <span style={{color: "white", display: "block", marginTop: "-10px"}}>{renderNickname}</span>
+                    </div>
+                   
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                 <DropdownToggle nav>
                                 {renderAvatar}
