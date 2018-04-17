@@ -34,7 +34,8 @@ class NavbarComponent extends Component{
         this.toggle = this.toggle.bind(this);
     }
    componentWillMount(){
-        //console.log(this.props.responseObject.id);
+       if(this.props.responseObject !== null){
+        console.log(this.props.responseObject);
         axios.get( 'https://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.responseObject.id)
             .then( response => {
                 this.setState({user: response.data});
@@ -42,6 +43,8 @@ class NavbarComponent extends Component{
             .catch(err => {
                 this.setState({user: null});
             });
+       }
+        
    }
     onClick(){
         this.setState({

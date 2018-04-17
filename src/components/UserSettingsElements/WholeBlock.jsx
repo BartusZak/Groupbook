@@ -3,6 +3,7 @@ import './WholeBlock.css';
 import Aux from '../../hoc/Auxi';
 import OptionBlock from './OptionBlock/OptionBlock';
 
+
 const wholeBlock = (props) => {
     let userDetailsList = [...props.wholeItems];
     let Content = null;
@@ -10,7 +11,7 @@ const wholeBlock = (props) => {
         case 1:
             Content = (
                 <Aux>
-                    <OptionBlock title="Wyglad" icon="fa fa-image" function="Zmien zdjecie profilowe" shortContent="Zmien swoje zdjecie profilowe, tak aby budzic respekt wsrod plci przeciwnej" />
+                    <OptionBlock title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
                     <ul className="WholeBlock">
                         {userDetailsList.map(item => {
                         return <li key={item.id}>
