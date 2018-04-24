@@ -54,9 +54,9 @@ class Posts extends Component{
                             description={item.content}
                             postTitle={item.title}
                             addDate={item.creationDate}
-                            userName={item.author.username}
-                            authorAvatar={item.author.profilePicture}
-                            sex={item.author.sex}
+                            userName={(item.author != null)? item.author.username: null}
+                            authorAvatar={(item.author != null)?item.author.profilePicture: null}
+                            sex={(item.author != null)?item.author.sex:null}
                             comments={item.comments}
                             postPicture={item.pictures} />
                         })
