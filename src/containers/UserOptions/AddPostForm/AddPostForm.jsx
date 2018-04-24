@@ -177,8 +177,17 @@ class AddPostForm extends Component{
                 return i.id
             })
             //console.log(idsArray);
-            formData.set("postsIds", idsArray);
-            formData.set("pictures", this.state.files);
+            // formData.set("postsIds", idsArray);
+            // formData.set("pictures", this.state.files);
+            console.log(idsArray);
+            console.log(this.state.files);
+            
+            idsArray.forEach(function (value){
+                formData.append('postsIds['+ idsArray.indexOf(value) +']', value);
+            });
+
+            console.log(formData);
+            formData.append('pictures',this.state.files[0]);
             axios({
                 method: 'post',
                 url: '/api/posts/addpictures',
@@ -188,7 +197,7 @@ class AddPostForm extends Component{
                 this.setState({sendingPictureSpinner: false, addingPictureError: ""});
                 this.redirectToAddedPostGroup();
             }).catch(error => {
-                //console.log(error.response);
+                console.log(error.response);
                 this.setState({sendingPictureSpinner: false,
                      addingPictureError: "Wystąpił błąd podczas dodawania zdjęcia"});
             })

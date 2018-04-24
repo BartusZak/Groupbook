@@ -11,6 +11,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import {withRouter} from 'react-router-dom';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
+import axios from 'axios';
 
 const helpArray = [1,2,3];
 const array = [
@@ -31,8 +32,16 @@ class AddEventForm extends Component{
         incorrectPictureError: ""
 
     }
+    
     componentDidMount(){
         this.props.fetchingGroups();
+        axios.get("https://groupsconnectsapi.azurewebsites.net/api/users/" + JSON.parse(localStorage.getItem('responseObject')).id)
+            .then( response => {
+                console.log(response);
+            })
+            .catch( error => {
+                console.log(error, error.response);
+            })
     }
     confirmAddEventHandler = () => {
         this.props.history.push("/logged/group/poczekalnia");
@@ -116,6 +125,8 @@ class AddEventForm extends Component{
         this.setState({files: []});
     }
     render(){
+        console.log(this.props);
+console.log(this.state);
         return(
             <div className="add-event-form-container">
                 <h4>Stwórz wydarzenie</h4>
