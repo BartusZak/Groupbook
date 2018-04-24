@@ -36,6 +36,7 @@ class Group extends Component{
         const url = concatingUrlTitle(this.props.location);
 
         axios.get('/api/groups' + url).then(response => {
+            console.log(response.data);
             this.setState({loadingGroupDataSpinner: false, loadingGroupDataError: "", 
                 loadedData: response.data, loadedPosts: response.data.posts, loadingPostsSpinner: false
                 });

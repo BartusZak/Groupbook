@@ -7,7 +7,7 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
     }
     switch(regularExpType){
         case "standard":
-            const pattern = /^([a-zA-Z0-9 _-]+)$/;
+            const pattern = /^([a-zA-Z0-9ąłęóńśćżź _-]+)$/;
             if(!pattern.test(inputText)){
                 return "Pole " + inputName + " zawiera niedozwolone znaki";
             }

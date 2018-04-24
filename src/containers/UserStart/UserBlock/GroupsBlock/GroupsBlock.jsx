@@ -7,6 +7,7 @@ class GroupsBlock extends Component {
     state = {
         animation: false
     }
+    
     iniciateAnimationHandler = () => {this.setState({animation: !this.state.animation})}
     render(){
         return(

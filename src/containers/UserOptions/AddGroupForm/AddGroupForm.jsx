@@ -81,7 +81,7 @@ class AddGroupForm extends Component{
         }
         axios.post('/api/groups/add', newGroup).then(response => {
             this.setState({addingGroupSpinner: false, addGroupError: ""});
-            this.props.history.push("/logged/group/"+ newGroup.Name);
+            this.props.history.push("/logged/group/"+ response.data.successResult.id);
         }).catch(error => {
             this.setState({addingGroupSpinner: false, addGroupError: "Wystąpił błąd podczas dodawania grupy"});
         })

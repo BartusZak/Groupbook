@@ -1,0 +1,1 @@
+export const LOAD_USER_GROUPS = 'LOAD_USER_GROUPS';
