@@ -3,7 +3,7 @@ import './Posts.css';
 import Post from './Post/Post';
 import Aux from '../../hoc/Auxi';
 import UserNavbar from '../UserNavbar/UserNavbar';
-import axios from '../../axios-groupsconnects';
+import axios from 'axios/axios-groupsconnects';
 class Posts extends Component{
     state = {
         posts: [],

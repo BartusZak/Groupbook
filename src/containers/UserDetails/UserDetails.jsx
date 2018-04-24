@@ -7,7 +7,7 @@ import UserDetailsInfo from './UserDetailsInfo/UserDetailsInfo';
 import UserGroups from './UserGroups/UserGroups';
 
 import { Container, Row, Col, Alert } from 'reactstrap';
-import axios from '../../axios-users';
+import axios from 'axios/axios-users';
 import Aux from 'hoc/Auxi';
 import Spinner from 'components/UI/Spinner/Spinner';
 

@@ -1,7 +1,7 @@
 import * as actionsTypes from './actionTypes';
-import axios from '../../../axios-firebase';
-import axiosRandom from '../../../axios-post';
-import trueAxios from '../../../axios-groupsconnects';
+import axios from 'axios/axios-firebase';
+import axiosRandom from 'axios/axios-post';
+import trueAxios from 'axios/axios-groupsconnects';
 
 export const changingPostTitle = (value) => {
     return {

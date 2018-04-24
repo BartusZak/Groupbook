@@ -8,7 +8,7 @@ import Back from '../../assets/img/groupimages/back.jpg';
 import Events from '../../components/Events/Events';
 import Posts from '../../components/Posts/Posts';
 import { connect } from 'react-redux';
-import axios from '../../axios-groupsconnects';
+import axios from 'axios/axios-groupsconnects';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { concatingUrlTitle } from '../../helperMethods/helperMethods';

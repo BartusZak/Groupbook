@@ -5,7 +5,7 @@ import GroupsBar from './GroupsBar/GroupsBar';
 import { validateInput, validatePictures } from '../Validation/Validation';
 import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
-import axios from '../../../axios-groupsconnects';
+import axios from 'axios/axios-groupsconnects';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import { withRouter } from 'react-router-dom';

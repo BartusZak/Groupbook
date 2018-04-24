@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import { fetchingUsersHandler } from '../Store/actions';
 import { withRouter } from 'react-router-dom';
-import axios from '../../../axios-groupsconnects';
+import axios from 'axios/axios-groupsconnects';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 
