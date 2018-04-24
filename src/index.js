@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import CommentsReducer from './store/Comments/Reducers';
 import GroupsReducer from './store/Groups/Reducers';
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 WebFont.load({
@@ -28,7 +29,7 @@ const rootReducer = combineReducers({
     logRed: logginReducer,
     userOptionsRed: userOptionsReducer,
     CommentsReducer: CommentsReducer,
-    GroupsReducer: GroupsReducer
+    groupsRed: GroupsReducer
 }); 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
