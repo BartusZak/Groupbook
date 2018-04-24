@@ -36,6 +36,7 @@ import UserDetails from '../UserDetails/UserDetails';
 // ) <Route path="/posts" exact component={Komponent} />"
 //<Route path="/repos/:userName/:repoName" component={Repo}/>
 import { loggingOut } from '../../store/actions/loggingActions';
+import { withRouter } from 'react-router-dom';
 
 class RootContainer extends Component{
     state = {
@@ -163,4 +164,4 @@ const mapDispatchToProps = dispatch => {
         loggingOut: () => dispatch(loggingOut())
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})(RootContainer);
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})(withRouter(RootContainer));

@@ -3,38 +3,34 @@ import './CommentSection.css';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from '../../axios-groupsconnects';
 import { validateInput } from '../../containers/UserOptions/Validation/Validation';
+import { connect } from 'react-redux';
+import { addCommentsActionCreator } from '../../store/Comments/Actions';
+
 class CommentSection extends Component{
     state = {
         CommentContent: "",
         commentValidation: "",
-        comments: this.props.comments.reverse(),
-
-        sendingCommentError: ""
+        sendingCommentError: "",
+        comments: this.props.comments
     }
-    onChangeHandler = (event) => {
+    onChangeHandler = event => {
         const result = validateInput(2,255, 
             event.target.value, ["przeklenstwo"], "", "", "komentarz", "");
 
         this.setState({CommentContent: event.target.value, commentValidation: result,
         sendingCommentError: ""});
     }
-    addComment = () => {
-        console.log();
-        if(!this.state.commentValidation && this.state.CommentContent){
-            const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
-            JSON.parse(localStorage.getItem('responseObject')) : this.props.userObject;
 
-            const newComment = {
-                    Content: this.state.CommentContent,
-                    PostId: this.props.PostId,
-                    AuthorId: responseObject.id
-            }
-            axios.post('api/commensts/add', newComment).then(response => {
-                this.setState({comments: response.data.successResult.post.comments.reverse()});
-                
-            }).catch(error => {
-                this.setState({sendingCommentError: "Wystąpił błąd podczas dodawania komentarza"});
-            })
+    componentDidUpdate(prevProps){
+        if(prevProps.addedComments !== this.props.addedComments){
+            this.setState({comments: this.props.addedComments});
+        }
+       
+    }
+
+    addComment = () => {
+        if(!this.state.commentValidation && this.state.CommentContent){
+            this.props.addCommentsActionCreator(this.state.CommentContent, this.props.PostId);
         }
         else{
             const result = validateInput(2,255, 
@@ -67,11 +63,12 @@ class CommentSection extends Component{
                     
                   
                 </li>
+
                 {this.state.comments.map(item => {
                     return (
                     <li key={item.id}>
                         <span className="CommentInfo">
-                            <b>{item.userName === undefined ? item.userName : item.userName }</b>
+                            <b>{item.author.username}</b>
                             <b>{item.modifiedDate.slice(0,10) + " "
                              + item.modifiedDate.slice(11,16)}</b>
                         </span>
@@ -86,5 +83,16 @@ class CommentSection extends Component{
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        addedComments: state.CommentsReducer.addedComments
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        addCommentsActionCreator: (content, postId) => dispatch(addCommentsActionCreator(content, postId))
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CommentSection);
 
-export default CommentSection;
+

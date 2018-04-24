@@ -15,20 +15,17 @@ class Post extends Component{
         postId: this.props.postId
     }
     showCommentsClickHandler = () => { 
-        const oldState = {
-            ...this.state
-        }
-        this.setState({showComments: !oldState.showComments});
+        this.setState({showComments: !this.state.showComments});
     }
 
     showPostPicture = () => { this.setState({showPicture: !this.state.showPicture}); }
-    
+
     render(){
         const Content = this.state.showComments ? this.props.commentsErrorLoading ? 
         <h5 className="loading-error-eessage">Wystąpił błąd podczas ładowania komentarzy</h5> : 
         <CommentSection 
-        comments={this.props.comments}
-        PostId={this.state.postId}/> : null;   
+        comments={this.props.comments.reverse()}
+        PostId={this.state.postId}/> : null; 
         return(
             <Aux>
                 <li>
@@ -46,7 +43,7 @@ class Post extends Component{
                     </div>    
                     <div className="post-block-title">
                         <span>{this.props.postTitle}</span> 
-                        {this.props.postPicture.length ? 
+                        {this.props.postPicture.length > 0 ? 
                         <i onClick={this.showPostPicture} className="fa fa-image"></i> : null}
                         
                             
@@ -55,7 +52,8 @@ class Post extends Component{
                             
                         
                     <p onClick={this.showCommentsClickHandler} 
-                    className="add-comment-button">{  this.state.showComments ? "Schowaj komentarze" : "Pokaż komentarze"
+                    className="add-comment-button">{this.state.showComments ? 
+                        "Schowaj komentarze" : "Pokaż komentarze"
                     }</p>
                     {Content}
                     
@@ -64,8 +62,9 @@ class Post extends Component{
                            
                 <Backdrop show={this.state.showPicture} clicked={this.showPostPicture}>
                     <div className="image-container" style={{display: this.state.showPicture ? 'initial' : 'none'}}>
-                        <img src={this.props.postPicture.length ? 
-                        "https://groupsconnectsapi.azurewebsites.net/pictures/" + this.props.postPicture[0].picture.fullResolutionPicName : null} alt="" />
+                        {this.props.postPicture.length > 0 ? 
+                        <img src={"https://groupsconnectsapi.azurewebsites.net/pictures/" + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie"/>
+                        : null}
                     </div>
                 </Backdrop>
             </Aux>    

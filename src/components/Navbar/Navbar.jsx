@@ -146,7 +146,7 @@ class NavbarComponent extends Component{
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem>
-                                        <Link to="/logged/group/poczekalnia">
+                                        <Link onClick={window.location.reload} to="/logged/group/poczekalnia">
                                         <i style={{marginRight: "10px"}} className="fa fa-clock-o" aria-hidden="true"></i>
                                                 Poczekalnia
                                         </Link>

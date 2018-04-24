@@ -18,8 +18,7 @@ class SideMenuContent extends Component{
         //console.log("JSON.parse(localStorage ", JSON.parse(localStorage.getItem('responseObject')));
     }
     componentDidMount(){
-        const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
-            JSON.parse(localStorage.getItem('responseObject')) : this.props.user;
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
                 this.setState({userObject: responseObject}); 
 
                 //console.log("DidMount this.state.userObject ",this.state.userObject);
@@ -35,6 +34,7 @@ class SideMenuContent extends Component{
     redirectToGroup = (groupId) => {
         this.clearState();
         this.props.history.push("/logged/group/" + groupId);
+        window.location.reload();
     }
     redirectToAddEvent = () => {
         this.setState({addPost: false, addEvent: true, addGroup: false, profile: false});

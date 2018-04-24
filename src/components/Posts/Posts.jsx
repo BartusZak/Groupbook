@@ -4,12 +4,9 @@ import Post from './Post/Post';
 import Aux from '../../hoc/Auxi';
 import UserNavbar from '../UserNavbar/UserNavbar';
 import axios from '../../axios-groupsconnects';
-import SmallSpinner from '../UI/SmallSpinner/SmallSpinner';
-
 class Posts extends Component{
     state = {
         posts: [],
-        loadingMorePostsSpinner: false,
         loadingMorePostsError: "",
         actualId: 0
     }
@@ -25,20 +22,20 @@ class Posts extends Component{
     }
     componentDidUpdate(prevProps){
         if(prevProps.posts !== this.props.posts){
-            this.setState({posts: this.props.posts, actualId: this.props.posts.length-1});
+            this.setState({posts: this.props.posts});
         }
     }
-    
     loadMoreItems = () => {
-        this.setState({ loadingMorePostsSpinner: true });
-        const oldPosts = [...this.state.posts];
-            axios.get('/api/posts/' + this.props.groupName + '/get10/' + oldPosts[this.state.actualId].id).then(response => {
-                const data = oldPosts.concat(response.data);
-                this.setState({loadingMorePostsSpinner: false, 
-                    loadingMorePostsError: "", posts: data, actualId: this.state.actualId + response.data.length-1});
-            }).catch(error => {
-                this.setState({loadingMorePostsSpinner: false, loadingMorePostsError: "Błąd podczas ładowania"});
-            })
+        this.setState({loadingMorePostsSpinner: true});
+        let newPosts = [...this.state.posts];
+        const lastId = this.state.posts[this.state.posts.length-1].id;
+        axios.get('/api/posts/' + this.props.groupName +'/get10/' + lastId).then(response => {
+            newPosts = newPosts.concat(response.data);
+            this.setState({posts: newPosts, loadingMorePostsError: ""});
+        }).catch(error => {
+            this.setState({loadingMorePostsError: "Wystąpił błąd podczas ładowania postów"});
+        })
+
     }
     render(){
         return(
@@ -61,12 +58,10 @@ class Posts extends Component{
                             authorAvatar={item.author.profilePicture}
                             sex={item.author.sex}
                             comments={item.comments}
-                            postPicture={item.postPictures} />
+                            postPicture={item.pictures} />
                         })
                     }
-                        
-                        {!this.state.loadingMorePostsError ? <li className="spinner-cont"><SmallSpinner /></li>
-                        : <li className="backdropo-error">{this.state.loadingMorePostsError}</li>}
+                     
                 </ul>   
                 <UserNavbar></UserNavbar>
             </div>

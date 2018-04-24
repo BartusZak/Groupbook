@@ -29,20 +29,20 @@ export const fetchingLogingIn = (username, password, router) => {
         }
         axios.post('/api/account/login', loginData).then(response => {
             const responseObject = response.data.successResult;
-            console.log(responseObject);
             if (typeof(Storage) !== "undefined") {
                 dispatch(settingLocalStorageSupport(true));
                 localStorage.setItem('responseObject', JSON.stringify(responseObject));
             } else {
                 dispatch(settingLocalStorageSupport(false));
             }
+
             dispatch(logingIn(responseObject.token, responseObject));
             dispatch(errorInLoggingProcedure(""));
             router.push('logged/group/poczekalnia');
             window.location.reload();
             
         }).catch( error => {
-            dispatch(errorInLoggingProcedure("Zły login lub hasło"));
+            dispatch(errorInLoggingProcedure(new String("Zły login lub hasło")));
             dispatch(logingIn("", "", "", ""));
         })
     }

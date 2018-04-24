@@ -1,5 +1,5 @@
 import React from 'react';
-const groupPostSingleItem = (props) => {
+const groupPostSingleItem = props => {
     return(
         <li>
             <div className="left-group-image-holder">

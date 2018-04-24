@@ -37,10 +37,10 @@ class Group extends Component{
 
         axios.get('/api/groups' + url).then(response => {
             this.setState({loadingGroupDataSpinner: false, loadingGroupDataError: "", 
-                loadedData: response.data, loadedPosts: response.data.posts
+                loadedData: response.data, loadedPosts: response.data.posts, loadingPostsSpinner: false
                 });
         }).catch(error => {
-            this.setState({loadingGroupDataSpinner: false,
+            this.setState({loadingGroupDataSpinner: false, loadingPostsSpinner: false,
                  loadingGroupDataError: "Wystąpił błąd podczas ładowania danych", 
                  loadingPostsError: "Wystąpił błąd podczas ładowania postów"
                 });
@@ -57,7 +57,6 @@ class Group extends Component{
 
 
     render(){
-        console.log(this.state.loadedData);
         return(
             <div className="background-container">
                 <div className="left-trash-container">

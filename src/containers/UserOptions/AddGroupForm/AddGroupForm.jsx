@@ -72,9 +72,12 @@ class AddGroupForm extends Component{
 
     addGroupHandler = () => {
         this.setState({addingGroupSpinner: true, showGroupAddingModal: true});
+        const storageItem =  JSON.parse(localStorage.getItem('responseObject'));
+
         const newGroup = {
             Name: this.state.formContent[0].value,
-            Description: this.state.formContent[1].value
+            Description: this.state.formContent[1].value,
+            UserId: storageItem.id
         }
         axios.post('/api/groups/add', newGroup).then(response => {
             this.setState({addingGroupSpinner: false, addGroupError: ""});
@@ -101,7 +104,6 @@ class AddGroupForm extends Component{
     deleteAddedPictureHandler = () => { this.setState({files: []}); }
 
     selectUsers = event => {
-        console.log(this.props.fetchedUsers);
         const fetchedUsers = [...this.props.fetchedUsers];
         let newListFetchedUsers = [];
         for(let key in fetchedUsers){
