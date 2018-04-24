@@ -10,7 +10,7 @@ import axios from 'axios/axios-groupsconnects';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 
-import { addGroupPictureActionCreator } from '../../../store/Groups/Actions';
+import { addGroupActionCreator } from '../../../store/Groups/Actions';
 
 
 class AddGroupForm extends Component{
@@ -27,15 +27,15 @@ class AddGroupForm extends Component{
 
         files: [],
         filesErrorType: "",
-        showSpinner: false,
 
         addingGroupSpinner: false,
-        showGroupAddingModal: false,
-        addGroupError: ""
+        addingGroupModal: false
+        
+
     }
     
     componentDidMount(){
-        this.changeSpinnerStateHandler();
+        this.setState({showSpinner: !this.state.showSpinner});
         this.props.fetchingUsersHandler();
     }
     componentDidUpdate(prevProps, prevState){
@@ -44,7 +44,6 @@ class AddGroupForm extends Component{
             this.setState({showSpinner: false});
         }
     }
-    changeSpinnerStateHandler = () => this.setState({showSpinner: !this.state.showSpinner});
     onChangeHandler = (e, id) => {
         let formContentCopy = [
             ...this.state.formContent
@@ -73,36 +72,7 @@ class AddGroupForm extends Component{
         this.setState({formContent: formContentCopy});
         return result;
     }
-
-    addGroupHandler = () => {
-        this.setState({addingGroupSpinner: true, showGroupAddingModal: true});
-        const storageItem =  JSON.parse(localStorage.getItem('responseObject'));
-
-        const newGroup = {
-            Name: this.state.formContent[0].value,
-            Description: this.state.formContent[1].value,
-            UserId: storageItem.id
-        }
-        axios.post('/api/groups/add', newGroup).then(response => {
-            
-            this.setState({addingGroupSpinner: false, addGroupError: ""});
-
-            this.props.addGroupPicture(this.state.files[0], 
-                response.data.successResult.id, this.props.history);
-
-
-        }).catch(error => {
-            this.setState({addingGroupSpinner: false, addGroupError: "Wystąpił błąd podczas dodawania grupy"});
-        })
-    }
-    closeModalHandler = () => {
-        this.setState({showGroupAddingModal: false});
-    }
-    onSubmitHandler = e => {
-        if(this.Validate()){
-            this.addGroupHandler();
-        }
-    }
+  
     onDropHandler = file => {
         const result = validatePictures(file[0].type, 200000, file[0].size);
         if(result === ""){
@@ -110,6 +80,8 @@ class AddGroupForm extends Component{
         }
         this.setState({filesErrorType: result}); 
     }
+
+
     deleteAddedPictureHandler = () => { this.setState({files: []}); }
 
     selectUsers = event => {
@@ -122,6 +94,7 @@ class AddGroupForm extends Component{
         }
         this.setState({searchInput: event.target.value, fetchedUsers: newListFetchedUsers});
     }
+
     addUserHandler = (id, item) => {
         const addedUsers = [...this.state.addedUsers];
         let containsError = "";
@@ -161,6 +134,15 @@ class AddGroupForm extends Component{
         this.setState({addedUsers: addedUsers});
     }
 
+
+    onSubmitHandler = e => {
+        if(this.Validate()){
+            this.setState({addingGroupSpinner: true});
+            this.props.addGroup(this.state.formContent[0].value, this.state.formContent[1].value,
+                this.props.history, this.state.files);   
+        }
+    }
+
     render(){
         const filesLength = this.state.files.length;
         const fetchedUsers = this.state.fetchedUsers === null ? 
@@ -178,12 +160,9 @@ class AddGroupForm extends Component{
         </ul>);
         return(
             <div className="add-group-form-main-div">
-                <Backdrop show={this.state.showGroupAddingModal} clicked={this.closeModalHandler}>
-                    {this.state.addingGroupSpinner ? <Spinner /> : this.state.addGroupError !== "" ?
-                    <p className="backdropo-error">{this.state.addGroupError}</p> 
-                    : <p className="backdropo-error">"Dodano grupe"</p>}
+                <Backdrop show={this.state.addingGroupModal}>
+                    {this.state.addingGroupSpinner ? <Spinner /> : null}
                 </Backdrop>
-
                 <h4>Tworzenie nowej grupy</h4>
                 <div className="add-group-content-container">
                     <div className="left-form-content">
@@ -267,7 +246,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchingUsersHandler: () => dispatch(fetchingUsersHandler()),
-        addGroupPicture: (picture, groupId, history) => dispatch(addGroupPictureActionCreator(picture, groupId, history))
+        addGroup: (name, description, history, picture) => dispatch(addGroupActionCreator(name, description, history, picture))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddGroupForm));
