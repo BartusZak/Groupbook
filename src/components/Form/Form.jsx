@@ -7,7 +7,7 @@ import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
 import {fetchingLogingIn } from '../../store/actions/loggingActions';
 import Spinner from '../UI/Spinner/Spinner';
-import axios from 'axios';
+import axios from 'axios/axios-groupsconnects';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { validateInput } from '../../containers/UserOptions/Validation/Validation';
 
@@ -71,8 +71,7 @@ class Form extends Component {
             Password: this.state.names[2].text,
             ConfirmedPassword: this.state.names[3].text,
         };
-        //axios.post('https://react-groupsconnects.firebaseio.com/users.json', registerData)
-        axios.post('https://groupsconnectsapi.azurewebsites.net/api/account/register', registerData)
+        axios.post('/api/account/register', registerData)
         .then(response => {
                 this.setState({loading: false});
                 this.setState({registredSuccesfully: true});

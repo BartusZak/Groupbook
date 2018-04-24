@@ -1,7 +1,7 @@
 import ProfilePicture from '../../../assets/img/users/250x400/1.jpg';
 import {IMG, ImgDiv} from './UserDetailsLogo.style'; 
 import React, { Component } from 'react';
-import axios from 'axios/axios-users';
+import axios from 'axios/axios-groupsconnects';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import EmptyAvatarMan from 'assets/img/empty_avatars/empty_avatar_man.jpg';
@@ -21,7 +21,7 @@ class UserDetailsLogo extends Component {
             loadData () {
                 if ( this.props.id) {
                     if ( !this.props.profilePicture && this.props.profilePicture != null) {
-                        axios.get( 'https://groupsconnectsapi.azurewebsites.net/pictures/' + this.props.profilePicture, {responseType: "blob"})
+                        axios.get( '/pictures/' + this.props.profilePicture, {responseType: "blob"})
                             .then( response => {
                                // console.log(response);
                                 this.setState({loading: false, profilePicture: URL.createObjectURL(response.data)});

@@ -4,7 +4,7 @@ import './OptionBlock.css';
 import Modal from '../../UI/Modal/Modal';
 import AddPictureBar from '../../UI/AddPictureBar/AddPictureBar';
 import Aux from 'hoc/Auxi';
-import axios from 'axios';
+import axios from 'axios/axios-groupsconnects';
 
 class optionBlock extends Component{
     state={
@@ -40,7 +40,7 @@ class optionBlock extends Component{
             f.append('userId', JSON.parse(localStorage.getItem('responseObject')).id);
             f.append('avatar', this.state.files[0]);
     
-        axios.post("https://groupsconnectsapi.azurewebsites.net/api/account/AddAvatar", f)
+        axios.post("/api/account/AddAvatar", f)
             .then(response => console.log(response))
             .catch(error =>{
                 console.log(error);
