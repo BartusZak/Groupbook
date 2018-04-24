@@ -9,6 +9,10 @@ import { withRouter } from 'react-router-dom';
 import axios from '../../../axios-groupsconnects';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
+
+import { addGroupPictureActionCreator } from '../../../store/Groups/Actions';
+
+
 class AddGroupForm extends Component{
     state = {
         fetchedUsers: null,
@@ -80,8 +84,13 @@ class AddGroupForm extends Component{
             UserId: storageItem.id
         }
         axios.post('/api/groups/add', newGroup).then(response => {
+            
             this.setState({addingGroupSpinner: false, addGroupError: ""});
-            this.props.history.push("/logged/group/"+ response.data.successResult.id);
+
+            this.props.addGroupPicture(this.state.files[0], 
+                response.data.successResult.id, this.props.history);
+
+
         }).catch(error => {
             this.setState({addingGroupSpinner: false, addGroupError: "Wystąpił błąd podczas dodawania grupy"});
         })
@@ -257,7 +266,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        fetchingUsersHandler: () => dispatch(fetchingUsersHandler())
+        fetchingUsersHandler: () => dispatch(fetchingUsersHandler()),
+        addGroupPicture: (picture, groupId, history) => dispatch(addGroupPictureActionCreator(picture, groupId, history))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddGroupForm));

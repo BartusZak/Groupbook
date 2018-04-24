@@ -32,7 +32,10 @@ class AddPostForm extends Component{
         addingPictureError: "",
         sendingPictureSpinner: false,
 
-        showBackdrop: false
+        showBackdrop: false,
+
+
+        addedPostsIds: []
     }
     componentDidMount(){
         const userGroups = (
@@ -153,7 +156,7 @@ class AddPostForm extends Component{
                 AuthorId: responseObject.id
             }
             axios.post('/api/posts/add', newPost).then(response => {
-                this.setState({responsePostId: response.data.successResult.id,
+                this.setState({addedPostsIds: response.data.successResult.posts, responsePostId: response.data.successResult.id,
                     addingPostError: "", sendingPostSpinner: false});    
                 if(this.state.files.length === 0){
                     this.redirectToAddedPostGroup();
@@ -170,8 +173,12 @@ class AddPostForm extends Component{
         this.setState({sendingPictureSpinner: true});
         if(this.state.files.length !== 0 && this.state.responsePostId !== null){
             let formData = new FormData();
-            formData.set("postId", this.state.responsePostId);
-            formData.set("pictures", this.state.files[0]);
+            const idsArray = this.state.addedPostsIds.map(i => {
+                return i.id
+            })
+            //console.log(idsArray);
+            formData.set("postsIds", idsArray);
+            formData.set("pictures", this.state.files);
             axios({
                 method: 'post',
                 url: '/api/posts/addpictures',
@@ -181,6 +188,7 @@ class AddPostForm extends Component{
                 this.setState({sendingPictureSpinner: false, addingPictureError: ""});
                 this.redirectToAddedPostGroup();
             }).catch(error => {
+                //console.log(error.response);
                 this.setState({sendingPictureSpinner: false,
                      addingPictureError: "Wystąpił błąd podczas dodawania zdjęcia"});
             })
