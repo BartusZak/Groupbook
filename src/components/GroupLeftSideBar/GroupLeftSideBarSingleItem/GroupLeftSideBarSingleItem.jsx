@@ -6,7 +6,7 @@ const groupPostSingleItem = props => {
                 <img src={props.pic} alt={props.email} />
             </div>
             <span className="left-group-name-holder">
-                <b>{props.email}</b>
+                <b>{props.username}</b>
             </span>
             <span className="icons-holder">
                 <i className="fa fa-envelope"></i>

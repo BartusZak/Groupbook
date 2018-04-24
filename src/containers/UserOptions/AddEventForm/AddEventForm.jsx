@@ -153,25 +153,27 @@ class AddEventForm extends Component{
                     title="Etap 2: Wypełnij formularz"
                     number={2}>
                          <form onSubmit={this.onSubmitHandler} className="universal-form">
-                        {this.state.inputValues.map( item => {
-                        return (<section key={item.id} className="input-holders">
-                        <label>{item.name}</label>
-                        {item.type === "textarea" ? 
-                        <textarea className={this.state.inputValues[item.id].error !== "" ?
-                        "validation-input-error" : null} onChange={(event) => this.onChangeHandlerInput(event, item.id)}
-                        value={this.state.inputValues[item.id].value}
-                        placeholder={item.placeholder}>
-                        </textarea> : 
-                        <input className={this.state.inputValues[item.id].error !== "" ?
-                        "validation-input-error" : null} max="2050-12-31" onChange={(event) => this.onChangeHandlerInput(event, item.id)} 
-                        value={this.state.inputValues[item.id].value} 
-                        type={item.type} placeholder={item.placeholder} />}
-                        <p className={this.state.inputValues[item.id].error === "" ?
-                        "invisible-message" : "invalid-message"}>
-                        {this.state.inputValues[item.id].error}</p>
-                        </section>);
-                        })} 
-                        <input className="submit-button" type="submit" value="Dalej" />
+
+                            {this.state.inputValues.map( item => {
+                            return (<section key={item.id} className="input-holders">
+                            <label>{item.name}</label>
+                            {item.type === "textarea" ? 
+                            <textarea className={this.state.inputValues[item.id].error !== "" ?
+                            "validation-input-error" : null} onChange={(event) => this.onChangeHandlerInput(event, item.id)}
+                            value={this.state.inputValues[item.id].value}
+                            placeholder={item.placeholder}>
+                            </textarea> : 
+                            <input className={this.state.inputValues[item.id].error !== "" ?
+                            "validation-input-error" : null} max="2050-12-31" onChange={(event) => this.onChangeHandlerInput(event, item.id)} 
+                            value={this.state.inputValues[item.id].value} 
+                            type={item.type} placeholder={item.placeholder} />}
+                            <p className={this.state.inputValues[item.id].error === "" ?
+                            "invisible-message" : "invalid-message"}>
+                            {this.state.inputValues[item.id].error}</p>
+                            </section>);
+                            })} 
+
+                            <input className="submit-button" type="submit" value="Dalej" />
                         </form>
                     </EventContentBlock>
                     

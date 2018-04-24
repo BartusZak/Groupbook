@@ -12,16 +12,16 @@ const groupLeftSideBar = props => {
     if(props.users){
         usersList = (
             props.users.map( item => {
-                console.log(item.user.profilePicture === null ? "null" : item.user.profilePicture.avatar);
                 return (
                     <GroupLeftSideBarSingleItem 
                     key={item.user.id}
                     pic={
-                        item.user.profilePicture === null ? 
+                        item.user.profilePicture === null ?
                         item.user.sex ? EmptyAvatarGirl : 
                         EmptyAvatarMan : "https://groupsconnectsapi.azurewebsites.net/pictures/" + 
                         item.user.profilePicture.avatar
                     }
+                    username={item.user.username}
                     email={item.user.email}
                     isModerator={item.isModerator}
                     />

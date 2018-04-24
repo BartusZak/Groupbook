@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const validateInput = (min, max, inputText, specialKeys, inputType, isZeroAble, inputName, regularExpType) => {
     const lengthOfInput = inputText.length;
     if(lengthOfInput === 0 && min !== ""){
@@ -24,31 +26,13 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
                 return "Musisz dodac chociaz jedna grupe, przed opublikowaniem postu";
             break;
         case "date":
-            if(inputType === "date"){
-                if(inputText === "")
-                    return "Data wydarzenia musi zostac ustawiona";
-
-                if(inputText.length > 10)
-                    return "Data posiada nieprawidłowy format";
-                // sprawdzam czy rok jest mniejszy // potem czy 
-                const today = new Date();
-               
-                if(Number(inputText.slice(0,4)) < Number(today.getFullYear()))
-                    return "Rok wydarzenia nie może odnosic sie do przeszlosci";
-                else{
-                    if(Number(inputText.slice(5,7) < Number(today.getMonth()+1))){
-                        return "Miesiąc wydarzenia nie może odnosić się do przeszłości";
-                    }
-                    else{
-                        if(Number(inputText.slice(8,10) < Number(today.getDate())) &&
-                    inputType.slice(5,7) < Number(today.getMonth()+1 &&
-                    inputType.slice(8,10) < Number(today.getFullYear()))){
-                            return "Dzień wydarzenia nie może odnosić się do przeszlości";
-                        }
-                    }
-
-                }
+            const dateNow = moment().format();
+            
+            if(!moment(inputText).isAfter(dateNow)){
+                return "Data wydarzenia nie może odnosić się do przeszłości";
             }
+
+           
             break;
         default:
             if(min !== ""){
