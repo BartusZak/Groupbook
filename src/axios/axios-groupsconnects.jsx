@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://groupsconnectsapi.azurewebsites.net'
+    baseURL: 'http://www.groupsconnectsapi.hostingasp.pl'
 })
 
 export default instance;

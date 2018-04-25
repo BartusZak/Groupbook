@@ -9,7 +9,9 @@ import axios from 'axios/axios-groupsconnects';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import { withRouter } from 'react-router-dom';
-import { fetchUserGroupsActionCreator } from '../../../store/Posts/Actions';
+import { fetchUserGroupsActionCreator, addPostActionCreator } from '../../../store/Posts/Actions';
+
+import ErrorPrompt from '../../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
 
 class AddPostForm extends Component{
     state = {
@@ -17,6 +19,8 @@ class AddPostForm extends Component{
         postContent: "",
         loadedGroups: [],
         addedGroups: [],
+        loadGroupSpinner: true,
+
         validationResult: [
             {id: "postTitle", content: ""},
             {id: "postContent", content: ""},
@@ -26,33 +30,26 @@ class AddPostForm extends Component{
         files: [],
         incorrectPictureError: "",
 
-        addingPostError: "",
-        responsePostId: null,
-        sendingPostSpinner: false,
-
-        addingPictureError: "",
-        sendingPictureSpinner: false,
-
         showBackdrop: false,
-
-
-        addedPostsIds: []
+        addPostSpinner: false
     }
     componentDidMount(){
         const loggedUserData = JSON.parse(localStorage.getItem('responseObject'));
         this.props.fetchUserGroups(loggedUserData.id);
     }
    
-    componentDidUpdate(prevProps, prevState){
-        if (prevState.responsePostId !== this.state.responsePostId &&
-        this.state.files.length > 0 && this.state.responsePostId !== null) {
-            this.AddingPictureOnServer();
+    componentDidUpdate(prevProps){
+        if(prevProps.userGroups !== this.props.userGroups){
+            this.setState({loadedGroups: this.props.userGroups, loadGroupSpinner: false});
+        }
+        if(prevProps.addPostErrors !== this.props.addPostErrors){
+            this.setState({addPostSpinner: false});
         }
     }
-    addGroup = (event) => {
+    addGroup = event => {
         const loadedGroups = [...this.state.loadedGroups];
         const index = loadedGroups.findIndex(item => {
-            return item.id === event.target.value;
+            return item.group.id === event.target.value;
         })
         const addedGroups = [...this.state.addedGroups];
         addedGroups.push(loadedGroups[index]);
@@ -61,11 +58,11 @@ class AddPostForm extends Component{
 
         this.setState({addedGroups: addedGroups, loadedGroups: loadedGroups});
     }
-    deleteGroup = (event) => {
+    deleteGroup = event => {
         const addedGroups = [...this.state.addedGroups];
         const loadedGroups = [...this.state.loadedGroups];
         const index = addedGroups.findIndex( item => {
-            return item.id === event.target.value;
+            return item.group.id === event.target.value;
         });
 
         loadedGroups.push(addedGroups[index]);
@@ -88,6 +85,7 @@ class AddPostForm extends Component{
     onSubmitHandler = e => {
         e.preventDefault();
         this.Validate();  
+        this.setState({addPostSpinner: true});
         this.AddPostOnServer(); 
     }
 
@@ -132,111 +130,47 @@ class AddPostForm extends Component{
             }
         }
         if(booleanResult){
-            const responseObject = JSON.parse(localStorage.getItem('responseObject')) !== null ?
-            JSON.parse(localStorage.getItem('responseObject')) : this.props.userObject;
-            this.setState({sendingPostSpinner: true, showBackdrop: true});
-            
-            const addedGroupsIds = this.state.addedGroups.map(item => {
-                return item.id;
-            })
-            const newPost = {
-                Title: this.state.postTitle,
-                Content: this.state.postContent,
-                GroupsIds: addedGroupsIds,
-                AuthorId: responseObject.id
-            }
-            axios.post('/api/posts/add', newPost).then(response => {
-                this.setState({addedPostsIds: response.data.successResult.posts, responsePostId: response.data.successResult.id,
-                    addingPostError: "", sendingPostSpinner: false});    
-                if(this.state.files.length === 0){
-                    this.redirectToAddedPostGroup();
-                }
-                
-               
-            }).catch(error => {
-                 this.setState({addingPostError: "Wystąpił błąd podczas dodawania postu",
-                 sendingPostSpinner: false, responsePostId: null });
-            })
+            const responseObject =  JSON.parse(localStorage.getItem('responseObject'));
+            this.props.addPost(this.state.files, this.state.addedGroups,
+                 this.state.postTitle, this.state.postContent, responseObject.id,
+                 this.props.history, this.state.addedGroups[0].group.id);
         }   
     }
-    AddingPictureOnServer = () => {
-        this.setState({sendingPictureSpinner: true});
-        if(this.state.files.length !== 0 && this.state.responsePostId !== null){
-            let formData = new FormData();
-            const idsArray = this.state.addedPostsIds.map(i => {
-                return i.id
-            })
-            //console.log(idsArray);
-            // formData.set("postsIds", idsArray);
-            // formData.set("pictures", this.state.files);
-            console.log(idsArray);
-            console.log(this.state.files);
-            
-            idsArray.forEach(function (value){
-                formData.append('postsIds['+ idsArray.indexOf(value) +']', value);
-            });
-
-            console.log(formData);
-            formData.append('pictures',this.state.files[0]);
-            axios({
-                method: 'post',
-                url: '/api/posts/addpictures',
-                data: formData,
-                config: { headers: {'Content-Type': 'multipart/form-data' }}
-            }).then(response => {
-                this.setState({sendingPictureSpinner: false, addingPictureError: ""});
-                this.redirectToAddedPostGroup();
-            }).catch(error => {
-                console.log(error.response);
-                this.setState({sendingPictureSpinner: false,
-                     addingPictureError: "Wystąpił błąd podczas dodawania zdjęcia"});
-            })
-        }
-    }
-
     closeBackdrop = () => {
         this.setState({showBackdrop: false});
     }
-    redirectToAddedPostGroup = () => {
-        this.props.history.push('/logged/group/' + 
-            this.state.addedGroups[0].name.toLowerCase());
-    }
+  
     render(){
-        console.log(this.props.userGroups);
         return(
             <div className="add-post-container">
                 <Backdrop show={this.state.showBackdrop} 
-                clicked={(this.state.addingPostError !== ""
-                || this.state.addingPictureError !== "") ? this.closeBackdrop : null}>
-                    <div className="backdrop-container">
-                        {this.state.sendingPostSpinner ? <Spinner /> :
-                        this.state.addingPostError ? 
-                        <p className="backdrop-error">
-                            {this.state.addingPostError}
-                        </p> : null}
-
-                        {this.state.sendingPictureSpinner ? <Spinner /> :
-                        this.state.addingPictureError ? 
-                        <p className="backdrop-error">
-                            {this.state.addingPictureError}
-                        </p> : null}
-                    </div>
-                    
+                clicked={this.props.addPostErrors.length > 0 ? this.closeBackdrop : null}>
+                    {this.state.addPostSpinner ? <Spinner /> : this.props.addPostErrors.length > 0 ?
+                    <ErrorPrompt color="red" message={this.props.addPostErrors[0]} /> : null}
                 </Backdrop>
+
                 <h4>Formularz dodawania postów</h4>
                     <p className="block-header">Grupy do wybrania</p>
+            
+                    {this.state.loadGroupSpinner ? <Spinner /> : 
+                    this.props.userGroupsErrors.length > 0 ?
+                    <ErrorPrompt color="red" message={this.props.userGroupsErrors[0]} /> :
+
                     <GroupsBar 
                     targetClass="loaded-groups"
-                    clicked={(event) => this.addGroup(event)}
-                    groups={this.props.userGroups}
+                    clicked={event => this.addGroup(event)}
+                    groups={this.state.loadedGroups}
                     />
+                    }
+                    
                     <p className="block-header">Wybrane grupy</p>
                     <GroupsBar 
                     targetClass="added-groups"
                     groups={this.state.addedGroups}
-                    clicked={(event) => this.deleteGroup(event)} />
+                    clicked={event => this.deleteGroup(event)} />
               
                 <p className="block-header">Wypełnij poniższe pola</p>
+                
                 <div className="form-holder">
                     <input className={this.state.validationResult[0].content !== "" ?
                     "validation-input-error" : null} onChange={(event) => this.onChangeHandlerTitle(event)} 
@@ -284,16 +218,19 @@ class AddPostForm extends Component{
 
 const mapStateToProps = state => {
     return {
-        userObject: state.logRed.loggingObject,
 
         userGroups: state.PostsReducer.userGroups,
-        userGroupsError: state.PostsReducer.userGroupsError
+        userGroupsErrors: state.PostsReducer.userGroupsErrors,
+
+        addPostErrors: state.PostsReducer.addPostErrors
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchUserGroups: (userId) => dispatch(fetchUserGroupsActionCreator(userId)) 
+        fetchUserGroups: (userId) => dispatch(fetchUserGroupsActionCreator(userId)),
+        addPost: (files, addedGroups, postTitle, postContent, authorId, history, groupToPush) => 
+            dispatch(addPostActionCreator (files, addedGroups, postTitle, postContent, authorId, history, groupToPush))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddPostForm));

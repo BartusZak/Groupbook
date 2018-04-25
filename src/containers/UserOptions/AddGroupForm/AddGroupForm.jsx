@@ -166,7 +166,6 @@ class AddGroupForm extends Component{
             })}
         </ul>);
 
-        console.log(this.props.addGroupErrors);
         return(
             <div className="add-group-form-main-div">
                 <Backdrop clicked={this.props.addGroupErrors.length > 0 ? 

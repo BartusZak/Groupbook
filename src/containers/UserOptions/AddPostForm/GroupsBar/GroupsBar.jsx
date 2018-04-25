@@ -13,7 +13,8 @@ const groupsBar = props => {
     return(
         <ul className={props.targetClass}>
             {props.groups.map(i => {
-                return <li value={i.group.id}
+                return <li 
+                value={i.group.id}
                 onClick={props.clicked}
                 className="list-itemo"
                 key={i.group.id}

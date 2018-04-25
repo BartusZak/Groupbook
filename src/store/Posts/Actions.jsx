@@ -25,3 +25,65 @@ export const fetchUserGroupsActionCreator = (userId) => {
         })
     }
 }
+
+
+export const addPost = errors => {
+    return{
+        type: actionTypes.ADD_POST,
+        addPostErrors: errors
+    };
+}
+
+export const addPostActionCreator = (files, addedGroups, postTitle, postContent, authorId, history, groupToPush) => {
+    return dispatch => {
+        const groupsIds = addedGroups.map(i => {
+            return i.group.id
+        })
+        const newPost = {
+            Title: postTitle,
+            Content: postContent,
+            GroupsIds: groupsIds,
+            AuthorId: authorId
+        }
+        axios.post('/api/posts/add', newPost).then(response => {
+            if(files.length === 0){
+                history.push("/logged/group/" + groupToPush);
+            }
+            else{
+                dispatch(addPostPictureActionCreator(response.data.successResult.posts, 
+                files, history, groupToPush));
+            }
+            
+           
+        }).catch(error => {
+            dispatch(addPost(error.response.data.errors));
+        })
+    }
+}
+
+export const addPostPictureActionCreator = (addedPosts, files, history, groupToPush) => {
+    return dispatch => {
+       
+            let formData = new FormData();
+            const idsArray = addedPosts.map(i => {
+                return i.id
+            })
+            idsArray.forEach(function (value){
+                formData.append('postsIds['+ idsArray.indexOf(value) +']', value);
+            });
+            formData.append('pictures',files[0]);
+            axios({
+                method: 'post',
+                url: '/api/posts/addpictures',
+                data: formData,
+                config: { headers: {'Content-Type': 'multipart/form-data' }}
+            }).then(response => {
+                history.push("/logged/group/" + groupToPush);
+            }).catch(error => {
+                dispatch(addPost(error.response.data.errors));
+            })
+            
+        
+    }
+    
+}

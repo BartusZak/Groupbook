@@ -82,7 +82,7 @@ class NavbarComponent extends Component{
         
         if (this.state.user !== null){
             renderNickname =  this.state.user.username;
-            renderAvatar = <Avatar avatarImg={(this.state.user.sex)?require('assets/img/empty_avatars/empty_avatar_man.jpg'):require('assets/img/empty_avatars/empty-avatar-girl.jpg')} styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/> 
+            renderAvatar = <Avatar avatarImg={(!this.state.user.sex)?require('assets/img/empty_avatars/empty_avatar_man.jpg'):require('assets/img/empty_avatars/empty-avatar-girl.jpg')} styles={{height: "100px", width: "100px"}} class="rounded-circle z-depth-0"/> 
             
         }
         if(this.state.avatarImg !== null){

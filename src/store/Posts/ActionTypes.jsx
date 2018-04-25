@@ -1,2 +1,5 @@
 export const FETCH_USER_GROUPS = 'FETCH_USER_GROUPS';
 export const FETCH_USER_GROUPS_ERROR = 'FETCH_USER_GROUPS_ERROR';
+
+
+export const ADD_POST = 'ADD_POST';

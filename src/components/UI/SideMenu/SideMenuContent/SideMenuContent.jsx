@@ -10,51 +10,35 @@ import { concatingUrl } from '../../../../helperMethods/concatingUrl';
 class SideMenuContent extends Component{
     state = {
         currentLocation: "",
-        addPost: false,
-        addEvent: false,
-        addGroup: false,
-        profile: false,
-        userObject: null,
-    }
-    componentWillMount(){
-        //console.log("WillMount this.state.userObject ",this.state.userObject);
-        //console.log("JSON.parse(localStorage ", JSON.parse(localStorage.getItem('responseObject')));
+        userObject: JSON.parse(localStorage.getItem('responseObject'))
     }
     componentDidMount(){
-        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
-                this.setState({userObject: responseObject, currentLocation: concatingUrl(window.location.href)}); 
-
-                //console.log("DidMount this.state.userObject ",this.state.userObject);
-                //console.log("localStorage ", responseObject);
+        this.setState({currentLocation: concatingUrl(window.location.href)}); 
     }
-    clearState = () => {
-        this.setState({addPost: false, addEvent: false, addGroup: false, profile: false, userObject: null});
-    }
-    redirectToAddPost = () => {
-        this.setState({addPost: true, addEvent: false, addGroup: false, profile: false});
-        this.props.history.push("/logged/addpost");
-    }
-    redirectToGroup = (groupId) => {
-        this.clearState();
+    redirectToGroup = groupId => {
+        this.setState({currentLocation: "/logged/group/" + groupId});
         this.props.history.push("/logged/group/" + groupId);
         window.location.reload();
     }
+    redirectToAddPost = () => {
+        this.setState({currentLocation: "addpost"});
+        this.props.history.push("/logged/addpost");
+    }
     redirectToAddEvent = () => {
-        this.setState({addPost: false, addEvent: true, addGroup: false, profile: false});
+        this.setState({currentLocation: "addevent"});
         this.props.history.push("/logged/addevent");
     }
-    redirectToProfile = () => {
-        console.log("Redirect to profile this.state.userObjecct ", this.state.userObject);
-        this.setState({addPost: false, addEvent: false, addGroup: false, profile: true});
-        this.props.history.push("/logged/user/" + this.state.userObject.id);
-        //this.props.history.push("/logged/user" + localStorage.getItem('responseObject').id);
-    }
     redirectToAddGroup = () => {
-        this.setState({addPost: false, addEvent: false, addGroup: true, profile: false});
+        this.setState({currentLocation: "addgroup"});
         this.props.history.push("/logged/addgroup");
     }
+
+    redirectToProfile = () => {
+        this.setState({currentLocation: this.state.userObject.id.toString()});
+        this.props.history.push("/logged/user/" + this.state.userObject.id);
+    }
+   
     render(){
-        console.log(this.state.currentLocation);
         return(
         <Aux>
             <div className="side-bar-groups">
@@ -90,14 +74,16 @@ class SideMenuContent extends Component{
                 
                 <span  
                 onClick={this.redirectToAddEvent} 
-                className={this.state.addEvent ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj wydarzenie</span>
+                className={this.state.currentLocation === "addevent" ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj wydarzenie</span>
 
                 <span
-                onClick={this.redirectToAddGroup} className={this.state.addGroup ?
+                onClick={this.redirectToAddGroup} className={this.state.currentLocation === "addgroup" ?
                      "sidebar-butt overline-butt" : "sidebar-butt"}>Stwórz grupe</span>
+
                 <span
                 onClick={this.redirectToProfile} 
-                className={this.state.profile ? "sidebar-butt overline-butt": "sidebar-butt"}>
+                className={this.state.currentLocation === this.state.userObject.id.toString() ? 
+                    "sidebar-butt overline-butt" : "sidebar-butt"} >
                     Twój profil
                 </span>
             </div>  

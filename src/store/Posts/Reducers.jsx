@@ -4,7 +4,9 @@ import { updateObject } from '../utility';
 
 const initialState = {
     userGroups: [],
-    userGroupsErrors: []
+    userGroupsErrors: [],
+
+    addPostErrors: []
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -13,6 +15,9 @@ const reducer = (state = initialState, action) => {
        
        case actionTypes.FETCH_USER_GROUPS_ERROR:
             return updateObject(state, {userGroupsErrors: action.userGroupsErrors})
+
+       case actionTypes.ADD_POST:
+            return updateObject(state, {addPostErrors: action.addPostErrors})
     }
     return state;   
 }
