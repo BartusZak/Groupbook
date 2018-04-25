@@ -12,6 +12,7 @@ import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 
 import { addGroupActionCreator } from '../../../store/Groups/Actions';
 
+import ErrorPrompt from '../../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
 
 class AddGroupForm extends Component{
     state = {
@@ -42,6 +43,9 @@ class AddGroupForm extends Component{
         if (prevProps.fetchedUsers !== this.props.fetchedUsers 
             || prevProps.fetchingUsersError !== this.props.fetchingUsersError) {
             this.setState({showSpinner: false});
+        }
+        if(prevProps.addGroupErrors !== this.props.addGroupErrors){
+            this.setState({addingGroupSpinner: false});
         }
     }
     onChangeHandler = (e, id) => {
@@ -137,12 +141,15 @@ class AddGroupForm extends Component{
 
     onSubmitHandler = e => {
         if(this.Validate()){
-            this.setState({addingGroupSpinner: true});
+            this.setState({addingGroupModal: true, addingGroupSpinner: true});
             this.props.addGroup(this.state.formContent[0].value, this.state.formContent[1].value,
                 this.props.history, this.state.files);   
         }
     }
 
+    closeModalAfterErrorOnClick = () => {
+        this.setState({addingGroupModal: false});
+    }
     render(){
         const filesLength = this.state.files.length;
         const fetchedUsers = this.state.fetchedUsers === null ? 
@@ -158,10 +165,17 @@ class AddGroupForm extends Component{
                 </li>);
             })}
         </ul>);
+
+        console.log(this.props.addGroupErrors);
         return(
             <div className="add-group-form-main-div">
-                <Backdrop show={this.state.addingGroupModal}>
-                    {this.state.addingGroupSpinner ? <Spinner /> : null}
+                <Backdrop clicked={this.props.addGroupErrors.length > 0 ? 
+                this.closeModalAfterErrorOnClick : null} show={this.state.addingGroupModal}>
+                    {this.state.addingGroupSpinner ? <Spinner /> : 
+                    this.props.addGroupErrors.length > 0 ? 
+                    <ErrorPrompt color="red" message={this.props.addGroupErrors[0]} /> : null}
+                    
+                    
                 </Backdrop>
                 <h4>Tworzenie nowej grupy</h4>
                 <div className="add-group-content-container">
@@ -240,7 +254,9 @@ class AddGroupForm extends Component{
 const mapStateToProps = state => {
     return {
         fetchedUsers: state.userOptionsRed.fetchedUsers,
-        fetchingUsersError: state.userOptionsRed.fetchingUsersError
+        fetchingUsersError: state.userOptionsRed.fetchingUsersError,
+
+        addGroupErrors: state.GroupReducer.addGroupErrors
     };
 }
 const mapDispatchToProps = dispatch => {

@@ -12,6 +12,8 @@ import axios from 'axios/axios-groupsconnects';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { concatingUrlTitle } from '../../helperMethods/helperMethods';
+import AddGroupMessage from '../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
+import Transition from 'react-transition-group/Transition';
 
 class Group extends Component{
    
@@ -26,17 +28,28 @@ class Group extends Component{
 
         loadingPostsError: false,
         loadingPostsSpinner: false,
-        loadedPosts: []        
+        loadedPosts: [],
+
+        addGroupMessage: false
     }
     componentDidMount(){ 
         this.fetchingPosts();
+        if(this.props.history.location.state){
+            this.setState({ addGroupMessage: true });
+            setTimeout(() => {
+                this.setState({ addGroupMessage: false });
+              }, 3000);
+        }
+        
+    }
+    componentDidUpdate(){
+        
     }
     fetchingPosts = () => {
         this.setState({loadingGroupDataSpinner: true});
         const url = concatingUrlTitle(this.props.location);
 
         axios.get('/api/groups' + url).then(response => {
-            console.log(response.data);
             this.setState({loadingGroupDataSpinner: false, loadingGroupDataError: "", 
                 loadedData: response.data, loadedPosts: response.data.posts, loadingPostsSpinner: false
                 });
@@ -60,6 +73,20 @@ class Group extends Component{
     render(){
         return(
             <div className="background-container">
+                <Transition 
+                    mountOnEnter 
+                    unmountOnExit 
+                    in={this.state.addGroupMessage}
+                    timeout={500}>
+                        {state => (
+                             <AddGroupMessage 
+                             color="green"
+                             message="Grupa została pomyślnie dodana"
+                             animationType={this.state.addGroupMessage ? "succ-add-group-message-in"
+                         : "succ-add-group-message-out"}/>
+                        )}
+                </Transition>
+
                 <div className="left-trash-container">
                     {this.state.loadingGroupDataSpinner ? 
                     <Spinner /> 
@@ -70,6 +97,8 @@ class Group extends Component{
                 </div>
                 
                 <div className="group-container">
+                    
+
                     <p className="group-title-full">{this.state.loadedData.name}</p>
                     {this.state.loadingGroupDataError ? 
                     <p className="backdropo-error">Wystąpił błąd podczas ładowania danych grupy</p> :

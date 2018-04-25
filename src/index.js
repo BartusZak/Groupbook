@@ -15,7 +15,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import CommentsReducer from './store/Comments/Reducers';
-import GroupsReducer from './store/Groups/Reducers';
+import GroupReducer from './store/Groups/Reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
     logRed: logginReducer,
     userOptionsRed: userOptionsReducer,
     CommentsReducer: CommentsReducer,
-    groupsRed: GroupsReducer
+    GroupReducer: GroupReducer
 }); 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
