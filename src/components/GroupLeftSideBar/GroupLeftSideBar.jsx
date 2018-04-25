@@ -4,6 +4,8 @@ import FacetStock from '../../assets/img/profiles/facet.jpg';
 import GroupLeftSideBarSingleItem from './GroupLeftSideBarSingleItem/GroupLeftSideBarSingleItem';
 import EmptyAvatarMan from '../../assets/img/empty_avatars/empty_avatar_man.jpg';
 import EmptyAvatarGirl from '../../assets/img/empty_avatars/empty-avatar-girl.jpg';
+import {apiPicturesUrl} from 'axios/apiPicturesUrl';
+
 const groupLeftSideBar = props => {
     let usersList = null;
     if(props.loadingUsersError){
@@ -18,7 +20,7 @@ const groupLeftSideBar = props => {
                     pic={
                         item.user.profilePicture === null ?
                         item.user.sex ? EmptyAvatarGirl : 
-                        EmptyAvatarMan : "https://groupsconnectsapi.azurewebsites.net/pictures/" + 
+                        EmptyAvatarMan : apiPicturesUrl + 
                         item.user.profilePicture.avatar
                     }
                     username={item.user.username}

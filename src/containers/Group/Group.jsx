@@ -14,6 +14,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import { concatingUrlTitle } from '../../helperMethods/helperMethods';
 import AddGroupMessage from '../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
 import Transition from 'react-transition-group/Transition';
+import {apiPicturesUrl} from 'axios/apiPicturesUrl';
 
 class Group extends Component{
    
@@ -103,7 +104,7 @@ class Group extends Component{
                     {this.state.loadingGroupDataError ? 
                     <p className="backdropo-error">Wystąpił błąd podczas ładowania danych grupy</p> :
                         <nav style={{backgroundImage: `url(${this.state.loadedData.picture ? 
-                            "https://groupsconnectsapi.azurewebsites.net/pictures/" + 
+                            apiPicturesUrl + 
                             this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
                             <span className="group-owner">Należysz <i className="fa fa-check"></i></span>
                         </nav>

@@ -6,6 +6,7 @@ import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import EmptyAvatarMan from 'assets/img/empty_avatars/empty_avatar_man.jpg';
 import EmptyAvatarWoman from 'assets/img/empty_avatars/empty-avatar-girl.jpg';
+import {apiPicturesUrl} from 'axios/apiPicturesUrl';
 
 class UserDetailsLogo extends Component {
         state = { 
@@ -39,7 +40,7 @@ class UserDetailsLogo extends Component {
                 if (this.props.profilePicture !== null ) {
                         img250x400 = (        
                         <ImgDiv>
-                                <IMG className="img-responsive" src={"https://groupsconnectsapi.azurewebsites.net/pictures/" + this.props.profilePicture.profile} alt="Zdjęcie Profilowe" />
+                                <IMG className="img-responsive" src={apiPicturesUrl + this.props.profilePicture.profile} alt="Zdjęcie Profilowe" />
                         </ImgDiv>
         
                     );
