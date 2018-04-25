@@ -7,6 +7,8 @@ import ImagePost from '../../../assets/img/404/404.jpg';
 import Aux from '../../../hoc/Auxi';
 import EmptyAvatarMan from '../../../assets/img/empty_avatars/empty_avatar_man.jpg';
 import EmptyAvatarGirl from '../../../assets/img/empty_avatars/empty-avatar-girl.jpg';
+import {apiPicturesUrl} from 'axios/apiPicturesUrl';
+
 // Pamietac, zeby potem tu wrocic i to poprawic - problem z erroramni od komentarzy
 class Post extends Component{
     state = {
@@ -35,7 +37,7 @@ class Post extends Component{
                         <div className="post-block-image-holder">
                             <img src={!this.props.authorAvatar ? 
                             this.props.sex ? EmptyAvatarGirl : 
-                            EmptyAvatarMan : "https://groupsconnectsapi.azurewebsites.net/pictures/" + 
+                            EmptyAvatarMan : apiPicturesUrl + 
                             this.props.authorAvatar.avatar
                             } alt="Opis"/>
                         </div>
@@ -63,7 +65,7 @@ class Post extends Component{
                 <Backdrop show={this.state.showPicture} clicked={this.showPostPicture}>
                     <div className="image-container" style={{display: this.state.showPicture ? 'initial' : 'none'}}>
                         {this.props.postPicture.length > 0 ? 
-                        <img src={"https://groupsconnectsapi.azurewebsites.net/pictures/" + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie"/>
+                        <img src={apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie"/>
                         : null}
                     </div>
                 </Backdrop>

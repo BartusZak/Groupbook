@@ -4,6 +4,8 @@ import {UserGroupsDiv} from './UserGroups.style';
 
 import { Col } from 'reactstrap';
 
+import {apiPicturesUrl} from 'axios/apiPicturesUrl';
+
 class UserGroups extends Component {
     state = { 
         groups: this.props.groups,
@@ -16,7 +18,7 @@ class UserGroups extends Component {
             groups = this.state.groups.map((group, index) => {
                 
                 if (group.group.picture != null){
-                    img = "https://groupsconnectsapi.azurewebsites.net/pictures/" + group.group.picture.mediumResolutionPicName;
+                    img = apiPicturesUrl + group.group.picture.mediumResolutionPicName;
                 }
                 return (
                     <Col key={index} lg="4">
