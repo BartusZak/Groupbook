@@ -66,7 +66,7 @@ class UserDetailsInfo extends Component {
                     </UserDetailsInfoDiv>
         }
         else if ( this.state.user ) {
-            let gender = (this.state.user.sex === true)? <p>Mężczyzna</p> : <p>Kobieta</p>;
+            let gender = !(this.state.user.sex === true)? <p>Mężczyzna</p> : <p>Kobieta</p>;
             user = (
 
                 <UserDetailsInfoDiv>

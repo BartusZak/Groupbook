@@ -109,7 +109,7 @@ class UserDetails extends Component{
                                 justifyContent: 'center',
                                 alignItems: 'center',
                             }}>
-                                    <UserDetailsLogo sex={this.state.user.sex} profilePicture={this.state.user.profilePicture} id={this.props.match.params.id}/>
+                                    <UserDetailsLogo sex={!this.state.user.sex} profilePicture={this.state.user.profilePicture} id={this.props.match.params.id}/>
                             </Col>
                             <Col md="6">
                                 <UserDetailsInfo user={this.state.user} />

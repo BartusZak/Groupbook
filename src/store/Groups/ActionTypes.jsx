@@ -1,1 +1,4 @@
 export const ADD_GROUP = "ADD_GROUP";
+
+export const FETCH_GROUPS = "FETCH_GROUPS";
+export const FETCH_GROUPS_ERROR = "FETCH_GROUPS_ERROR";

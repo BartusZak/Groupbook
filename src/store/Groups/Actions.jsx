@@ -50,11 +50,38 @@ export const addGroupPictureActionCreator = (picture, groupId, history, name) =>
         }).then(response => {
             history.push({
                 pathname: "/logged/group/" + groupId,
-                state: {addGroupMessage: response.data}
+                search: '?query=succGroupAdd'
             })
             history.push("/logged/group/" + groupId);
         }).catch(error => {
             dispatch(addGroup([...error.response.data.errors]))
         })
     }
+}
+
+export const fetchGroups = fetchedGroups => {
+    return {
+        type: actionTypes.FETCH_GROUPS,
+        fetchedGroups: fetchedGroups
+    };
+}
+
+export const fetchGroupsError = fetchedGroupsErrors => {
+    return {
+        type: actionTypes.FETCH_GROUPS_ERROR,
+        fetchedGroupsErrors: fetchedGroupsErrors
+    };
+}
+
+export const fetchGroupsActionCreator = userId => {
+    return dispatch => {
+        axios.get("/api/users/" + userId).then(response => {
+            dispatch(fetchGroups(response.data));
+        }).catch(error => {
+            const array = [];
+            array.push("Błąd serwera");
+            dispatch(fetchGroupsError(error.response.data === undefined ? 
+            array : error.response.data.errors));
+        })
+    };
 }

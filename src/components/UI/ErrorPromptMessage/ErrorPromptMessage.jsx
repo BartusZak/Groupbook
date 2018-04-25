@@ -3,6 +3,7 @@ import './ErrorPromptMessage.css';
 
 const prompt = props => {
     let basicClass = null;
+    let message = null;
     switch(props.color){
         case "red":
             basicClass = "error-prompt-message"

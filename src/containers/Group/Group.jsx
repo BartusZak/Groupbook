@@ -42,8 +42,11 @@ class Group extends Component{
               }, 3000);
         }
     }
-    componentDidUpdate(){
-        
+    
+    componentDidUpdate(prevProps){
+        if(prevProps.history.location.pathname !== this.props.history.location.pathname){
+            this.fetchingPosts();
+        }
     }
     fetchingPosts = () => {
         this.setState({loadingGroupDataSpinner: true});
@@ -71,7 +74,6 @@ class Group extends Component{
 
 
     render(){
-        
         return(
             <div className="background-container">
                 <Transition 
@@ -82,7 +84,7 @@ class Group extends Component{
                         {state => (
                              <AddGroupMessage 
                              color="green"
-                             message={"Poprawnie dodano"}
+                             message={"Poprawnie dodano element"}
                              animationType={this.state.succOperationPrompt ? "succ-add-group-message-in"
                          : "succ-add-group-message-out"}/>
                         )}
@@ -144,7 +146,7 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps, null,)(withRouter(Group));
+export default connect(mapStateToProps, null)(withRouter(Group));
 
 
 

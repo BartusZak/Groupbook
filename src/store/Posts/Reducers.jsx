@@ -6,7 +6,10 @@ const initialState = {
     userGroups: [],
     userGroupsErrors: [],
 
-    addPostErrors: []
+    addPostErrors: [],
+
+    fetchedPosts: [],
+    fetchingPostsErrors: []
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -18,6 +21,12 @@ const reducer = (state = initialState, action) => {
 
        case actionTypes.ADD_POST:
             return updateObject(state, {addPostErrors: action.addPostErrors})
+
+       case actionTypes.FETCH_USER_POSTS:
+            return updateObject(state, {fetchedPosts: action.fetchedPosts, fetchingPostsErrors: []})
+        
+       case actionTypes.FETCH_USER_POSTS_ERRORS:
+            return updateObject(state, {fetchingPostsErrors: action.fetchingPostsErrors})
     }
     return state;   
 }

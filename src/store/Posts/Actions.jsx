@@ -95,3 +95,32 @@ export const addPostPictureActionCreator = (addedPosts, files, history, groupToP
     }
     
 }
+
+
+
+export const fetchUserPosts = fetchedPosts => {
+    return{
+        type: actionTypes.FETCH_USER_POSTS,
+        fetchedPosts: fetchedPosts
+    };
+}
+export const fetchUserPostsErrors = fetchingPostsErrors => {
+    return{
+        type: actionTypes.FETCH_USER_POSTS_ERRORS,
+        fetchingPostsErrors: fetchingPostsErrors
+    };
+}
+
+export const fetchUserPostsActionCreator = userId => {
+    return dispatch => { 
+        axios.get('/api/users/'+userId).then(response => {
+            dispatch(fetchUserPosts(response.data));
+        }).catch(error => {
+            const array = [];
+            array.push("Błąd serwera");    
+            dispatch(fetchUserPostsErrors(error.response.data === undefined ? 
+                array : error.response.data.errors));
+
+        })
+    };
+}

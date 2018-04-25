@@ -47,6 +47,7 @@ class Posts extends Component{
                     >
                     {this.props.loadingPostsError ? 
                         <p className="backdropo-error">{this.props.loadingPostsError}</p> : 
+                        this.state.posts.length === 0 ? <p className="zero-posts">W tej grupie nie ma postów</p> :
                         this.state.posts.map( item => {
                             return <Post 
                             key={item.id}
