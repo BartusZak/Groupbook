@@ -49,7 +49,7 @@ export const addPostActionCreator = (files, addedGroups, postTitle, postContent,
             if(files.length === 0){
                 history.push({
                     pathname: "/logged/group/" + groupToPush,
-                    state: {addPostMessage: response.data}
+                    search: '?query=succPostAdd'
                 })
                 
             }

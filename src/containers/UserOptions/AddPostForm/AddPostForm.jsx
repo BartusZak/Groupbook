@@ -85,7 +85,7 @@ class AddPostForm extends Component{
     onSubmitHandler = e => {
         e.preventDefault();
         this.Validate();  
-        this.setState({addPostSpinner: true});
+        this.setState({addPostSpinner: true, showBackdrop: true});
         this.AddPostOnServer(); 
     }
 
@@ -130,7 +130,7 @@ class AddPostForm extends Component{
             }
         }
         if(booleanResult){
-            const responseObject =  JSON.parse(localStorage.getItem('responseObject'));
+            const responseObject = JSON.parse(localStorage.getItem('responseObject'));
             this.props.addPost(this.state.files, this.state.addedGroups,
                  this.state.postTitle, this.state.postContent, responseObject.id,
                  this.props.history, this.state.addedGroups[0].group.id);

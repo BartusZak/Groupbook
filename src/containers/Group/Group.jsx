@@ -71,6 +71,7 @@ class Group extends Component{
 
 
     render(){
+        
         return(
             <div className="background-container">
                 <Transition 
