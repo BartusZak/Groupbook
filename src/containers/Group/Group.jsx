@@ -31,17 +31,16 @@ class Group extends Component{
         loadingPostsSpinner: false,
         loadedPosts: [],
 
-        addGroupMessage: false
+        succOperationPrompt: false
     }
     componentDidMount(){ 
         this.fetchingPosts();
         if(this.props.history.location.state){
-            this.setState({ addGroupMessage: true });
+            this.setState({ succOperationPrompt: true });
             setTimeout(() => {
-                this.setState({ addGroupMessage: false });
+                this.setState({ succOperationPrompt: false });
               }, 3000);
         }
-        
     }
     componentDidUpdate(){
         
@@ -77,16 +76,17 @@ class Group extends Component{
                 <Transition 
                     mountOnEnter 
                     unmountOnExit 
-                    in={this.state.addGroupMessage}
+                    in={this.state.succOperationPrompt}
                     timeout={500}>
                         {state => (
                              <AddGroupMessage 
                              color="green"
-                             message="Grupa została pomyślnie dodana"
-                             animationType={this.state.addGroupMessage ? "succ-add-group-message-in"
+                             message={"Poprawnie dodano"}
+                             animationType={this.state.succOperationPrompt ? "succ-add-group-message-in"
                          : "succ-add-group-message-out"}/>
                         )}
                 </Transition>
+
 
                 <div className="left-trash-container">
                     {this.state.loadingGroupDataSpinner ? 

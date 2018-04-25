@@ -47,7 +47,11 @@ export const addPostActionCreator = (files, addedGroups, postTitle, postContent,
         }
         axios.post('/api/posts/add', newPost).then(response => {
             if(files.length === 0){
-                history.push("/logged/group/" + groupToPush);
+                history.push({
+                    pathname: "/logged/group/" + groupToPush,
+                    state: {addPostMessage: response.data}
+                })
+                
             }
             else{
                 dispatch(addPostPictureActionCreator(response.data.successResult.posts, 
@@ -78,7 +82,11 @@ export const addPostPictureActionCreator = (addedPosts, files, history, groupToP
                 data: formData,
                 config: { headers: {'Content-Type': 'multipart/form-data' }}
             }).then(response => {
-                history.push("/logged/group/" + groupToPush);
+                history.push({
+                    pathname: "/logged/group/" + groupToPush,
+                    state: {addPostMessage: response.data}
+                })
+                
             }).catch(error => {
                 dispatch(addPost(error.response.data.errors));
             })
