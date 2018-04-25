@@ -29,15 +29,17 @@ class AddEventForm extends Component{
         redirectToThree: false,
 
         files: [],
-        incorrectPictureError: ""
+        incorrectPictureError: "",
+
+        userGroups: null
 
     }
     
-    componentDidMount(){
+    componentWillMount(){
         this.props.fetchingGroups();
         axios.get("/api/users/" + JSON.parse(localStorage.getItem('responseObject')).id)
             .then( response => {
-                console.log(response);
+                this.setState({ userGroups: response.data.userGroups});
             })
             .catch( error => {
                 console.log(error, error.response);
@@ -60,19 +62,19 @@ class AddEventForm extends Component{
     }
 
     addGroup = (event) => {
-        const index = this.props.loadedGroups.findIndex(item => {
+        const index = this.state.userGroups.findIndex(item => {
             return item.id === event.target.value;
         })
         const oldAdded = [...this.state.addedGroups];
-        oldAdded.push(this.props.loadedGroups[index]);
+        oldAdded.push(this.state.userGroups[index]);
         this.setState({addedGroups: oldAdded});
-        this.props.loadGroups(this.props.loadedGroups.splice(index,1));
+        this.props.loadGroups(this.state.userGroups.splice(index,1));
     }
     deleteGroup = (event) => {
         const index = this.state.addedGroups.findIndex( item => {
             return item.id === event.target.value;
         })
-        this.props.loadGroups(this.props.loadedGroups.push(this.state.addedGroups[index]));
+        this.props.loadGroups(this.state.userGroups.push(this.state.addedGroups[index]));
         let newGroups = [...this.state.addedGroups];
         newGroups.splice(index, 1);
         this.setState({addedGroups: newGroups});
@@ -125,8 +127,6 @@ class AddEventForm extends Component{
         this.setState({files: []});
     }
     render(){
-        console.log(this.props);
-console.log(this.state);
         return(
             <div className="add-event-form-container">
                 <h4>Stwórz wydarzenie</h4>
@@ -145,11 +145,15 @@ console.log(this.state);
                     title="Etap 1: Wybierz grupe"
                     number={1}>
                         <p className="block-header">Grupy do wybrania</p>
-                         <GroupsBar 
+                        <GroupsBar 
                         targetClass="loaded-groups"
                         clicked={(event) => this.addGroup(event)}
-                        groups={this.props.loadedGroups}
+                        groups={(this.state.userGroups !== null)? this.state.userGroups : null }
+                        // groups={
+                        //     {name: "Poczekalnia", id: 1}
+                        // }
                         />
+                        {console.log(this.props.loadedGroups)}
                         <p className="block-header">Wybrane grupy</p>
                         <GroupsBar 
                         targetClass="added-groups"
