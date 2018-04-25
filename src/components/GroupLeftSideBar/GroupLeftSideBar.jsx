@@ -17,7 +17,7 @@ const groupLeftSideBar = props => {
                     key={item.user.id}
                     pic={
                         item.user.profilePicture === null ?
-                        item.user.sex ? EmptyAvatarGirl : 
+                        !item.user.sex ? EmptyAvatarGirl : 
                         EmptyAvatarMan : "https://groupsconnectsapi.azurewebsites.net/pictures/" + 
                         item.user.profilePicture.avatar
                     }
