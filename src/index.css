@@ -12,3 +12,7 @@ html{
 i{
   cursor: pointer;
 }
+.server-error{
+  color: red !important;
+  font-size: 24px;
+}

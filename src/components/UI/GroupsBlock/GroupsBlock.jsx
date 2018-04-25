@@ -18,7 +18,8 @@ class GroupsBlock extends Component {
         this.props.fetchGroups(responseObject.id);
     }
     componentDidUpdate(prevProps){
-        if(prevProps.fetchedGroups !== this.props.fetchedGroups){
+        if(prevProps.fetchedGroups !== this.props.fetchedGroups || 
+        prevProps.fetchedGroupsErrors !== this.props.fetchedGroupsErrors){
             this.setState({loadingGroupSpinner: false});
         }
     }
@@ -37,6 +38,7 @@ class GroupsBlock extends Component {
 
 
                     {this.state.loadingGroupSpinner ? <Spinner /> :
+                    this.props.fetchedGroupsErrors.length > 0 ? <p className="server-error">{this.props.fetchedGroupsErrors[0]}</p> : 
                     this.props.fetchedGroups.userGroups === undefined ? 
                     null : this.props.fetchedGroups.userGroups.map(i => {
                         return <Group key={i.group.id}

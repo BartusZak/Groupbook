@@ -1,0 +1,64 @@
+.post-container{
+    margin: 0 auto;
+    padding: 10px;
+    box-shadow: 0 2px 3px grey;
+    width: 96.5%;
+    display: flex;
+    flex-flow: column;
+    background-color: #2c2c36;
+    overflow-y: scroll;
+    max-height: 420px;
+}
+.main-post-title{
+    font-size: 14px !important;
+    padding: 5px;
+    box-sizing: border-box;
+    font-weight: bolder;
+    border-bottom: 1px solid grey;
+}
+
+.main-post-title-cont{
+    margin: 10px 0;
+    border-bottom: 1px solid grey;
+}
+
+.post-title-name{
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: rgb(107, 163, 24) !important;
+    font-weight: bolder;
+    margin: 0;
+    padding: 5px;
+}
+.main-post-date{
+    text-align: right;
+    margin: 0;
+    font-size: 17px !important;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.single-post{
+    padding: 10px 0;
+}
+.image-holder2{
+    width: 170px;
+    height: 170px;
+    float: left;
+    margin: 0 10px 25px 0;
+}
+.image-holder2 img{
+    width: 100%;
+    height: 100%;
+}
+.post-content{
+    font-size: 15px;
+    text-align: justify;
+}
+
+@media(min-width: 1000px){
+    .post-title{ font-size: 15px; padding: 10px; }
+    .main-post-date{  font-size: 16px; padding: 10px; }
+       
+   
+}

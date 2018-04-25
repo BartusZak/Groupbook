@@ -18,13 +18,8 @@
   border-radius: 5px;
   outline: 1px solid rgba(0,0,0,0.3);
 }
-.left-trash-container{
-    display: block;
-}
-.left-group-recent-add{
-    color: white;
-}
-.left-group-block ul, .left-group-block div:last-child{
+
+.left-group-block div:last-child{
     -webkit-animation-name: initAnim;  
     -webkit-animation-duration: 1s;   
     -webkit-animation-fill-mode: forwards;
@@ -33,6 +28,9 @@
     animation-fill-mode: forwards;
     position: relative;
 }
+
+
+
 @-webkit-keyframes initAnim {
     from {top: 200px;}
     to {top: 0;}
@@ -42,56 +40,36 @@
     to {top: 0;}
 }
 
-.left-group-last-add-block {
-    display: flex;
-    list-style: none;
-    background-color: #23232d;
-    flex-flow: column;
-    margin: 0;
-    padding: 0;
-}
-.left-group-last-add-block li {
-    display: flex;
-    width: 100%;
+.left-group-last-add-block  {
     transition: 0.1s all ease-in-out;
-    padding: 10px;
-    margin: 5px 0 5px 0;
+    display: flex;
+    flex-flow: column;
+}
+.single-left-group-container{
+    margin: 20px 0;
+    padding: 0 15px;
+    display: flex;
+}
+.username-link{
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin: 0 auto;
+}
+.left-group-image-holder{
     position: relative;
-    
 }
-.icons-holder i {
-    padding: 0 5px;
+.left-group-image-holder img{
+    border-radius: 50%;
+    cursor: pointer;
 }
-.lider-icon{
-    color: green;
-    font-size: 18px;
+.left-group-image-holder .fa-envelope{
     position: absolute;
-    right: 20px;
-    font-weight: bold;
+    bottom: -10px;
 }
-.left-group-last-add-block li .icons-holder {
-    position: absolute;
-    z-index: 1;
-    font-size: 16px;
-    right: 20px;
-    bottom: 5px;
-}
-.left-group-last-add-block li .icons-holder i:hover{
-    color: green;
-}
-.left-group-last-add-block li:hover { background-color: #343a40; cursor: pointer;}
-.left-group-image-holder img{  border-radius: 50%; }
-.left-group-name-holder {
-    width: 100%;
-    margin: auto 0;
-    height: 100%;
-}
-.left-group-block b{
-    padding-left: 10px;
-    font-size: 16px;
-}
-
-    
 
 @media(min-width: 1600px){
     .left-trash-container{ display: block; }

@@ -26,6 +26,7 @@ const groupLeftSideBar = props => {
                     username={item.user.username}
                     email={item.user.email}
                     isModerator={item.isModerator}
+                    id={item.user.id}
                     />
                     );
             }) 
@@ -38,9 +39,9 @@ const groupLeftSideBar = props => {
             <p className="left-group-recent-add">
                 Użytkownicy
             </p>
-            <ul className="left-group-last-add-block">
+            <div className="left-group-last-add-block">
                 {usersList}
-            </ul>
+            </div>
         </div>
     );
     

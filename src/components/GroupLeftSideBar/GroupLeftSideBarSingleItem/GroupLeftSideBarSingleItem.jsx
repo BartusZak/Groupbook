@@ -1,21 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 const groupPostSingleItem = props => {
     return(
-        <li>
+        <div className="single-left-group-container">   
             <div className="left-group-image-holder">
                 <img src={props.pic} alt={props.email} />
-            </div>
-            <span className="left-group-name-holder">
-                <b>{props.username}</b>
-            </span>
-            <span className="icons-holder">
                 <i className="fa fa-envelope"></i>
-            </span>
+            </div>
+            <Link 
+            className="username-link" 
+            to={`/logged/user/${props.id}`}>{props.username}</Link> 
+            
             {props.isModerator ? <i className="lider-icon">Lider</i> : null}
-            
-            
-            
-        </li>
+        </div>
     );
 }
 export default groupPostSingleItem;

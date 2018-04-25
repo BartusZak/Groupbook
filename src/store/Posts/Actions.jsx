@@ -118,7 +118,7 @@ export const fetchUserPostsActionCreator = userId => {
         }).catch(error => {
             const array = [];
             array.push("Błąd serwera");    
-            dispatch(fetchUserPostsErrors(error.response.data === undefined ? 
+            dispatch(fetchUserPostsErrors(error.response.status === 404 ? 
                 array : error.response.data.errors));
 
         })

@@ -1,14 +1,16 @@
 import * as actionTypes from './ActionTypes';
 import axios from 'axios/axios-groupsconnects';
 
-export const addGroup = addGroupErrors => {
+
+
+export const addEvent = addEventErrors => {
     return {
-        type: actionTypes.ADD_GROUP,
-        addGroupErrors: addGroupErrors
+        type: actionTypes.ADD_EVENT,
+        addEventErrors: addEventErrors
     };
 }
 
-export const addGroupActionCreator = (name, description, history, pictures) => {
+export const addEventActionCreator = (name, description, history, pictures) => {
     return dispatch => {
 
         const storageItem = JSON.parse(localStorage.getItem('responseObject'));
@@ -37,7 +39,7 @@ export const addGroupActionCreator = (name, description, history, pictures) => {
     }
 }
 
-export const addGroupPictureActionCreator = (picture, groupId, history, name) => {
+export const addEventPictureActionCreator = (picture, groupId, history, name) => {
     return dispatch => {
         let formData = new FormData();
         formData.set("picture", picture);
@@ -57,31 +59,4 @@ export const addGroupPictureActionCreator = (picture, groupId, history, name) =>
             dispatch(addGroup([...error.response.data.errors]))
         })
     }
-}
-
-export const fetchGroups = fetchedGroups => {
-    return {
-        type: actionTypes.FETCH_GROUPS,
-        fetchedGroups: fetchedGroups
-    };
-}
-
-export const fetchGroupsError = fetchedGroupsErrors => {
-    return {
-        type: actionTypes.FETCH_GROUPS_ERROR,
-        fetchedGroupsErrors: fetchedGroupsErrors
-    };
-}
-
-export const fetchGroupsActionCreator = userId => {
-    return dispatch => {
-        axios.get("/api/users/" + userId).then(response => {
-            dispatch(fetchGroups(response.data));
-        }).catch(error => {
-            const array = [];
-            array.push("Błąd serwera");
-            dispatch(fetchGroupsError(error.response.status === 404 ? 
-            array : error.response.data.errors));
-        })
-    };
 }
