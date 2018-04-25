@@ -149,11 +149,7 @@ class AddEventForm extends Component{
                         targetClass="loaded-groups"
                         clicked={(event) => this.addGroup(event)}
                         groups={(this.state.userGroups !== null)? this.state.userGroups : null }
-                        // groups={
-                        //     {name: "Poczekalnia", id: 1}
-                        // }
                         />
-                        {console.log(this.props.loadedGroups)}
                         <p className="block-header">Wybrane grupy</p>
                         <GroupsBar 
                         targetClass="added-groups"
