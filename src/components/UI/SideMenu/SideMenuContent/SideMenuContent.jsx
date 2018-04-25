@@ -4,9 +4,12 @@ import './SideMenuContent.css';
 import { withRouter } from 'react-router-dom'
 import Image from '../../../../assets/img/404/404.jpg';
 import {connect} from 'react-redux';
+import { concatingUrl } from '../../../../helperMethods/concatingUrl';
+
 
 class SideMenuContent extends Component{
     state = {
+        currentLocation: "",
         addPost: false,
         addEvent: false,
         addGroup: false,
@@ -19,7 +22,7 @@ class SideMenuContent extends Component{
     }
     componentDidMount(){
         const responseObject = JSON.parse(localStorage.getItem('responseObject'));
-                this.setState({userObject: responseObject}); 
+                this.setState({userObject: responseObject, currentLocation: concatingUrl(window.location.href)}); 
 
                 //console.log("DidMount this.state.userObject ",this.state.userObject);
                 //console.log("localStorage ", responseObject);
@@ -51,6 +54,7 @@ class SideMenuContent extends Component{
         this.props.history.push("/logged/addgroup");
     }
     render(){
+        console.log(this.state.currentLocation);
         return(
         <Aux>
             <div className="side-bar-groups">
@@ -82,10 +86,10 @@ class SideMenuContent extends Component{
             <div className="sidebar-buttons">
                 <span 
                 onClick={this.redirectToAddPost} 
-                className={this.state.addPost ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj post</span>
+                className={this.state.currentLocation === "addpost" ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj post</span>
                 
                 <span  
-                onClick={this.redirectToAddEvent} className="sidebar-butt"
+                onClick={this.redirectToAddEvent} 
                 className={this.state.addEvent ? "sidebar-butt overline-butt" : "sidebar-butt"}>Dodaj wydarzenie</span>
 
                 <span
