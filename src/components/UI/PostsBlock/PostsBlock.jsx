@@ -36,8 +36,8 @@ class PostsBlock extends Component {
                         </p>
                         <div className="single-post">
                             <div className="image-holder2">
-                                
-                                <img src={i.pictures ? apiPicturesUrl+i.pictures : null} alt="alt" />
+                                <img src={i.pictures.length > 0 ? 
+                                    apiPicturesUrl+i.pictures[0].mediumResolutionPicName : null} alt="alt" />
                                 <span className="post-title">
                                     {i.content}
                                     
