@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {UserDetailsInfoDiv} from './UserDetailsInfo.style';
 import Button from 'components/UI/Button';
-import axios from '../../../axios-users';
+import axios from 'axios/axios-groupsconnects';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import { withRouter } from 'react-router-dom'
@@ -31,7 +31,7 @@ class UserDetailsInfo extends Component {
     loadData () {
         if ( this.props.id) {
             if ( !this.state.user) {
-                axios.get( 'http://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.id)
+                axios.get( '/api/users/' + this.props.id)
                     .then( response => {
                         // console.log(response.data);
                         this.setState({loading: false, user: response.data});

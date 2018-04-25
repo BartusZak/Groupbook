@@ -1,5 +1,5 @@
 import * as actionsTypes from './actionsTypes';
-import axios from '../../axios-groupsconnects';
+import axios from 'axios/axios-groupsconnects';
 
 export const logingIn = (token, responseObject) => {
     return {

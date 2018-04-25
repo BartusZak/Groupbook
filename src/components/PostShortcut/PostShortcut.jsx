@@ -5,7 +5,7 @@ import SmallPost from './SmallPost/SmallPost';
 import Facet from '../../assets/img/profiles/facet.jpg';
 import Aux from '../../hoc/Auxi';
 import Modal from '../UI/Modal/Modal';
-import axios from '../../axios-post';
+import axios from 'axios/axios-post';
 import Spinner from '../UI/Spinner/Spinner';
 import PostModalContent from '../PostModalContent/PostModalContent';
 import CommentSection from '../PostModalContent/CommentSection/CommentSection';

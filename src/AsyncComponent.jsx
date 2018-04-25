@@ -1,3 +1,4 @@
+//@bartuszak przykład asynchronicznego komponentu (nauka)
 import React, { Component } from "react";
 export default function asyncComponent(getComponent) {
     class AsyncComponent extends Component {

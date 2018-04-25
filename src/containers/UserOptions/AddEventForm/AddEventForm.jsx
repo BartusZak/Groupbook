@@ -11,7 +11,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import {withRouter} from 'react-router-dom';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
-import axios from 'axios';
+import axios from 'axios/axios-groupsconnects';
 
 const helpArray = [1,2,3];
 const array = [
@@ -35,7 +35,7 @@ class AddEventForm extends Component{
     
     componentDidMount(){
         this.props.fetchingGroups();
-        axios.get("https://groupsconnectsapi.azurewebsites.net/api/users/" + JSON.parse(localStorage.getItem('responseObject')).id)
+        axios.get("/api/users/" + JSON.parse(localStorage.getItem('responseObject')).id)
             .then( response => {
                 console.log(response);
             })

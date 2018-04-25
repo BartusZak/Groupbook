@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { MessagesBlockDiv } from './MessagesBlock.style';
-import axios from '../../../axios-post';
+import axios from 'axios/axios-post';
 import Spinner from '../Spinner/Spinner';
 import Message from './Message/Message';
 import Modal from '../Modal/Modal';

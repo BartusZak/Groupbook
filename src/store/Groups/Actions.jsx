@@ -1,5 +1,5 @@
 import * as actionTypes from './ActionTypes';
-import axios from '../../axios-groupsconnects';
+import axios from 'axios/axios-groupsconnects';
 
 
 export const addGroupActionCreator = (name, description, history, pictures) => {

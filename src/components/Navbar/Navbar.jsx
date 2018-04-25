@@ -10,7 +10,7 @@ import Searcher from '../UI/Searcher/Searcher';
 import Avatar from '../UI/Avatar/Avatar';
 import logoIcon from '../../assets/img/logo/groupsconnectsLogoSmall.png';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import axios from 'axios/axios-groupsconnects';
 import {Container} from 'reactstrap';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
 
@@ -35,8 +35,7 @@ class NavbarComponent extends Component{
     }
    componentWillMount(){
        if(this.props.responseObject !== null){
-        //console.log(this.props.responseObject);
-        axios.get( 'https://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.responseObject.id)
+        axios.get( '/api/users/' + this.props.responseObject.id)
             .then( response => {
                 this.setState({user: response.data});
             })
@@ -63,7 +62,7 @@ class NavbarComponent extends Component{
             avatar = (this.state.user.profilePicture)? this.state.user.profilePicture.avatar: null;
 
             if(avatar !== null){
-                axios.get( 'https://groupsconnectsapi.azurewebsites.net/pictures/' + avatar, {responseType: "blob"})
+                axios.get( '/pictures/' + avatar, {responseType: "blob"})
                 .then( response => {
                    // console.log(response);
                     this.setState({ avatarImg: URL.createObjectURL(response.data)});

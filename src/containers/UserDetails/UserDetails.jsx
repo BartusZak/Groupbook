@@ -7,7 +7,7 @@ import UserDetailsInfo from './UserDetailsInfo/UserDetailsInfo';
 import UserGroups from './UserGroups/UserGroups';
 
 import { Container, Row, Col, Alert } from 'reactstrap';
-import axios from '../../axios-users';
+import axios from 'axios/axios-groupsconnects';
 import Aux from 'hoc/Auxi';
 import Spinner from 'components/UI/Spinner/Spinner';
 
@@ -27,7 +27,7 @@ class UserDetails extends Component{
     loadData () {
         if ( this.props.match.params.id) {
             if ( !this.state.user) {
-                axios.get( 'https://groupsconnectsapi.azurewebsites.net/api/users/' + this.props.match.params.id)
+                axios.get( '/api/users/' + this.props.match.params.id)
                     .then( response => {
                         this.setState({user: response.data});
                     })

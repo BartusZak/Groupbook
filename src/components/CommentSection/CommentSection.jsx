@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './CommentSection.css';
 import 'font-awesome/css/font-awesome.min.css';
-import axios from '../../axios-groupsconnects';
+import axios from 'axios/axios-groupsconnects';
 import { validateInput } from '../../containers/UserOptions/Validation/Validation';
 import { connect } from 'react-redux';
 import { addCommentsActionCreator } from '../../store/Comments/Actions';
