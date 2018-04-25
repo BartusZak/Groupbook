@@ -16,6 +16,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import CommentsReducer from './store/Comments/Reducers';
 import GroupReducer from './store/Groups/Reducers';
+import PostsReducer from './store/Posts/Reducers';
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -29,7 +31,8 @@ const rootReducer = combineReducers({
     logRed: logginReducer,
     userOptionsRed: userOptionsReducer,
     CommentsReducer: CommentsReducer,
-    GroupReducer: GroupReducer
+    GroupReducer: GroupReducer,
+    PostsReducer: PostsReducer
 }); 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 

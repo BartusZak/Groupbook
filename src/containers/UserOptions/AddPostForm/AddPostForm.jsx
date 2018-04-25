@@ -9,6 +9,7 @@ import axios from 'axios/axios-groupsconnects';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import { withRouter } from 'react-router-dom';
+import { fetchUserGroupsActionCreator } from '../../../store/Posts/Actions';
 
 class AddPostForm extends Component{
     state = {
@@ -38,21 +39,10 @@ class AddPostForm extends Component{
         addedPostsIds: []
     }
     componentDidMount(){
-        const userGroups = (
-            JSON.parse(localStorage.getItem('responseObject')) !== null ? 
-            JSON.parse(localStorage.getItem('responseObject')) :
-            this.props.userObject
-        );
-        this.setState({
-            loadedGroups: this.mappingFunction(userGroups.userGroups)
-        })
+        const loggedUserData = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.fetchUserGroups(loggedUserData.id);
     }
-    mappingFunction = (objectArray) => {
-        let resultArray = Object.keys(objectArray).map(item => {
-            return objectArray[item].group;
-        });
-        return resultArray;
-    }
+   
     componentDidUpdate(prevProps, prevState){
         if (prevState.responsePostId !== this.state.responsePostId &&
         this.state.files.length > 0 && this.state.responsePostId !== null) {
@@ -212,6 +202,7 @@ class AddPostForm extends Component{
             this.state.addedGroups[0].name.toLowerCase());
     }
     render(){
+        console.log(this.props.userGroups);
         return(
             <div className="add-post-container">
                 <Backdrop show={this.state.showBackdrop} 
@@ -237,7 +228,7 @@ class AddPostForm extends Component{
                     <GroupsBar 
                     targetClass="loaded-groups"
                     clicked={(event) => this.addGroup(event)}
-                    groups={this.state.loadedGroups}
+                    groups={this.props.userGroups}
                     />
                     <p className="block-header">Wybrane grupy</p>
                     <GroupsBar 
@@ -293,7 +284,16 @@ class AddPostForm extends Component{
 
 const mapStateToProps = state => {
     return {
-        userObject: state.logRed.loggingObject
+        userObject: state.logRed.loggingObject,
+
+        userGroups: state.PostsReducer.userGroups,
+        userGroupsError: state.PostsReducer.userGroupsError
     };
 }
-export default connect(mapStateToProps, null)(withRouter(AddPostForm));
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchUserGroups: (userId) => dispatch(fetchUserGroupsActionCreator(userId)) 
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddPostForm));
