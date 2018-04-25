@@ -82,7 +82,7 @@ class SideMenuContent extends Component{
 
                 <span
                 onClick={this.redirectToProfile} 
-                className={this.state.currentLocation === this.state.userObject.id.toString() ? 
+                className={this.state.currentLocation === (this.state.userObject !== null)? this.state.userObject.id.toString():null ? 
                     "sidebar-butt overline-butt" : "sidebar-butt"} >
                     Twój profil
                 </span>
