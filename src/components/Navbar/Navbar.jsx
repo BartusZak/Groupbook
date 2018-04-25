@@ -38,12 +38,22 @@ class NavbarComponent extends Component{
         axios.get( '/api/users/' + this.props.responseObject.id)
             .then( response => {
                 this.setState({user: response.data});
+                let avatar = (this.state.user.profilePicture)? this.state.user.profilePicture.avatar: null;
+                if(avatar !== null){
+                    axios.get( '/pictures/' + avatar, {responseType: "blob"})
+                    .then( response => {
+                       // console.log(response);
+                        this.setState({ avatarImg: URL.createObjectURL(response.data)});
+                    })
+                    .catch(err => {
+                       console.log(err);
+                    });
+                }
             })
             .catch(err => {
                 this.setState({user: null});
             });
        }
-        
    }
     onClick(){
         this.setState({
@@ -57,22 +67,6 @@ class NavbarComponent extends Component{
         });
     }
     render(){
-        let avatar = null;
-        if(this.state.user !== null){
-            avatar = (this.state.user.profilePicture)? this.state.user.profilePicture.avatar: null;
-
-            if(avatar !== null){
-                axios.get( '/pictures/' + avatar, {responseType: "blob"})
-                .then( response => {
-                   // console.log(response);
-                    this.setState({ avatarImg: URL.createObjectURL(response.data)});
-                })
-                .catch(err => {
-                   
-                });
-            }
-        }
-
         let navbarContent = null;
         let items = null;
         let homePageLink = "/";
