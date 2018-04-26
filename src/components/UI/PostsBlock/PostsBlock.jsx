@@ -44,7 +44,7 @@ class PostsBlock extends Component {
 
                 {this.state.showSpinner ? <Spinner /> : 
                 this.props.fetchingPostsErrors.length > 0 ? <p className="server-error">{this.props.fetchingPostsErrors[0]}</p> : 
-                this.props.fetchedPosts.posts === undefined ? 
+                this.props.fetchedPosts.posts === undefined ?  
                 null : this.props.fetchedPosts.posts.reverse().map(i => {
                     let imageHolder = i.pictures.length > 0 ? "image-holder2" : "image-holder2 hideImageContainer";
                     return (

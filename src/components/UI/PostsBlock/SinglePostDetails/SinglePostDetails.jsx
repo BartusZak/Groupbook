@@ -31,12 +31,21 @@ const singlePostDetails = (props) => (
                 </div>
             </Col>
             <Col>
-            
-                {props.post.comments.map( (i) => {
-                    return (
-                            <span>{i.content}</span>
-                    )  
-                })}
+                {(props.post.comments !== null)?
+                    props.post.comments.map( (i) => {
+                        return (
+                                <div className="post-single-comment">
+                                    <span>{i.content}</span>
+                                    <div className="comment-username-date">
+                                        <span className="comment-username">{i.author.username}</span>
+                                        <span className="creation-date">{i.creationDate.slice(0,10) + " " + i.creationDate.slice(11,16)}</span>
+                                    </div>
+                                </div>
+                        )  
+                })
+                :
+                <p>Brak komentarzy!</p>
+                }
             </Col>
         </Row>
     </Post>
