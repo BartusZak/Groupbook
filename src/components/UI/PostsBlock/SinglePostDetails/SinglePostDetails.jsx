@@ -11,7 +11,8 @@ class singlePostDetails extends Component{
             CommentContent: "",
             commentValidation: "",
             sendingCommentError: "",
-            comments: this.props.comments
+            comments: this.props.comments,
+            addedComments: this.props.addedComments
         }
 
     onChangeHandler = event => {
@@ -26,7 +27,8 @@ class singlePostDetails extends Component{
           e.preventDefault();
             if(!this.state.commentValidation && this.state.CommentContent){
                 this.props.addCommentsActionCreator(this.state.CommentContent, this.props.postId);
-                console.log(this.state);
+                //zjebany redux nie odswieza mi propow!
+                //TODO
             }
             else{
                 const result = validateInput(2,255, 
@@ -35,7 +37,6 @@ class singlePostDetails extends Component{
                 this.setState({commentValidation: result, sendingCommentError: ""});
                 
             }
-          //this.myFormRef.submit();
         }
       }
 
