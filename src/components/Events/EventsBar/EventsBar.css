@@ -6,9 +6,9 @@
     width: 100%;
 }
 .events-header{
-    border-bottom: 1px solid white;
     font-weight: bold;
     padding: 10px;
+    width: 100%;
 }
 
 @media(min-width: 1201px){

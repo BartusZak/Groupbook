@@ -23,9 +23,9 @@
 }
 .new-group{
     font-size: 22px;
-    color: orangered;
+    color: lightgreen;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: bolder;
     position: absolute;
     top: -60px;
     right: 0;

@@ -85,8 +85,10 @@ class SideMenuContent extends Component{
                                 {i.array.map( j => {
                                     return (
                                         <div key={j.name} onClick={() => this.redirectToGroup(j.id)}>
-                                            <img 
-                                            src={!j.picture ? Image : apiPicturesUrl + j.picture.smallResolutionPicName
+                                            <img src={!j.picture ? Image : apiPicturesUrl + j.picture.smallResolutionPicName}
+                                            onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}
+                                            
+                                            
                                             } 
                                             alt={j.name} />
                                         </div>  

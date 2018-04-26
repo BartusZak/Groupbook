@@ -33,6 +33,7 @@
     width: 100%;
     justify-content: space-between;   
     margin-bottom: 25px;
+    align-items: center;
 }
 .group-nav-right, .group-nav-left{
     color: white;
@@ -43,7 +44,7 @@
 .group-nav-right i:hover, .group-nav-left i:hover{cursor: pointer; color: green;}
 .group-main-content{
     box-sizing: border-box;
-  
+    
 }
 
 
@@ -88,11 +89,21 @@
     width: 100%;
     text-align: center;
 }
+.add-smth-new-link-in-group{
+    font-size: 21px;
+    text-decoration: none;
+    color: lightblue;
+    padding: 10px;
+}
+.add-smth-new-link-in-group:hover{
+    color: lightgreen;
+}
 @media(min-width: 1201px){
     .event-info { color: white; }
     .group-main-content{
         display: flex;
-        width: 100%;
+        width: 95%;
+        margin: auto;
         justify-content: space-around;
         flex-wrap: wrap;
 

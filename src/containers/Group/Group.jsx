@@ -19,6 +19,7 @@ import { loadGroupActionCreator } from '../../store/Groups/Actions';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Aux from '../../hoc/Auxi';
 import UserNotInGroup from './UserNotInGroup/UserNotInGroup';
+import { Link } from 'react-router-dom';
 
 
 class Group extends Component{
@@ -36,7 +37,7 @@ class Group extends Component{
         succOperationPrompt: false
     }
     componentDidMount(){ 
-        this.props.loadGroup(2); // dlatego, ze poczekalnia to 2
+        this.props.loadGroup(concatingUrlTitle(this.props.history.location)); // dlatego, ze poczekalnia to 2
         if(this.props.history.location.state){
             this.setState({ succOperationPrompt: true });
             setTimeout(() => {
@@ -78,7 +79,6 @@ class Group extends Component{
 
     render(){
         const isUserInGroup = this.checkIfUserIsInGroup();
-        console.log(this.props.loadedGroup);
         return(
             <Aux>
             <Backdrop show={this.state.showBackdrop}>
@@ -132,6 +132,17 @@ class Group extends Component{
                          <i onClick={this.showPostsClickHandler} className="fa fa-clipboard"></i>
                          <i onClick={this.showEventsClickHandler} className="fa fa-calendar"></i>
                      </div> : null}
+                     <div>
+                        <Link className="add-smth-new-link-in-group" to="/logged/addpost">
+                            Dodaj post
+                        </Link>
+                        <Link className="add-smth-new-link-in-group" to="/logged/addevent">
+                            Dodaj wydarzenie
+                        </Link>
+                     </div>
+                    
+                        
+                    
                      
                      <div className="group-nav-right">
                          <i onClick={this.modalShowClickHandler} className="fa fa-envelope"></i>
@@ -141,11 +152,13 @@ class Group extends Component{
                  <p className="group-desc-title">Opis grupy</p>
                  <p className="group-desc">{this.state.loadedData.description} </p>
 
-                {isUserInGroup.result ? this.state.showEvents ? <Events /> : 
+                {isUserInGroup.result ? this.state.showEvents ? <Events 
+                events={this.props.loadedGroup.events}
+                groupId={this.props.loadedGroup.id}/> : 
                    <Posts 
                    groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
                    
-                    posts={this.state.loadedPosts} /> : <UserNotInGroup clicked={"s"} />}
+                    posts={this.state.loadedPosts} /> : <UserNotInGroup />}
                 
                 
                 

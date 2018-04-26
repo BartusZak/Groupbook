@@ -89,6 +89,7 @@
     justify-content: center;
     position: absolute;
 }
+
 @media (min-width: 751px){
     .post-two-elements-container{ 
         display: flex;

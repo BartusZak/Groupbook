@@ -16,3 +16,9 @@ i{
   color: red !important;
   font-size: 24px;
 }
+.empty-content-in-group{
+  color: lightseagreen !important;
+  font-size: 24px;
+  width: 100%;
+  text-align: center;
+}

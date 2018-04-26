@@ -14,6 +14,8 @@ import axios from 'axios/axios-groupsconnects';
 import { fetchGroupsActionCreator } from '../../../store/Groups/Actions';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import { addEventActionCreator } from '../../../store/Events/Actions';
+import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+import ErrorPrompt from '../../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
 
 const helpArray = [1,2,3];
 const array = [
@@ -35,7 +37,10 @@ class AddEventForm extends Component{
 
         addedGroups: [],
         loadedGroups: [],
-        loadingGroupsSpinner: true
+        loadingGroupsSpinner: true,
+
+        addEventSpinner: false,
+        openBackdrop: false
 
     }
     
@@ -48,6 +53,10 @@ class AddEventForm extends Component{
             prevProps.fetchedGroupsErrors !== this.props.fetchedGroupsErrors){
             this.setState({loadedGroups: this.props.fetchedGroups.userGroups ,
                 loadingGroupsSpinner: false});
+        }
+
+        if(prevProps.addEventErrors !== this.props.addEventErrors){
+            this.setState({addEventSpinner: false});
         }
     }
 
@@ -104,7 +113,7 @@ class AddEventForm extends Component{
     onSubmitHandler = e => {
         e.preventDefault();
         let newItems = [...this.state.inputValues];
-        newItems[0].error = validateInput(2,20, 
+        newItems[0].error = validateInput(2,75, 
             newItems[0].value, ["przeklenstwo"], "", "", "nazwa wydarzenia", "standard");
         newItems[1].error = validateInput(5, 255, 
             newItems[1].value, ["przeklenstwo"], "", "", "opis wydarzenia", "standard");
@@ -138,9 +147,27 @@ class AddEventForm extends Component{
     deleteFiles = () => {
         this.setState({files: []});
     }
+
+    addingNewEvent = () => {
+        this.setState({openBackdrop: true, addEventSpinner: true});
+
+        this.props.addEvent(this.state.files, this.state.addedGroups, this.state.inputValues[0].value,
+            this.state.inputValues[1].value, this.state.inputValues[2].value, this.props.history);
+    }
+    closeBackdrop = () => {
+        this.setState({openBackdrop: false});
+    }
     render(){
         return(
             <div className="add-event-form-container">
+                <Backdrop show={this.state.openBackdrop} clicked={this.props.addEventErrors.length > 0 ? 
+                this.closeBackdrop : null}>
+                    {this.state.addEventSpinner ? <Spinner /> : null}
+
+                    {this.props.addEventErrors.length > 0 ? 
+                    <ErrorPrompt color="red" message={this.props.addEventErrors[0]} /> : null}
+                </Backdrop>
+
                 <h4>Stwórz wydarzenie</h4>
                 <nav className="form-navigation">
                     {helpArray.map( item => {
@@ -232,6 +259,8 @@ class AddEventForm extends Component{
                         onSubmitHandler={e => this.onSubmitHandler(e)}
                         isGroupForm={false} 
                         height="100%"
+                        onSubmitHandler={this.addingNewEvent}
+                       
                         />
                     </EventContentBlock>
                     
@@ -250,13 +279,15 @@ class AddEventForm extends Component{
 const mapStateToProps = state => {
     return {
         fetchedGroups: state.GroupReducer.fetchedGroups,
-        fetchedGroupsErrors: state.GroupReducer.fetchedGroupsErrors
+        fetchedGroupsErrors: state.GroupReducer.fetchedGroupsErrors,
+
+        addEventErrors: state.EventsReducer.addEventErrors
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
         fetchGroups: (userId) => dispatch(fetchGroupsActionCreator(userId)),
-        addEvent: (files, addedGroups, eventTitle, eventContent, eventDate, authorId, history, groupToPush) => dispatch(addEventActionCreator(files, addedGroups, eventTitle, eventContent, eventDate, authorId, history, groupToPush))
+        addEvent: (pictures, addedGroups, eventTitle, eventContent, eventDate, history) => dispatch(addEventActionCreator (pictures, addedGroups, eventTitle,eventContent, eventDate, history))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddEventForm));

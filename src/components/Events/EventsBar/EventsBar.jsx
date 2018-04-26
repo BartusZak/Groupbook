@@ -5,10 +5,14 @@ const eventsBar = (props) => {
     return(
         <div className="events-bar">
             <h5 className="events-header">
-                Spotkanie z matka teresą z kalkuty
+                {props.title}
             </h5>
-            <SingleEvent id={props.id}/>
-         
+            <SingleEvent 
+            id={props.id}
+            title={props.title}
+            picture={props.picture}
+            eventDate={props.eventDate}
+            description={props.description}/>
         </div>
     );
 }

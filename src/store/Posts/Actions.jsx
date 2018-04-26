@@ -60,7 +60,13 @@ export const addPostActionCreator = (files, addedGroups, postTitle, postContent,
             
            
         }).catch(error => {
-            dispatch(addPost(error.response.data.errors));
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(addPost(error.response.status === 404 ? 
+                array : error.response.data.errors));
+            }
+            
         })
     }
 }
@@ -88,7 +94,12 @@ export const addPostPictureActionCreator = (addedPosts, files, history, groupToP
                 })
                 
             }).catch(error => {
-                dispatch(addPost(error.response.data.errors));
+                if(error.response){
+                    const array = [];
+                    array.push("Błąd serwera");
+                    dispatch(addPost(error.response.status === 404 ? 
+                    array : error.response.data.errors));
+                }
             })
             
         
