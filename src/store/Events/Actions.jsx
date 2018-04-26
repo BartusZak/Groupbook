@@ -10,31 +10,32 @@ export const addEvent = addEventErrors => {
     };
 }
 
-export const addEventActionCreator = (name, description, history, pictures) => {
+export const addEventActionCreator = (files, addedGroups, eventTitle,
+    eventContent, eventDate, authorId, history, groupToPush) => {
+
     return dispatch => {
 
         const storageItem = JSON.parse(localStorage.getItem('responseObject'));
 
-        const newGroup = {
-            Name: name,
-            Description: description,
-            UserId: storageItem.id
+        const newEvent = {
+            Title: eventTitle,
+            Description: eventContent,
+            EventDate: eventDate,
+            UserId: storageItem.id,
+            GroupsIds: addedGroups
         }
 
-        axios.post('/api/groups/add', newGroup).then(response => {
-            if(pictures.length > 0){
-                dispatch(addGroupPictureActionCreator(pictures[0], 
-                    response.data.successResult.id, history, name));
+        axios.post('/api/events/add', newEvent).then(response => {
+            if(files.length > 0){
+               // dispatch(addEventPictureActionCreator(pictures[0], 
+                   // response.data.successResult.id, history, name));
             }
             else{
-                history.push({
-                    pathname: "/logged/group/" + response.data.successResult.id,
-                    state: {addGroupMessage: response.data}
-                })
+                history.push("/logged/events/1" + response.data.successResult.id);
             }     
 
         }).catch(error => {
-            dispatch(addGroup([...error.response.data.errors]))
+            dispatch(addEvent([...error.response.data.errors]))
         })
     }
 }
@@ -43,7 +44,7 @@ export const addEventPictureActionCreator = (picture, groupId, history, name) =>
     return dispatch => {
         let formData = new FormData();
         formData.set("picture", picture);
-        formData.set("groupId", groupId);
+        formData.set("eventId", groupId);
         axios({
             method: 'post',
             url: '/api/groups/addpicture',
@@ -56,7 +57,7 @@ export const addEventPictureActionCreator = (picture, groupId, history, name) =>
             })
             history.push("/logged/group/" + groupId);
         }).catch(error => {
-            dispatch(addGroup([...error.response.data.errors]))
+            dispatch(addEvent([...error.response.data.errors]))
         })
     }
 }

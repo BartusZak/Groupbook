@@ -94,7 +94,11 @@
 .block-header{
     padding-left: 10px;
 }
-
+.Spinner-holder{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 @media(min-width: 991px){
     .add-event-form-container{
         width: 750px
@@ -122,6 +126,7 @@
     
     
 }
+
 @media(max-width: 990px){
   
     .add-event-form-container{

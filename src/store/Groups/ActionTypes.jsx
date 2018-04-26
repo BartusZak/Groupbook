@@ -2,3 +2,7 @@ export const ADD_GROUP = "ADD_GROUP";
 
 export const FETCH_GROUPS = "FETCH_GROUPS";
 export const FETCH_GROUPS_ERROR = "FETCH_GROUPS_ERROR";
+
+
+export const LOAD_GROUP = "LOAD_GROUP";
+export const LOAD_GROUP_ERRORS = "LOAD_GROUP_ERRORS";
