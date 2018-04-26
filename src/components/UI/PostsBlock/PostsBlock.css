@@ -9,6 +9,12 @@
     overflow-y: scroll;
     max-height: 420px;
 }
+
+.post-container .modalabc {
+        background-color: #32323f;
+        border: none;
+        color: white;
+}
 .main-post-title{
     font-size: 14px !important;
     padding: 5px;
@@ -46,6 +52,9 @@
     height: 170px;
     float: left;
     margin: 0 10px 25px 0;
+}
+.image-holder2.hideImageContainer {
+    display: none
 }
 .image-holder2 img{
     width: 100%;

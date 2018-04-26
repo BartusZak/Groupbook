@@ -7,7 +7,7 @@ import Aux from 'hoc/Auxi';
 import axios from 'axios/axios-groupsconnects';
 
 class optionBlock extends Component{
-    state={
+    state = {
         showChangeAvatar: false,
         files: [],
         incorrectPictureError: ""
