@@ -75,10 +75,7 @@ class PostsBlock extends Component {
                 })}
 
                 <Modal 
-                    modalClass="modalabc" 
-                    width={window.innerWidth > 1100 ? "50%" : "90%"} 
-                    left={window.innerWidth > 1100 ? "20%" : ""} 
-                    heightPosition="10%" 
+                    modalClass="modalabc"  
                     show={this.state.showPostDetails} 
                     clickedMethod={this.closePostDetails}>
                    
