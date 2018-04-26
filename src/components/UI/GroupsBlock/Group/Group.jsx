@@ -7,7 +7,11 @@ const group = props => (
     
         <div onClick={props.clicked} className="group-cont">              
             <div className="image-holder">
-                <img src={apiPicturesUrl+props.picture} alt="cos"/>
+                <img 
+                    src={apiPicturesUrl+props.picture} 
+                    alt="cos"
+                    onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}}
+                    />
             </div>
             <div className="group-desc">
                 <span className="group-title">{props.name}</span>
