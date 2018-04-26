@@ -82,6 +82,12 @@
     transition: 1s all ease-in-out;
     
 }
+.group-error{
+    font-size: 45px;
+    color: red;
+    width: 100%;
+    text-align: center;
+}
 @media(min-width: 1201px){
     .event-info { color: white; }
     .group-main-content{

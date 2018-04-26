@@ -8,8 +8,8 @@ export const Loader = styled.div`
   text-indent: -99999em;
   margin: 55px auto;
   position: relative;
-  width: 10em;
-  height: 10em;
+  width: 10em !important;
+  height: 10em !important;
   box-shadow: inset 0 0 0 1em;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);

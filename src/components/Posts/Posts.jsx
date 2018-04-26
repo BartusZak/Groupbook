@@ -45,9 +45,8 @@ class Posts extends Component{
                 <ul className="post-block-container" 
                     ref={(el) => { this.postEnd = el; }} 
                     >
-                    {this.props.loadingPostsError ? 
-                        <p className="backdropo-error">{this.props.loadingPostsError}</p> : 
-                        this.state.posts.length === 0 ? <p className="zero-posts">W tej grupie nie ma postów</p> :
+                    { this.state.posts ?
+                        
                         this.state.posts.map( item => {
                             return <Post 
                             key={item.id}
@@ -61,7 +60,7 @@ class Posts extends Component{
                             comments={item.comments}
                             postPicture={item.pictures} />
                         })
-                    }
+                    : null}
                      
                 </ul>   
                 <UserNavbar></UserNavbar>

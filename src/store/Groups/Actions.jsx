@@ -80,8 +80,49 @@ export const fetchGroupsActionCreator = userId => {
         }).catch(error => {
             const array = [];
             array.push("Błąd serwera");
+       
             dispatch(fetchGroupsError(error.response.status === 404 ? 
             array : error.response.data.errors));
+        
         })
+    };
+}
+
+
+
+export const loadGroup = loadedGroup => {
+    return {
+        type: actionTypes.LOAD_GROUP,
+        loadedGroup: loadedGroup
+    };
+    
+}
+
+export const loadGroupErrors = loadedGroupErrors =>{ 
+    return {
+        type: actionTypes.LOAD_GROUP_ERRORS,
+        loadedGroupErrors: loadedGroupErrors
+    }
+}
+
+export const loadGroupActionCreator = (groupId, history) => {
+    return dispatch => {
+        axios.get('/api/groups/' + groupId).then(response => {
+            console.log(response.data);
+            dispatch(loadGroup(response.data));
+            history.push("/logged/group/" + groupId);
+        }).catch(error => {
+            if(error.response){
+                console.log(error.response);
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(loadGroupErrors(error.response.status === 404 ? array :
+                     error.response.data.errors));
+            }
+        
+        })
+
+
+
     };
 }

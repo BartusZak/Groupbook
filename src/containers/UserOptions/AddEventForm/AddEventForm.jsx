@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './AddEventForm.css';
 import { connect } from 'react-redux';
 import GroupsBar from '../AddPostForm/GroupsBar/GroupsBar';
-import { fetchingGroups, loadGroups } from '../Store/actions';
 import EventContentBlock from './EventContentBlock/EventContentBlock';
 import './UniversalForm.css';
 import { validateInput } from '../Validation/Validation';
@@ -12,6 +11,9 @@ import {withRouter} from 'react-router-dom';
 import AddPictureBar from '../../../components/UI/AddPictureBar/AddPictureBar';
 import EmptyGroupsModal from '../../../components/UI/EmptyGroupsModal/EmptyGroupsModal';
 import axios from 'axios/axios-groupsconnects';
+import { fetchGroupsActionCreator } from '../../../store/Groups/Actions';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import { addEventActionCreator } from '../../../store/Events/Actions';
 
 const helpArray = [1,2,3];
 const array = [
@@ -22,7 +24,6 @@ const array = [
 class AddEventForm extends Component{
     state = {
         actualBlock: 1,
-        addedGroups: [],
         validateError: "",
         showValidateModal: false,
         inputValues: array,
@@ -31,20 +32,25 @@ class AddEventForm extends Component{
         files: [],
         incorrectPictureError: "",
 
-        userGroups: null
+
+        addedGroups: [],
+        loadedGroups: [],
+        loadingGroupsSpinner: true
 
     }
     
-    componentWillMount(){
-        this.props.fetchingGroups();
-        axios.get("/api/users/" + JSON.parse(localStorage.getItem('responseObject')).id)
-            .then( response => {
-                this.setState({ userGroups: response.data.userGroups});
-            })
-            .catch( error => {
-                console.log(error, error.response);
-            })
+    componentDidMount(){
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.fetchGroups(responseObject.id);
     }
+    componentDidUpdate(prevProps){
+        if(prevProps.fetchedGroups !== this.props.fetchedGroups || 
+            prevProps.fetchedGroupsErrors !== this.props.fetchedGroupsErrors){
+            this.setState({loadedGroups: this.props.fetchedGroups.userGroups ,
+                loadingGroupsSpinner: false});
+        }
+    }
+
     confirmAddEventHandler = () => {
         this.props.history.push("/logged/group/poczekalnia");
     }
@@ -52,7 +58,9 @@ class AddEventForm extends Component{
     toogleValidationModal = () => {
         this.setState({showValidateModal: !this.state.showValidateModal});
     }
-    changeActualBlock = (id) => {
+
+
+    changeActualBlock = id => {
         const validationResult = validateInput("","","","","groups",this.state.addedGroups.length);
         if(validationResult !== "")
             this.setState({validateError: validationResult, showValidateModal: true});
@@ -61,23 +69,27 @@ class AddEventForm extends Component{
             this.setState({actualBlock: id, showValidateModal: false});
     }
 
-    addGroup = (event) => {
-        const index = this.state.userGroups.findIndex(item => {
-            return item.id === event.target.value;
+    addGroup = event => {
+        const index = this.state.loadedGroups.findIndex(item => {
+            return item.group.id === event.target.value;
         })
         const oldAdded = [...this.state.addedGroups];
-        oldAdded.push(this.state.userGroups[index]);
-        this.setState({addedGroups: oldAdded});
-        this.props.loadGroups(this.state.userGroups.splice(index,1));
+        oldAdded.push(this.state.loadedGroups[index]);
+        const newLoaded = [...this.state.loadedGroups];
+        newLoaded.splice(index, 1);
+        this.setState({addedGroups: oldAdded, loadedGroups: newLoaded});
     }
-    deleteGroup = (event) => {
-        const index = this.state.addedGroups.findIndex( item => {
-            return item.id === event.target.value;
-        })
-        this.props.loadGroups(this.state.userGroups.push(this.state.addedGroups[index]));
-        let newGroups = [...this.state.addedGroups];
-        newGroups.splice(index, 1);
-        this.setState({addedGroups: newGroups});
+    deleteGroup = event => {
+        const addedGroups = [...this.state.addedGroups];
+        const loadedGroups = [...this.state.loadedGroups];
+
+        const index = addedGroups.findIndex( item => {
+            return item.group.id === event.target.value;
+        });
+
+        loadedGroups.push(addedGroups[index]);
+        addedGroups.splice(index, 1);
+        this.setState({addedGroups: addedGroups, loadedGroups: loadedGroups});
     }
 
     onChangeHandlerInput = (event, id) => {
@@ -108,7 +120,7 @@ class AddEventForm extends Component{
     comeBackEventHandler = () => {
         this.setState({actualBlock: this.state.actualBlock-1});
     }
-    onDrop = (files) => {
+    onDrop = files => {
         const correctFormats = ['jpg','jpeg','png'];
         let counter = 0;
         for(let key in correctFormats){
@@ -136,30 +148,47 @@ class AddEventForm extends Component{
                         "" : "unactive-circle"} 
                         key={item}>{item}</button>
                     })}
+
                 </nav>
+
                 <i style={{left: this.state.actualBlock <= 1 ? '-100vh' : '10px'}} 
                  onClick={this.state.actualBlock > 1 ? this.comeBackEventHandler : null}
                  className="fa fa-arrow-left"></i>
+                 
                 <div className="event-blocks-container">
+                {this.state.loadingGroupsSpinner ? <div className="Spinner-holder"><Spinner /></div> :
+                this.props.fetchedGroupsErrors.length > 0 ?
+                <p style={{textAlign: 'center'}} className="server-error">{this.props.fetchedGroupsErrors[0]}</p> :
+                
                     <EventContentBlock actualBlock={this.state.actualBlock}
                     title="Etap 1: Wybierz grupe"
                     number={1}>
+
                         <p className="block-header">Grupy do wybrania</p>
-                        <GroupsBar 
+
+                        
+                        {this.state.loadedGroups.length === 0 ? 
+                        null : <GroupsBar 
                         targetClass="loaded-groups"
-                        clicked={(event) => this.addGroup(event)}
-                        groups={(this.state.userGroups !== null)? this.state.userGroups : null }
-                        />
+                        clicked={event => this.addGroup(event)}
+                        groups={this.state.loadedGroups}
+                        />}
+
+                       
+
+                        
                         <p className="block-header">Wybrane grupy</p>
                         <GroupsBar 
                         targetClass="added-groups"
                         groups={this.state.addedGroups}
-                        clicked={(event) => this.deleteGroup(event)} />
+                        clicked={event => this.deleteGroup(event)} />
 
-                    <p className="continue-button" onClick={() => this.changeActualBlock(this.state.actualBlock+1)}>
-                        Dalej
-                    </p>
-                    </EventContentBlock>
+                        <p className="continue-button" onClick={() => this.changeActualBlock(this.state.actualBlock+1)}>
+                            Dalej
+                        </p>
+                        </EventContentBlock> }
+
+
                     <EventContentBlock actualBlock={this.state.actualBlock}
                     title="Etap 2: Wypełnij formularz"
                     number={2}>
@@ -187,6 +216,7 @@ class AddEventForm extends Component{
                             <input className="submit-button" type="submit" value="Dalej" />
                         </form>
                     </EventContentBlock>
+             
                     
                     <EventContentBlock actualBlock={this.state.actualBlock}
                     title="Etap 3: Ustaw wygląd"
@@ -219,13 +249,14 @@ class AddEventForm extends Component{
 
 const mapStateToProps = state => {
     return {
-        loadedGroups: state.userOptionsRed.loadedGroups
+        fetchedGroups: state.GroupReducer.fetchedGroups,
+        fetchedGroupsErrors: state.GroupReducer.fetchedGroupsErrors
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        fetchingGroups: () => dispatch(fetchingGroups()),
-        loadGroups: (groups) => loadGroups(groups)
+        fetchGroups: (userId) => dispatch(fetchGroupsActionCreator(userId)),
+        addEvent: (files, addedGroups, eventTitle, eventContent, eventDate, authorId, history, groupToPush) => dispatch(addEventActionCreator(files, addedGroups, eventTitle, eventContent, eventDate, authorId, history, groupToPush))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddEventForm));

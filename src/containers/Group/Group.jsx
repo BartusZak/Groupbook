@@ -15,6 +15,9 @@ import { concatingUrlTitle } from '../../helperMethods/helperMethods';
 import AddGroupMessage from '../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
 import Transition from 'react-transition-group/Transition';
 import {apiPicturesUrl} from 'axios/apiPicturesUrl';
+import { loadGroupActionCreator } from '../../store/Groups/Actions';
+import Backdrop from '../../components/UI/Backdrop/Backdrop';
+import Aux from '../../hoc/Auxi';
 
 class Group extends Component{
    
@@ -23,18 +26,15 @@ class Group extends Component{
         showPosts: true,
         showSendMessageToOwnerModal: false,
 
-        loadingGroupDataSpinner: false,
-        loadingGroupDataError: false,
+        loadingGroupDataSpinner: true,
+        showBackdrop: true,
         loadedData: [],
-
-        loadingPostsError: false,
-        loadingPostsSpinner: false,
         loadedPosts: [],
 
         succOperationPrompt: false
     }
     componentDidMount(){ 
-        this.fetchingPosts();
+        this.props.loadGroup(2);
         if(this.props.history.location.state){
             this.setState({ succOperationPrompt: true });
             setTimeout(() => {
@@ -44,24 +44,12 @@ class Group extends Component{
     }
     
     componentDidUpdate(prevProps){
-        if(prevProps.history.location.pathname !== this.props.history.location.pathname){
-            this.fetchingPosts();
+        if(prevProps.loadedGroup !== this.props.loadedGroup 
+            || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
+            this.setState({loadedData: this.props.loadedGroup, 
+                loadingGroupDataSpinner: false, loadedPosts: this.props.loadedGroup.posts ,
+                showBackdrop: false})
         }
-    }
-    fetchingPosts = () => {
-        this.setState({loadingGroupDataSpinner: true});
-        const url = concatingUrlTitle(this.props.location);
-
-        axios.get('/api/groups' + url).then(response => {
-            this.setState({loadingGroupDataSpinner: false, loadingGroupDataError: "", 
-                loadedData: response.data, loadedPosts: response.data.posts, loadingPostsSpinner: false
-                });
-        }).catch(error => {
-            this.setState({loadingGroupDataSpinner: false, loadingPostsSpinner: false,
-                 loadingGroupDataError: "Wystąpił błąd podczas ładowania danych", 
-                 loadingPostsError: "Wystąpił błąd podczas ładowania postów"
-                });
-        })
     }
     showEventsClickHandler = () => { this.setState({showEvents: true, showPosts: false}); }
     showPostsClickHandler = () => { 
@@ -72,81 +60,92 @@ class Group extends Component{
         !this.state.showSendMessageToOwnerModal}); }
 
 
-
     render(){
         return(
-            <div className="background-container">
-                <Transition 
-                    mountOnEnter 
-                    unmountOnExit 
-                    in={this.state.succOperationPrompt}
-                    timeout={500}>
-                        {state => (
-                             <AddGroupMessage 
-                             color="green"
-                             message={"Poprawnie dodano element"}
-                             animationType={this.state.succOperationPrompt ? "succ-add-group-message-in"
-                         : "succ-add-group-message-out"}/>
-                        )}
-                </Transition>
+            <Aux>
+            {this.props.loadedGroupErrors.length > 0 ? 
+            <h1 className="group-error">{this.props.loadedGroupErrors[0]}</h1> :
+             <div className="background-container">
+             <Backdrop show={this.state.showBackdrop}>
+                 {this.state.loadingGroupDataSpinner ? <Spinner /> : null}
+             </Backdrop>
+             <Transition 
+                 mountOnEnter 
+                 unmountOnExit 
+                 in={this.state.succOperationPrompt}
+                 timeout={500}>
+                     {state => (
+                          <AddGroupMessage 
+                          color="green"
+                          message={"Poprawnie dodano element"}
+                          animationType={this.state.succOperationPrompt ? "succ-add-group-message-in"
+                      : "succ-add-group-message-out"}/>
+                     )}
+             </Transition>
 
 
-                <div className="left-trash-container">
-                    {this.state.loadingGroupDataSpinner ? 
-                    <Spinner /> 
-                    : <GroupLeftSideBar 
-                    users={this.state.loadedData.userGroups}
-                    loadingUsersError={this.state.loadingGroupDataError} />}
-                    
-                </div>
+             <div className="left-trash-container">
+                 <GroupLeftSideBar 
+                 users={this.state.loadedData.userGroups}
+                 loadingUsersError={this.state.loadingGroupDataError} />
+                 
+             </div>
+             
+             <div className="group-container">
+                 
+
+                 <p className="group-title-full">{this.state.loadedData.name}</p>
                 
-                <div className="group-container">
-                    
-
-                    <p className="group-title-full">{this.state.loadedData.name}</p>
-                    {this.state.loadingGroupDataError ? 
-                    <p className="backdropo-error">Wystąpił błąd podczas ładowania danych grupy</p> :
-                        <nav style={{backgroundImage: `url(${this.state.loadedData.picture ? 
-                            apiPicturesUrl + 
-                            this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
-                            <span className="group-owner">Należysz <i className="fa fa-check"></i></span>
-                        </nav>
-                    }
-                    
-                    <div className="navigate">
-                        <div className="group-nav-left">
-                            <i onClick={this.showPostsClickHandler} className="fa fa-clipboard"></i>
-                            <i onClick={this.showEventsClickHandler} className="fa fa-calendar"></i>
-                        </div>
-                        <div className="group-nav-right">
-                            <i onClick={this.modalShowClickHandler} className="fa fa-envelope"></i>
-                            <i onClick={this.modalShowClickHandler} className="fa fa-user-plus"></i>
-                        </div>                               
-                    </div>
-                    <p className="group-desc-title">Opis grupy</p>
-                    <p className="group-desc">{this.state.loadedData.description} </p>
-                    {this.state.showEvents ? <Events /> : 
-                    <Posts groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
-                    posts={this.state.loadedPosts} />}
-                     
-                </div>
-                <Modal
-                show={this.state.showSendMessageToOwnerModal} 
-                clickedMethod={this.modalShowClickHandler}> 
-                    <OpenedMessage />
-                </Modal>
+                 <nav style={{backgroundImage: `url(${this.state.loadedData.picture ? 
+                     apiPicturesUrl + 
+                     this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
+                     <span className="group-owner">Należysz <i className="fa fa-check"></i></span>
+                 </nav>
+                 
+                 
+                 <div className="navigate">
+                     <div className="group-nav-left">
+                         <i onClick={this.showPostsClickHandler} className="fa fa-clipboard"></i>
+                         <i onClick={this.showEventsClickHandler} className="fa fa-calendar"></i>
+                     </div>
+                     <div className="group-nav-right">
+                         <i onClick={this.modalShowClickHandler} className="fa fa-envelope"></i>
+                         <i onClick={this.modalShowClickHandler} className="fa fa-user-plus"></i>
+                     </div>                               
+                 </div>
+                 <p className="group-desc-title">Opis grupy</p>
+                 <p className="group-desc">{this.state.loadedData.description} </p>
+                 {this.state.showEvents ? <Events /> : 
+                 <Posts 
+                 groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
+                 posts={this.state.loadedPosts} />}
+                  
+             </div>
+             <Modal
+             show={this.state.showSendMessageToOwnerModal} 
+             clickedMethod={this.modalShowClickHandler}> 
+                 <OpenedMessage />
+             </Modal>
             </div>
+            }
+           
+            </Aux>
+            
             
         );
     }
 }
+
 const mapStateToProps = state => {
     return {
-        loggedObject: state.logRed.loggedObject
+        loadedGroup: state.GroupReducer.loadedGroup,
+        loadedGroupErrors: state.GroupReducer.loadedGroupErrors
     };
 }
 
-export default connect(mapStateToProps, null)(withRouter(Group));
-
-
-
+const mapDispatchToProps = dispatch => {
+    return {
+        loadGroup: (groupId) => dispatch(loadGroupActionCreator(groupId))
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Group));

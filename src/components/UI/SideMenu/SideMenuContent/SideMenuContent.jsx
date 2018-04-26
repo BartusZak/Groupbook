@@ -18,7 +18,6 @@ class SideMenuContent extends Component{
     redirectToGroup = groupId => {
         this.setState({currentLocation: "/logged/group/" + groupId});
         this.props.history.push("/logged/group/" + groupId);
-        window.location.reload();
     }
     redirectToAddPost = () => {
         this.setState({currentLocation: "addpost"});
@@ -42,7 +41,7 @@ class SideMenuContent extends Component{
         return(
         <Aux>
             <div className="side-bar-groups">
-                <p className="SideBarTitle">Twoje grupy </p>
+                <p className="SideBarTitle">Losowe grupy </p>
                 <div className="groups-place-holder">
                     <div onClick={() => this.redirectToGroup(2)}>
                         <img src={Image} alt="Nazwa grupy" />
