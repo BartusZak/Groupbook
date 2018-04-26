@@ -2,21 +2,44 @@ import React, { Component } from 'react';
 import Aux from '../../../../hoc/Auxi';
 import './SideMenuContent.css';
 import { withRouter } from 'react-router-dom'
-import Image from '../../../../assets/img/404/404.jpg';
+import Image from '../../../../assets/img/groupimages/back.jpg';
 import {connect} from 'react-redux';
 import { concatingUrl } from '../../../../helperMethods/concatingUrl';
-import { loadGroupActionCreator } from '../../../../store/Groups/Actions';
+import { loadGroupActionCreator, loadRandomGroupsActionCreator } from '../../../../store/Groups/Actions';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import  { apiPicturesUrl } from '../../../../axios/apiPicturesUrl';
 
 class SideMenuContent extends Component{
     state = {
         currentLocation: "",
-        userObject: JSON.parse(localStorage.getItem('responseObject'))
+        userObject: JSON.parse(localStorage.getItem('responseObject')),
+        loadedGroups: []
     }
     componentDidMount(){
+        this.props.loadRandomGroup(this.state.userObject.id);
         this.setState({currentLocation: concatingUrl(window.location.href)}); 
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.loadedRandomGroups !== this.props.loadedRandomGroups){
+            const length = this.props.loadedRandomGroups.length/3;
+            let helper = 0;
+            const mainArray = [];
+            let end = length;
+            for(let i = 0 ; i < length-1; i++){
+                const array = [];
+                for(let j = helper ; j < end; j++){
+                    array.push(this.props.loadedRandomGroups[j]);
+                }
+                mainArray.push({id: i, array: array});
+                helper += length;
+                end += length;
+            }
+            this.setState({loadedGroups: mainArray});
+        }
+
     }
     redirectToGroup = groupId => {
         this.setState({currentLocation: "/logged/group/" + groupId});
@@ -47,57 +70,33 @@ class SideMenuContent extends Component{
             slidesToShow: 1,
             slidesToScroll: 1,
             infinite: false,
-            autoplay: true,
             dotsClass: "dots-slider slick-dots"
           };
         return(
         <Aux>
             <div className="side-bar-groups">
-                <p className="SideBarTitle">Losowe grupy </p>
+                <p className="SideBarTitle">Losowe grupy</p>
                 
                 <Slider className="slider-container" {...settings} >
-                    <div className="groups-place-holder">
-                        <div onClick={() => this.redirectToGroup(2)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>    
-                        <div onClick={() => this.redirectToGroup(1)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>                
-                        <div onClick={() => this.redirectToGroup(3)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>                
-                        <div onClick={() => this.redirectToGroup(4)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>  
-                    </div>   
-                    <div className="groups-place-holder">
-                        <div onClick={() => this.redirectToGroup(2)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>    
-                        <div onClick={() => this.redirectToGroup(1)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>                
-                        <div onClick={() => this.redirectToGroup(3)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>                
-                        <div onClick={() => this.redirectToGroup(4)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>  
-                    </div>   
-                    <div className="groups-place-holder">
-                        <div onClick={() => this.redirectToGroup(2)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>    
-                        <div onClick={() => this.redirectToGroup(1)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>                
-                        <div onClick={() => this.redirectToGroup(3)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>                
-                        <div onClick={() => this.redirectToGroup(4)}>
-                            <img src={Image} alt="Nazwa grupy" />
-                        </div>  
-                    </div>                                                                                                                                                                                                                   
+                    {this.state.loadedGroups ? 
+                        this.state.loadedGroups.map(i => {
+                            return (
+                            <div key={i} className="groups-place-holder">
+                                {i.array.map( j => {
+                                    return (
+                                        <div key={j.name} onClick={() => this.redirectToGroup(j.id)}>
+                                            <img 
+                                            src={!j.picture ? Image : apiPicturesUrl + j.picture.smallResolutionPicName
+                                            } 
+                                            alt={j.name} />
+                                        </div>  
+                                    );
+                                })}
+                               
+                            </div>   
+                            );
+                        }) : null}
+                                                                                                                                                                                                                                 
                 </Slider>
                 
             </div>
@@ -135,9 +134,18 @@ class SideMenuContent extends Component{
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return {
-        loadGroup: (groupId, history) => dispatch(loadGroupActionCreator(groupId, history))
+        loadedRandomGroups: state.GroupReducer.loadedRandomGroups,
+        loadedRandomGroupsErrors: state.GroupReducer.loadedRandomGroupsErrors,
     };
 }
-export default connect(null, mapDispatchToProps)(withRouter(SideMenuContent));
+
+const mapDispatchToProps = dispatch => {
+    return {
+        loadGroup: (groupId, history) => dispatch(loadGroupActionCreator(groupId, history)),
+        loadRandomGroup: (userId) => dispatch(loadRandomGroupsActionCreator(userId))
+
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SideMenuContent));

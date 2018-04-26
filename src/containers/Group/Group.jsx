@@ -18,6 +18,8 @@ import {apiPicturesUrl} from 'axios/apiPicturesUrl';
 import { loadGroupActionCreator } from '../../store/Groups/Actions';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Aux from '../../hoc/Auxi';
+import UserNotInGroup from './UserNotInGroup/UserNotInGroup';
+
 
 class Group extends Component{
    
@@ -59,16 +61,35 @@ class Group extends Component{
     modalShowClickHandler = () => { this.setState({showSendMessageToOwnerModal: 
         !this.state.showSendMessageToOwnerModal}); }
 
+    checkIfUserIsInGroup = () => {
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        let result = false;
+        let lider = null;
+        for(let key in this.props.loadedGroup.userGroups){
+            if(this.props.loadedGroup.userGroups[key].user.id === responseObject.id){
+                result = true;
+            }
+        }
+        const objectToSend = {
+            result: result
+        }
+        return objectToSend;
+    }
 
     render(){
+        const isUserInGroup = this.checkIfUserIsInGroup();
+        console.log(this.props.loadedGroup);
         return(
             <Aux>
-            {this.props.loadedGroupErrors.length > 0 ? 
-            <h1 className="group-error">{this.props.loadedGroupErrors[0]}</h1> :
-             <div className="background-container">
-             <Backdrop show={this.state.showBackdrop}>
+            <Backdrop show={this.state.showBackdrop}>
                  {this.state.loadingGroupDataSpinner ? <Spinner /> : null}
              </Backdrop>
+
+
+            {this.props.loadedGroupErrors.length > 0 ? 
+            <h1 className="group-error">{this.props.loadedGroupErrors[0]}</h1> :
+            <div className="background-container">
+             
              <Transition 
                  mountOnEnter 
                  unmountOnExit 
@@ -99,15 +120,19 @@ class Group extends Component{
                  <nav style={{backgroundImage: `url(${this.state.loadedData.picture ? 
                      apiPicturesUrl + 
                      this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
-                     <span className="group-owner">Należysz <i className="fa fa-check"></i></span>
+                     {isUserInGroup.result ? 
+                     <span className="group-owner">Należysz <i className="fa fa-check"></i></span> :
+                     <span className="group-owner">Nie należysz <i className="fa fa-ban"></i></span>}
+                     
                  </nav>
                  
                  
                  <div className="navigate">
-                     <div className="group-nav-left">
+                     {isUserInGroup.result ? <div className="group-nav-left">
                          <i onClick={this.showPostsClickHandler} className="fa fa-clipboard"></i>
                          <i onClick={this.showEventsClickHandler} className="fa fa-calendar"></i>
-                     </div>
+                     </div> : null}
+                     
                      <div className="group-nav-right">
                          <i onClick={this.modalShowClickHandler} className="fa fa-envelope"></i>
                          <i onClick={this.modalShowClickHandler} className="fa fa-user-plus"></i>
@@ -115,11 +140,14 @@ class Group extends Component{
                  </div>
                  <p className="group-desc-title">Opis grupy</p>
                  <p className="group-desc">{this.state.loadedData.description} </p>
-                 {this.state.showEvents ? <Events /> : 
+
+                {isUserInGroup.result ? this.state.showEvents ? <Events /> : 
                    <Posts 
                    groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
                    
-                    posts={this.state.loadedPosts} />}
+                    posts={this.state.loadedPosts} /> : <UserNotInGroup clicked={"s"} />}
+                
+                
                 
                   
              </div>
