@@ -37,4 +37,30 @@ export const Post = styled.div`
             align-content: space-between;
         }
     }
+    .comments{
+        height: 400px;
+        overflow-y: scroll;
+
+        $::-webkit-scrollbar {
+            display: none;
+           }
+    }
+    .add-comment {
+        width: 100%;
+
+        textarea {
+            width: 100%;
+            background-color: rgba(0,0,0,0.2);
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            resize: none;
+            color: white;
+            padding: 20px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
 `;

@@ -35,8 +35,6 @@ class PostsBlock extends Component {
         this.setState({showPostDetails: !this.state.showPostDetails}); 
     }
     render(){
-        //console.log(this.props.fetchingPostsErrors);
-        console.log(this.props);
         return(
             <div className="post-container">
                 <p className="main-post-title">Posty opublikowane przez Ciebie</p>
@@ -79,7 +77,7 @@ class PostsBlock extends Component {
                     show={this.state.showPostDetails} 
                     clickedMethod={this.closePostDetails}>
                    
-                    {(this.state.singlePostData !== null)? <SinglePostDetails post={this.state.singlePostData} />: null}
+                    {(this.state.singlePostData !== null)? <SinglePostDetails post={this.state.singlePostData} postId={this.state.singlePostData.id}  />: null}
                     
                 </Modal> 
             </div>

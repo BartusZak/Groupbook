@@ -8,9 +8,9 @@ const initialState = {
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
-       case actionTypes.ADD_COMMENT:
+        case actionTypes.ADD_COMMENT:
             return updateObject(state, {addedComments: action.addedComments})
-            break; 
+        break;
     }
     return state;   
 }

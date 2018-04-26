@@ -44,6 +44,10 @@ const wholeBlock = (props) => {
                 </div>
             );    
         break;
+        default:
+            Content = (
+                <p>Error</p>
+            )
     }
     return(<Aux>{Content}</Aux>);
 }
