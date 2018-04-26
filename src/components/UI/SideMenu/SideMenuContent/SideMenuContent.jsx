@@ -5,7 +5,10 @@ import { withRouter } from 'react-router-dom'
 import Image from '../../../../assets/img/404/404.jpg';
 import {connect} from 'react-redux';
 import { concatingUrl } from '../../../../helperMethods/concatingUrl';
-
+import { loadGroupActionCreator } from '../../../../store/Groups/Actions';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 class SideMenuContent extends Component{
     state = {
@@ -17,7 +20,7 @@ class SideMenuContent extends Component{
     }
     redirectToGroup = groupId => {
         this.setState({currentLocation: "/logged/group/" + groupId});
-        this.props.history.push("/logged/group/" + groupId);
+        this.props.loadGroup(groupId, this.props.history);
     }
     redirectToAddPost = () => {
         this.setState({currentLocation: "addpost"});
@@ -38,24 +41,65 @@ class SideMenuContent extends Component{
     }
    
     render(){
+        const settings = {
+            dots: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: false,
+            autoplay: true,
+            dotsClass: "dots-slider slick-dots"
+          };
         return(
         <Aux>
             <div className="side-bar-groups">
                 <p className="SideBarTitle">Losowe grupy </p>
-                <div className="groups-place-holder">
-                    <div onClick={() => this.redirectToGroup(2)}>
-                        <img src={Image} alt="Nazwa grupy" />
-                    </div>    
-                    <div onClick={() => this.redirectToGroup(1)}>
-                        <img src={Image} alt="Nazwa grupy" />
-                    </div>                
-                    <div onClick={() => this.redirectToGroup(3)}>
-                        <img src={Image} alt="Nazwa grupy" />
-                    </div>                
-                    <div onClick={() => this.redirectToGroup(4)}>
-                        <img src={Image} alt="Nazwa grupy" />
-                    </div>                                                         
-                </div>
+                
+                <Slider className="slider-container" {...settings} >
+                    <div className="groups-place-holder">
+                        <div onClick={() => this.redirectToGroup(2)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>    
+                        <div onClick={() => this.redirectToGroup(1)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>                
+                        <div onClick={() => this.redirectToGroup(3)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>                
+                        <div onClick={() => this.redirectToGroup(4)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>  
+                    </div>   
+                    <div className="groups-place-holder">
+                        <div onClick={() => this.redirectToGroup(2)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>    
+                        <div onClick={() => this.redirectToGroup(1)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>                
+                        <div onClick={() => this.redirectToGroup(3)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>                
+                        <div onClick={() => this.redirectToGroup(4)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>  
+                    </div>   
+                    <div className="groups-place-holder">
+                        <div onClick={() => this.redirectToGroup(2)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>    
+                        <div onClick={() => this.redirectToGroup(1)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>                
+                        <div onClick={() => this.redirectToGroup(3)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>                
+                        <div onClick={() => this.redirectToGroup(4)}>
+                            <img src={Image} alt="Nazwa grupy" />
+                        </div>  
+                    </div>                                                                                                                                                                                                                   
+                </Slider>
+                
             </div>
             <div className="side-bar-messages">
                 <p className="SideBarTitle">Ostatnie wiadomości</p>
@@ -90,9 +134,10 @@ class SideMenuContent extends Component{
         );
     }
 }
-const mapStateToProps = state => {
+
+const mapDispatchToProps = dispatch => {
     return {
-        user: state.logRed.loggingObject,
+        loadGroup: (groupId, history) => dispatch(loadGroupActionCreator(groupId, history))
     };
 }
-export default connect( mapStateToProps, null)(withRouter(SideMenuContent));
+export default connect(null, mapDispatchToProps)(withRouter(SideMenuContent));

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import Group from './Group/Group';
 import { connect } from 'react-redux';
-import { fetchGroupsActionCreator } from '../../../store/Groups/Actions';
+import { fetchGroupsActionCreator, loadGroupActionCreator } from '../../../store/Groups/Actions';
 import Spinner from '../../UI/Spinner/Spinner';
 import './GroupsBlock.css';
 import Back from '../../../assets/img/groupimages/back.jpg';
-
+import { withRouter } from 'react-router-dom';
 
 class GroupsBlock extends Component {
     state = {
@@ -25,6 +25,10 @@ class GroupsBlock extends Component {
     }
     iniciateAnimationHandler = () => {
         this.setState({animation: !this.state.animation});
+    }
+
+    loadGroup = groupId => {
+        this.props.loadGroup(groupId, this.props.history);
     }
     render(){
         return(
@@ -50,7 +54,7 @@ class GroupsBlock extends Component {
                         addDate={i.joinDate}
                         id={i.group.id}
                         moderator={i.group.moderator ? i.group.moderator.username : "Brak"} 
-                        />
+                        clicked={e => this.loadGroup(i.group.id)}/>
                     })}
                 </div> 
         );
@@ -67,9 +71,10 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        fetchGroups: (userId) => dispatch(fetchGroupsActionCreator(userId))
+        fetchGroups: (userId) => dispatch(fetchGroupsActionCreator(userId)),
+        loadGroup: (groupId, history) => dispatch(loadGroupActionCreator(groupId, history))
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(GroupsBlock);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GroupsBlock));
 
 

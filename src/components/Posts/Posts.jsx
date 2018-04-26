@@ -4,11 +4,14 @@ import Post from './Post/Post';
 import Aux from '../../hoc/Auxi';
 import UserNavbar from '../UserNavbar/UserNavbar';
 import axios from 'axios/axios-groupsconnects';
+import Spinner from '../UI/Spinner/Spinner';
+
 class Posts extends Component{
     state = {
         posts: [],
         loadingMorePostsError: "",
-        actualId: 0
+        actualId: 0,
+        loadingPostsSpinner: true
     }
     componentDidMount() {
         this.postEnd.addEventListener("scroll", () => {
@@ -22,19 +25,21 @@ class Posts extends Component{
     }
     componentDidUpdate(prevProps){
         if(prevProps.posts !== this.props.posts){
-            this.setState({posts: this.props.posts});
+            this.setState({posts: this.props.posts, loadingPostsSpinner: false});
         }
     }
     loadMoreItems = () => {
-        this.setState({loadingMorePostsSpinner: true});
-        let newPosts = [...this.state.posts];
-        const lastId = this.state.posts[this.state.posts.length-1].id;
-        axios.get('/api/posts/' + this.props.groupName +'/get10/' + lastId).then(response => {
-            newPosts = newPosts.concat(response.data);
-            this.setState({posts: newPosts, loadingMorePostsError: ""});
-        }).catch(error => {
-            this.setState({loadingMorePostsError: "Wystąpił błąd podczas ładowania postów"});
-        })
+        if(this.state.posts.length > 0){
+            let newPosts = [...this.state.posts];
+            const lastId = this.state.posts[this.state.posts.length-1].id;
+            axios.get('/api/posts/' + this.props.groupName +'/get10/' + lastId).then(response => {
+                newPosts = newPosts.concat(response.data);
+                this.setState({posts: newPosts, loadingMorePostsError: ""});
+            }).catch(error => {
+                this.setState({loadingMorePostsError: "Wystąpił błąd podczas ładowania postów"});
+            })
+        }
+        
 
     }
     render(){
@@ -42,6 +47,7 @@ class Posts extends Component{
             <Aux>
             <p className="event-info">Posty</p>
             <div className="post-two-elements-container">
+            {this.state.loadingPostsSpinner ? <div className="center-spinner"><Spinner /></div> : null}
                 <ul className="post-block-container" 
                     ref={(el) => { this.postEnd = el; }} 
                     >

@@ -71,7 +71,9 @@
     text-align: right;
     margin: 0;
 }
-
+.post-two-elements-container{
+    position: relative;
+}
 .loading-error-eessage{
     color: red;
     text-align: center;
@@ -79,6 +81,12 @@
 .zero-posts{
     font-size: 26px;
     text-align: center;
+}
+.center-spinner{
+    width: 62%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
 }
 @media (min-width: 751px){
     .post-two-elements-container{ 

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import {apiPicturesUrl} from 'axios/apiPicturesUrl';
 
 const group = props => (
-    <Link to={`/logged/group/${props.id}`}>
-        <div className="group-cont">              
+    
+        <div onClick={props.clicked} className="group-cont">              
             <div className="image-holder">
                 <img src={apiPicturesUrl+props.picture} alt="cos"/>
             </div>
@@ -20,7 +20,7 @@ const group = props => (
                 </div>
             </div>
         </div>
-    </Link>
+   
     
 );
 

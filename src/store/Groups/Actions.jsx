@@ -108,12 +108,14 @@ export const loadGroupErrors = loadedGroupErrors =>{
 export const loadGroupActionCreator = (groupId, history) => {
     return dispatch => {
         axios.get('/api/groups/' + groupId).then(response => {
-            console.log(response.data);
             dispatch(loadGroup(response.data));
-            history.push("/logged/group/" + groupId);
+
+            if(history){
+                history.push("/logged/group/" + groupId);
+            }
+            
         }).catch(error => {
             if(error.response){
-                console.log(error.response);
                 const array = [];
                 array.push("Błąd serwera");
                 dispatch(loadGroupErrors(error.response.status === 404 ? array :
