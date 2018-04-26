@@ -7,11 +7,13 @@ import Spinner from '../Spinner/Spinner';
 import {apiPicturesUrl} from '../../../axios/apiPicturesUrl';
 import './PostsBlock.css';
 import Modal from '../Modal/Modal';
+import SinglePostDetails from './SinglePostDetails/SinglePostDetails'
 
 class PostsBlock extends Component {
     state = {
         showSpinner: true,
-        showPostDetails: false
+        showPostDetails: false,
+        singlePostData: null
     }
     componentDidMount(){
         const responseObject = JSON.parse(localStorage.getItem('responseObject'));
@@ -24,8 +26,14 @@ class PostsBlock extends Component {
         }
     }
 
-    showPostDetails = () => { this.setState({showPostDetails: !this.state.showPostDetails}); }
+    showPostDetails(i, e) { 
+        console.log(i);
+        this.setState({showPostDetails: !this.state.showPostDetails, singlePostData: i}); 
+    }
 
+    closePostDetails = () => {
+        this.setState({showPostDetails: !this.state.showPostDetails}); 
+    }
     render(){
         //console.log(this.props.fetchingPostsErrors);
         console.log(this.props);
@@ -37,10 +45,10 @@ class PostsBlock extends Component {
                 {this.state.showSpinner ? <Spinner /> : 
                 this.props.fetchingPostsErrors.length > 0 ? <p className="server-error">{this.props.fetchingPostsErrors[0]}</p> : 
                 this.props.fetchedPosts.posts === undefined ? 
-                null : this.props.fetchedPosts.posts.map(i => {
+                null : this.props.fetchedPosts.posts.reverse().map(i => {
                     let imageHolder = i.pictures.length > 0 ? "image-holder2" : "image-holder2 hideImageContainer";
                     return (
-                    <div key={i.id} onClick={this.showPostDetails} className="main-post-title-cont">
+                    <div key={i.id} onClick={(e) => this.showPostDetails(i, e)} className="main-post-title-cont">
                         <p className="post-title-name">{i.title} </p>
                         <p className="main-post-date">
                             <b>Liczba komentarzy {i.comments === null ? 0 : i.comments.length}</b>
@@ -66,8 +74,16 @@ class PostsBlock extends Component {
                     );
                 })}
 
-                <Modal modalClass="modalabc" width={window.innerWidth > 1100 ? "50%" : "90%"} left={window.innerWidth > 1100 ? "20%" : ""} heightPosition="10%" show={this.state.showPostDetails} clickedMethod={this.showPostDetails}>
-                    <p>Tresc</p>
+                <Modal 
+                    modalClass="modalabc" 
+                    width={window.innerWidth > 1100 ? "50%" : "90%"} 
+                    left={window.innerWidth > 1100 ? "20%" : ""} 
+                    heightPosition="10%" 
+                    show={this.state.showPostDetails} 
+                    clickedMethod={this.closePostDetails}>
+                   
+                    {(this.state.singlePostData !== null)? <SinglePostDetails post={this.state.singlePostData} />: null}
+                    
                 </Modal> 
             </div>
 
