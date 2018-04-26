@@ -34,7 +34,7 @@ class Group extends Component{
         succOperationPrompt: false
     }
     componentDidMount(){ 
-        this.props.loadGroup(2);
+        this.props.loadGroup(2); // dlatego, ze poczekalnia to 2
         if(this.props.history.location.state){
             this.setState({ succOperationPrompt: true });
             setTimeout(() => {
@@ -54,7 +54,7 @@ class Group extends Component{
     showEventsClickHandler = () => { this.setState({showEvents: true, showPosts: false}); }
     showPostsClickHandler = () => { 
         this.setState({showEvents: false, showPosts: true});
-        this.fetchingPosts();
+        this.props.loadGroup(concatingUrlTitle(this.props.history.location));
     }
     modalShowClickHandler = () => { this.setState({showSendMessageToOwnerModal: 
         !this.state.showSendMessageToOwnerModal}); }
@@ -116,9 +116,11 @@ class Group extends Component{
                  <p className="group-desc-title">Opis grupy</p>
                  <p className="group-desc">{this.state.loadedData.description} </p>
                  {this.state.showEvents ? <Events /> : 
-                 <Posts 
-                 groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
-                 posts={this.state.loadedPosts} />}
+                   <Posts 
+                   groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
+                   
+                    posts={this.state.loadedPosts} />}
+                
                   
              </div>
              <Modal

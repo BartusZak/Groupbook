@@ -6,13 +6,12 @@
     right: 0;
     padding: 15px;
     box-sizing: border-box;
-    width: 250px;
+    width: 280px;
     transition: all 0.3s ease-out;
     height: 100%;
 }
 .side-bar-groups{
-    height: 100px;
-   
+    height: 100px;  
 }
 .side-bar-groups,
 .side-bar-messages,
@@ -23,6 +22,7 @@
 }
 .side-bar-messages{
     height: 320px;
+    margin-top: 20px;
 }
 .sidebar-buttons{
     height: 120px;
@@ -34,27 +34,38 @@
 .SideBarTitle {
     font-size: 17px;
 }
+.slider-container{
+    padding: 0 10px;
+}
+.slider-container .slick-prev{
+    left: -10px;
+}
+.slider-container .slick-next{
+    right: -10px;
+}
 .groups-place-holder {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;     
-    margin-bottom: 10px;
+    display: flex !important;
+    padding: 20px 0;
+    justify-content: space-around;
+}
+.dots-slider{
+    top: -10px;
+    left: 0;
+    height: 30px;
+}
+.dots-slider li button::before{
+    color: white !important;
 }
 .groups-place-holder div,
 .groups-place-holder img{
     width: 50px;
-    height: 50px;
-}
-.groups-place-holder div{
-    border-radius: 50%;
-}
-.groups-place-holder div:hover{
-    opacity: 0.5;
-}
-.groups-place-holder img {
     border-radius: 50%;
     cursor: pointer;   
+    height: 50px;
+    z-index: 100;
 }
+
+
 .messages-place-holder{
     width: 100%;
     height: 280px;
