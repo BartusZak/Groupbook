@@ -16,9 +16,10 @@
         color: white;
         width: 90%;
         left: 0%;
+        height: 550px;
 }
 .post-container .post-image-container {
-    height: 650px;
+    height: 300px;
 }
 
 .post-container .post-image-container img {

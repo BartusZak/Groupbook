@@ -17,9 +17,11 @@ export const addCommentsActionCreator = (content, postId) => {
                 PostId: postId,
                 AuthorId: responseObject.id
         }
+        console.log(newComment);
         axios.post('api/comments/add', newComment).then(response => {
             dispatch(addComment(response.data.successResult.post.comments));
         }).catch(error => {
+            console.log(error.response)
         })
     }
 }

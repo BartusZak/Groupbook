@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './CommentSection.css';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios/axios-groupsconnects';
-import { validateInput } from '../../containers/UserOptions/Validation/Validation';
+import { validateInput } from 'containers/UserOptions/Validation/Validation';
 import { connect } from 'react-redux';
 import { addCommentsActionCreator } from '../../store/Comments/Actions';
 
@@ -13,6 +13,7 @@ class CommentSection extends Component{
         sendingCommentError: "",
         comments: this.props.comments
     }
+
     onChangeHandler = event => {
         const result = validateInput(2,255, 
             event.target.value, ["przeklenstwo"], "", "", "komentarz", "");
@@ -52,7 +53,8 @@ class CommentSection extends Component{
                     <textarea className={this.state.commentValidation 
                     ? "validation-input-error" : null}
                     value={this.state.CommentContent} 
-                    onChange={(e) => this.onChangeHandler(e)} placeholder="Dodaj nowy komentarz...">
+                    onChange={(e) => this.onChangeHandler(e)} 
+                    placeholder="Dodaj nowy komentarz...">
                     </textarea>
 
 
