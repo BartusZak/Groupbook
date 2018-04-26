@@ -105,15 +105,16 @@ export const loadGroupErrors = loadedGroupErrors =>{
     }
 }
 
+
+
 export const loadGroupActionCreator = (groupId, history) => {
     return dispatch => {
         axios.get('/api/groups/' + groupId).then(response => {
+            
             dispatch(loadGroup(response.data));
-
             if(history){
                 history.push("/logged/group/" + groupId);
             }
-            
         }).catch(error => {
             if(error.response){
                 const array = [];
@@ -126,5 +127,36 @@ export const loadGroupActionCreator = (groupId, history) => {
 
 
 
+    };
+}
+
+
+export const loadRandomGroups = loadedRandomGroups => {
+    return {
+        type: actionTypes.LOAD_RANDOM_GROUPS,
+        loadedRandomGroups: loadedRandomGroups
+    };
+}
+export const loadRandomGroupsErrors = loadedRandomGroupsErrors => {
+    return {
+        type: actionTypes.LOAD_RANDOM_GROUPS_ERRORS,
+        loadedRandomGroupsErrors: loadedRandomGroupsErrors
+    };
+}
+
+export const loadRandomGroupsActionCreator = userId => {
+    return dispatch => {
+        axios.get("/api/groups/getrandom/" + userId).then(response => {
+            dispatch(loadRandomGroups(response.data));
+        }).catch(error =>{ 
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(loadRandomGroupsErrors(error.response.status === 404 ? 
+                array : error.response.data.errors));
+            }
+
+            
+        })
     };
 }

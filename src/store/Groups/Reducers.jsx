@@ -9,7 +9,11 @@ const initialState = {
     fetchedGroupsErrors: [],
 
     loadedGroup: {},
-    loadedGroupErrors: []
+    loadedGroupErrors: [],
+
+    loadedRandomGroups: [],
+    loadedRandomGroupsErrors: []
+
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -26,6 +30,13 @@ const reducer = (state = initialState, action) => {
 
        case actionTypes.LOAD_GROUP_ERRORS:
             return updateObject(state, {loadedGroupErrors: action.loadedGroupErrors})
+
+       case actionTypes.LOAD_RANDOM_GROUPS:
+            return updateObject(state, {loadedRandomGroups: action.loadedRandomGroups, loadedRandomGroupsErrors: []})
+       
+       case actionTypes.LOAD_RANDOM_GROUPS_ERRORS:
+            return updateObject(state, {loadedRandomGroupsErrors: action.loadedRandomGroupsErrors})
+
     }
     return state;   
 }
