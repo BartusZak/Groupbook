@@ -98,6 +98,14 @@
 .add-smth-new-link-in-group:hover{
     color: lightgreen;
 }
+.group-main-content{
+    position: relative;
+}
+.group-main-content .spinner-absolute{
+    position: absolute;
+    z-index: 100;
+    bottom: 10px;
+}
 @media(min-width: 1201px){
     .event-info { color: white; }
     .group-main-content{

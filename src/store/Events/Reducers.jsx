@@ -23,10 +23,13 @@ const reducer = (state = initialState, action) => {
        case actionTypes.FETCHING_EVENTS_ERRORS:
             return updateObject(state, {fetchedOneEventErrors: action.fetchedOneEventErrors})
        
+            
        case actionTypes.FETCH_EVENTS:
             return updateObject(state, {fetchedEvents: action.fetchedEvents, fetchedEventsErrors: []})
        case actionTypes.FETCH_EVENTS_ERRORS:
             return updateObject(state, {fetchedEventsErrors: action.fetchedEventsErrors})
+
+       
     }
     return state;   
 }

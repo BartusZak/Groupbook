@@ -32,7 +32,6 @@ class Events extends Component {
             <Aux> 
                 <p className="event-info">Wydarzenia</p>
                 
-                {this.state.loadMoreSpinner ? <Spinner /> : null}
 
                 {this.props.fetchedEventsErrors.length > 0 ?
                 <p className="server-error">{this.props.fetchedEventsErrors[0]}</p> :
@@ -40,6 +39,7 @@ class Events extends Component {
                 
                 <Aux>
                     <div className="group-main-content">
+                    {this.state.loadMoreSpinner ? <div className="spinner-absolute"><Spinner /></div> : null}
                         
                         {this.state.currentEvents.map(i => {
                             return <EventsBar key={i.id}

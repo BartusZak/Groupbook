@@ -18,8 +18,12 @@ class SideMenuContent extends Component{
         loadedGroups: []
     }
     componentDidMount(){
-        this.props.loadRandomGroup(this.state.userObject.id);
-        this.setState({currentLocation: concatingUrl(window.location.href)}); 
+        if(this.state.userObject){
+            const responseObject = JSON.parse(localStorage.getItem('responseObject'))
+            this.props.loadRandomGroup(responseObject.id);
+            this.setState({currentLocation: concatingUrl(window.location.href)}); 
+        }
+        
     }
 
     componentDidUpdate(prevProps){

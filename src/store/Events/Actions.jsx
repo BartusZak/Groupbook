@@ -51,15 +51,11 @@ export const fetchOneEventErrors = fetchedOneEventErrors => {
     }
 }
 
-export const fetchOneEventActionCreator = (eventId, history) => {
+export const fetchOneEventActionCreator = eventId => {
     return dispatch => {
         axios.get("/api/events/ " + eventId).then(response => {
-            console.log(response.data);
-
-
+            dispatch(fetchOneEvent(response.data));
         }).catch(error => {
-            console.log(error.response);
-            
             if(error.response){
                 const array = [];
                 array.push("Błąd serwera");
