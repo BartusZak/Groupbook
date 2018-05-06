@@ -11,13 +11,16 @@ import moment from 'moment';
 import 'moment/locale/pl'
 import 'react-datepicker/dist/react-datepicker.css';
 
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
+
 class wholeBlock extends Component{
     state = {
             userDetailsList: null,
             editAccountDetailsToogle: false,
             loading: false,
             loggingObject: null,
-            startDate: moment()
+            error: false,
     };
     
     componentDidMount(){
@@ -39,7 +42,7 @@ class wholeBlock extends Component{
                         {id: 3, name: "Nazwa użytkownika", value: response.data.username},
                         {id: 4, name: "Adres email", value: response.data.email},
                         {id: 5, name: "Data urodzenia", value: response.data.birthDate},
-                        {id: 6, name: "Płec", value: response.data.sex ? "Mężczyzna" : "Kobieta"}            
+                        {id: 6, name: "Płec", value: response.data.sex}            
                     ];
                     this.setState({ userDetailsList: WholeItems })
                 } )
@@ -66,22 +69,23 @@ class wholeBlock extends Component{
         console.log(this.state.userDetailsList[0].value);
         
         let data = {
-            FirstName: this.state.userDetailsList[0].value,
-            LastName: this.state.userDetailsList[1].value,
-            Email: this.state.userDetailsList[3].value,
+            FirstName: this.state.userDetailsList[0].value.trim(),
+            LastName: this.state.userDetailsList[1].value.trim(),
+            Email: this.state.userDetailsList[3].value.trim(),
             BirthDate: this.state.userDetailsList[4].value,
-            // Sex: this.state.userDetailsList[5].value
-            Sex: true
+            Sex: this.state.userDetailsList[5].value
         }
         
         axios.post("/api/account/updatedata", data, config)
             .then( response => {
                 console.log(response);
-                this.setState({editAccountDetailsToogle: false, loading: false});
+                this.setState({editAccountDetailsToogle: false, loading: false, error: false});
             })
             .catch( error => {
                 console.log(error);
-                console.log(error.response);
+                console.log(error.response);               
+
+                this.setState({loading: false, error: true});
             })
         
     }
@@ -117,11 +121,40 @@ class wholeBlock extends Component{
         updatedForm[4] = updatedFormElement;
         this.setState({userDetailsList: updatedForm});
       }
+
+    _onSelect = (event) => {
+        const updatedForm = {
+            ...this.state.userDetailsList
+        };
+
+        const updatedFormElement = { 
+            ...updatedForm[5]
+        };
+
+        updatedFormElement.value = event.value;
+        
+        updatedForm[5] = updatedFormElement;
+
+        this.setState({userDetailsList: updatedForm});
+        
+        // setTimeout(() => {
+        //     console.log("Po ",this.state.userDetailsList[5]);
+        //   }, 100);
+    }
     render(){
         moment.locale('pl');
+        let errorsFromBackend = (this.state.error) ? (
+            <p style={{color: "red"}}>Błędy w formularzu!</p>
+        ): null;
+
+        const options = [
+            { value: false, label: 'Kobieta'},
+            { value: true, label: 'Mężczyzna'}           
+          ]
+        let defaultOption = null
+
         if(this.state.userDetailsList !== null){
-            console.log(new Date(this.state.userDetailsList[4].value));
-            console.log(moment(this.state.userDetailsList[4].value));
+           defaultOption = options[(this.state.userDetailsList[5].value)? 1:0 ];
         }
 
         let Content = null;
@@ -155,9 +188,19 @@ class wholeBlock extends Component{
                                 )
                                 :
                                 (
+                                    (item.config.id === 6)?
+                                    (
+                                        <b>
+                                            {(item.config.value)? "Mężczyzna": "Kobieta"}
+                                        </b>
+                                    )
+                                    :
+                                    (
                                     <b>
                                         {(item.config.value === null || item.config.value === undefined) ? "Brak" : item.config.value}
                                     </b>
+                                    )
+                                    
                                 )
                                 }
                                 </li>
@@ -204,10 +247,17 @@ class wholeBlock extends Component{
                                             )
                                             :
                                             (
-                                                <input 
+                                                (item.config.id === 6)?(
+                                                    <Dropdown options={options} onChange={(event) => this._onSelect(event)} value={defaultOption} placeholder="Wybierz" />
+                                                )
+                                                :
+                                                (
+                                                    <input 
                                                     value={(item.config.value === null || item.config.value === undefined) ? "" : item.config.value}
                                                     onChange={(event) => this.changeInputValue(event, item.id)}
                                                 />
+                                                )
+                                               
                                             )
                                         )
                                     }
@@ -257,7 +307,7 @@ class wholeBlock extends Component{
                 )
         }
 
-        return((<Aux>{Content}</Aux>)
+        return((<Aux>{errorsFromBackend}{Content}</Aux>)
     );
 }
 }
