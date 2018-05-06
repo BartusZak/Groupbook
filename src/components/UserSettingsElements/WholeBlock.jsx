@@ -22,7 +22,8 @@ class wholeBlock extends Component{
             loggingObject: null,
             error: false,
     };
-    
+
+
     componentDidMount(){
         const loggingObject = (
             JSON.parse(localStorage.getItem('responseObject')) !== null ? 
@@ -172,7 +173,7 @@ class wholeBlock extends Component{
                 (!this.state.editAccountDetailsToogle)?
                 (
                     <Aux>
-                        <OptionBlock title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
+                        <OptionBlock number="1" title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
                         <ul className="WholeBlock">
                             {formElementsArray.map(item => {
                             return (
@@ -212,7 +213,7 @@ class wholeBlock extends Component{
                 ):
                 (
                     <Aux>
-                        <OptionBlock title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
+                        <OptionBlock number="1" title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
                         
                         {!(this.state.loading)
                         ?
@@ -285,7 +286,7 @@ class wholeBlock extends Component{
             case 2:
                 Content = (
                     <div className="WholeBlock">
-                        <OptionBlock title="Uwierzytelnianie" icon="fa fa-key" function="Zmien haslo" shortContent="Pamietaj, aby twoje haslo bylo unikalne i o odpowiedniej mocy"/>
+                        <OptionBlock number="2" title="Uwierzytelnianie" icon="fa fa-key" function="Zmień hasło" shortContent="Pamiętaj, aby twoje hasło było unikalne i o odpowiedniej złożoności."/>
                         <OptionBlock title="Operacje na koncie" icon="fa fa-trash" function="Usuń konto" shortContent="Zanim usuniesz konto zastanow sie. Nie mozna go przywrocic"/>
     
                     </div>

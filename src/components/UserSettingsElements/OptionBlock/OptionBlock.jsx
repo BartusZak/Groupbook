@@ -5,14 +5,15 @@ import Modal from '../../UI/Modal/Modal';
 import AddPictureBar from '../../UI/AddPictureBar/AddPictureBar';
 import Aux from 'hoc/Auxi';
 import axios from 'axios/axios-groupsconnects';
+import ChangePassword from './ChangePassword/ChangePassword';
 
 class optionBlock extends Component{
     state = {
-        showChangeAvatar: false,
         files: [],
-        incorrectPictureError: ""
+        incorrectPictureError: "",
+        showChangeAvatar: false,
+        showChangePassword: false,
     };
-    changeShowChangeAvatar = () => {this.setState({showChangeAvatar: !this.state.showChangeAvatar})};
 
     onDrop = (files) => {
         const correctFormats = ['jpg','jpeg','png'];
@@ -41,21 +42,39 @@ class optionBlock extends Component{
             f.append('avatar', this.state.files[0]);
     
         axios.post("/api/account/AddAvatar", f)
-            .then(response => console.log(response))
+            .then(response => {
+                console.log(response)
+                this.setState({showChangeAvatar: !this.state.showChangeAvatar});
+                window.location.reload();
+            })
             .catch(error =>{
                 console.log(error);
                 console.log(error.response)
             });
     }
-    
+
+    changeShowChangeAvatar = () => {this.setState({showChangeAvatar: !this.state.showChangeAvatar})};
+    changeShowChangePassword = () => {this.setState({showChangePassword: !this.state.showChangePassword})};
+
     render(){
+        console.log(this.props);
+        let onClickFunction;
+
+        //zmiana awataru
+        if(this.props.number === "1"){
+            onClickFunction = this.changeShowChangeAvatar;
+        }
+        //zmiana hasła
+        else if (this.props.number === "2"){
+            onClickFunction = this.changeShowChangePassword;
+        }
         return(
         <Aux>
             <div className="OptionBlock">
                 <h5>{this.props.title}</h5>
-                <div>
+                <div onClick={onClickFunction}>
 
-                    <i onClick={this.changeShowChangeAvatar} className={this.props.icon}></i>
+                    <i className={this.props.icon}></i>
 
                     
             
@@ -80,6 +99,10 @@ class optionBlock extends Component{
                 height="100%"
                 />
 
+            </Modal>
+
+            <Modal modalClass="minWidth800" show={this.state.showChangePassword} clickedMethod={this.changeShowChangePassword}>
+               <ChangePassword/>
             </Modal>
         </Aux>
     );
