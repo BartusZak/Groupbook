@@ -3,6 +3,10 @@ import Aux from 'hoc/Auxi';
 import Button from 'components/UI/Button';
 import Spinner from 'components/UI/Spinner/Spinner';
 
+import {connect} from 'react-redux';
+import * as actionCreators from 'store/actions/changePassword';
+//import PropTypes from 'prop-types';
+
 class changePassword extends Component{
     constructor() {
         super();
@@ -19,21 +23,42 @@ class changePassword extends Component{
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
     }
 
-    newPasswordMatch(){
-        if(this.state.newPassword === this.state.repeatedNewPassword){
-            let errorsTmp = [...this.state.errors, "Hasła nie pasują do siebie."];
+    checkValidity(){
+        let errorsTmp = []
+        let valid = true;
 
-            this.setState({errors: errorsTmp});
-            console.log(errorsTmp);
-            return true;
+        if(this.state.newPassword !== this.state.repeatedNewPassword){
+            errorsTmp.push("Hasła nie pasują do siebie.");
+            valid = false;
         }
-        return false;
+        if(this.state.oldPassword === null || this.state.newPassword === null || this.state.repeatedNewPassword === null){
+            errorsTmp.push("Żadne pole nie może być puste.");
+            valid = false;
+        }
+        if(this.state.oldPassword.length < 5 || this.state.newPassword.length < 5 || this.state.repeatedNewPassword.length < 5){
+            errorsTmp.push("Nowe hasło powinno mieć od 5 do 30 znaków.");
+            valid = false;
+        }
+
+        this.setState({errors: errorsTmp});
+
+        return valid;
     }
+
 
     changePasswordHandler = ( event ) => {
         event.preventDefault();
-        let validation = this.newPasswordMatch();
-        this.setState( { loading: true, formValid: validation } );
+        this.setState( { loading: true})
+        
+        let validation = this.checkValidity();
+
+        if(validation){
+            this.props.changePassword(JSON.parse(localStorage.getItem('responseObject')).token, 
+                                        this.state.oldPassword, this.state.newPassword, this.state.repeatedNewPassword);
+        }
+       
+        this.setState( { loading: false, formValid: validation } );
+        
     }
 
     inputChangeHandler({target}){
@@ -41,18 +66,42 @@ class changePassword extends Component{
     }
 
     render(){
+        console.log(this.props)
         let content;
-        console.log(this.state.errors);
+       
+        let errors = (this.state.errors !== null )?( 
+            <ul>
+                {this.state.errors.map(item => {
+                    return(
+                        <li style={{color: 'red', fontWeight: 'bold'}} key={item}>{item}</li>
+                    )
+                })}
+            </ul>
+        ):
+        null; 
+        
+        let apiErrors = (this.props.errors !== null )?( 
+            <ul>
+                {this.props.errors.map(item => {
+                    return(
+                        (item !== undefined)? (<li style={{color: 'red', fontWeight: 'bold'}} key={item}>{item}</li>) : null
+                    )
+                })}
+            </ul>
+        ):
+        null;      
 
         content = (
             <Aux>
                 <h2>Zmień hasło</h2>
                 <hr/>
+                {errors}
+                {apiErrors}
                 <form onSubmit={this.changePasswordHandler}>
                     <ul>
                         <li>
                             <b>Stare hasło:</b>
-                            <input name="oldPassword" onChange={this.inputChangeHandler}/>
+                            <input type="password" name="oldPassword" onChange={this.inputChangeHandler}/>
                         </li>
                         <li>
                             <b>Nowe hasło:</b>
@@ -67,6 +116,12 @@ class changePassword extends Component{
                 </form>
             </Aux>
         );
+        if(this.props.response !== null){
+            if(!this.props.response.isError){
+                content = <p style={{color: 'red', fontWeight: 'bold'}}>Hasło zostało zmienione!</p>;
+            }
+        }
+        
 
         if(this.state.loading){
             content = <Spinner/>;
@@ -80,4 +135,13 @@ class changePassword extends Component{
     }
 }
 
-export default changePassword;
+// changePassword.prototype = {
+//     //changePassword: PropTypes.func.isRequired
+// };
+
+const mapStateToProps = state => ({
+    response: state.changePassword.response,
+    errors: state.changePassword.errors
+});
+
+export default connect (mapStateToProps, actionCreators)(changePassword);

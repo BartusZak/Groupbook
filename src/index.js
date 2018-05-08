@@ -4,22 +4,26 @@ import './index.css'; //to 3ba przerzucic do ./theme/globalStyle
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import WebFont from 'webfontloader'; //to jest do czcionek na stronie
-import  { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import logginReducer from './store/reducers/logginAction';
 
-import userOptionsReducer from './containers/UserOptions/Store/reducer';
+//redux-thunk
+import  { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import  { Provider} from 'react-redux';
 import thunk from 'redux-thunk';
-import './theme/globalStyle'; //globalne style css 
-import 'font-awesome/css/font-awesome.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'mdbreact/dist/css/mdb.css';
+
+//import reducerow
+import logginReducer from './store/reducers/logginAction';
 import CommentsReducer from './store/Comments/Reducers';
 import GroupReducer from './store/Groups/Reducers';
 import PostsReducer from './store/Posts/Reducers';
 import EventsReducer from './store/Events/Reducers';
+import userOptionsReducer from './containers/UserOptions/Store/reducer';
+import changePassword from 'store/reducers/changePassword';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+import './theme/globalStyle'; //globalne style css 
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+
 
 WebFont.load({
     google: {
@@ -33,8 +37,13 @@ const rootReducer = combineReducers({
     CommentsReducer: CommentsReducer,
     GroupReducer: GroupReducer,
     PostsReducer: PostsReducer,
-    EventsReducer: EventsReducer
+    EventsReducer: EventsReducer,
+    changePassword: changePassword
 }); 
+
+//redux dev tools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(

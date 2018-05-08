@@ -57,7 +57,6 @@ class optionBlock extends Component{
     changeShowChangePassword = () => {this.setState({showChangePassword: !this.state.showChangePassword})};
 
     render(){
-        console.log(this.props);
         let onClickFunction;
 
         //zmiana awataru
