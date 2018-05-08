@@ -46,6 +46,7 @@ class EventDetails extends Component{
     componentWillReceiveProps(nextProps){
         if(nextProps.addUserToEventErrorList !== this.props.addUserToEventErrorList){
             this.setState({addUserToEventSpinner: false, addUserToEventSuccMessage: true});
+
             setTimeout( () => {
                 this.setState({addUserToEventSuccMessage: null});
             }, 3000);
@@ -55,7 +56,10 @@ class EventDetails extends Component{
         }
     }
     componentDidMount(){
-        this.props.fetchOneEvent(concatingUrl(this.props.history.location.pathname));
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.fetchOneEvent(concatingUrl(this.props.history.location.pathname),
+            responseObject["token"]);
+            
         window.addEventListener('resize', this.updateWindowWidth);
     }
     componentWillUnmount(){ 
@@ -126,7 +130,6 @@ class EventDetails extends Component{
         const eventLider = this.searchEventLider();
         const isUserInEvent = this.isUserExistInEvent();
         const isUserLider = this.isUserLider();
-        console.log(this.props.fetchedOneEvent);
 
         return(
         <Aux>
@@ -211,8 +214,9 @@ class EventDetails extends Component{
                 }) : null}
             </ul>
             <EventDetailsBlock events={this.state.width >= 1001 ? 
-            this.props.fetchedOneEvent.group.events : null} 
-            click={e => this.redirectToOtherEvent(e)}/>
+            this.props.groupEvents : null} 
+            click={e => this.redirectToOtherEvent(e)} 
+            errors={this.props.groupEventsErrors}/>
 
             </div>
         
@@ -264,13 +268,16 @@ const mapStateToProps = state => {
         fetchedOneEvent: state.EventsReducer.fetchedOneEvent,
         fetchedOneEventErrors: state.EventsReducer.fetchedOneEventErrors,
 
+        groupEvents: state.EventsReducer.groupEvents,
+        groupEventsErrors: state.EventsReducer.groupEventsErrors,
+
         addUserToEventResult: state.EventsReducer.addUserToEventResult,
         addUserToEventErrorList: state.EventsReducer.addUserToEventErrorList
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOneEvent: (eventId) => dispatch(fetchOneEventActionCreator(eventId)),
+        fetchOneEvent: (eventId, token) => dispatch(fetchOneEventActionCreator(eventId, token)),
         addUserToEvent: (EventId, UserId) => dispatch(addUserToEventActionCreator(EventId, UserId)),
         redirectToOtherEvent: (EventId, history) => dispatch(redirectToOtherEventActionCreator(EventId, history))
     };

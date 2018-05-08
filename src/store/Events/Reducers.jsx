@@ -13,7 +13,10 @@ const initialState = {
     fetchedEventsErrors: [],
 
     addUserToEventResult: null,
-    addUserToEventErrorList: []
+    addUserToEventErrorList: [],
+
+    groupEvents: [],
+    groupEventsErrors: []
 
 }
 const reducer = (state = initialState, action) => {
@@ -36,7 +39,10 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, {addUserToEventResult: action.addUserToEventResult,
                 addUserToEventErrorList: action.addUserToEventErrorList})
         
-       
+        case actionTypes.FETCH_EVENTS_FROM_GROUP:
+            return updateObject(state, {groupEvents: action.groupEvents,
+                groupEventsErrors: action.groupEventsErrors })
+        
     }
     return state;   
 }

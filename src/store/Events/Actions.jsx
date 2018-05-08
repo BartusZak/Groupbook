@@ -51,19 +51,56 @@ export const fetchOneEventErrors = fetchedOneEventErrors => {
     }
 }
 
-export const fetchOneEventActionCreator = eventId => {
+export const fetchOneEventActionCreator = (eventId, token) => {
     return dispatch => {
         axios.get("/api/events/" + eventId).then(response => {
+            console.log(response.data);
             dispatch(fetchOneEvent(response.data));
+            if(token !== undefined){
+                console.log("Siema");
+                dispatch(fetchEventsGroupActionCreator(response.data.group.id, token));
+            }
         }).catch(error => {
             if(error.response){
                 const array = [];
                 array.push("Błąd serwera");
-                dispatch(fetchOneEventErrors(error.response.status === 404 ? array : error.response.data.errors));
+                dispatch(fetchOneEventErrors(error.response.status === 404 ?
+                    array : error.response.data.errors));
             }
         })
     }
 }
+export const fetchEventsFromGroup = (groupEvents, groupEventsErrors) => {
+    return {
+        type: actionTypes.FETCH_EVENTS_FROM_GROUP,
+        groupEvents: groupEvents,
+        groupEventsErrors: groupEventsErrors
+    }
+}
+
+
+export const fetchEventsGroupActionCreator = (groupId, token) => {
+    return dispatch => {
+        if(groupId){
+            let config = {
+                headers: {'Authorization': "bearer " + token}
+            };
+            axios.get(`/api/events/groupevents/${groupId}`, config).then(response => {
+                dispatch(fetchEventsFromGroup(response.data, []));
+            }).catch(error => {
+                if(error.response){
+                    const array = [];
+                    array.push("Błąd serwera");
+                    dispatch(fetchEventsFromGroup([], error.response.status === 404 
+                        ? array : error.response.data.errors));
+                }
+            })
+        }
+        
+    }
+}
+
+
 
 export const redirectToOtherEventActionCreator = (eventId, history) => {
     return dispatch => {
@@ -195,3 +232,6 @@ export const addUserToEventActionCreator = (EventId, UserId) => {
         })
     }
 }
+
+
+

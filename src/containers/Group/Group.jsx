@@ -15,12 +15,14 @@ import { concatingUrlTitle } from '../../helperMethods/helperMethods';
 import AddGroupMessage from '../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
 import Transition from 'react-transition-group/Transition';
 import {apiPicturesUrl} from 'axios/apiPicturesUrl';
-import { loadGroupActionCreator, joinIntoGroupActionCreator } from '../../store/Groups/Actions';
+import { loadGroupActionCreator, joinIntoGroupActionCreator, deleteGroupActionCreator } from '../../store/Groups/Actions';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Aux from '../../hoc/Auxi';
 import UserNotInGroup from './UserNotInGroup/UserNotInGroup';
 import { Link } from 'react-router-dom';
 import Prompt from '../../components/UI/Prompt/Prompt';
+import Button from '../../components/UI/Button/Button';
+import ConfirmModal from '../../components/UI/ActionConfirm/ActionConfirm';
 
 class Group extends Component{
    
@@ -37,7 +39,12 @@ class Group extends Component{
         succOperationPrompt: false,
 
         joinIntoGroupSpinner: false,
-        joinIntoGroupPrompt: false
+        joinIntoGroupPrompt: false,
+
+        confirmModal: false,
+
+        deleteGroupSpinner: false,
+        deleteGroupPrompt: false
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
@@ -45,7 +52,12 @@ class Group extends Component{
             setTimeout(() => {
                 this.setState({joinIntoGroupPrompt: false});
             }, 3000);
-
+        }
+        if(nextProps.deleteGroupErrors !== this.props.deleteGroupErrors){
+            this.setState({deleteGroupSpinner: false, deleteGroupPrompt: true});
+            setTimeout(() => {
+                this.setState({deleteGroupPrompt: false});
+            }, 3000);
         }
     }
 
@@ -96,8 +108,32 @@ class Group extends Component{
             this.state.loadedData.id, this.props.history);
     }
 
+    checkIfUserIsGroupLeader = () => {
+        if(this.props.loadedGroup.moderator !== undefined){
+            if(this.props.loadedGroup.moderator !== null){
+                const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+                if(this.props.loadedGroup.moderator.username === responseObject.username)
+                    return true;
+            }
+            
+        }
+        return false;
+    }
+    openDeleteModal = () => {
+        this.setState({confirmModal: !this.state.confirmModal});
+    }
+
+    deleteGroupHandler = () => {
+        this.setState({confirmModal: false, deleteGroupSpinner: true});
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.deleteGroup(this.props.loadedGroup.id, responseObject.token, this.props.history);
+    }
+
+
     render(){
+        const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
+        
         return(
             <Aux>
             <Backdrop show={this.state.showBackdrop}>
@@ -108,7 +144,23 @@ class Group extends Component{
                 <Spinner />
             </Backdrop>
 
+            <Backdrop show={this.state.deleteGroupSpinner}>
+                <Spinner />
+            </Backdrop>
 
+            {this.props.deleteGroupResult === null ? null : 
+                    <Prompt 
+                    on={this.state.deleteGroupPrompt} 
+                    message={
+                        this.props.deleteGroupResult ? 
+                        "Pomyślnie usunięto grupę" : 
+                        this.props.deleteGroupErrors[0]
+                    }
+                    promptClass={
+                        this.props.deleteGroupResult ? 
+                        "prompt-ok" : "prompt-bad" }
+                    />
+            }
 
             {this.props.loadedGroupErrors.length > 0 ? 
             <h1 className="group-error">{this.props.loadedGroupErrors[0]}</h1> :
@@ -157,13 +209,43 @@ class Group extends Component{
                  <p className="group-title-full">{this.state.loadedData.name}</p>
                 
                  <nav style={{backgroundImage: `url(${this.state.loadedData.picture ? 
-                     apiPicturesUrl + 
-                     this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
-                     {isUserInGroup.result ? 
-                     <span className="group-owner">Należysz <i className="fa fa-check"></i></span> :
-                     <span className="group-owner">Nie należysz <i className="fa fa-ban"></i></span>}
+                    apiPicturesUrl + 
+                    this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
+                    {isUserInGroup.result ? 
                      
-                 </nav>
+                     
+                    <span className="group-owner">Należysz <i className="fa fa-check"></i></span> :
+                    <span className="group-owner">Nie należysz <i className="fa fa-ban"></i></span>}
+
+                    {isUserGroupLeader ? 
+                        <div className="leader-options">
+                            <Button btnClass="user-opts-edit" content="Edytuj grupę" />
+                            <Button clicked={this.openDeleteModal} btnClass="user-opts-del" content="Usuń grupę" />
+                        </div>
+                        : null
+                    } 
+
+                    <ConfirmModal mode="Small" action={this.deleteGroupHandler}
+                    clicked={this.openDeleteModal} show={this.state.confirmModal}>
+                        <div className="delete-group-prompt">
+                            <i onClick={this.openDeleteModal} className="fa fa-close den"></i>
+                            <h2>Jesteś pewny?</h2>
+                            <p>Czy jestes pewny, że chcesz usunąć grupę <b>{this.props.loadedGroup.name}</b>. Pamiętaj, że ten zabieg
+                            jest nie odwracalny.</p>
+                            <div className="delete-group-buttons">
+                                <Button clicked={this.openDeleteModal} 
+                                btnClass="user-opts-deny" content="Anuluj" />
+
+                                <Button clicked={this.deleteGroupHandler} 
+                                btnClass="user-opts-del" content="Usuń grupę" />
+
+                                
+                            </div>
+                        </div>
+                    
+                    </ConfirmModal>
+                    
+                </nav>
                  
                  
                  <div className="navigate">
@@ -227,14 +309,18 @@ const mapStateToProps = state => {
         loadedGroupErrors: state.GroupReducer.loadedGroupErrors,
 
         joinIntoGroupResult: state.GroupReducer.joinIntoGroupResult,
-        joinIntoGroupErrors: state.GroupReducer.joinIntoGroupErrors
+        joinIntoGroupErrors: state.GroupReducer.joinIntoGroupErrors,
+
+        deleteGroupResult: state.GroupReducer.deleteGroupResult,
+        deleteGroupErrors: state.GroupReducer.deleteGroupErrors
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         loadGroup: (groupId) => dispatch(loadGroupActionCreator(groupId)),
-        joinIntoGroup: (UserId, GroupId) => dispatch(joinIntoGroupActionCreator(UserId, GroupId))
+        joinIntoGroup: (UserId, GroupId) => dispatch(joinIntoGroupActionCreator(UserId, GroupId)),
+        deleteGroup: (GroupId, token, history) => dispatch(deleteGroupActionCreator(GroupId, token, history))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Group));

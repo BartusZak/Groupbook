@@ -11,6 +11,7 @@ class Events extends Component {
         loadMoreSpinner: false
 
     }
+   
     componentDidUpdate(prevProps){
         if(prevProps.fetchedEvents !== this.props.fetchedEvents){
             let newCurrentEvents = [...this.state.currentEvents];
