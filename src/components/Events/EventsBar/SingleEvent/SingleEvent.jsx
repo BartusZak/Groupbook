@@ -28,7 +28,7 @@ const singleEvent = props => {
                 {
                 props.eventDate.slice(0,10) + " " +  props.eventDate.slice(11,16)}
             </span>  
-            <Link to={`/logged/event/${props.id}`}  className="load-more-tag">Weż udział</Link>
+            <Link to={`/logged/event/${props.id}`}  className="load-more-tag">Szczegóły</Link>
         </div>
         </Aux>
     );

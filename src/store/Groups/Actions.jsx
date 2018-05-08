@@ -160,3 +160,33 @@ export const loadRandomGroupsActionCreator = userId => {
         })
     };
 }
+
+
+export const joinIntoGroup = (joinIntoGroupResult, joinIntoGroupErrors) => {
+    return {
+        type: actionTypes.JOIN_INTO_GROUP,
+        joinIntoGroupResult: joinIntoGroupResult,
+        joinIntoGroupErrors: joinIntoGroupErrors
+    }
+}
+
+export const joinIntoGroupActionCreator = (UserId, GroupId, history) => {
+    return dispatch => {
+        const objectToSend = {
+            UserId: UserId,
+            GroupId: GroupId
+        }
+        axios.post("/api/groups/adduser", objectToSend).then(response => {
+            dispatch(joinIntoGroup(true, []));
+            dispatch(loadGroupActionCreator(GroupId, history));
+            dispatch(loadRandomGroupsActionCreator(GroupId));
+        }).catch(error => {
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(joinIntoGroup(false, error.response.status === 404 ? 
+                array : error.response.data.errors));
+            }
+        })
+    }
+}

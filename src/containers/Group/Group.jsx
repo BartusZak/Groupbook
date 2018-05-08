@@ -15,12 +15,12 @@ import { concatingUrlTitle } from '../../helperMethods/helperMethods';
 import AddGroupMessage from '../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
 import Transition from 'react-transition-group/Transition';
 import {apiPicturesUrl} from 'axios/apiPicturesUrl';
-import { loadGroupActionCreator } from '../../store/Groups/Actions';
+import { loadGroupActionCreator, joinIntoGroupActionCreator } from '../../store/Groups/Actions';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Aux from '../../hoc/Auxi';
 import UserNotInGroup from './UserNotInGroup/UserNotInGroup';
 import { Link } from 'react-router-dom';
-
+import Prompt from '../../components/UI/Prompt/Prompt';
 
 class Group extends Component{
    
@@ -34,8 +34,21 @@ class Group extends Component{
         loadedData: [],
         loadedPosts: [],
 
-        succOperationPrompt: false
+        succOperationPrompt: false,
+
+        joinIntoGroupSpinner: false,
+        joinIntoGroupPrompt: false
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
+            this.setState({joinIntoGroupSpinner: false, joinIntoGroupPrompt: true});
+            setTimeout(() => {
+                this.setState({joinIntoGroupPrompt: false});
+            }, 3000);
+
+        }
+    }
+
     componentDidMount(){ 
         this.props.loadGroup(concatingUrlTitle(this.props.history.location)); // dlatego, ze poczekalnia to 2
         if(this.props.history.location.state){
@@ -76,6 +89,12 @@ class Group extends Component{
         }
         return objectToSend;
     }
+    joinIntoGroup = () => {
+        this.setState({joinIntoGroupSpinner: true});
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.joinIntoGroup(responseObject.id,
+            this.state.loadedData.id, this.props.history);
+    }
 
     render(){
         const isUserInGroup = this.checkIfUserIsInGroup();
@@ -83,26 +102,46 @@ class Group extends Component{
             <Aux>
             <Backdrop show={this.state.showBackdrop}>
                  {this.state.loadingGroupDataSpinner ? <Spinner /> : null}
-             </Backdrop>
+            </Backdrop>
+
+            <Backdrop show={this.state.joinIntoGroupSpinner}>
+                <Spinner />
+            </Backdrop>
+
 
 
             {this.props.loadedGroupErrors.length > 0 ? 
             <h1 className="group-error">{this.props.loadedGroupErrors[0]}</h1> :
             <div className="background-container">
-             
-             <Transition 
-                 mountOnEnter 
-                 unmountOnExit 
-                 in={this.state.succOperationPrompt}
-                 timeout={500}>
-                     {state => (
+
+                {this.props.joinIntoGroupResult === null ? null : 
+                    <Prompt 
+                    on={this.state.joinIntoGroupPrompt} 
+                    message={
+                        this.props.joinIntoGroupResult ? 
+                        `Pomyślnie dołączyłeś do grupy ${this.state.loadedData.name}` : 
+                        this.props.joinIntoGroupErrors[0]
+                    }
+                    promptClass={
+                        this.props.joinIntoGroupResult ? 
+                        "prompt-ok" : "prompt-bad" }
+                    />
+                }
+                
+
+            <Transition 
+                mountOnEnter 
+                unmountOnExit 
+                in={this.state.succOperationPrompt}
+                timeout={500}>
+                    {state => (
                           <AddGroupMessage 
                           color="green"
                           message={"Poprawnie dodano element"}
                           animationType={this.state.succOperationPrompt ? "succ-add-group-message-in"
                       : "succ-add-group-message-out"}/>
-                     )}
-             </Transition>
+                    )}
+            </Transition>
 
 
              <div className="left-trash-container">
@@ -132,6 +171,8 @@ class Group extends Component{
                          <i onClick={this.showPostsClickHandler} className="fa fa-clipboard"></i>
                          <i onClick={this.showEventsClickHandler} className="fa fa-calendar"></i>
                      </div> : null}
+
+                     {isUserInGroup.result ? 
                      <div>
                         <Link className="add-smth-new-link-in-group" to="/logged/addpost">
                             Dodaj post
@@ -139,7 +180,8 @@ class Group extends Component{
                         <Link className="add-smth-new-link-in-group" to="/logged/addevent">
                             Dodaj wydarzenie
                         </Link>
-                     </div>
+                    </div> : null}
+                     
                     
                         
                     
@@ -158,7 +200,7 @@ class Group extends Component{
                    <Posts 
                    groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
                    
-                    posts={this.state.loadedPosts} /> : <UserNotInGroup />}
+                    posts={this.state.loadedPosts} /> : <UserNotInGroup clicked={this.joinIntoGroup}/>}
                 
                 
                 
@@ -182,13 +224,17 @@ class Group extends Component{
 const mapStateToProps = state => {
     return {
         loadedGroup: state.GroupReducer.loadedGroup,
-        loadedGroupErrors: state.GroupReducer.loadedGroupErrors
+        loadedGroupErrors: state.GroupReducer.loadedGroupErrors,
+
+        joinIntoGroupResult: state.GroupReducer.joinIntoGroupResult,
+        joinIntoGroupErrors: state.GroupReducer.joinIntoGroupErrors
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        loadGroup: (groupId) => dispatch(loadGroupActionCreator(groupId))
+        loadGroup: (groupId) => dispatch(loadGroupActionCreator(groupId)),
+        joinIntoGroup: (UserId, GroupId) => dispatch(joinIntoGroupActionCreator(UserId, GroupId))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Group));

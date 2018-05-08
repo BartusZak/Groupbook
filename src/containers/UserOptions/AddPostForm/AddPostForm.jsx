@@ -84,9 +84,16 @@ class AddPostForm extends Component{
 
     onSubmitHandler = e => {
         e.preventDefault();
-        this.Validate();  
-        this.setState({addPostSpinner: true, showBackdrop: true});
-        this.AddPostOnServer(); 
+        this.Validate();
+        if(this.state.validationResult[0].content === "" && 
+            this.state.validationResult[1].content === "" && 
+            this.state.validationResult[2].content === "" &&
+            this.state.incorrectPictureError === ""){
+                this.setState({addPostSpinner: true, showBackdrop: true});
+                this.AddPostOnServer(); 
+        }
+          
+        
     }
 
     Validate = () => {

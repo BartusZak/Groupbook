@@ -12,31 +12,39 @@ const initialState = {
     loadedGroupErrors: [],
 
     loadedRandomGroups: [],
-    loadedRandomGroupsErrors: []
+    loadedRandomGroupsErrors: [],
+    
+    
+    joinIntoGroupResult: null,
+    joinIntoGroupErrors: []
+    
 
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
-       case actionTypes.ADD_GROUP:
+        case actionTypes.ADD_GROUP:
             return updateObject(state, {addGroupErrors: action.addGroupErrors})
-       case actionTypes.FETCH_GROUPS:
+        case actionTypes.FETCH_GROUPS:
             return updateObject(state, {fetchedGroups: action.fetchedGroups, fetchedGroupsErrors: []})
 
-       case actionTypes.FETCH_GROUPS_ERROR:
+        case actionTypes.FETCH_GROUPS_ERROR:
             return updateObject(state, {fetchedGroupsErrors: action.fetchedGroupsErrors})
 
-       case actionTypes.LOAD_GROUP:
+        case actionTypes.LOAD_GROUP:
             return updateObject(state, {loadedGroup: action.loadedGroup, loadedGroupErrors: []})
 
-       case actionTypes.LOAD_GROUP_ERRORS:
+        case actionTypes.LOAD_GROUP_ERRORS:
             return updateObject(state, {loadedGroupErrors: action.loadedGroupErrors})
 
-       case actionTypes.LOAD_RANDOM_GROUPS:
+        case actionTypes.LOAD_RANDOM_GROUPS:
             return updateObject(state, {loadedRandomGroups: action.loadedRandomGroups, loadedRandomGroupsErrors: []})
        
-       case actionTypes.LOAD_RANDOM_GROUPS_ERRORS:
+        case actionTypes.LOAD_RANDOM_GROUPS_ERRORS:
             return updateObject(state, {loadedRandomGroupsErrors: action.loadedRandomGroupsErrors})
 
+        case actionTypes.JOIN_INTO_GROUP:
+            return updateObject(state, {joinIntoGroupResult: action.joinIntoGroupResult,
+                joinIntoGroupErrors: action.joinIntoGroupErrors})
     }
     return state;   
 }
