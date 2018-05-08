@@ -1,0 +1,41 @@
+.uni-btn{
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 18px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+.uni-btn:focus{
+    outline: none;
+}
+.delete-event,
+.leave-group,
+.join-event{
+    margin: 20px 0 20px 40%;
+}
+
+.delete-event{
+    color: white;
+    background-color: brown;
+}
+.delete-event:hover{
+    background-color: rgb(228, 50, 50);
+}
+
+.leave-group{
+    color: black;
+    background-color: tomato;
+}
+.leave-group:hover{
+    background-color: rgb(224, 71, 44);
+}
+
+.join-event{
+    background-color: teal;
+    color: white;
+}
+.join-event:hover{
+    background-color: rgb(2, 151, 151);
+}

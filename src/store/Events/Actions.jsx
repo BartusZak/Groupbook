@@ -53,7 +53,7 @@ export const fetchOneEventErrors = fetchedOneEventErrors => {
 
 export const fetchOneEventActionCreator = eventId => {
     return dispatch => {
-        axios.get("/api/events/ " + eventId).then(response => {
+        axios.get("/api/events/" + eventId).then(response => {
             dispatch(fetchOneEvent(response.data));
         }).catch(error => {
             if(error.response){
@@ -65,6 +65,20 @@ export const fetchOneEventActionCreator = eventId => {
     }
 }
 
+export const redirectToOtherEventActionCreator = (eventId, history) => {
+    return dispatch => {
+        axios.get("/api/events/" + eventId).then(response => {
+            dispatch(fetchOneEvent(response.data));
+            history.push("/logged/event/" + eventId);
+        }).catch(error => {
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(fetchOneEventErrors(error.response.status === 404 ? array : error.response.data.errors));
+            }
+        })
+    }
+}
 
 
 export const addEvent = addEventErrors => {
@@ -86,7 +100,7 @@ export const addEventActionCreator = (pictures, addedGroups, eventTitle,
 
         const newEvent = {
             Title: eventTitle,
-            Desciption: eventContent,
+            Description: eventContent,
             EventDate: eventDate,
             GroupsIds: groupsIds,
             UserId: storageItem.id
@@ -95,7 +109,6 @@ export const addEventActionCreator = (pictures, addedGroups, eventTitle,
         axios.post('/api/events/add', newEvent).then(response => {
             if(pictures.length > 0){
                dispatch(addEventPictureActionCreator(pictures[0], history, response.data.successResult.events));
-                    
             }
             else{
                 history.push({
@@ -108,7 +121,8 @@ export const addEventActionCreator = (pictures, addedGroups, eventTitle,
             if(error.response){
                 const array = [];
                 array.push("Błąd serwera");
-                dispatch(addEvent(error.response.status === 404 ? array : error.response.data.errors));
+                dispatch(addEvent(error.response.status === 404 ? array :
+                    error.response.data.errors));
             }
 
             
@@ -151,3 +165,33 @@ export const addEventPictureActionCreator = (picture, history, eventData) => {
 }
 
 
+
+
+export const addUserToEvent = (addUserToEventResult, addUserToEventErrorList) => {
+    return {
+        type: actionTypes.ADD_USER_TO_EVENT,
+        addUserToEventResult: addUserToEventResult,
+        addUserToEventErrorList: addUserToEventErrorList
+    }
+}
+
+export const addUserToEventActionCreator = (EventId, UserId) => {
+    return dispatch => {
+        const objectToSend = {
+            EventId: EventId,
+            UserId: UserId
+        }
+        axios.post('/api/events/adduser', objectToSend).then(response => {
+            dispatch(addUserToEvent(true, []));
+            dispatch(fetchOneEventActionCreator(EventId));
+        }).catch(error => {
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(addUserToEvent(false, error.response.status === 404 
+                    ? array : error.response.data.errors));
+            }
+                
+        })
+    }
+}

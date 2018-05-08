@@ -9,8 +9,21 @@
     align-items: center;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     cursor: pointer;
+    position: relative;
+}
+.single-event-detail p{
+    color: white;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    background-color: rgba(0,0,0,0.8);
+    width: 100%;
+    top: 0;
+    font-size: 14px;
+    position: absolute;
+    text-align: center;
+    padding: 5px;
 }
 .single-event-detail:hover{
     transform: rotate(15deg);

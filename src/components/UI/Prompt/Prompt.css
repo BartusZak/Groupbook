@@ -1,0 +1,46 @@
+.prompt{
+    position: absolute;
+    top: 0px;
+    transition: 1s all forwards;
+    width: 100%;
+    font-size: 20px;
+    letter-spacing: 1px;
+    z-index: 30;
+    box-shadow: 0 2px 10px black;
+    text-align: center;
+}
+.prompt-in{
+    animation: 1s animate-prompt-in linear forwards;
+}
+.prompt-out{
+    animation: 1s animate-prompt-out linear forwards;
+}
+.prompt-ok{
+    background-color: rgb(33, 182, 108);
+    color: black;
+    font-weight: bold;
+}
+.prompt-bad{
+    background-color: brown;
+    color: white;
+}
+@keyframes animate-prompt-in{
+    0%{
+        opacity: 0;
+        padding: 0;
+    }
+    100%{
+        opacity: 1;
+        padding: 20px;
+    }
+}
+@keyframes animate-prompt-out{
+    0%{
+        opacity: 1;
+        padding: 20px;
+    }
+    100%{
+        padding: 0;
+        opacity: 0;
+    }
+}

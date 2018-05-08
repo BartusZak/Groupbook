@@ -23,28 +23,27 @@ class SideMenuContent extends Component{
             this.props.loadRandomGroup(responseObject.id);
             this.setState({currentLocation: concatingUrl(window.location.href)}); 
         }
-        
     }
-
-    componentDidUpdate(prevProps){
-        if(prevProps.loadedRandomGroups !== this.props.loadedRandomGroups){
-            const length = this.props.loadedRandomGroups.length/3;
-            let helper = 0;
+    componentWillReceiveProps(nextProps){
+        if(nextProps.loadedRandomGroups){
+            const oldArray = [...this.props.loadedRandomGroups];
+            const size = Math.ceil(oldArray.length/4);
             const mainArray = [];
-            let end = length;
-            for(let i = 0 ; i < length-1; i++){
+            let helper = 0;
+            let end = 4;
+            for(let i = 0 ; i < size; i++){
                 const array = [];
                 for(let j = helper ; j < end; j++){
                     array.push(this.props.loadedRandomGroups[j]);
                 }
                 mainArray.push({id: i, array: array});
-                helper += length;
-                end += length;
+                helper += 4;
+                end = (end+4 > oldArray.length ? oldArray.length : end+4);
             }
             this.setState({loadedGroups: mainArray});
         }
-
     }
+  
     redirectToGroup = groupId => {
         this.setState({currentLocation: "/logged/group/" + groupId});
         this.props.loadGroup(groupId, this.props.history);
@@ -68,6 +67,7 @@ class SideMenuContent extends Component{
     }
    
     render(){
+        console.log(this.props.loadedRandomGroups);
         const settings = {
             dots: true,
             speed: 500,

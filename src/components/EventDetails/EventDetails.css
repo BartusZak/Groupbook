@@ -30,13 +30,6 @@
     margin-bottom: 10px;
     position: relative;
 }
-.event-button{
-    background-color: #34b399;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-}
 .event-author-date-container{
     display: flex;
     align-items: center;
@@ -133,8 +126,8 @@
 }
 .users-full-list li i{
     text-align: right;
-    font-weight: lighter;
-    color: orange;
+    font-weight: bolder;
+    color: orangered;
     cursor: pointer;
 }
 

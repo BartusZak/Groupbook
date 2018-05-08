@@ -12,3 +12,4 @@ export const FETCH_EVENTS = "FETCH_EVENTS";
 export const FETCH_EVENTS_ERRORS = "FETCH_EVENTS_ERRORS";
 
 
+export const ADD_USER_TO_EVENT = "ADD_USER_TO_EVENT";

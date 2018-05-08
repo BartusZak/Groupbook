@@ -48,7 +48,7 @@ class Events extends Component {
                             place={i.place}
                             eventDate={i.eventDate} 
                             picture={i.picture}
-                            description={i.desciption}/>
+                            description={i.description}/>
                         })}
 
                     </div>
