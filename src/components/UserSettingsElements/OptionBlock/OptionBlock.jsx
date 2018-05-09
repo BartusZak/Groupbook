@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import './OptionBlock.css';
 import Modal from '../../UI/Modal/Modal';
+import ConfirmModal  from 'components/UI/ActionConfirm/ActionConfirm';
 import AddPictureBar from '../../UI/AddPictureBar/AddPictureBar';
 import Aux from 'hoc/Auxi';
 import axios from 'axios/axios-groupsconnects';
@@ -112,9 +113,9 @@ class optionBlock extends Component{
                <ChangePassword/>
             </Modal>
 
-            <Modal modalClass="minWidth800" show={this.state.showDeleteAccount} clickedMethod={this.changeDeleteAccount}>
+            <ConfirmModal mode="Small" show={this.state.showDeleteAccount} clicked={this.changeDeleteAccount}>
                <DeleteAccount/>
-            </Modal>
+            </ConfirmModal>
         </Aux>
     );
 }

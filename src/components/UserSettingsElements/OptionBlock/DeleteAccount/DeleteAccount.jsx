@@ -2,15 +2,16 @@ import React, {Component} from 'react';
 import Aux from 'hoc/Auxi';
 import Button from 'components/UI/Button';
 import Spinner from 'components/UI/Spinner/Spinner';
-
 import {connect} from 'react-redux';
 import * as actionCreators from 'store/actions/deleteAccount';
+import { Redirect } from 'react-router'
 
 class deleteAccount extends Component{
     constructor() {
         super();
         this.state = {
-            checkboxCheked: false
+            checkboxCheked: false,
+            redirect: false
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onAccountRemoveHandler = this.onAccountRemoveHandler.bind(this);
@@ -21,11 +22,17 @@ class deleteAccount extends Component{
     }
 
     onAccountRemoveHandler(){
+        //spinner na true
         this.props.setLoadingToTrue();
         
+        //axios 
         this.props.deleteAccount(JSON.parse(localStorage.getItem('responseObject')).token);
+
+        localStorage.clear();
+ 
         setTimeout( () => {
             console.log(this.props);
+            this.setState({redirect: !this.state.redirect});
         }, 3000);
        
     }
@@ -33,7 +40,10 @@ class deleteAccount extends Component{
 
     render(){
         let content;
-       
+
+        if (this.state.redirect) {
+            return <Redirect to='/'/>;
+          }
         
         content = (
             <Aux>
@@ -53,19 +63,41 @@ class deleteAccount extends Component{
         if(this.props.loading){
             content = <Spinner/>;
         }
-
         if(this.props.response !== null){
-            content = <p>Konto zosało poprawnie usunięte!</p>
-
-            if(this.props.response.status !== 200){
-                content = <p>Error</p>;
+            
+            if(!this.props.response.isError){
+                content = <p style={{color: 'green', fontWeight: 'bold'}}>Konto zosało poprawnie usunięte!</p>
             }
+            else if(this.props.response.status !== 200){
+                console.log(this.props.response.data.errors);
+                content = <p>Błąd serwera ziomuś</p>;
+                if (this.props.response.data !== null && this.props.response.data !== null){
+                    content = 
+                    (
+                    <Aux>
+                        <p>Error</p>
+                        <ul style={{margin: '0px'}}>
+                            {this.props.response.data.errors.map((item) => 
+                                <li style={{color: 'red', fontWeight: 'bold'}} key={item}>{item}</li>
+                            
+                        )}
+                        </ul>
+                    </Aux>);
+                }
+                
+            }
+
+
         }
 
+
         return(
-            <Aux>
-                {content}
-            </Aux>
+            <div className="modal-bartuszak">
+                <div>
+                    <i style={{display: 'inline-flex', marginBottom: '20px'}} className="fa fa-close den"></i>
+                    {content}
+                </div>
+            </div>
         )
     }
 }
@@ -73,7 +105,13 @@ class deleteAccount extends Component{
 
 const mapStateToProps = state => ({
     response: state.deleteAccount.response,
-    loading: state.deleteAccount.loading
+    loading: state.deleteAccount.loading,
 });
+
+const mapDispatchToProps = dispatch => {
+    return {
+        //loggingOut: () => dispatch(loggingOut())
+    };
+}
 
 export default connect (mapStateToProps, actionCreators)(deleteAccount);

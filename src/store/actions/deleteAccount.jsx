@@ -2,16 +2,15 @@ import axios from 'axios/axios-groupsconnects';
 
 export function deleteAccount(token){
     return(dispatch)=>{
-        let data = {
-        }
 
         let config = {
             headers: {'Authorization': "bearer " + token}
         }
         return (
-            axios.post('', data, config)
+            axios.delete('/api/account', config)
             .then((response)=>{
                 dispatch(accountRemovedSuccessfull(response.data));
+                console.log(response.data)
             })
             .catch((error)=>{
                 dispatch(accountRemovedUnSuccessfull(error.response));

@@ -8,6 +8,20 @@ injectGlobal `
 
     font-family: 'Quicksand', sans-serif;
     
+    .modal-bartuszak{
+        width: 100%;
+        background-color: #32323f;
+        border-radius: 5px;
+        height: 100%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        position: relative;
+        justify-content: center;
+        text-align: center;
+    }
+
+
     .kupa {
         font-family: 'Roboto', sans-serif;
         font-size: 24px;
