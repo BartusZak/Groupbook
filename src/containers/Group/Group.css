@@ -89,6 +89,7 @@
     padding-left: 10px;
     border-top: 1px solid grey;
     color: greenyellow !important;
+    position: relative;
 }
 .group-container > p{
     color: white;
@@ -136,7 +137,6 @@
     flex-flow: column;
     position: absolute;
     right: 10px;
-    height: 110px;
     top: 10px;
     justify-content: space-around;
 }
@@ -180,6 +180,14 @@
     display: flex;
     justify-content: space-around;
     width: 75%;
+}
+.edit-i{
+    position: absolute;
+    margin-left: 15px;
+    color: white;
+}
+.edit-i:hover{
+    color: tomato;
 }
 @media(min-width: 1201px){
     .event-info { color: white; }

@@ -48,3 +48,67 @@
         transform: translateX(0vw);
     }
 }
+
+
+.group-desc-edit{
+    position: absolute;
+    display: flex;
+    flex-flow: column;
+    top: -415px;
+    width: 450px;
+    border-radius: 5px;
+    height: 200px;
+    
+    justify-content: center;
+    align-items: center;
+    
+}
+.group-desc-edit > .fa-times{
+    color: white;
+    position: absolute;
+    bottom: -35px;
+    left: 20px;
+    font-size: 24px;
+    border-radius: 50%;
+    background-color: rgb(16, 27, 61);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.group-desc-edit > .fa-times:hover{
+    background-color: royalblue
+}
+.group-desc-edit textarea{
+    resize: none;
+    width: 92%;
+    padding: 10px;
+    border: none;
+    height: 70%;
+    margin: 5px 0;
+}
+.area-validation-message{
+    padding: 5px 10px;
+    width: 92%;
+    background-color: rgb(206, 31, 0);
+    position: absolute;
+    top: 0;
+    transition: 1s all ease-out;
+    color: white;
+    font-size: 14px;
+    animation: 1s text-in linear forwards;
+}
+
+@keyframes text-in{
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
+        
+    }
+}

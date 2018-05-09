@@ -27,6 +27,13 @@ import ConfirmModal from '../../components/UI/ActionConfirm/ActionConfirm';
 import OneInputEdit from '../../components/Edit/OneInputEdit';
 import { validateInput } from '../../containers/UserOptions/Validation/Validation';
 
+const valSettings = [
+    {min: 5, max: 120, 
+        name: "nazwa grupy", type: "standard"},
+    {min: 5, max: 260, 
+        name: "opis grupy", type:  "standard"}
+]
+
 class Group extends Component{
    
     state = {
@@ -57,7 +64,9 @@ class Group extends Component{
             {error: "", value: ""}
             
         ],
-        openEditPlace: false
+        openEditPlace: false,
+
+        openEditPlaceDesc: false
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
@@ -73,7 +82,8 @@ class Group extends Component{
             }, 3000);
         }
         if(nextProps.editGroupErrors !== this.props.editGroupErrors){
-            this.setState({editGroupSpinner: false, editGroupPrompt: true, openEditPlace: false});
+            this.setState({editGroupSpinner: false, editGroupPrompt: true, openEditPlace: false, 
+                openEditPlaceDesc: false, editData: [{error: "", value: ""}, {error: "", value: ""}]});
             setTimeout(() => {
                 this.setState({editGroupPrompt: false});
             }, 3000)
@@ -152,8 +162,10 @@ class Group extends Component{
     editGroupHandler = (e, id) => {
         const newData = [...this.state.editData];
         e.preventDefault();
-        const result = validateInput(5,120, 
-            newData[id].value, this.props.loadedGroup.name, "", "", "nazwa grupy", "standard");
+        const result = validateInput(valSettings[id].min,valSettings[id].max, 
+            newData[id].value, this.props.loadedGroup.name, "", "",
+            valSettings[id].name, valSettings[id].type);
+
         if(result){
             newData[id].error = result;
             this.setState({editData: newData});
@@ -171,8 +183,9 @@ class Group extends Component{
         const newData = [...this.state.editData];
         newData[id].value = e.target.value;
 
-        const result = validateInput(5,120, 
-            newData[id].value, this.props.loadedGroup.name, "", "", "nazwa grupy", "standard");
+        const result = validateInput(valSettings[id].min, valSettings[id].max, 
+            newData[id].value, this.props.loadedGroup.name, "", "",
+            valSettings[id].name, valSettings[id].type);
 
         newData[id].error = result;
 
@@ -181,8 +194,6 @@ class Group extends Component{
 
 
     render(){
-        console.log(this.props.editGroupResult);
-        console.log(this.props.editGroupErrors);
         
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
@@ -314,7 +325,6 @@ class Group extends Component{
 
                     {isUserGroupLeader ? 
                         <div className="leader-options">
-                            <Button btnClass="user-opts-edit" content="Edytuj grupę" />
                             <Button clicked={this.openDeleteModal} btnClass="user-opts-del" content="Usuń grupę" />
                         </div>
                         : null
@@ -368,8 +378,41 @@ class Group extends Component{
                          <i onClick={this.modalShowClickHandler} className="fa fa-user-plus"></i>
                      </div>                               
                  </div>
-                 <p className="group-desc-title">Opis grupy</p>
-                 <p className="group-desc">{this.state.loadedData.description} </p>
+
+                {this.state.openEditPlaceDesc ?
+                    <Aux>
+                        <div className="group-header-area">
+                            <p className="group-desc-title">
+                            Opis grupy</p>
+                            <OneInputEdit 
+                            btnContent={<i className="fa fa-edit"></i>}
+                            other={true} btnClass="desc-button"
+                            placeholder="wpisz nowy opis grupy..." 
+                            newName={this.state.editData[1].value} 
+                            type="textarea"
+                            error={this.state.editData[1].error}
+                            onEditHandler={e => this.onEditHandler(e, 1)}
+                            editGroupHandler={e => this.editGroupHandler(e, 1)} 
+                            close={() => this.setState({openEditPlaceDesc: !this.state.openEditPlaceDesc, 
+                            editData: [{error: "", value: ""}, {error: "", value: ""}]})}
+                            />
+                        </div>
+                        <p className="group-desc">{this.state.editData[1].value} </p>
+                    </Aux> 
+                    
+                     : 
+                     
+                    <Aux>
+                        <p className="group-desc-title">
+                        Opis grupy
+                        <i onClick={() => this.setState({openEditPlaceDesc: !this.state.openEditPlaceDesc})}
+                        className="fa fa-edit edit-i"></i>
+                        </p>
+                        <p className="group-desc">{this.state.loadedData.description} </p>
+                    </Aux>
+                }
+
+                
 
                 {isUserInGroup.result ? this.state.showEvents ? <Events 
                 events={this.props.loadedGroup.events}

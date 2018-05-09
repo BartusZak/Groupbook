@@ -83,3 +83,26 @@
 .deny-btn-input{
     position: absolute;
 }
+
+.desc-button{
+    border-radius: 50%;
+    background-color: tomato;
+    color: white;
+    font-weight: bolder;
+    height: 60px;
+    width: 60px;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    position: absolute;
+    bottom: -40px;
+    box-shadow: 0 0 3px black;
+}
+.desc-button:hover{
+    background-color: rgb(243, 83, 54);
+}
+.desc-button i{
+    margin: 5px 0 0 5px;
+}
