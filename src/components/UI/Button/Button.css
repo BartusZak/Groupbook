@@ -1,3 +1,22 @@
+.circle-button{
+    height: 48px;
+    width: 58px;
+    background-color: tomato;
+    color: white;
+    border: none;
+    transform: translateX(-2px);
+    font-size: 25px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    z-index: 20;
+    border-top-right-radius: 5px;
+}
+.circle-button:hover{
+    background-color: rgb(238, 86, 59);
+}
+.circle-button:focus{
+    outline: none;
+}
 .uni-btn{
     width: 200px;
     padding: 10px;
@@ -54,5 +73,8 @@
 }
 .user-opts-del:hover{
     background-color: rgb(112, 4, 4);
+}
 
+.deny-btn-input{
+    position: absolute;
 }

@@ -15,7 +15,8 @@ import { concatingUrlTitle } from '../../helperMethods/helperMethods';
 import AddGroupMessage from '../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
 import Transition from 'react-transition-group/Transition';
 import {apiPicturesUrl} from 'axios/apiPicturesUrl';
-import { loadGroupActionCreator, joinIntoGroupActionCreator, deleteGroupActionCreator } from '../../store/Groups/Actions';
+import { loadGroupActionCreator, joinIntoGroupActionCreator,
+    deleteGroupActionCreator, editGroupAcionCreator } from '../../store/Groups/Actions';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Aux from '../../hoc/Auxi';
 import UserNotInGroup from './UserNotInGroup/UserNotInGroup';
@@ -23,6 +24,7 @@ import { Link } from 'react-router-dom';
 import Prompt from '../../components/UI/Prompt/Prompt';
 import Button from '../../components/UI/Button/Button';
 import ConfirmModal from '../../components/UI/ActionConfirm/ActionConfirm';
+
 
 class Group extends Component{
    
@@ -44,7 +46,15 @@ class Group extends Component{
         confirmModal: false,
 
         deleteGroupSpinner: false,
-        deleteGroupPrompt: false
+        deleteGroupPrompt: false,
+
+
+        editGroupSpinner: false,
+        editGroupPrompt: false,
+        newName: "",
+        newDescription: "",
+
+        openEditPlace: false
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
@@ -58,6 +68,9 @@ class Group extends Component{
             setTimeout(() => {
                 this.setState({deleteGroupPrompt: false});
             }, 3000);
+        }
+        if(nextProps.editGroupErrors !== this.props.editGroupErrors){
+
         }
     }
 
@@ -126,8 +139,16 @@ class Group extends Component{
     deleteGroupHandler = () => {
         this.setState({confirmModal: false, deleteGroupSpinner: true});
         const responseObject = JSON.parse(localStorage.getItem('responseObject'));
-        this.props.deleteGroup(this.props.loadedGroup.id, responseObject.token, this.props.history);
+        this.props.deleteGroup(this.props.loadedGroup.id, responseObject.token,
+            this.props.history, responseObject.id);
     }
+
+    editGroupHandler = () => {
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.editGroup(responseObject.token, this.props.loadedGroup.id,
+            this.state.newName, this.state.newDescription, this.state.Files)
+    }
+
 
 
     render(){
@@ -204,9 +225,32 @@ class Group extends Component{
              </div>
              
              <div className="group-container">
-                 
+                
+                <div className="group-header-area">
+                {this.state.openEditPlace ? 
+                <div onSubmit={e => this.editGroupHandler(e)} className="group-edit-input-area">
+                    <input onKeyPress className="edit-input" type="text" placeholder="wpisz nowy tytuł..." />
+                    <Button 
+                    btnClass="circle-button"
+                    other={true}>
+                        <i className="fa fa-edit"></i>
+                    </Button>
+                    
 
-                 <p className="group-title-full">{this.state.loadedData.name}</p>
+                </div> : 
+                <p onClick={isUserGroupLeader ? 
+                    () => this.setState({openEditPlace: !this.state.openEditPlace}) : null}
+
+                    className="group-title-full">
+                    <span>{this.state.loadedData.name}</span>
+                    {isUserGroupLeader ?  
+                    <i className="fa fa-edit"></i>
+                    : null}
+                </p>}
+                </div>
+                
+                
+                
                 
                  <nav style={{backgroundImage: `url(${this.state.loadedData.picture ? 
                     apiPicturesUrl + 
@@ -312,7 +356,10 @@ const mapStateToProps = state => {
         joinIntoGroupErrors: state.GroupReducer.joinIntoGroupErrors,
 
         deleteGroupResult: state.GroupReducer.deleteGroupResult,
-        deleteGroupErrors: state.GroupReducer.deleteGroupErrors
+        deleteGroupErrors: state.GroupReducer.deleteGroupErrors,
+
+        editGroupResult: state.GroupReducer.editGroupResult,
+        editGroupErrors: state.GroupReducer.editGroupErrors
     };
 }
 
@@ -320,7 +367,8 @@ const mapDispatchToProps = dispatch => {
     return {
         loadGroup: (groupId) => dispatch(loadGroupActionCreator(groupId)),
         joinIntoGroup: (UserId, GroupId) => dispatch(joinIntoGroupActionCreator(UserId, GroupId)),
-        deleteGroup: (GroupId, token, history) => dispatch(deleteGroupActionCreator(GroupId, token, history))
+        deleteGroup: (GroupId, token, history, userId) => dispatch(deleteGroupActionCreator(GroupId, token, history, userId)),
+        editGroup: (token, groupId, Name, Description, Files) => dispatch(editGroupAcionCreator(token, groupId, Name, Description, Files))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Group));

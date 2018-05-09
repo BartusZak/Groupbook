@@ -19,12 +19,19 @@ const initialState = {
     joinIntoGroupErrors: [],
 
     deleteGroupResult: null,
-    deleteGroupErrors: []
+    deleteGroupErrors: [],
+
+    editGroupResult: null,
+    editGroupErrors: []
     
 
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
+        case actionTypes.EDIT_GROUP:
+            return updateObject(state, { editGroupResult: action.editGroupResult,
+                editGroupErrors: action.editGroupErrors})
+                
         case actionTypes.ADD_GROUP:
             return updateObject(state, {addGroupErrors: action.addGroupErrors})
         case actionTypes.FETCH_GROUPS:

@@ -205,7 +205,7 @@ export const deleteGroup = (deleteGroupResult, deleteGroupErrors) => {
     }
 }
 
-export const deleteGroupActionCreator = (groupId, token, history) => {
+export const deleteGroupActionCreator = (groupId, token, history, userId) => {
     return dispatch => {
         const config = {
             headers: {'Authorization': "bearer " + token}
@@ -213,12 +213,49 @@ export const deleteGroupActionCreator = (groupId, token, history) => {
         axios.delete(`/api/groups/${groupId}`, config).then(response => {
             dispatch(deleteGroup(true, []));
             dispatch(loadGroupActionCreator(2, history));
+            dispatch(fetchGroupsActionCreator(userId));
         }).catch(error => {
-            console.log(error);
             if(error.response){
                 const array = [];
                 array.push("Błąd serwera");
                 dispatch(deleteGroup(false, error.response.status === 404 ? 
+                array : error.response.data.errors));
+            }
+        })
+    }
+}
+
+
+export const editGroup = (editGroupResult, editGroupErrors) => {
+    return {
+        type: actionTypes.EDIT_GROUP,
+        editGroupResult: editGroupResult,
+        editGroupErrors: editGroupErrors
+    }
+}
+export const editGroupAcionCreator = (token, groupId, Name, Description, Files) => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + token}
+        };
+        const objectToSend = {
+            Id: groupId, 
+            Name: Name,
+            Description: Description
+        }
+        axios.post("/api/groups/update",objectToSend, config).then(response => {
+            console.log(response.data);
+            if(Files.length > 0){
+                console.log("Ktoś chce zmienic zdjecie")
+            }
+            else{
+                dispatch(editGroup(true, []));
+            }
+        }).catch(error => {
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(editGroup(false, error.response.status === 404 ? 
                 array : error.response.data.errors));
             }
         })
