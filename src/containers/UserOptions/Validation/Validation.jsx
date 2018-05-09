@@ -42,12 +42,8 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
                     return "Pole " + inputName + " zawiera za dużo znaków " + "(max " + max + ")";
             }
             if(specialKeys !== ""){
-                for(let items in specialKeys){
-                    if(inputText.includes(specialKeys[items]))
-                    {
-                        return "Pole " + inputName + " nie powinno zawierac znaku: " + specialKeys;
-                    }
-                }
+                if(specialKeys === inputText)
+                    return "Pole " + inputName + " powinno mieć inną nazwę";
             
             }
             break;

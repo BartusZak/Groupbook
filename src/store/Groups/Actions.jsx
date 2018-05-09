@@ -233,29 +233,35 @@ export const editGroup = (editGroupResult, editGroupErrors) => {
         editGroupErrors: editGroupErrors
     }
 }
-export const editGroupAcionCreator = (token, groupId, Name, Description, Files) => {
+export const editGroupAcionCreator = (token, Name, Description, Files, loadedGroup, history) => {
     return dispatch => {
         const config = {
             headers: {'Authorization': "bearer " + token}
         };
-        const objectToSend = {
-            Id: groupId, 
-            Name: Name,
-            Description: Description
+        let correctName = Name;
+        let correctDesc = Description;
+        if(correctName === ""){
+            correctName = loadedGroup.name;
         }
+        if(correctDesc === ""){
+            correctDesc = loadedGroup.description;
+        }
+
+        const objectToSend = {
+            Id: loadedGroup.id, 
+            Name: correctName,
+            Description: correctDesc
+        }
+        console.log(correctDesc);
+        console.log(correctName);
         axios.post("/api/groups/update",objectToSend, config).then(response => {
-            console.log(response.data);
-            if(Files.length > 0){
-                console.log("Ktoś chce zmienic zdjecie")
-            }
-            else{
-                dispatch(editGroup(true, []));
-            }
+            dispatch(editGroup(true, []));
+            dispatch(loadGroupActionCreator(response.data.successResult.id, history));
         }).catch(error => {
             if(error.response){
                 const array = [];
                 array.push("Błąd serwera");
-                dispatch(editGroup(false, error.response.status === 404 ? 
+                dispatch(editGroup(false, !error.response.data.errors ? 
                 array : error.response.data.errors));
             }
         })

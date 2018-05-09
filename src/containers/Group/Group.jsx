@@ -24,7 +24,8 @@ import { Link } from 'react-router-dom';
 import Prompt from '../../components/UI/Prompt/Prompt';
 import Button from '../../components/UI/Button/Button';
 import ConfirmModal from '../../components/UI/ActionConfirm/ActionConfirm';
-
+import OneInputEdit from '../../components/Edit/OneInputEdit';
+import { validateInput } from '../../containers/UserOptions/Validation/Validation';
 
 class Group extends Component{
    
@@ -51,9 +52,11 @@ class Group extends Component{
 
         editGroupSpinner: false,
         editGroupPrompt: false,
-        newName: "",
-        newDescription: "",
-
+        editData: [
+            {error: "", value: ""},
+            {error: "", value: ""}
+            
+        ],
         openEditPlace: false
     }
     componentWillReceiveProps(nextProps){
@@ -70,7 +73,10 @@ class Group extends Component{
             }, 3000);
         }
         if(nextProps.editGroupErrors !== this.props.editGroupErrors){
-
+            this.setState({editGroupSpinner: false, editGroupPrompt: true, openEditPlace: false});
+            setTimeout(() => {
+                this.setState({editGroupPrompt: false});
+            }, 3000)
         }
     }
 
@@ -143,15 +149,41 @@ class Group extends Component{
             this.props.history, responseObject.id);
     }
 
-    editGroupHandler = () => {
-        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
-        this.props.editGroup(responseObject.token, this.props.loadedGroup.id,
-            this.state.newName, this.state.newDescription, this.state.Files)
+    editGroupHandler = (e, id) => {
+        const newData = [...this.state.editData];
+        e.preventDefault();
+        const result = validateInput(5,120, 
+            newData[id].value, this.props.loadedGroup.name, "", "", "nazwa grupy", "standard");
+        if(result){
+            newData[id].error = result;
+            this.setState({editData: newData});
+        }
+        else{
+            this.setState({editGroupSpinner: true});
+            const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+            this.props.editGroup(responseObject.token, this.state.editData[0].value, this.state.editData[1].value,
+                [], this.props.loadedGroup, this.props.history);
+        }
+        
+    }
+
+    onEditHandler = (e, id) => {
+        const newData = [...this.state.editData];
+        newData[id].value = e.target.value;
+
+        const result = validateInput(5,120, 
+            newData[id].value, this.props.loadedGroup.name, "", "", "nazwa grupy", "standard");
+
+        newData[id].error = result;
+
+        this.setState({editData: newData});
     }
 
 
-
     render(){
+        console.log(this.props.editGroupResult);
+        console.log(this.props.editGroupErrors);
+        
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
         
@@ -168,6 +200,25 @@ class Group extends Component{
             <Backdrop show={this.state.deleteGroupSpinner}>
                 <Spinner />
             </Backdrop>
+         
+            <Backdrop show={this.state.editGroupSpinner}>
+                <Spinner />
+            </Backdrop>
+
+            {this.props.editGroupResult === null ? null : 
+                    <Prompt 
+                    on={this.state.editGroupPrompt} 
+                    message={
+                        this.props.editGroupResult ? 
+                        "Edycja wykonana prawidłowo" : 
+                        this.props.editGroupErrors[0]
+                    }
+                    promptClass={
+                        this.props.editGroupResult ? 
+                        "prompt-ok" : "prompt-bad" }
+                    />
+            }
+
 
             {this.props.deleteGroupResult === null ? null : 
                     <Prompt 
@@ -228,23 +279,23 @@ class Group extends Component{
                 
                 <div className="group-header-area">
                 {this.state.openEditPlace ? 
-                <div onSubmit={e => this.editGroupHandler(e)} className="group-edit-input-area">
-                    <input onKeyPress className="edit-input" type="text" placeholder="wpisz nowy tytuł..." />
-                    <Button 
-                    btnClass="circle-button"
-                    other={true}>
-                        <i className="fa fa-edit"></i>
-                    </Button>
-                    
 
-                </div> : 
-                <p onClick={isUserGroupLeader ? 
-                    () => this.setState({openEditPlace: !this.state.openEditPlace}) : null}
-
+                <OneInputEdit btnContent={<i className="fa fa-edit"></i>} 
+                other={true} btnClass="circle-button" placeholder="wpisz nowy tytuł grupy..." 
+                newName={this.state.editData[0].value} 
+                error={this.state.editData[0].error}
+                onEditHandler={e => this.onEditHandler(e, 0)}
+                editGroupHandler={e => this.editGroupHandler(e, 0)} 
+                close={() => this.setState({openEditPlace: !this.state.openEditPlace, 
+                editData: [{error: "", value: ""}, {error: "", value: ""}]})}
+                />
+                : 
+                <p
                     className="group-title-full">
                     <span>{this.state.loadedData.name}</span>
                     {isUserGroupLeader ?  
-                    <i className="fa fa-edit"></i>
+                    <i onClick={isUserGroupLeader ? 
+                        () => this.setState({openEditPlace: !this.state.openEditPlace}) : null} className="fa fa-edit"></i>
                     : null}
                 </p>}
                 </div>
@@ -368,7 +419,7 @@ const mapDispatchToProps = dispatch => {
         loadGroup: (groupId) => dispatch(loadGroupActionCreator(groupId)),
         joinIntoGroup: (UserId, GroupId) => dispatch(joinIntoGroupActionCreator(UserId, GroupId)),
         deleteGroup: (GroupId, token, history, userId) => dispatch(deleteGroupActionCreator(GroupId, token, history, userId)),
-        editGroup: (token, groupId, Name, Description, Files) => dispatch(editGroupAcionCreator(token, groupId, Name, Description, Files))
+        editGroup: (token, Name, Description, Files, loadedGroup, history) => dispatch(editGroupAcionCreator(token, Name, Description, Files, loadedGroup, history))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Group));

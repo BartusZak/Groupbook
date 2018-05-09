@@ -1,0 +1,50 @@
+.group-edit-input-area{
+    transition: 1s all ease-in-out;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 300px;
+    margin: 0 auto;
+    animation: 1s thing-in linear forwards;
+    align-items: center;
+    position: relative;
+}
+.group-edit-input-area > .fa-times{
+    color: white;
+    position: absolute;
+    left: -15px;
+    top: 5px;
+}
+.group-edit-input-area input[type="text"]{
+    height: 60%;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    width: 300px;
+    border: none;
+    padding: 10px;
+}
+.group-edit-input-area input[type="text"]:focus{
+    border: none;
+    outline: none;
+}
+.validation-message{
+    position: absolute;
+    bottom: -40px;
+    color: rgb(255, 122, 122);
+    font-size: 14px;
+    letter-spacing: 2px;
+    width: 450px;
+    text-align: center;
+    animation: 1s message-in ease-in-out forwards;
+}
+@keyframes message-in{
+    0%{
+        transform: translateX(-100vw);
+    }
+    50%{
+        transform: translateX(8vw);
+    }
+    100%{
+        transform: translateX(0vw);
+    }
+}

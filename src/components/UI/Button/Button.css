@@ -9,14 +9,19 @@
     border-bottom-right-radius: 5px;
     cursor: pointer;
     z-index: 20;
+    transition: 0.5s all ease-in-out;
     border-top-right-radius: 5px;
 }
 .circle-button:hover{
     background-color: rgb(238, 86, 59);
 }
+.dis-btn-circle{
+    background-color: grey;
+}
 .circle-button:focus{
     outline: none;
 }
+
 .uni-btn{
     width: 200px;
     padding: 10px;

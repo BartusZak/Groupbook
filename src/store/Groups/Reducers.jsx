@@ -28,10 +28,7 @@ const initialState = {
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
-        case actionTypes.EDIT_GROUP:
-            return updateObject(state, { editGroupResult: action.editGroupResult,
-                editGroupErrors: action.editGroupErrors})
-                
+        
         case actionTypes.ADD_GROUP:
             return updateObject(state, {addGroupErrors: action.addGroupErrors})
         case actionTypes.FETCH_GROUPS:
@@ -59,7 +56,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.DELETE_GROUP:
             return updateObject(state, { deleteGroupResult: action.deleteGroupResult, 
                 deleteGroupErrors: action.deleteGroupErrors})
-        
+                
+        case actionTypes.EDIT_GROUP:
+            return updateObject(state, { editGroupResult: action.editGroupResult,
+                editGroupErrors: action.editGroupErrors})
+                    
     }
     return state;   
 }

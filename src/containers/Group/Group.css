@@ -22,24 +22,9 @@
 }
 .group-header-area{
     height: 80px;
-    margin-bottom: 15px;
+    margin-bottom: 50px;
 }
-.group-edit-input-area{
-    transition: 1s all ease-in-out;
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    animation: 1s thing-in linear forwards;
-    align-items: center;
-    position: relative;
-}
-.group-edit-input-area input[type="text"]{
-    height: 60%;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-    width: 300px;
-    padding: 10px;
-}
+
 @keyframes thing-in{
     0%{
         opacity: 0;
@@ -72,7 +57,7 @@
 .navigate{
     width: 100%;
     justify-content: space-between;   
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     align-items: center;
 }
 .group-nav-right, .group-nav-left{
@@ -105,7 +90,7 @@
     border-top: 1px solid grey;
     color: greenyellow !important;
 }
-.group-container p{
+.group-container > p{
     color: white;
     word-break: break-all;
     white-space: normal;
@@ -174,6 +159,7 @@
     padding: 20px;
     text-align: center;
     width: 80%;
+    color: white;
     letter-spacing: 1px;
     font-size: 17px;
 }

@@ -5,11 +5,12 @@ const button = props => {
     return (
         <Aux>
             {props.other ? 
-                <button className={props.btnClass} type="submit" value={props.name}>
+                <button disabled={props.disabled} className={props.btnClass} 
+                type="submit" value={props.name}>
                     {props.children}
                 </button>
 
-                : <button onClick={props.clicked} 
+                : <button disabled={props.disabled} onClick={props.clicked} 
                 className={`uni-btn ${props.btnClass}`}>
                     {props.content}
                 </button>
