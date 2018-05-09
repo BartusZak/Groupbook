@@ -21,6 +21,7 @@ class wholeBlock extends Component{
             loading: false,
             loggingObject: null,
             error: false,
+            avatarDeleted: false
     };
 
 
@@ -31,7 +32,6 @@ class wholeBlock extends Component{
             this.props.loggingObject
         );
         this.setState({loggingObject: loggingObject});
-        console.log(loggingObject);
 
         if(loggingObject !== null){
             axios.get( '/api/users/' + loggingObject.id )
@@ -53,6 +53,26 @@ class wholeBlock extends Component{
                     console.log(err);
                 } );
         }
+    }
+
+    deleteAvatarHandler = () =>{
+        let config = {
+            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
+        }
+
+            axios.delete('/api/account/picture', config)
+            .then((response)=>{
+                console.log(response.data);
+                setTimeout( () => {
+                    window.location.reload();
+                }, 3000);
+
+                this.setState({avatarDeleted: !this.state.avatarDeleted});
+            })
+            .catch((error)=>{
+                console.log(error.response);
+            })
+        
     }
 
     editAccountDetails = () => {
@@ -144,13 +164,21 @@ class wholeBlock extends Component{
     }
     render(){
         moment.locale('pl');
+        console.log(this.state.avatarDeleted);
+        let topContent = (
+            <Aux>
+                <OptionBlock number="1" title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
+                {(this.state.avatarDeleted)? <p style={{color: 'green'}}>Usunięto avatar</p>:null}
+                <button onClick={this.deleteAvatarHandler}>Usuń avatar</button>
+            </Aux>
+        )
         let errorsFromBackend = (this.state.error) ? (
             <p style={{color: "red"}}>Błędy w formularzu!</p>
         ): null;
 
         const options = [
-            { value: false, label: 'Kobieta'},
-            { value: true, label: 'Mężczyzna'}           
+            { value: false, label: 'Mężczyzna'},
+            { value: true, label: 'Kobieta'}           
           ]
         let defaultOption = null
 
@@ -173,7 +201,7 @@ class wholeBlock extends Component{
                 (!this.state.editAccountDetailsToogle)?
                 (
                     <Aux>
-                        <OptionBlock number="1" title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
+                        {topContent}
                         <ul className="WholeBlock">
                             {formElementsArray.map(item => {
                             return (
@@ -184,7 +212,7 @@ class wholeBlock extends Component{
                                 {(item.config.id === 5)?
                                 (
                                     <b>
-                                        {moment(item.config.value).format('LL')}
+                                        {(moment().diff(item.config.value, 'years') > 100)? "Brak" : moment(item.config.value).format('LL')}
                                     </b>
                                 )
                                 :
@@ -213,12 +241,12 @@ class wholeBlock extends Component{
                 ):
                 (
                     <Aux>
-                        <OptionBlock number="1" title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
-                        
                         {!(this.state.loading)
                         ?
                         (
                             <Aux>
+                                {topContent}
+                                
                             <form>
                                 <ul className="WholeBlock">
                                     {formElementsArray.map(item => {
@@ -242,7 +270,8 @@ class wholeBlock extends Component{
                                                     withPortal
                                                     showYearDropdown
                                                     maxDate={moment()}
-                                                    selected={moment(this.state.userDetailsList[4].value)}                                                    
+                                                    selected={(moment().diff(this.state.userDetailsList[4].value, 'years') > 100)? moment() : moment(this.state.userDetailsList[4].value)}      
+                                                                                                  
                                                     onChange={this.handleChange}
                                                 />
                                             )

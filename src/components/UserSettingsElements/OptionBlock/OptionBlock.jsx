@@ -8,7 +8,7 @@ import Aux from 'hoc/Auxi';
 import axios from 'axios/axios-groupsconnects';
 import ChangePassword from './ChangePassword/ChangePassword';
 import DeleteAccount from './DeleteAccount/DeleteAccount';
-
+import Spinner from 'components/UI/Spinner/Spinner';
 
 class optionBlock extends Component{
     state = {
@@ -17,6 +17,7 @@ class optionBlock extends Component{
         showChangeAvatar: false,
         showChangePassword: false,
         showDeleteAccount: false,
+        loading: false,
     };
 
     onDrop = (files) => {
@@ -41,6 +42,7 @@ class optionBlock extends Component{
 
     onSubmitHandler = e => {
         e.preventDefault();
+        this.setState({loading: !this.state.loading});
         let f = new FormData();
             f.append('userId', JSON.parse(localStorage.getItem('responseObject')).id);
             f.append('avatar', this.state.files[0]);
@@ -48,12 +50,13 @@ class optionBlock extends Component{
         axios.post("/api/account/AddAvatar", f)
             .then(response => {
                 console.log(response)
-                this.setState({showChangeAvatar: !this.state.showChangeAvatar});
+                this.setState({showChangeAvatar: !this.state.showChangeAvatar, loading: !this.state.loading});
                 window.location.reload();
             })
             .catch(error =>{
                 console.log(error);
                 console.log(error.response)
+                window.location.reload();
             });
     }
 
@@ -93,10 +96,11 @@ class optionBlock extends Component{
                 </div>  
             </div>
             <Modal modalClass="minWidth800" show={this.state.showChangeAvatar} clickedMethod={this.changeShowChangeAvatar}>
-            
+            {(this.state.loading)?<Spinner className="whiteSpinner"/>: 
                 <AddPictureBar
                 mainLabelTitle="Zmień avatar"
                 buttonTitle="Zatwierdź"
+
                 filesLength={this.state.files.length}
                 onDropHandler={file => this.onDrop(file)}
                 filesErrorType={this.state.incorrectPictureError}
@@ -106,7 +110,7 @@ class optionBlock extends Component{
                 isGroupForm={false} 
                 height="100%"
                 />
-
+                }
             </Modal>
 
             <Modal modalClass="minWidth800" show={this.state.showChangePassword} clickedMethod={this.changeShowChangePassword}>
@@ -116,6 +120,7 @@ class optionBlock extends Component{
             <ConfirmModal mode="Small" show={this.state.showDeleteAccount} clicked={this.changeDeleteAccount}>
                <DeleteAccount/>
             </ConfirmModal>
+
         </Aux>
     );
 }
