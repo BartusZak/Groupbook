@@ -18,3 +18,5 @@ export const DELETE_GROUP = "DELETE_GROUP";
 
 
 export const EDIT_GROUP = "EDIT_GROUP";
+
+export const ADD_PICTURE = "ADD_PICTURE";

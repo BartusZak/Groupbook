@@ -7,6 +7,7 @@ import Spinner from '../../UI/Spinner/Spinner';
 import './GroupsBlock.css';
 import Back from '../../../assets/img/groupimages/back.jpg';
 import { withRouter } from 'react-router-dom';
+import {apiPicturesUrl} from 'axios/apiPicturesUrl';
 
 class GroupsBlock extends Component {
     state = {
@@ -50,7 +51,7 @@ class GroupsBlock extends Component {
                         name={i.group.name}
                         description={i.group.description}
                         picture={i.group.picture === null ?
-                            Back : i.group.picture.smallResolutionPicName}
+                            Back : apiPicturesUrl+i.group.picture.smallResolutionPicName}
                         addDate={i.joinDate}
                         id={i.group.id}
                         moderator={i.group.moderator ? i.group.moderator.username : "Brak"} 
@@ -66,7 +67,6 @@ const mapStateToProps = state => {
     return {
         fetchedGroups: state.GroupReducer.fetchedGroups,
         fetchedGroupsErrors: state.GroupReducer.fetchedGroupsErrors
-
     };
 }
 const mapDispatchToProps = dispatch => {

@@ -1,14 +1,13 @@
 import React from 'react';
 import Image from '../../../../assets/img/404/404.jpg';
 import { Link } from 'react-router-dom';
-import {apiPicturesUrl} from 'axios/apiPicturesUrl';
 
 const group = props => (
     
         <div onClick={props.clicked} className="group-cont">              
             <div className="image-holder">
                 <img 
-                    src={apiPicturesUrl+props.picture} 
+                    src={props.picture} 
                     alt="cos"
                     onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}}
                     />

@@ -16,7 +16,7 @@ import AddGroupMessage from '../../components/UI/ErrorPromptMessage/ErrorPromptM
 import Transition from 'react-transition-group/Transition';
 import {apiPicturesUrl} from 'axios/apiPicturesUrl';
 import { loadGroupActionCreator, joinIntoGroupActionCreator,
-    deleteGroupActionCreator, editGroupAcionCreator } from '../../store/Groups/Actions';
+    deleteGroupActionCreator, editGroupAcionCreator, addPictureActionCreator } from '../../store/Groups/Actions';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Aux from '../../hoc/Auxi';
 import UserNotInGroup from './UserNotInGroup/UserNotInGroup';
@@ -25,7 +25,8 @@ import Prompt from '../../components/UI/Prompt/Prompt';
 import Button from '../../components/UI/Button/Button';
 import ConfirmModal from '../../components/UI/ActionConfirm/ActionConfirm';
 import OneInputEdit from '../../components/Edit/OneInputEdit';
-import { validateInput } from '../../containers/UserOptions/Validation/Validation';
+import { validateInput, validatePictures } from '../../containers/UserOptions/Validation/Validation';
+import Dropzone from 'react-dropzone';
 
 const valSettings = [
     {min: 5, max: 120, 
@@ -66,7 +67,12 @@ class Group extends Component{
         ],
         openEditPlace: false,
 
-        openEditPlaceDesc: false
+        openEditPlaceDesc: false,
+
+        files: [],
+        addFilesError: "",
+
+        addPicPrompt: false
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
@@ -88,6 +94,12 @@ class Group extends Component{
                 this.setState({editGroupPrompt: false});
             }, 3000)
         }
+        if(nextProps.addPictureErrors !== this.props.addPictureErrors){
+            this.setState({addPicPrompt: true});
+            setTimeout(() => {
+                this.setState({addPicPrompt: false});
+            }, 3000);
+        }
     }
 
     componentDidMount(){ 
@@ -105,7 +117,7 @@ class Group extends Component{
             || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
             this.setState({loadedData: this.props.loadedGroup, 
                 loadingGroupDataSpinner: false, loadedPosts: this.props.loadedGroup.posts ,
-                showBackdrop: false})
+                showBackdrop: false, openEditPlace: false, openEditPlaceDesc: false});
         }
     }
     showEventsClickHandler = () => { this.setState({showEvents: true, showPosts: false}); }
@@ -174,7 +186,7 @@ class Group extends Component{
             this.setState({editGroupSpinner: true});
             const responseObject = JSON.parse(localStorage.getItem('responseObject'));
             this.props.editGroup(responseObject.token, this.state.editData[0].value, this.state.editData[1].value,
-                [], this.props.loadedGroup, this.props.history);
+                responseObject.id, this.props.loadedGroup, this.props.history);
         }
         
     }
@@ -192,9 +204,19 @@ class Group extends Component{
         this.setState({editData: newData});
     }
 
-
+    onDropHandler = files => {
+        const result = validatePictures(files[0].type, 200000, files[0].size);
+        if(result === ""){
+            const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+            this.setState({files: files});
+            this.props.addPicture(files[0], this.props.loadedGroup.id,
+                responseObject.id, this.props.history);
+        }
+        this.setState({addFilesError: result}); 
+    }
     render(){
-        
+        console.log(this.props.addPictureErrors);
+        console.log(this.props.addPictureResult);
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
         
@@ -245,6 +267,20 @@ class Group extends Component{
                     />
             }
 
+            {this.props.addPictureResult === null ? null : 
+                    <Prompt 
+                    on={this.state.addPicPrompt} 
+                    message={
+                        this.props.addPictureResult ? 
+                        "Pomyślnie dodano zdjęcie" : 
+                        this.props.addPictureErrors[0]
+                    }
+                    promptClass={
+                        this.props.addPictureResult ? 
+                        "prompt-ok" : "prompt-bad" }
+                    />
+            }
+
             {this.props.loadedGroupErrors.length > 0 ? 
             <h1 className="group-error">{this.props.loadedGroupErrors[0]}</h1> :
             <div className="background-container">
@@ -290,16 +326,20 @@ class Group extends Component{
                 
                 <div className="group-header-area">
                 {this.state.openEditPlace ? 
-
-                <OneInputEdit btnContent={<i className="fa fa-edit"></i>} 
-                other={true} btnClass="circle-button" placeholder="wpisz nowy tytuł grupy..." 
-                newName={this.state.editData[0].value} 
-                error={this.state.editData[0].error}
-                onEditHandler={e => this.onEditHandler(e, 0)}
-                editGroupHandler={e => this.editGroupHandler(e, 0)} 
-                close={() => this.setState({openEditPlace: !this.state.openEditPlace, 
-                editData: [{error: "", value: ""}, {error: "", value: ""}]})}
-                />
+                
+                isUserGroupLeader ? 
+                    <OneInputEdit btnContent={<i className="fa fa-edit"></i>} 
+                    other={true} btnClass="circle-button" placeholder="wpisz nowy tytuł grupy..." 
+                    newName={this.state.editData[0].value} 
+                    error={this.state.editData[0].error}
+                    onEditHandler={e => this.onEditHandler(e, 0)}
+                    editGroupHandler={e => this.editGroupHandler(e, 0)} 
+                    close={() => this.setState({openEditPlace: !this.state.openEditPlace, 
+                    editData: [{error: "", value: ""}, {error: "", value: ""}]})}
+                    />
+                     : null
+                
+                
                 : 
                 <p
                     className="group-title-full">
@@ -314,21 +354,33 @@ class Group extends Component{
                 
                 
                 
-                 <nav style={{backgroundImage: `url(${this.state.loadedData.picture ? 
+                 <nav style={{backgroundImage: `url(${
+                    this.state.files.length > 0 ? this.state.files[0].preview : 
+                    this.state.loadedData.picture ? 
                     apiPicturesUrl + 
                     this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
                     {isUserInGroup.result ? 
                      
-                     
+                    
+
                     <span className="group-owner">Należysz <i className="fa fa-check"></i></span> :
                     <span className="group-owner">Nie należysz <i className="fa fa-ban"></i></span>}
 
                     {isUserGroupLeader ? 
                         <div className="leader-options">
                             <Button clicked={this.openDeleteModal} btnClass="user-opts-del" content="Usuń grupę" />
+                            <Dropzone onDrop={this.onDropHandler} className="user-opts-deny">
+                                <Button
+                                btnClass="change-photo" 
+                                content={<Aux><span>Zmień tło grupy</span><i className="fa fa-photo"></i></Aux>} />
+                            </Dropzone> 
+                          
                         </div>
+
                         : null
                     } 
+                    {this.state.addFilesError ? 
+                    <p className="picture-error">{this.state.addFilesError}</p> : null}
 
                     <ConfirmModal mode="Small" action={this.deleteGroupHandler}
                     clicked={this.openDeleteModal} show={this.state.confirmModal}>
@@ -384,18 +436,21 @@ class Group extends Component{
                         <div className="group-header-area">
                             <p className="group-desc-title">
                             Opis grupy</p>
-                            <OneInputEdit 
-                            btnContent={<i className="fa fa-edit"></i>}
-                            other={true} btnClass="desc-button"
-                            placeholder="wpisz nowy opis grupy..." 
-                            newName={this.state.editData[1].value} 
-                            type="textarea"
-                            error={this.state.editData[1].error}
-                            onEditHandler={e => this.onEditHandler(e, 1)}
-                            editGroupHandler={e => this.editGroupHandler(e, 1)} 
-                            close={() => this.setState({openEditPlaceDesc: !this.state.openEditPlaceDesc, 
-                            editData: [{error: "", value: ""}, {error: "", value: ""}]})}
-                            />
+                            {isUserGroupLeader ? 
+                                <OneInputEdit 
+                                btnContent={<i className="fa fa-edit"></i>}
+                                other={true} btnClass="desc-button"
+                                placeholder="wpisz nowy opis grupy..." 
+                                newName={this.state.editData[1].value} 
+                                type="textarea"
+                                error={this.state.editData[1].error}
+                                onEditHandler={e => this.onEditHandler(e, 1)}
+                                editGroupHandler={e => this.editGroupHandler(e, 1)} 
+                                close={() => this.setState({openEditPlaceDesc: !this.state.openEditPlaceDesc, 
+                                editData: [{error: "", value: ""}, {error: "", value: ""}]})}
+                                /> : null
+                            }
+                            
                         </div>
                         <p className="group-desc">{this.state.editData[1].value} </p>
                     </Aux> 
@@ -405,8 +460,11 @@ class Group extends Component{
                     <Aux>
                         <p className="group-desc-title">
                         Opis grupy
-                        <i onClick={() => this.setState({openEditPlaceDesc: !this.state.openEditPlaceDesc})}
-                        className="fa fa-edit edit-i"></i>
+                        {isUserGroupLeader ?
+                            <i onClick={() => this.setState({openEditPlaceDesc: !this.state.openEditPlaceDesc})}
+                            className="fa fa-edit edit-i"></i> : null
+                        }
+                        
                         </p>
                         <p className="group-desc">{this.state.loadedData.description} </p>
                     </Aux>
@@ -453,7 +511,10 @@ const mapStateToProps = state => {
         deleteGroupErrors: state.GroupReducer.deleteGroupErrors,
 
         editGroupResult: state.GroupReducer.editGroupResult,
-        editGroupErrors: state.GroupReducer.editGroupErrors
+        editGroupErrors: state.GroupReducer.editGroupErrors,
+
+        addPictureResult: state.GroupReducer.addPictureResult,
+        addPictureErrors: state.GroupReducer.addPictureErrors
     };
 }
 
@@ -462,7 +523,8 @@ const mapDispatchToProps = dispatch => {
         loadGroup: (groupId) => dispatch(loadGroupActionCreator(groupId)),
         joinIntoGroup: (UserId, GroupId) => dispatch(joinIntoGroupActionCreator(UserId, GroupId)),
         deleteGroup: (GroupId, token, history, userId) => dispatch(deleteGroupActionCreator(GroupId, token, history, userId)),
-        editGroup: (token, Name, Description, Files, loadedGroup, history) => dispatch(editGroupAcionCreator(token, Name, Description, Files, loadedGroup, history))
+        editGroup: (token, Name, Description, id, loadedGroup, history) => dispatch(editGroupAcionCreator(token, Name, Description, id, loadedGroup, history)),
+        addPicture: (picture, groupId, userId, history) => dispatch(addPictureActionCreator(picture, groupId, userId, history))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Group));

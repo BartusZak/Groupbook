@@ -233,7 +233,7 @@ export const editGroup = (editGroupResult, editGroupErrors) => {
         editGroupErrors: editGroupErrors
     }
 }
-export const editGroupAcionCreator = (token, Name, Description, Files, loadedGroup, history) => {
+export const editGroupAcionCreator = (token, Name, Description, id, loadedGroup, history) => {
     return dispatch => {
         const config = {
             headers: {'Authorization': "bearer " + token}
@@ -252,11 +252,11 @@ export const editGroupAcionCreator = (token, Name, Description, Files, loadedGro
             Name: correctName,
             Description: correctDesc
         }
-        console.log(correctDesc);
-        console.log(correctName);
+       
         axios.post("/api/groups/update",objectToSend, config).then(response => {
             dispatch(editGroup(true, []));
             dispatch(loadGroupActionCreator(response.data.successResult.id, history));
+            dispatch(fetchGroupsActionCreator(id));
         }).catch(error => {
             if(error.response){
                 const array = [];
@@ -266,4 +266,37 @@ export const editGroupAcionCreator = (token, Name, Description, Files, loadedGro
             }
         })
     }
+}
+
+export const addPicture = (addPictureResult, addPictureErrors) => {
+    return {
+        type: actionTypes.ADD_PICTURE,
+        addPictureResult: addPictureResult,
+        addPictureErrors: addPictureErrors
+    }
+}
+
+export const addPictureActionCreator = (picture, groupId, userId, history) => {
+    return dispatch => {
+        let formData = new FormData();
+        formData.append("picture", picture);
+        formData.append("groupId", groupId);
+        axios({
+            method: 'post',
+            url: '/api/groups/addpicture',
+            data: formData,
+            config: { headers: {'Content-Type': 'multipart/form-data' }}
+        }).then(response => {
+            dispatch(addPicture(true, []));
+            dispatch(fetchGroupsActionCreator(userId));
+        }).catch(error => {
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(addPicture(false, !error.response.data.errors ? 
+                array : error.response.data.errors));
+            }
+        })
+    }
+    
 }
