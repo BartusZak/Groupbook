@@ -6,6 +6,8 @@ import AddPictureBar from '../../UI/AddPictureBar/AddPictureBar';
 import Aux from 'hoc/Auxi';
 import axios from 'axios/axios-groupsconnects';
 import ChangePassword from './ChangePassword/ChangePassword';
+import DeleteAccount from './DeleteAccount/DeleteAccount';
+
 
 class optionBlock extends Component{
     state = {
@@ -13,6 +15,7 @@ class optionBlock extends Component{
         incorrectPictureError: "",
         showChangeAvatar: false,
         showChangePassword: false,
+        showDeleteAccount: false,
     };
 
     onDrop = (files) => {
@@ -55,6 +58,7 @@ class optionBlock extends Component{
 
     changeShowChangeAvatar = () => {this.setState({showChangeAvatar: !this.state.showChangeAvatar})};
     changeShowChangePassword = () => {this.setState({showChangePassword: !this.state.showChangePassword})};
+    changeDeleteAccount = () => {this.setState({showDeleteAccount: !this.state.showDeleteAccount})};
 
     render(){
         let onClickFunction;
@@ -66,6 +70,10 @@ class optionBlock extends Component{
         //zmiana hasła
         else if (this.props.number === "2"){
             onClickFunction = this.changeShowChangePassword;
+        }
+        //usuwanie konta
+        else if (this.props.number === "3"){
+            onClickFunction = this.changeDeleteAccount;
         }
         return(
         <Aux>
@@ -102,6 +110,10 @@ class optionBlock extends Component{
 
             <Modal modalClass="minWidth800" show={this.state.showChangePassword} clickedMethod={this.changeShowChangePassword}>
                <ChangePassword/>
+            </Modal>
+
+            <Modal modalClass="minWidth800" show={this.state.showDeleteAccount} clickedMethod={this.changeDeleteAccount}>
+               <DeleteAccount/>
             </Modal>
         </Aux>
     );

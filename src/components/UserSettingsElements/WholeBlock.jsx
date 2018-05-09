@@ -287,7 +287,7 @@ class wholeBlock extends Component{
                 Content = (
                     <div className="WholeBlock">
                         <OptionBlock number="2" title="Uwierzytelnianie" icon="fa fa-key" function="Zmień hasło" shortContent="Pamiętaj, aby twoje hasło było unikalne i o odpowiedniej złożoności."/>
-                        <OptionBlock title="Operacje na koncie" icon="fa fa-trash" function="Usuń konto" shortContent="Zanim usuniesz konto zastanow sie. Nie mozna go przywrocic"/>
+                        <OptionBlock number="3" title="Operacje na koncie" icon="fa fa-trash" function="Usuń konto" shortContent="Zanim usuniesz konto zastanów się. Nie będzie go można przywrócić"/>
     
                     </div>
                 );
