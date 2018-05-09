@@ -192,7 +192,7 @@ class wholeBlock extends Component{
                                     (item.config.id === 6)?
                                     (
                                         <b>
-                                            {(item.config.value)? "Mężczyzna": "Kobieta"}
+                                            {(item.config.value)? "Kobieta": "Mężczyzna"}
                                         </b>
                                     )
                                     :
