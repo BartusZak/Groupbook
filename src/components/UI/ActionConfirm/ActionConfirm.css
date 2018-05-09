@@ -1,0 +1,33 @@
+.action-confirm{
+    position: relative;
+    border-radius: 5px;
+}
+.cls{
+    font-size: 48px;
+    z-index: 30;
+    position: absolute;
+    right: 40px;
+    top: 20px;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+@keyframes action-in{
+    0%{
+        opacity: 0;
+        transform: translateX(-100vw);
+    }
+    50%{
+        opacity: 0.5;
+        transform: translateX(10vw);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.action-in{
+    animation: 1s action-in ease-in-out forwards;
+}

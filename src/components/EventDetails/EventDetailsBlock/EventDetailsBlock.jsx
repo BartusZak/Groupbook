@@ -1,6 +1,7 @@
 import React from 'react';
 import './EventDetailsBlock.css';
 import SingleEventDetail from './SingleEventDetail/SingleEventDetail';
+import Prompt from '../../UI/Prompt/Prompt';
 const eventDetailsBlock = props => {
     return(
         <div className="right-events-block">

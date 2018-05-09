@@ -106,6 +106,55 @@
     z-index: 100;
     bottom: 10px;
 }
+.leader-options{
+    display: flex;
+    flex-flow: column;
+    position: absolute;
+    right: 10px;
+    height: 110px;
+    top: 10px;
+    justify-content: space-around;
+}
+.delete-group-prompt{
+    width: 100%;
+    background-color: #32323f;
+    border-radius: 5px;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    position: relative;
+}
+.delete-group-prompt h2{
+    font-weight: bolder;
+    color: rgb(251, 247, 247);
+    margin-top: 15px;
+}
+.delete-group-prompt > p:first-of-type{
+    padding: 20px;
+    text-align: center;
+    width: 80%;
+    letter-spacing: 1px;
+    font-size: 17px;
+}
+.den{
+    font-size: 50px;
+    border-radius: 50%;
+    border: 2px solid red;
+    height: 80px;
+    margin-top: 25px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-weight: lighter;
+}
+.delete-group-buttons{
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
+}
 @media(min-width: 1201px){
     .event-info { color: white; }
     .group-main-content{
@@ -175,6 +224,23 @@
     .group-desc{
         font-size: 18px;
     }
+    .delete-group-prompt > p:first-of-type{
+        padding: 10px;
+        text-align: center;
+        width: 90%;
+        font-size: 15px;
+    }
+    .den{
+        font-size: 40px;
+        height: 60px;
+        margin-top: 15px;
+        width: 60px;
+    }
+    .delete-group-buttons{
+        height: 120px;
+        flex-flow: column;
+        align-items: center;
+    }
 
 }
  @media(max-width: 750px){
@@ -194,6 +260,26 @@
     }
     .group-desc{
         font-size: 16px;
+    }
+    .delete-group-prompt > p:first-of-type{
+        padding: 5px;
+        text-align: center;
+        width: 90%;
+        font-size: 13px;
+    }
+    .delete-group-prompt h2{
+        font-size: 26px !important;
+    }
+    .den{
+        font-size: 40px;
+        height: 60px;
+        margin-top: 15px;
+        width: 60px;
+    }
+    .delete-group-buttons{
+        height: 120px;
+        flex-flow: column;
+        align-items: center;
     }
   
  }   
@@ -217,5 +303,26 @@
         font-size: 15px;
     }
     
+    .delete-group-prompt > p:first-of-type{
+        padding: 0 5px;
+        text-align: center;
+        width: 90%;
+        font-size: 13px;
+    }
+    .delete-group-prompt h2{
+        font-size: 23px !important;
+        text-align: center;
+    }
+    .den{
+        font-size: 25px;
+        height: 40px;
+        margin-top: 15px;
+        width: 40px;
+    }
+    .delete-group-buttons{
+        height: 120px;
+        flex-flow: column;
+        align-items: center;
+    }
   
 }

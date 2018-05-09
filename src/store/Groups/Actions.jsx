@@ -190,3 +190,37 @@ export const joinIntoGroupActionCreator = (UserId, GroupId, history) => {
         })
     }
 }
+
+
+
+
+
+
+
+export const deleteGroup = (deleteGroupResult, deleteGroupErrors) => {
+    return {
+        type: actionTypes.DELETE_GROUP,
+        deleteGroupResult: deleteGroupResult,
+        deleteGroupErrors: deleteGroupErrors
+    }
+}
+
+export const deleteGroupActionCreator = (groupId, token, history) => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + token}
+        };
+        axios.delete(`/api/groups/${groupId}`, config).then(response => {
+            dispatch(deleteGroup(true, []));
+            dispatch(loadGroupActionCreator(2, history));
+        }).catch(error => {
+            console.log(error);
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(deleteGroup(false, error.response.status === 404 ? 
+                array : error.response.data.errors));
+            }
+        })
+    }
+}

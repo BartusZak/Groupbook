@@ -16,7 +16,10 @@ const initialState = {
     
     
     joinIntoGroupResult: null,
-    joinIntoGroupErrors: []
+    joinIntoGroupErrors: [],
+
+    deleteGroupResult: null,
+    deleteGroupErrors: []
     
 
 }
@@ -45,6 +48,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.JOIN_INTO_GROUP:
             return updateObject(state, {joinIntoGroupResult: action.joinIntoGroupResult,
                 joinIntoGroupErrors: action.joinIntoGroupErrors})
+        
+        case actionTypes.DELETE_GROUP:
+            return updateObject(state, { deleteGroupResult: action.deleteGroupResult, 
+                deleteGroupErrors: action.deleteGroupErrors})
+        
     }
     return state;   
 }
