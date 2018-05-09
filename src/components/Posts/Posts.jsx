@@ -15,36 +15,27 @@ class Posts extends Component{
 
         loadingMorePostsSpinner: false
     }
-    componentDidMount() {
-        if(this.postEnd){
-            this.postEnd.addEventListener("scroll", () => {
-                if (
-                    this.postEnd.scrollTop + this.postEnd.clientHeight >=
-                    this.postEnd.scrollHeight
-                ) {
-                  this.loadMoreItems();
-                }
-            });
-        }
-        
-    }
     componentDidUpdate(prevProps){
         if(prevProps.posts !== this.props.posts){
             this.setState({posts: this.props.posts, loadingPostsSpinner: false});
         }
+
     }
     loadMoreItems = () => {
         if(this.state.posts.length > 0){
-            this.setState({loadingMorePostsSpinner: true});
+            if(this.postEnd.scrollTop + this.postEnd.clientHeight >= this.postEnd.scrollHeight){
+                this.setState({loadingMorePostsSpinner: true});
+                console.log(this.state.posts);
+                let newPosts = [...this.state.posts];
+                const lastId = this.state.posts[this.state.posts.length-1].id;
+                axios.get('/api/posts/' + this.props.groupName +'/get10/' + lastId).then(response => {
+                    newPosts = newPosts.concat(response.data);
+                    this.setState({posts: newPosts, loadingMorePostsError: "", loadingMorePostsSpinner: false});
+                }).catch(error => {
+                    this.setState({loadingMorePostsSpinner: false, loadingMorePostsError: "Wystąpił błąd podczas ładowania postów"});
+                })
+            }
             
-            let newPosts = [...this.state.posts];
-            const lastId = this.state.posts[this.state.posts.length-1].id;
-            axios.get('/api/posts/' + this.props.groupName +'/get10/' + lastId).then(response => {
-                newPosts = newPosts.concat(response.data);
-                this.setState({posts: newPosts, loadingMorePostsError: "", loadingMorePostsSpinner: false});
-            }).catch(error => {
-                this.setState({loadingMorePostsSpinner: false, loadingMorePostsError: "Wystąpił błąd podczas ładowania postów"});
-            })
         }
         
 
@@ -59,7 +50,7 @@ class Posts extends Component{
                     {this.state.posts.length === 0 ? <p className="empty-content-in-group">
                         W tej grupie nie ma żadnych postów
                     </p> : 
-                    <ul className="post-block-container" 
+                    <ul onScroll={this.loadMoreItems} className="post-block-container" 
                         ref={(el) => { this.postEnd = el; }} 
                         >
                         { this.state.posts ?

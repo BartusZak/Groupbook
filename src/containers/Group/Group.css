@@ -18,6 +18,7 @@
     background-size: cover;
     background-position: center;
     width: 100%;
+    transition: 1s all ease-in-out;
     position: relative;
 }
 .group-header-area{
@@ -134,11 +135,13 @@
 }
 .leader-options{
     display: flex;
+    height: 110px;
     flex-flow: column;
     position: absolute;
     right: 10px;
     top: 10px;
-    justify-content: space-around;
+    z-index: 30;
+    justify-content: space-between;
 }
 .delete-group-prompt{
     width: 100%;
@@ -188,6 +191,19 @@
 }
 .edit-i:hover{
     color: tomato;
+}
+.picture-error{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(233, 58, 35, 0.9);
+    color: rgb(5, 1, 1);
+    font-weight: bold;
+    display: flex;
+    z-index: 10;
+    font-size: 24px;
+    justify-content: center;
+    align-items: center;
 }
 @media(min-width: 1201px){
     .event-info { color: white; }

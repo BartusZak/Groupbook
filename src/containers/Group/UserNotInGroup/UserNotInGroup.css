@@ -3,6 +3,7 @@
     width: 100%;
     display: flex;
     flex-flow: column;
+    color: white;
 }
 
 .user-not-in-group-container h3{

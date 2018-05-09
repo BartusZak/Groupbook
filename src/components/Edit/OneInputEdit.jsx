@@ -10,7 +10,7 @@ const oneInputEdit = props => {
         {props.type === "textarea" ? 
             <div className="group-desc-edit">
                 <i onClick={props.close} className="fa fa-times"></i>
-                <textarea onChange={props.onEditHandler}
+                <textarea onBlur={() => setTimeout(props.close, 5000)} onChange={props.onEditHandler}
                 placeholder={props.placeholder} value={props.newName}>
 
                 </textarea>
@@ -29,8 +29,7 @@ const oneInputEdit = props => {
             
             :
             <Aux>
-                <i onClick={props.close} className="fa fa-times"></i>
-                <input onChange={props.onEditHandler}
+                <input onBlur={() => setTimeout(props.close, 5000)} onChange={props.onEditHandler}
                 value={props.newName} className="edit-input" 
                 type="text" placeholder={props.placeholder} />
                 

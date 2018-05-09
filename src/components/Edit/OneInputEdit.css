@@ -9,12 +9,7 @@
     align-items: center;
     position: relative;
 }
-.group-edit-input-area > .fa-times{
-    color: white;
-    position: absolute;
-    left: -15px;
-    top: 5px;
-}
+
 .group-edit-input-area input[type="text"]{
     height: 60%;
     border-bottom-left-radius: 5px;

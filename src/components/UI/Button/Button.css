@@ -93,6 +93,7 @@
     width: 60px;
     font-size: 32px;
     display: flex;
+    transition: 1s all ease-in-out;
     align-items: center;
     justify-content: center;
     border: none;
@@ -100,9 +101,30 @@
     bottom: -40px;
     box-shadow: 0 0 3px black;
 }
+.desc-button:disabled{
+    background-color: grey;
+}
 .desc-button:hover{
     background-color: rgb(243, 83, 54);
 }
 .desc-button i{
     margin: 5px 0 0 5px;
+}
+
+.change-photo{
+    background-color: rgb(20, 107, 141);
+    font-weight: bold;
+    color: white;
+    font-family: 'Lobster', cursive;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-around;
+    letter-spacing: 3px;
+
+}
+.change-photo:hover{
+    background-color: rgb(24, 130, 172);
+}
+.change-photo i{
+    font-size: 22px;
 }

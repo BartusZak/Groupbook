@@ -22,8 +22,12 @@ const initialState = {
     deleteGroupErrors: [],
 
     editGroupResult: null,
-    editGroupErrors: []
-    
+    editGroupErrors: [],
+
+    addPictureResult: null, 
+    addPictureErrors: []
+
+   
 
 }
 const reducer = (state = initialState, action) => {
@@ -60,7 +64,10 @@ const reducer = (state = initialState, action) => {
         case actionTypes.EDIT_GROUP:
             return updateObject(state, { editGroupResult: action.editGroupResult,
                 editGroupErrors: action.editGroupErrors})
-                    
+        case actionTypes.ADD_PICTURE:
+            return updateObject(state, { addPictureResult: action.addPictureResult,
+                addPictureErrors: action.addPictureErrors })
+
     }
     return state;   
 }
