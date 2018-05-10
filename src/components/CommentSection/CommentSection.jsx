@@ -4,7 +4,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios/axios-groupsconnects';
 import { validateInput } from 'containers/UserOptions/Validation/Validation';
 import { connect } from 'react-redux';
-import { addCommentsActionCreator, deleteCommentsActionCreator } from '../../store/Comments/Actions';
+import { addCommentsActionCreator, deleteCommentsActionCreator, editCommentsActionCreator } from '../../store/Comments/Actions';
 
 function getIndex(value, arr, prop) {
     for(var i = 0; i < arr.length; i++) {
@@ -21,7 +21,8 @@ class CommentSection extends Component{
         commentValidation: "",
         sendingCommentError: "",
         comments: this.props.comments,
-        response: this.props.response
+        response: this.props.response,
+        editingCommentId: null
     }
 
     onChangeHandler = event => {
@@ -67,8 +68,28 @@ class CommentSection extends Component{
         this.setState({comments: comments});
     }
 
+    editCommentHandler = (commentId) => {
+        this.setState({editingCommentId: commentId});
+    }
+
+    onCommentInputChangeHandler = (event, id) => {
+        let oldList = [...this.state.comments];
+
+        oldList[id].content = event.target.value;
+        
+
+        this.setState({comments: oldList});
+    }
+
+    onSubmitCommentChange = (commentId, content) => {
+
+        console.log(commentId, content);
+        this.props.editCommentsActionCreator(commentId, content);
+
+        this.setState({editingCommentId: null});
+    }
+
     render(){
-        console.log(this.state.comments);
         return(
             <ul className="CommentSection">
                 <li className="add-comment-area">
@@ -91,7 +112,7 @@ class CommentSection extends Component{
                   
                 </li>
     
-                {this.state.comments.map(item => {
+                {this.state.comments.map((item, id) => {
                     return (
                     <li key={item.id}>
                         <span className="CommentInfo">
@@ -102,15 +123,29 @@ class CommentSection extends Component{
                             (
                                 <span>
                                     <i onClick={() => this.deleteCommentHandler(item.id)} className="fa fa-minus"></i>
-                                    <i className="fa fa-edit"></i>
+                                    <i onClick={() => this.editCommentHandler(item.id)} className="fa fa-edit"></i>
                                 </span>
                             )
                             :
                             null}
                         </span>
+                        {(this.state.editingCommentId === item.id)? (
+                            <input 
+                                onChange={(event) => this.onCommentInputChangeHandler(event, id)} 
+                                value={item.content}
+                                onKeyPress={event => {
+                                    if (event.key === 'Enter') {
+                                      this.onSubmitCommentChange(item.id, item.content);
+                                    }
+                                }}
+                                />
+                        )
+                        :
                         <span className="CommentBody">
                             {item.content === undefined ? item.body : item.content}
                         </span>
+                        }
+                        
                     </li>
                     );
                 })}
@@ -128,7 +163,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addCommentsActionCreator: (content, postId) => dispatch(addCommentsActionCreator(content, postId)),
-        deleteCommentsActionCreator: (commentId) => dispatch(deleteCommentsActionCreator(commentId))
+        deleteCommentsActionCreator: (commentId) => dispatch(deleteCommentsActionCreator(commentId)),
+        editCommentsActionCreator: (commentId, content) => dispatch(editCommentsActionCreator(commentId, content)),
+        
+        
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CommentSection);
