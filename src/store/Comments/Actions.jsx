@@ -47,3 +47,21 @@ export const deleteCommentsActionCreator = (commentId) => {
         })
     }
 }
+
+export const editCommentsActionCreator = (commentId, content) => {
+    return dispatch => {
+        let config = {
+            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
+        }
+        let data = {
+            Id: commentId,
+            Content: content
+        }
+        axios.post(`/api/comments/update`, data, config).then(response => {
+            console.log(response);
+            //dispatch(deleteComment(response.status));
+        }).catch(error => {
+            console.log(error.response);
+        })
+    }
+}
