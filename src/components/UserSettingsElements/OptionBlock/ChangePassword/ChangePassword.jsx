@@ -68,8 +68,8 @@ class changePassword extends Component{
     render(){
         console.log(this.props)
         let content;
-       
-        let errors = (this.state.errors !== null )?( 
+       console.log(this.state.errors);
+        let errors = (this.state.errors !== null && this.state.errors.length > 0 )?( 
             <ul>
                 {this.state.errors.map(item => {
                     return(
@@ -80,7 +80,7 @@ class changePassword extends Component{
         ):
         null; 
         
-        let apiErrors = (this.props.errors !== null )?( 
+        let apiErrors = (this.props.errors !== null && this.props.errors.length > 0  )?( 
             <ul>
                 {this.props.errors.map(item => {
                     return(
@@ -97,8 +97,8 @@ class changePassword extends Component{
                 <hr/>
                 {errors}
                 {apiErrors}
-                <form onSubmit={this.changePasswordHandler}>
-                    <ul>
+                <form style={{width: '90%'}} onSubmit={this.changePasswordHandler}>
+                    <ul style={{margin: '0px', padding: '0px'}}>
                         <li>
                             <b>Stare hasło:</b>
                             <input type="password" name="oldPassword" onChange={this.inputChangeHandler}/>

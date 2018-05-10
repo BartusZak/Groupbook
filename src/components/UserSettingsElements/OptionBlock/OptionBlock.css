@@ -3,6 +3,11 @@
     background-color: #23232d;
     border-radius: 5px;
 }
+
+.OptionBlock:hover{
+    background-color: #343a40;
+    
+}
 .OptionBlock h5{
     padding: 10px 20px;
     box-sizing: border-box;
