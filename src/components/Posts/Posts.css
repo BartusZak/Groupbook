@@ -43,7 +43,7 @@
     padding-right: 5px;
     font-size: 16px;
 } 
-.flex-cont{ display: flex; }
+.flex-cont{ display: flex; position: relative;}
 .post-block-image-holder img{ border-radius: 50%; }
 .post-block-author{ margin: auto 0 auto 25px; }
 .post-block-title{ padding: 10px;
@@ -98,6 +98,21 @@
 }
 .post-two-elements-container .empty-content-in-group{
     width: 62%;
+}
+.user-post-options-block{
+    position: absolute;
+    right: 0;
+    width: 120px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 24px;
+    top: 10px;
+}
+.user-post-options-block i{
+    cursor: pointer;
+}
+.user-post-options-block i:hover{
+    color: tomato;
 }
 @media (min-width: 751px){
     .post-two-elements-container{ 

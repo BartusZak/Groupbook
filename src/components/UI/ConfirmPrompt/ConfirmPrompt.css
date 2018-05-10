@@ -39,3 +39,114 @@
     justify-content: space-around;
     width: 75%;
 }
+
+.modal-spinner{
+    position: absolute;
+    bottom: 10px;
+    width: 200px;
+    height: 70px;
+    transition: 1s all ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column;
+    align-items: center;
+
+}
+.animated-item{
+    height: 25px;
+    position: absolute;
+    width: 25px;
+    border-radius: 50%;
+}
+.animated-item:nth-of-type(1) {
+    animation: 1s animate-item 0.99s linear infinite;
+    background-color: paleturquoise;
+    left: -10px;
+}
+.animated-item:nth-of-type(2){
+    animation: 1s animate-item-second 0.33s linear infinite;
+    background-color: orangered;
+    left: 0;
+}
+.animated-item:nth-of-type(3){
+    background-color: olivedrab;
+    animation: 1s animate-item-third 0.66s linear infinite;
+    left: 10px;
+}
+.spinner-text{
+    color: white;
+    letter-spacing: 4px;
+    font-size: 12px;
+    color: paleturquoise;
+}
+.dot-container{
+    position: relative;
+    margin-right: 20px;
+}
+@keyframes animate-item-third{
+    0%{
+        opacity: 0;
+        transform: translateX(-25px);
+    }
+    25%{
+        opacity: 0.5;
+        transform: translateX(-10px);
+    }
+    50%{
+        opacity: 1;
+        transform: translateX(5px);
+    }
+    75%{
+        opacity: 0.25;
+        transform: translateX(20px)
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(40px);
+    }
+}
+@keyframes animate-item-second{
+    0%{
+        opacity: 0;
+        transform: translateX(-25px);
+    }
+    25%{
+        opacity: 0.5;
+        transform: translateX(-10px);
+    }
+    50%{
+        opacity: 1;
+        transform: translateX(5px);
+    }
+    75%{
+        opacity: 0.25;
+        transform: translateX(20px)
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(40px);
+    }
+}
+
+@keyframes animate-item{
+    0%{
+        opacity: 0;
+        transform: translateX(-25px);
+    }
+    25%{
+        opacity: 0.5;
+        transform: translateX(-10px);
+    }
+    50%{
+        opacity: 1;
+        transform: translateX(5px);
+    }
+    75%{
+        opacity: 0.25;
+        transform: translateX(20px)
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(40px);
+    }
+}

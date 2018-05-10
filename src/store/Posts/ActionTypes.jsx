@@ -6,3 +6,6 @@ export const ADD_POST = 'ADD_POST';
 
 export const FETCH_USER_POSTS = 'FETCH_USER_POSTS';
 export const FETCH_USER_POSTS_ERRORS = "FETCH_USER_POSTS_ERRORS";
+
+
+export const DELETE_POST = "DELETE_POST";

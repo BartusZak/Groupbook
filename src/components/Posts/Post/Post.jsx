@@ -22,12 +22,20 @@ class Post extends Component{
 
     showPostPicture = () => { this.setState({showPicture: !this.state.showPicture}); }
 
+    checkIsUserPostOwner = () => {
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        if(responseObject.username === this.props.userName)
+            return true;
+
+        return false;
+    }
     render(){
         const Content = this.state.showComments ? this.props.commentsErrorLoading ? 
         <h5 className="loading-error-eessage">Wystąpił błąd podczas ładowania komentarzy</h5> : 
         <CommentSection 
         comments={this.props.comments}
         PostId={this.state.postId}/> : null; 
+
         return(
             <Aux>
                 <li>
@@ -42,6 +50,18 @@ class Post extends Component{
                             } alt="Opis"/>
                         </div>
                         <p className="post-block-author">{this.props.userName}</p>
+
+                        {(this.checkIsUserPostOwner()) ? 
+                        <div className="user-post-options-block">
+                            {this.props.isUserGroupLeader ? 
+                            <i className="fa fa-edit"></i> : null}
+
+                            <i onClick={this.props.openDeleteModal} className="fa fa-minus"></i>
+                        </div>
+                        : null}
+                        
+                        
+
                     </div>    
                     <div className="post-block-title">
                         <span>{this.props.postTitle}</span> 
@@ -69,6 +89,7 @@ class Post extends Component{
                         : null}
                     </div>
                 </Backdrop>
+                
             </Aux>    
            
         );

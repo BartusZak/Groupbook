@@ -473,7 +473,7 @@ class Group extends Component{
                 {isUserInGroup.result ? this.state.showEvents ? <Events 
                 events={this.props.loadedGroup.events}
                 groupId={this.props.loadedGroup.id}/> : 
-                   <Posts 
+                   <Posts isUserGroupLeader={isUserGroupLeader}
                    groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}
                    
                     posts={this.state.loadedPosts} /> : <UserNotInGroup clicked={this.joinIntoGroup}/>}

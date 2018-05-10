@@ -5,6 +5,9 @@ import Aux from '../../hoc/Auxi';
 import UserNavbar from '../UserNavbar/UserNavbar';
 import axios from 'axios/axios-groupsconnects';
 import Spinner from '../UI/Spinner/Spinner';
+import ConfirmModal from '../UI/ConfirmPrompt/ConfirmPrompt';
+import { connect } from 'react-redux';
+import { deletePostActionCreator } from '../../store/Posts/Actions';
 
 class Posts extends Component{
     state = {
@@ -13,7 +16,21 @@ class Posts extends Component{
         actualId: 0,
         loadingPostsSpinner: true,
 
-        loadingMorePostsSpinner: false
+        loadingMorePostsSpinner: false,
+
+        openDeleteModal: false,
+        postToDelete: null,
+        postDeleteSpinner: false,
+        postDeletePrompt: null
+
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.deletePostErrors !== this.props.deletePostErrors){
+            this.setState({postDeleteSpinner: false, postDeletePrompt: true});
+            setTimeout( () => {
+                this.setState({postDeletePrompt: true});
+            }, 3000);
+        }
     }
     componentDidUpdate(prevProps){
         if(prevProps.posts !== this.props.posts){
@@ -25,7 +42,6 @@ class Posts extends Component{
         if(this.state.posts.length > 0){
             if(this.postEnd.scrollTop + this.postEnd.clientHeight >= this.postEnd.scrollHeight){
                 this.setState({loadingMorePostsSpinner: true});
-                console.log(this.state.posts);
                 let newPosts = [...this.state.posts];
                 const lastId = this.state.posts[this.state.posts.length-1].id;
                 axios.get('/api/posts/' + this.props.groupName +'/get10/' + lastId).then(response => {
@@ -37,14 +53,29 @@ class Posts extends Component{
             }
             
         }
-        
-
+    }
+    deletePostHandler = () => {
+        this.setState({postDeleteSpinner: true});
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.deletePost(responseObject.token, this.state.postToDelete.id);
     }
     render(){
         return(
             <Aux>
+            {this.state.openDeleteModal ? 
+                <ConfirmModal close={() => this.setState({openDeleteModal: false})}
+                show={this.state.openDeleteModal} message={`Pamietaj, że ta operacja jest nie odwracalna. Jeżeli sie pomyliłeś 
+                i jesteś autorem postu ${this.state.postToDelete.title}, możesz dokonac jego edycji. Czy chcesz
+                usunąc post?`} 
+                btnName="Usuń post" action={this.deletePostHandler} 
+                animation={true}/> : null
+            }
+            
+            
+
             <p className="event-info">Posty</p>
             <div className="post-two-elements-container">
+
             {this.state.loadingPostsSpinner ? <div className="center-spinner"><Spinner /></div> : 
                 <Aux>
                     {this.state.posts.length === 0 ? <p className="empty-content-in-group">
@@ -53,10 +84,14 @@ class Posts extends Component{
                     <ul onScroll={this.loadMoreItems} className="post-block-container" 
                         ref={(el) => { this.postEnd = el; }} 
                         >
+                        
                         { this.state.posts ?
                             
                             this.state.posts.map( item => {
                                 return <Post 
+                                isUserGroupLeader={this.props.isUserGroupLeader}
+                                openDeleteModal={() => this.setState({openDeleteModal: true, postToDelete: item})}
+                                showModal={this.state.openDeleteModal}
                                 key={item.id}
                                 postId={item.id}
                                 description={item.content}
@@ -97,8 +132,21 @@ class Posts extends Component{
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        deletePostErrors: state.PostsReducer.deletePostErrors,
+        deletePostResult: state.PostsReducer.deletePostResult
+    };
+}
 
-export default Posts;
+const mapDispatchToProps = dispatch => {
+    return {
+        deletePost: (token, postId) => dispatch(deletePostActionCreator(token, postId))
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
+
+
 
 
 

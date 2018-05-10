@@ -19,6 +19,17 @@ const confirmPrompt = props => {
 
                                 
                 </div>
+
+                {props.animation ? 
+                <div className="modal-spinner">
+                    <div className="dot-container">
+                        <div className="animated-item"></div>
+                        <div className="animated-item"></div>
+                        <div className="animated-item"></div>
+                    </div>
+                    <p className="spinner-text">trwa dodawanie</p>
+                </div> : null}
+                
             </div>
                     
         </ConfirmModal>

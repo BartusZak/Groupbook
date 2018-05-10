@@ -9,24 +9,30 @@ const initialState = {
     addPostErrors: [],
 
     fetchedPosts: [],
-    fetchingPostsErrors: []
+    fetchingPostsErrors: [],
+
+    deletePostErrors: [],
+    deletePostResult: []
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
-       case actionTypes.FETCH_USER_GROUPS:
+        case actionTypes.FETCH_USER_GROUPS:
             return updateObject(state, {userGroups: action.userGroups, userGroupsErrors: []})
        
-       case actionTypes.FETCH_USER_GROUPS_ERROR:
+        case actionTypes.FETCH_USER_GROUPS_ERROR:
             return updateObject(state, {userGroupsErrors: action.userGroupsErrors})
 
-       case actionTypes.ADD_POST:
+        case actionTypes.ADD_POST:
             return updateObject(state, {addPostErrors: action.addPostErrors})
 
-       case actionTypes.FETCH_USER_POSTS:
+        case actionTypes.FETCH_USER_POSTS:
             return updateObject(state, {fetchedPosts: action.fetchedPosts, fetchingPostsErrors: []})
         
-       case actionTypes.FETCH_USER_POSTS_ERRORS:
+        case actionTypes.FETCH_USER_POSTS_ERRORS:
             return updateObject(state, {fetchingPostsErrors: action.fetchingPostsErrors})
+        case actionTypes.DELETE_POST:
+            return updateObject(state, { deletePostResult: action.deletePostResult,
+                deletePostErrors: action.deletePostErrors})
     }
     return state;   
 }

@@ -135,3 +135,31 @@ export const fetchUserPostsActionCreator = userId => {
         })
     };
 }
+
+export const deletePost = (deletePostResult, deletePostErrors) => {
+    return {
+        type: actionTypes.DELETE_POST,
+        deletePostResult: deletePostResult,
+        deletePostErrors: deletePostErrors
+    }
+}
+
+export const deletePostActionCreator = (token, postId) => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + token}
+        };
+        axios.delete(`/api/pdosts/${postId}`, config).then(response => {
+            dispatch(deletePost(true, []));
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error.response);
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(deletePost(false, !error.response.data.errors ? 
+                array : error.response.data.errors));
+            }
+        })
+    }
+}
