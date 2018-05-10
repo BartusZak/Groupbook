@@ -9,3 +9,7 @@ export const FETCH_USER_POSTS_ERRORS = "FETCH_USER_POSTS_ERRORS";
 
 
 export const DELETE_POST = "DELETE_POST";
+
+export const EDIT_POST = "EDIT_POST";
+
+export const FETCH_EDIT_POST = "FETCH_EDIT_POST";

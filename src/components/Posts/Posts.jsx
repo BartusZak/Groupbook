@@ -22,14 +22,22 @@ class Posts extends Component{
         postToDelete: null,
         postDeleteSpinner: false,
         postDeletePrompt: null
-
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.deletePostErrors !== this.props.deletePostErrors){
             this.setState({postDeleteSpinner: false, postDeletePrompt: true});
             setTimeout( () => {
-                this.setState({postDeletePrompt: true});
+                this.setState({postDeletePrompt: null});
             }, 3000);
+
+            if(nextProps.deletePostErrors.length === 0 && nextProps.deletePostResult){
+                let newPosts = [...this.state.posts];
+                const index = newPosts.findIndex(i => {
+                    return i.id === this.state.postToDelete.id
+                });
+                newPosts.splice(index, 1);
+                this.setState({posts: newPosts, openDeleteModal: false});
+            }
         }
     }
     componentDidUpdate(prevProps){
@@ -58,23 +66,59 @@ class Posts extends Component{
         this.setState({postDeleteSpinner: true});
         const responseObject = JSON.parse(localStorage.getItem('responseObject'));
         this.props.deletePost(responseObject.token, this.state.postToDelete.id);
+        
+    }
+
+    changeChangedPost = () => {
+        if(this.props.editedPost){
+            const newPosts = [...this.state.posts];
+            const index = newPosts.findIndex(i => {
+                return i.id === this.props.editedPost.id
+            })
+            console.log(newPosts[index]);
+            console.log(this.props.editedPost);
+            newPosts[index].title = this.props.editedPost.title;
+            newPosts[index].content = this.props.editedPost.content;
+
+            this.setState({posts: newPosts});
+
+         
+        }
+        
+        
     }
     render(){
         return(
             <Aux>
+                {this.state.postDeletePrompt === null ? null :
+
+                <p className={`small-prompt ${this.props.deletePostErrors.length > 0 ?
+                "small-prompt-red" : "small-prompt-green"}`}>
+                    <i className={`fa ${this.props.deletePostErrors.length > 0 ? "fa-times" : "fa-check"}`}></i>
+                    {this.props.deletePostErrors.length > 0 ? 
+                    this.props.deletePostErrors[0] : "Operacja wykonana pomyślnie"}
+                </p>}
+
+
             {this.state.openDeleteModal ? 
                 <ConfirmModal close={() => this.setState({openDeleteModal: false})}
                 show={this.state.openDeleteModal} message={`Pamietaj, że ta operacja jest nie odwracalna. Jeżeli sie pomyliłeś 
                 i jesteś autorem postu ${this.state.postToDelete.title}, możesz dokonac jego edycji. Czy chcesz
                 usunąc post?`} 
                 btnName="Usuń post" action={this.deletePostHandler} 
-                animation={true}/> : null
+                animation={this.state.postDeleteSpinner}
+                spinnerText="trwa usuwanie postu"
+                error={this.state.postDeletePrompt} 
+                /> : null
             }
             
             
 
             <p className="event-info">Posty</p>
             <div className="post-two-elements-container">
+            
+            
+            
 
             {this.state.loadingPostsSpinner ? <div className="center-spinner"><Spinner /></div> : 
                 <Aux>
@@ -91,6 +135,7 @@ class Posts extends Component{
                                 return <Post 
                                 isUserGroupLeader={this.props.isUserGroupLeader}
                                 openDeleteModal={() => this.setState({openDeleteModal: true, postToDelete: item})}
+                                changeChangedPost={this.changeChangedPost}
                                 showModal={this.state.openDeleteModal}
                                 key={item.id}
                                 postId={item.id}
@@ -135,7 +180,8 @@ class Posts extends Component{
 const mapStateToProps = state => {
     return {
         deletePostErrors: state.PostsReducer.deletePostErrors,
-        deletePostResult: state.PostsReducer.deletePostResult
+        deletePostResult: state.PostsReducer.deletePostResult,
+        editedPost: state.PostsReducer.editedPost
     };
 }
 

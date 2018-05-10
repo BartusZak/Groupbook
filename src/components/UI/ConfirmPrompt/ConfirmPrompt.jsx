@@ -25,10 +25,10 @@ const confirmPrompt = props => {
                     <div className="dot-container">
                         <div className="animated-item"></div>
                         <div className="animated-item"></div>
-                        <div className="animated-item"></div>
                     </div>
-                    <p className="spinner-text">trwa dodawanie</p>
+                    <p className="spinner-text">{props.spinnerText}</p>
                 </div> : null}
+            
                 
             </div>
                     

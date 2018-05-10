@@ -12,7 +12,12 @@ const initialState = {
     fetchingPostsErrors: [],
 
     deletePostErrors: [],
-    deletePostResult: []
+    deletePostResult: [],
+
+    editPostResult: null,
+    editPostErrors: [],
+
+    editedPost: null
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -33,6 +38,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.DELETE_POST:
             return updateObject(state, { deletePostResult: action.deletePostResult,
                 deletePostErrors: action.deletePostErrors})
+        case actionTypes.EDIT_POST:
+            return updateObject(state, {editPostResult: action.editPostResult,
+                editPostErrors: action.editPostErrors})
+        case actionTypes.FETCH_EDIT_POST:
+            return updateObject(state, { editedPost: action.editedPost})
     }
     return state;   
 }

@@ -24,6 +24,7 @@
 .post-block-container li { 
    display: flex;
    flex-flow: column;
+   transition: 1s all ease-in-out;
    border-radius: 10px;
    background-color: #2c2c36;  
    margin: 15px 0;
@@ -113,6 +114,42 @@
 }
 .user-post-options-block i:hover{
     color: tomato;
+}
+.small-prompt{
+    z-index: 30;
+    font-size: 22px;
+    display: flex;
+    left: 0;
+    width: 100%;
+    border-top-left-radius: 10px;
+    position: fixed;
+    align-items: center;
+    transition: 0.5s all ease-in-out;
+    animation: 0.5s small-prompt-in linear forwards;
+}
+
+@keyframes small-prompt-in{
+    from{ 
+        padding: 0 20px;
+        bottom: -80px;
+    }
+    to{
+        padding: 20px 20px;
+        bottom: -20px;
+    }
+}
+
+
+.small-prompt-red{
+    color: white;
+    background-color: firebrick;
+}
+.small-prompt-green{
+    color: white;
+    background-color: darkgreen;
+}
+.small-prompt i{
+    margin-right: 20px;
 }
 @media (min-width: 751px){
     .post-two-elements-container{ 

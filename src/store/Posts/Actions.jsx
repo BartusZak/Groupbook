@@ -149,7 +149,7 @@ export const deletePostActionCreator = (token, postId) => {
         const config = {
             headers: {'Authorization': "bearer " + token}
         };
-        axios.delete(`/api/pdosts/${postId}`, config).then(response => {
+        axios.delete(`/api/posts/${postId}`, config).then(response => {
             dispatch(deletePost(true, []));
             console.log(response.data);
         }).catch(error => {
@@ -161,5 +161,54 @@ export const deletePostActionCreator = (token, postId) => {
                 array : error.response.data.errors));
             }
         })
+    }
+}
+
+export const editPost = (editPostResult, editPostErrors) => {
+    return {
+        type: actionTypes.EDIT_POST,
+        editPostResult: editPostResult,
+        editPostErrors: editPostErrors
+    }
+}
+
+export const editPostActionCreator = (token, Name, Description, postId, currName, currDesc) => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + token}
+        };
+        let correctName = Name;
+        let correctDesc = Description;
+        if(correctName === ""){
+            correctName = currName;
+        }
+        if(correctDesc === ""){
+            correctDesc = currDesc;
+        }
+        const objectToSend = {
+            Id: postId, 
+            Title: correctName,
+            Content: correctDesc
+        }
+
+        axios.post("/api/posts/update",objectToSend, config).then(response => {
+            console.log(response.data);
+            dispatch(editPost(true, []));
+            dispatch(fetchEditPost(response.data.successResult));
+        }).catch(error => {
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(editPost(false, !error.response.data.errors ? 
+                array : error.response.data.errors));
+            }
+        })
+    }
+}
+
+export const fetchEditPost = editedPost => {
+    return {
+        type: actionTypes.FETCH_EDIT_POST,
+        editedPost: editedPost
     }
 }
