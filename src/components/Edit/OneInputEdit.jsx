@@ -10,7 +10,7 @@ const oneInputEdit = props => {
         {props.type === "textarea" ? 
             <div className="group-desc-edit">
                 <i onClick={props.close} className="fa fa-times"></i>
-                <textarea onBlur={() => setTimeout(props.close, 5000)} onChange={props.onEditHandler}
+                <textarea onChange={props.onEditHandler}
                 placeholder={props.placeholder} value={props.newName}>
 
                 </textarea>

@@ -215,8 +215,6 @@ class Group extends Component{
         this.setState({addFilesError: result}); 
     }
     render(){
-        console.log(this.props.addPictureErrors);
-        console.log(this.props.addPictureResult);
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
         

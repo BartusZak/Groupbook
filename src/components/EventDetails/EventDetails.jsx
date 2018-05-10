@@ -70,11 +70,17 @@ class EventDetails extends Component{
             }, 3000);
         }
         if(nextProps.deleteEventErrors !== this.props.deleteEventErrors){
-            this.setState({deletingEventSpinner: false, deletingEventPrompt: true});
+            this.setState({deletingEventSpinner: false, deletingEventPrompt: true, confirmModalOpen: false});
             setTimeout(() => {
                 this.setState({deletingEventPrompt: false});
             }, 3000);
+            if(nextProps.deleteEventErrors){
+                setTimeout(() => {
+                    this.props.history.push("/logged/group/2");
+                }, 4500);
+            }
         }
+        
     }
     componentDidMount(){
         const responseObject = JSON.parse(localStorage.getItem('responseObject'));
@@ -214,7 +220,7 @@ class EventDetails extends Component{
         {this.state.deletingEventPrompt === null ? null :
          this.props.deleteEventResult === true ? 
          <Prompt on={this.state.deletingEventPrompt} 
-         message="Udało się pomyślnie dołączyć do wydarzenia" 
+         message="Pomyślnie usunieto wydarzenie, zostaniesz przekierowany..." 
          promptClass="prompt-ok"/> 
 
          : <Prompt promptClass="prompt-bad" on={this.state.deletingEventPrompt}

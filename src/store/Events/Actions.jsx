@@ -279,10 +279,8 @@ export const deleteEventActionCreator = (token, eventId) => {
             headers: {'Authorization': "bearer " + token}
         };
         axios.delete(`/api/events/${eventId}`, config).then(response => {
-            console.log(response.data);
             dispatch(deleteEvent(true, []));
         }).catch(error => {
-            console.log(error.response);
             if(error.response){
                 const array = [];
                 array.push("Błąd serwera");
