@@ -75,14 +75,13 @@ class Posts extends Component{
             const index = newPosts.findIndex(i => {
                 return i.id === this.props.editedPost.id
             })
-            console.log(newPosts[index]);
-            console.log(this.props.editedPost);
+           
             newPosts[index].title = this.props.editedPost.title;
             newPosts[index].content = this.props.editedPost.content;
             newPosts[index].pictures = this.props.editedPost.pictures
             this.setState({posts: newPosts});
         }
-        
+        // educka zdkeco zpsta;a
         
     }
     render(){

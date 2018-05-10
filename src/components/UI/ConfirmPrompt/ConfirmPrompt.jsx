@@ -2,6 +2,7 @@ import React from 'react';
 import ConfirmModal from '../ActionConfirm/ActionConfirm';
 import Button from '../Button/Button';
 import './ConfirmPrompt.css';
+import OwnSpinner from '../OwnSpinner/OwnSpinner';
 const confirmPrompt = props => {
     return(
         <ConfirmModal mode="Small" clicked={props.close} show={props.show}>
@@ -21,13 +22,8 @@ const confirmPrompt = props => {
                 </div>
 
                 {props.animation ? 
-                <div className="modal-spinner">
-                    <div className="dot-container">
-                        <div className="animated-item"></div>
-                        <div className="animated-item"></div>
-                    </div>
-                    <p className="spinner-text">{props.spinnerText}</p>
-                </div> : null}
+                <OwnSpinner spinnerText={props.spinnerText} /> : null}
+                
             
                 
             </div>
