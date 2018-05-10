@@ -11,7 +11,8 @@ import OpenedMessage from '../UI/OpenedMessage/OpenedMessage';
 import Calendar from '../UI/Calendar/Calendar';
 import { connect } from 'react-redux';
 import { fetchOneEventActionCreator,
-    addUserToEventActionCreator, redirectToOtherEventActionCreator } from '../../store/Events/Actions';
+    addUserToEventActionCreator, redirectToOtherEventActionCreator,
+    rejectFromEventActionCreator, deleteEventActionCreator } from '../../store/Events/Actions';
 import { concatingUrl } from '../../helperMethods/concatingUrl';
 import { apiPicturesUrl } from '../../axios/apiPicturesUrl';
 import AvatarMan from '../../assets/img/empty_avatars/empty_avatar_man.jpg';
@@ -21,7 +22,7 @@ import Button from '../UI/Button/Button';
 import Backdrop from '../UI/Backdrop/Backdrop';
 import Spinner from '../UI/Spinner/Spinner';
 import Prompt from '../UI/Prompt/Prompt';
-
+import ConfrimPrompt from '../../components/UI/ConfirmPrompt/ConfirmPrompt';
 
 
 
@@ -39,7 +40,15 @@ class EventDetails extends Component{
 
             showCalendar: false,
             addUserToEventSpinner: false,
-            addUserToEventSuccMessage: null
+            addUserToEventSuccMessage: null,
+
+            rejectEventSpinner: false, 
+            rejectEventPrompt: null,
+
+            deletingEventSpinner: false,
+            deletingEventPrompt: null,
+
+            confirmModalOpen: false
         }
         this.updateWindowWidth = this.updateWindowWidth.bind(this);
     }
@@ -53,6 +62,18 @@ class EventDetails extends Component{
         }
         if(nextProps.fetchedOneEvent !== this.props.fetchedOneEvent){
             this.setState({loadEventSpinner: false});
+        }
+        if(nextProps.rejectErrors !== this.props.rejectErrors){
+            this.setState({rejectEventSpinner: false, rejectEventPrompt: true});
+            setTimeout(() => {
+                this.setState({rejectEventPrompt: false});
+            }, 3000);
+        }
+        if(nextProps.deleteEventErrors !== this.props.deleteEventErrors){
+            this.setState({deletingEventSpinner: false, deletingEventPrompt: true});
+            setTimeout(() => {
+                this.setState({deletingEventPrompt: false});
+            }, 3000);
         }
     }
     componentDidMount(){
@@ -124,7 +145,20 @@ class EventDetails extends Component{
         this.props.redirectToOtherEvent(
             e.target.id, this.props.history);
     }
-    
+    rejectFromEventHandler = () => {
+        this.setState({rejectEventSpinner: true});
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.rejectFromEvent(responseObject.token, this.props.fetchedOneEvent.id);
+    }
+
+    deleteEventHandler = () => {
+        this.setState({deletingEventSpinner: true});
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        this.props.deleteEvent(responseObject.token, 
+            this.props.fetchedOneEvent.id);
+    }
+
+
     render(){
         const date = moment().format();
         const eventLider = this.searchEventLider();
@@ -136,7 +170,21 @@ class EventDetails extends Component{
             <Backdrop show={this.state.addUserToEventSpinner}>
                 <Spinner />
             </Backdrop>
-            
+            <Backdrop show={this.state.rejectEventSpinner}>
+                <Spinner />
+            </Backdrop>
+            <Backdrop show={this.state.deletingEventSpinner}>
+                <Spinner />
+            </Backdrop>
+            <ConfrimPrompt show={this.state.confirmModalOpen} 
+            close={() => this.setState({confirmModalOpen: false})}
+            message={` Pamiętaj, że ta operacja jest nie odwracalna. Czy jesteś pewny, że chcesz usunąć wydarzenie 
+            ${this.props.fetchedOneEvent.title} ?` }
+            action={this.deleteEventHandler}
+            btnName="Usuń wydarzenie" />
+
+
+
         {this.state.loadEventSpinner ? 
         <Backdrop show={this.state.loadEventSpinner}>
             <Spinner />
@@ -153,7 +201,30 @@ class EventDetails extends Component{
          message={this.props.addUserToEventErrorList[0]} />}
 
 
-         <p className="event-name">
+        {this.state.rejectEventPrompt === null ? null :
+         this.props.rejectResult === true ? 
+         <Prompt on={this.state.rejectEventPrompt} 
+         message="Zrezygnowałeś z wydarzenia" 
+         promptClass="prompt-ok"/> 
+
+         : <Prompt promptClass="prompt-bad" on={this.state.rejectEventPrompt}
+         message={this.props.rejectErrors[0]} />}
+
+
+        {this.state.deletingEventPrompt === null ? null :
+         this.props.deleteEventResult === true ? 
+         <Prompt on={this.state.deletingEventPrompt} 
+         message="Udało się pomyślnie dołączyć do wydarzenia" 
+         promptClass="prompt-ok"/> 
+
+         : <Prompt promptClass="prompt-bad" on={this.state.deletingEventPrompt}
+         message={this.props.deleteEventErrors[0]} />}
+
+        
+        
+
+
+        <p className="event-name">
              <span>{this.props.fetchedOneEvent.title}</span>
              <i onClick={this.showCalendar} className="fa fa-calendar"></i> 
             
@@ -193,8 +264,9 @@ class EventDetails extends Component{
          <Button clicked={this.addUserToEvent} btnClass="join-event" content="Dołącz" /> :
 
          isUserLider ? 
-             <Button btnClass="delete-event" content="Usuń wydarzenie" /> : 
-             <Button content="Zrezygnuj" btnClass="leave-group"/> 
+             <Button clicked={() => this.setState({confirmModalOpen: true})}
+             btnClass="delete-event" content="Usuń wydarzenie" /> : 
+             <Button clicked={this.rejectFromEventHandler} content="Zrezygnuj" btnClass="leave-group"/> 
          }
 
          
@@ -237,8 +309,8 @@ class EventDetails extends Component{
                         <div className="modal-text-holder">
                             <p>{item.user.username}</p>
                             <span>mniej niż minute temu</span>
-                            {item.user.username !== eventLider ?
-                            <i>wyklucz z wydarzenia</i> : null}
+                            {isUserLider ? item.user.username !== eventLider ?
+                            <i>wyklucz z wydarzenia</i> : null : null}
                             
                         </div>
                    
@@ -257,6 +329,8 @@ class EventDetails extends Component{
         clickedMethod={this.openMessageToEventAuthor}>
             <OpenedMessage author="autor"/>
         </Modal>
+
+        
     </Aux>
            
         );
@@ -272,14 +346,22 @@ const mapStateToProps = state => {
         groupEventsErrors: state.EventsReducer.groupEventsErrors,
 
         addUserToEventResult: state.EventsReducer.addUserToEventResult,
-        addUserToEventErrorList: state.EventsReducer.addUserToEventErrorList
+        addUserToEventErrorList: state.EventsReducer.addUserToEventErrorList,
+
+        rejectResult: state.EventsReducer.rejectResult,
+        rejectErrors: state.EventsReducer.rejectErrors,
+
+        deleteEventResult: state.EventsReducer.deleteEventResult,
+        deleteEventErrors: state.EventsReducer.deleteEventErrors
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
         fetchOneEvent: (eventId, token) => dispatch(fetchOneEventActionCreator(eventId, token)),
         addUserToEvent: (EventId, UserId) => dispatch(addUserToEventActionCreator(EventId, UserId)),
-        redirectToOtherEvent: (EventId, history) => dispatch(redirectToOtherEventActionCreator(EventId, history))
+        redirectToOtherEvent: (EventId, history) => dispatch(redirectToOtherEventActionCreator(EventId, history)),
+        rejectFromEvent: (token, eventId) => dispatch(rejectFromEventActionCreator(token, eventId)),
+        deleteEvent: (token, eventId) => dispatch(deleteEventActionCreator(token, eventId))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EventDetails));

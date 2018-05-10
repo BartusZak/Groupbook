@@ -1,0 +1,41 @@
+.delete-group-prompt{
+    width: 100%;
+    background-color: #32323f;
+    border-radius: 5px;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    position: relative;
+}
+.delete-group-prompt h2{
+    font-weight: bolder;
+    color: rgb(251, 247, 247);
+    margin-top: 15px;
+}
+.delete-group-prompt > p:first-of-type{
+    padding: 20px;
+    text-align: center;
+    width: 80%;
+    color: white;
+    letter-spacing: 1px;
+    font-size: 17px;
+}
+.den{
+    font-size: 50px;
+    border-radius: 50%;
+    border: 2px solid red;
+    height: 80px;
+    margin-top: 25px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-weight: lighter;
+}
+.delete-group-buttons{
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
+}

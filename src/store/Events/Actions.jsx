@@ -235,3 +235,60 @@ export const addUserToEventActionCreator = (EventId, UserId) => {
 
 
 
+export const rejectFromEvent = (rejectResult, rejectErrors) => {
+    return {
+        type: actionTypes.REJECT_FROM_EVENT,
+        rejectResult: rejectResult,
+        rejectErrors: rejectErrors
+    }
+}
+
+export const rejectFromEventActionCreator = (token, eventId) => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + token}
+        };
+        const objectToSend = {
+            EventId: eventId
+        }
+        axios.post(`/api/events/reject`, objectToSend, config).then(response => {
+            dispatch(rejectFromEvent(true, []));
+            dispatch(fetchOneEventActionCreator(eventId, token));
+        }).catch(error => {
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(rejectFromEvent(false, error.response.status === 404 
+                    ? array : error.response.data.errors));
+            }
+        })
+    }
+}
+
+export const deleteEvent = (deleteEventResult, deleteEventErrors) => {
+    return {
+        type: actionTypes.DELETE_EVENT,
+        deleteEventResult: deleteEventResult,
+        deleteEventErrors: deleteEventErrors
+    }
+}
+
+export const deleteEventActionCreator = (token, eventId) => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + token}
+        };
+        axios.delete(`/api/events/${eventId}`, config).then(response => {
+            console.log(response.data);
+            dispatch(deleteEvent(true, []));
+        }).catch(error => {
+            console.log(error.response);
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(deleteEvent(false, error.response.status === 404 
+                    ? array : error.response.data.errors));
+            }
+        })
+    }
+}

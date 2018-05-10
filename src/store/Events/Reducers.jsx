@@ -16,7 +16,13 @@ const initialState = {
     addUserToEventErrorList: [],
 
     groupEvents: [],
-    groupEventsErrors: []
+    groupEventsErrors: [],
+
+    rejectResult: null,
+    rejectErrors: [],
+
+    deleteEventResult: null,
+    deleteEventErrors: []
 
 }
 const reducer = (state = initialState, action) => {
@@ -42,7 +48,12 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_EVENTS_FROM_GROUP:
             return updateObject(state, {groupEvents: action.groupEvents,
                 groupEventsErrors: action.groupEventsErrors })
-        
+        case actionTypes.REJECT_FROM_EVENT:
+            return updateObject(state, { rejectResult: action.rejectResult,
+                rejectErrors: action.rejectErrors })
+        case actionTypes.DELETE_EVENT:
+            return updateObject(state, {deleteEventResult: action.deleteEventResult,
+                deleteEventErrors: action.deleteEventErrors })
     }
     return state;   
 }
