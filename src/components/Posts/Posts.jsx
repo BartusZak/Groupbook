@@ -79,10 +79,8 @@ class Posts extends Component{
             console.log(this.props.editedPost);
             newPosts[index].title = this.props.editedPost.title;
             newPosts[index].content = this.props.editedPost.content;
-
+            newPosts[index].pictures = this.props.editedPost.pictures
             this.setState({posts: newPosts});
-
-         
         }
         
         
