@@ -1,9 +1,8 @@
 import React from 'react';
 import Modal from '../Modal/Modal';
 import './ConfirmModal.css';
-const confirmModal = (props) =>{
+const confirmModal = props =>{
     return(
-        
         <Modal clickedMethod={props.openModal} show={props.isOpen}>
             <h5 className="confirm-modal-header">{props.title}</h5>
             <div className="confirm-modal-content">
