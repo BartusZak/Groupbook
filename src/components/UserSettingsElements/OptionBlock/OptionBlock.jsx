@@ -95,27 +95,31 @@ class optionBlock extends Component{
                     </div>
                 </div>  
             </div>
-            <Modal modalClass="minWidth800" show={this.state.showChangeAvatar} clickedMethod={this.changeShowChangeAvatar}>
-            {(this.state.loading)?<Spinner className="whiteSpinner"/>: 
-                <AddPictureBar
-                mainLabelTitle="Zmień avatar"
-                buttonTitle="Zatwierdź"
+            <ConfirmModal mode="Small" show={this.state.showChangeAvatar} clicked={this.changeShowChangeAvatar}>
+                <div className="modal-bartuszak">
+                    {(this.state.loading)?<Spinner className="whiteSpinner"/>: 
+                        <AddPictureBar
+                        mainLabelTitle="Zmień avatar"
+                        buttonTitle="Zatwierdź"
 
-                filesLength={this.state.files.length}
-                onDropHandler={file => this.onDrop(file)}
-                filesErrorType={this.state.incorrectPictureError}
-                files={this.state.files}
-                deleteAddedPictureHandler={this.deleteFiles}
-                onSubmitHandler={e => this.onSubmitHandler(e)}
-                isGroupForm={false} 
-                height="100%"
-                />
-                }
-            </Modal>
+                        filesLength={this.state.files.length}
+                        onDropHandler={file => this.onDrop(file)}
+                        filesErrorType={this.state.incorrectPictureError}
+                        files={this.state.files}
+                        deleteAddedPictureHandler={this.deleteFiles}
+                        onSubmitHandler={e => this.onSubmitHandler(e)}
+                        isGroupForm={false} 
+                        height="100%"
+                        />
+                        }
+                </div>
+            </ConfirmModal>
 
-            <Modal modalClass="minWidth800" show={this.state.showChangePassword} clickedMethod={this.changeShowChangePassword}>
-               <ChangePassword/>
-            </Modal>
+            <ConfirmModal mode="Small" show={this.state.showChangePassword} clicked={this.changeShowChangePassword}>
+                <div className="modal-bartuszak">
+                    <ChangePassword/>
+                </div>
+            </ConfirmModal>
 
             <ConfirmModal mode="Small" show={this.state.showDeleteAccount} clicked={this.changeDeleteAccount}>
                <DeleteAccount/>

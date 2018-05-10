@@ -14,6 +14,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
+import Button from 'components/UI/Button';
+
 class wholeBlock extends Component{
     state = {
             userDetailsList: null,
@@ -65,7 +67,7 @@ class wholeBlock extends Component{
                 console.log(response.data);
                 setTimeout( () => {
                     window.location.reload();
-                }, 3000);
+                }, 2000);
 
                 this.setState({avatarDeleted: !this.state.avatarDeleted});
             })
@@ -169,7 +171,7 @@ class wholeBlock extends Component{
             <Aux>
                 <OptionBlock number="1" title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
                 {(this.state.avatarDeleted)? <p style={{color: 'green'}}>Usunięto avatar</p>:null}
-                <button onClick={this.deleteAvatarHandler}>Usuń avatar</button>
+                <Button clicked={this.deleteAvatarHandler} title="Usuń avatar"/>
             </Aux>
         )
         let errorsFromBackend = (this.state.error) ? (
@@ -236,7 +238,7 @@ class wholeBlock extends Component{
                             );
                             })}
                         </ul>
-                        <b onClick={this.editAccountDetails}>Edytuj dane konta</b>
+                        <Button clicked={this.editAccountDetails} title="Edytuj dane konta"/>
                     </Aux>
                 ):
                 (
@@ -247,7 +249,7 @@ class wholeBlock extends Component{
                             <Aux>
                                 {topContent}
                                 
-                            <form>
+                            <form style={{width: '100%'}}>
                                 <ul className="WholeBlock">
                                     {formElementsArray.map(item => {
                                     return (
