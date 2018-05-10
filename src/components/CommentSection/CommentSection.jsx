@@ -4,14 +4,24 @@ import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios/axios-groupsconnects';
 import { validateInput } from 'containers/UserOptions/Validation/Validation';
 import { connect } from 'react-redux';
-import { addCommentsActionCreator } from '../../store/Comments/Actions';
+import { addCommentsActionCreator, deleteCommentsActionCreator } from '../../store/Comments/Actions';
+
+function getIndex(value, arr, prop) {
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i][prop] === value) {
+            return i;
+        }
+    }
+    return -1; //to handle the case where the value doesn't exist
+}
 
 class CommentSection extends Component{
     state = {
         CommentContent: "",
         commentValidation: "",
         sendingCommentError: "",
-        comments: this.props.comments
+        comments: this.props.comments,
+        response: this.props.response
     }
 
     onChangeHandler = event => {
@@ -26,8 +36,12 @@ class CommentSection extends Component{
         if(prevProps.addedComments !== this.props.addedComments){
             this.setState({comments: this.props.addedComments});
         }
+        if(prevProps.response !== this.props.response){
+            this.setState({response: this.props.response});
+        }
        
     }
+
 
     addComment = () => {
         if(!this.state.commentValidation && this.state.CommentContent){
@@ -41,9 +55,20 @@ class CommentSection extends Component{
             
         }
        
-        
     }
+
+    deleteCommentHandler = (commentId) => {
+        this.props.deleteCommentsActionCreator(commentId);
+        let comments = [...this.state.comments];
+        let index = getIndex(commentId, comments, 'id');
+        comments.splice(index, 1);
+        
+        
+        this.setState({comments: comments});
+    }
+
     render(){
+        console.log(this.state.comments);
         return(
             <ul className="CommentSection">
                 <li className="add-comment-area">
@@ -65,7 +90,7 @@ class CommentSection extends Component{
                     
                   
                 </li>
-
+    
                 {this.state.comments.map(item => {
                     return (
                     <li key={item.id}>
@@ -73,6 +98,15 @@ class CommentSection extends Component{
                             <b>{item.author.username}</b>
                             <b>{item.modifiedDate.slice(0,10) + " "
                              + item.modifiedDate.slice(11,16)}</b>
+                            {(JSON.parse(localStorage.getItem('responseObject')).id === item.author.id)?
+                            (
+                                <span>
+                                    <i onClick={() => this.deleteCommentHandler(item.id)} className="fa fa-minus"></i>
+                                    <i className="fa fa-edit"></i>
+                                </span>
+                            )
+                            :
+                            null}
                         </span>
                         <span className="CommentBody">
                             {item.content === undefined ? item.body : item.content}
@@ -87,12 +121,14 @@ class CommentSection extends Component{
 
 const mapStateToProps = state => {
     return {
-        addedComments: state.CommentsReducer.addedComments
+        addedComments: state.CommentsReducer.addedComments,
+        response: state.CommentsReducer.response
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        addCommentsActionCreator: (content, postId) => dispatch(addCommentsActionCreator(content, postId))
+        addCommentsActionCreator: (content, postId) => dispatch(addCommentsActionCreator(content, postId)),
+        deleteCommentsActionCreator: (commentId) => dispatch(deleteCommentsActionCreator(commentId))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CommentSection);
