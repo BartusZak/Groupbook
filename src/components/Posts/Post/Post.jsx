@@ -44,6 +44,10 @@ class Post extends Component{
                 this.setState({showEditPrompt: null});
             }, 3000);
         }
+        if(this.state.blockId === 2 && nextProps.currentObject !== this.props.currentObject){
+            this.setState({files: nextProps.currentObject.pictures});
+        }
+       
     }
 
     showCommentsClickHandler = () => { 
@@ -98,7 +102,6 @@ class Post extends Component{
     onDropHandler = files => {
         const result = validatePictures(files[0].type, 200000, files[0].size);
         if(result === ""){
-            this.setState({files: files});
             const responseObject = JSON.parse(localStorage.getItem('responseObject'));
             const array = [];
             array.push(this.props.post);
@@ -107,8 +110,12 @@ class Post extends Component{
                 newObject = {...this.props.post};
             }
             newObject.pictures = files;
-            console.log(newObject);
-            this.props.editPostPicture(array, files, newObject);
+            if(this.props.postPicture.length > 0){
+                this.props.editPostPicture(array, files, newObject, responseObject.token);
+            }
+            else{
+                this.props.editPostPicture(array, files, newObject, "");
+            }
         }
         this.setState({addFilesError: result}); 
     }
@@ -240,9 +247,10 @@ class Post extends Component{
                             </Dropzone>
 
                      
-                            <div style={{backgroundImage: `url(${this.props.postPicture.length > 0 ? 
-                            apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName : this.state.files.length > 0 ? 
-                            this.state.files[0].preview : null})`}} 
+                            <div style={{backgroundImage: `url(${ this.state.files.length > 0 ? 
+                            this.state.files[0].preview : this.props.postPicture.length > 0 ? 
+                            apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName : null
+                            })`}} 
                             className="drop-preview">
                                 
                             </div>
@@ -267,7 +275,8 @@ class Post extends Component{
                 <Backdrop show={this.state.showPicture} clicked={this.showPostPicture}>
                 <div className="image-container" style={{display: this.state.showPicture ? 'initial' : 'none'}}>
                     {this.props.postPicture.length > 0 ? 
-                    <img src={apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie"/>
+                    <img src={this.props.postPicture[0].preview ? 
+                        this.props.postPicture[0].preview : apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie"/>
                     : null}
                 </div>
                 </Backdrop> : null
@@ -296,7 +305,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         editPost: (token, Name, Description, postId, currName, currDesc) => dispatch(editPostActionCreator(token, Name, Description, postId, currName, currDesc)),
-        editPostPicture: (addedPosts, pictures, currentObject) => dispatch(editPostPictureActionCreator(addedPosts, pictures, currentObject))
+        editPostPicture: (addedPosts, pictures, currentObject, token) => dispatch(editPostPictureActionCreator(addedPosts, pictures, currentObject, token))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

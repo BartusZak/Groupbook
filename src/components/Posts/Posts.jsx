@@ -87,7 +87,6 @@ class Posts extends Component{
         return(
             <Aux>
                 {this.state.postDeletePrompt === null ? null :
-
                 <p className={`small-prompt ${this.props.deletePostErrors.length > 0 ?
                 "small-prompt-red" : "small-prompt-green"}`}>
                     <i className={`fa ${this.props.deletePostErrors.length > 0 ? "fa-times" : "fa-check"}`}></i>
@@ -151,7 +150,7 @@ class Posts extends Component{
                     </ul>
                     }   
                     
-                    <UserNavbar></UserNavbar>   
+                    <UserNavbar delFiles={this.props.delFiles}></UserNavbar>   
                 </Aux>
             }
                 

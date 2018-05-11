@@ -29,6 +29,7 @@ class GroupsBlock extends Component {
     }
 
     loadGroup = groupId => {
+        this.props.delFiles();
         this.props.loadGroup(groupId, this.props.history);
     }
     render(){

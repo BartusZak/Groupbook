@@ -216,34 +216,58 @@ export const fetchEditPost = editedPost => {
 
 
 
-export const editPostPictureActionCreator = (addedPosts, pictures, currentObject) => {
+export const editPostPictureActionCreator = (addedPosts, pictures, currentObject, token) => {
     return dispatch => {
-        
             let formData = new FormData();
-
+            let config = null;
+            if(token === ""){
+                config = {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                }
+            }
+            else{
+                config = {
+                    headers: {'Content-Type': 'multipart/form-data', 
+                    'Authorization': "bearer " + token}
+                }; 
+            }
+            
+            
             const idsArray = addedPosts.map(i => {
                 return i.id
             })
-            idsArray.forEach(function (value){
-                formData.append('postsIds['+ idsArray.indexOf(value) +']', value);
-            });
-            formData.append("pictures", pictures[0]);
+            if(token === ""){
+                idsArray.forEach(function (value){
+                    formData.append('postsIds['+ idsArray.indexOf(value) +']', value);
+                });
+                formData.append("pictures", pictures[0]);
+            }
+            else{
+                idsArray.forEach(function (value){
+                    formData.append('picsToDeleteIds['+ idsArray.indexOf(value) +']', value);
+                });
+                formData.append("newPictures", pictures);
+                formData.append("postId", addedPosts[0].id);
+                
+            }
+            
             
             axios({
                 method: 'post',
-                url: '/api/posts/addpictures',
+                url: `${token === "" ? "/api/posts/addpictures" : "/api/posts/updatepictures"}`,
                 data: formData,
-                config: { headers: {'Content-Type': 'multipart/form-data' }}
+                config: { headers: config }
             }).then(response => {
                 console.log(response.data);
                 dispatch(editPost(true, []));
+                dispatch(fetchEditPost(currentObject));
                 
             }).catch(error => {
-                console.log(error.response);
+                console.log(error);
                 if(error.response){
                     const array = [];
                     array.push("Błąd serwera");
-                    dispatch(editPost(false, error.response.status === 404 ? 
+                    dispatch(editPost(false, (error.response.status === 404 || error.response.status === 401 )? 
                     array : error.response.data.errors));
                 }
             })

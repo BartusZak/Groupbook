@@ -24,7 +24,7 @@ class UserNavbar extends Component{
     }
 
     render(){
-        const whichBlockShows = this.state.isShowGroups ? <UserNavbarGroup /> :
+        const whichBlockShows = this.state.isShowGroups ? <UserNavbarGroup delFiles={this.props.delFiles}/> :
         this.state.isShowMyPosts ? <UserNavbarPosts /> : this.state.isShowMessages ? <UserNavbarMessages /> : null;
         return(
         <div className={this.props.isFixed + " user-help-bar"}>
