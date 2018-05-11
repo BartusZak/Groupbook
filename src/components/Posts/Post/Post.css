@@ -119,7 +119,17 @@
     margin: 0 auto;
     transition: 1s all ease-in-out;
 }
+.own-spinner-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: -15%;
+}
+.own-spinner-container p{
+    display: none;
 
+}
 @keyframes val-in{
     0%{
         transform: translateX(-10vw);

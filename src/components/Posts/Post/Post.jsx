@@ -15,7 +15,8 @@ import OnInputEdit from '../../Edit/OneInputEdit';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { editPostActionCreator, fetchEditPost, editPostPictureActionCreator } from '../../../store/Posts/Actions';
-// Pamietac, zeby potem tu wrocic i to poprawic - problem z erroramni od komentarzy
+import OwnSpinner from '../../UI/OwnSpinner/OwnSpinner';
+
 class Post extends Component{
     state = {
         showComments: false,
@@ -34,20 +35,17 @@ class Post extends Component{
         files: [],
         addFilesError: "",
 
-        editPostSpinner: false,
-        showEditPrompt: null
+        showEditPrompt: null,
+
+        changeSpinner: false
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.editPostErrors !== this.props.editPostErrors){
-            this.setState({editPostSpinner: false, showEditPrompt: true});
+            this.setState({changeSpinner: false, showEditPrompt: true});
             setTimeout(() => {
                 this.setState({showEditPrompt: null});
             }, 3000);
         }
-        if(this.state.blockId === 2 && nextProps.currentObject !== this.props.currentObject){
-            this.setState({files: nextProps.currentObject.pictures});
-        }
-       
     }
 
     showCommentsClickHandler = () => { 
@@ -91,47 +89,37 @@ class Post extends Component{
             this.setState({changeArray: newChangeArray});
         }
         else{
-            this.setState({editPostSpinner: true});
+            this.setState({editPostSpinner: true, changeSpinner: true});
             const responseObject = JSON.parse(localStorage.getItem('responseObject'));
-            console.log(responseObject.token);
             this.props.editPost(responseObject.token, this.state.changeArray[0].value,
                 this.state.changeArray[1].value, this.props.postId, this.props.postTitle, this.props.description);
         }
         
     }
+   
     onDropHandler = files => {
         const result = validatePictures(files[0].type, 200000, files[0].size);
         if(result === ""){
             const responseObject = JSON.parse(localStorage.getItem('responseObject'));
-            const array = [];
-            array.push(this.props.post);
-            let newObject = {...this.props.currentObject};
-            if(newObject.id === null || newObject.id === undefined){
-                newObject = {...this.props.post};
-            }
-            newObject.pictures = files;
-            if(this.props.postPicture.length > 0){
-                this.props.editPostPicture(array, files, newObject, responseObject.token);
-            }
-            else{
-                this.props.editPostPicture(array, files, newObject, "");
-            }
+            this.setState({changeSpinner: true});
+            this.props.editPostPicture(this.props.post, files, this.props.currentObject, responseObject.token);
+            
         }
         this.setState({addFilesError: result}); 
     }
 
     changePosts = () => {
         this.setState({editBlock: false,
-            changeArray: [{error: "", value:""}, {error: "", value: ""}]})
+            changeArray: [{error: "", value:""}, {error: "", value: ""}], blockId: 0, files: []})
         this.props.changeChangedPost();
     }
+
     render(){
         const Content = this.state.showComments ? this.props.commentsErrorLoading ? 
         <h5 className="loading-error-eessage">Wystąpił błąd podczas ładowania komentarzy</h5> : 
         <CommentSection 
         comments={this.props.comments}
         PostId={this.state.postId}/> : null; 
-
         return(
             <Aux>
                 {!this.state.editBlock ?  
@@ -187,7 +175,8 @@ class Post extends Component{
                     <div className="edit-post-form">
                         <nav>
                             <Button disabled={this.state.changeArray[0].error ? true : false} 
-                            content={<i className="fa fa-align-justify"></i>} clicked={() => this.setState({blockId: 0, changeArray: [{error: "", value:""}, {error: "", value: ""}], 
+                            content={<i className="fa fa-align-justify"></i>} clicked={() => this.setState({blockId: 0, 
+                            changeArray: [{error: "", value:""}, {error: "", value: ""}],
                             files: [], addFilesError: ""})}
                             btnClass={`circle-button ${this.state.blockId === 0 ? "ac-butt" : null} 
                             ${this.state.changeArray[0].error ? "disabled-btn" : null}`}/>
@@ -245,14 +234,13 @@ class Post extends Component{
                             content={<Aux><span>Zmień zdjęcie postu</span><i className="fa fa-photo"></i></Aux>} />
                             
                             </Dropzone>
+                            <div style={{backgroundImage: 
+                                `url(${this.state.files.length > 0 ? 
+                                this.state.files[0].preview : 
+                                this.props.postPicture.length > 0 ? apiPicturesUrl + 
+                                this.props.postPicture[0].fullResolutionPicName : null})`}} 
 
-                     
-                            <div style={{backgroundImage: `url(${ this.state.files.length > 0 ? 
-                            this.state.files[0].preview : this.props.postPicture.length > 0 ? 
-                            apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName : null
-                            })`}} 
-                            className="drop-preview">
-                                
+                                className="drop-preview">
                             </div>
 
                             {this.state.addFilesError ? 
@@ -262,7 +250,10 @@ class Post extends Component{
                         </div>
                          : null} 
                         
-
+                        {this.state.changeSpinner ? 
+                        <div style={{bottom: this.state.blockId === 2 ? "150px" : "15px"}} className="own-spinner-container">
+                            <OwnSpinner spinnerText="trwa edycja..."/>     
+                        </div> : null}
                         
                     </div>
                 </li>
@@ -276,7 +267,8 @@ class Post extends Component{
                 <div className="image-container" style={{display: this.state.showPicture ? 'initial' : 'none'}}>
                     {this.props.postPicture.length > 0 ? 
                     <img src={this.props.postPicture[0].preview ? 
-                        this.props.postPicture[0].preview : apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie"/>
+                        this.props.postPicture[0].preview : 
+                        apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie"/>
                     : null}
                 </div>
                 </Backdrop> : null

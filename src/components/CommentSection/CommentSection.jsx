@@ -122,7 +122,7 @@ class CommentSection extends Component{
                             {(JSON.parse(localStorage.getItem('responseObject')).id === item.author.id)?
                             (
                                 <span>
-                                    <i onClick={() => this.deleteCommentHandler(item.id)} className="fa fa-minus"></i>
+                                    <i onClick={() => this.deleteCommentHandler(item.id)} className="fa fa-trash"></i>
                                     <i onClick={() => this.editCommentHandler(item.id)} className="fa fa-edit"></i>
                                 </span>
                             )

@@ -5,11 +5,12 @@ import 'font-awesome/css/font-awesome.min.css';
 import { apiPicturesUrl } from '../../../../axios/apiPicturesUrl';
 const singleEventDetails = props => {
     return(
-        <div id={props.id} onClick={props.click} 
+        <div onMouseOver={props.showCloud} id={props.id} onClick={props.click} 
         className="single-event-detail" 
         style={{background: `url(${props.picture ? apiPicturesUrl + props.picture.smallResolutionPicName
             : Image})`}}>
             <p>{props.title}</p>
+
         </div>
     );
 }

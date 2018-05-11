@@ -2,7 +2,7 @@
     color: white;
     padding: 10px;
     list-style: none;
-    margin: 20px 0 0px 0;
+    margin: 20px 0 150px 0;
     height: 750px;
     overflow-y: auto;
     position: relative;
@@ -67,12 +67,7 @@
       z-index: 10;
       bottom: 0;
 }
-.add-comment-button{ 
-    cursor: pointer;
-    color: rgb(146, 197, 114);
-    text-align: right;
-    margin: 0;
-}
+
 .post-two-elements-container{
     position: relative;
 }
@@ -93,7 +88,7 @@
 .bottom-spinner{
     width: 150px;
     position: absolute;
-    bottom: 0;
+    bottom: -50px;
     left: 41%;
     right: 0;
 }
@@ -179,9 +174,10 @@
     }    
     .add-comment-button {  
         font-size: 18px;
-        margin-bottom: 15px;
-        color: orangered !important;
+        color: greenyellow;
+        cursor: pointer;
         letter-spacing: 1px;
+        margin: 10px auto;
     }
     .post-block-container article{
         padding: 15px;
@@ -232,11 +228,7 @@
         padding: 10px;
         font-size: 19px;
     }    
-    .add-comment-button {  
-        font-size: 18px;
-        margin-bottom: 15px;
-       
-    }
+    
     .post-block-container article{
         padding: 10px;
         font-size: 16px;
@@ -274,11 +266,7 @@
         padding: 10px;
         font-size: 19px;
     }    
-    .add-comment-button {  
-        font-size: 16px;
-        margin-bottom: 15px;
-       
-    }
+    
     .post-block-container article{
         padding: 10px;
         font-size: 13px;

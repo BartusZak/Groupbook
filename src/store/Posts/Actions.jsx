@@ -216,60 +216,39 @@ export const fetchEditPost = editedPost => {
 
 
 
-export const editPostPictureActionCreator = (addedPosts, pictures, currentObject, token) => {
+export const editPostPictureActionCreator = (addedPosts, pictures, editedPost, token) => {
     return dispatch => {
             let formData = new FormData();
-            let config = null;
-            if(token === ""){
-                config = {
-                    headers: {'Content-Type': 'multipart/form-data'}
-                }
-            }
-            else{
-                config = {
+            const config = {
                     headers: {'Content-Type': 'multipart/form-data', 
-                    'Authorization': "bearer " + token}
-                }; 
-            }
-            
-            
-            const idsArray = addedPosts.map(i => {
-                return i.id
-            })
-            if(token === ""){
-                idsArray.forEach(function (value){
-                    formData.append('postsIds['+ idsArray.indexOf(value) +']', value);
-                });
-                formData.append("pictures", pictures[0]);
-            }
-            else{
+                    'Authorization' : "bearer " + token}
+            }; 
+            console.log(addedPosts);
+            const idsArray = [];
+            if(addedPosts.pictures.length > 0){
+                idsArray.push(addedPosts.pictures[0].id);
                 idsArray.forEach(function (value){
                     formData.append('picsToDeleteIds['+ idsArray.indexOf(value) +']', value);
                 });
-                formData.append("newPictures", pictures);
-                formData.append("postId", addedPosts[0].id);
-                
             }
-            
-            
-            axios({
-                method: 'post',
-                url: `${token === "" ? "/api/posts/addpictures" : "/api/posts/updatepictures"}`,
-                data: formData,
-                config: { headers: config }
-            }).then(response => {
-                console.log(response.data);
+        
+            formData.append("newPictures", pictures);
+            formData.append("postId", addedPosts.id);
+           
+            axios.post("/api/posts/updatepictures", formData, config)
+            .then(response => {
+                const newObject = editedPost !== null ? {...editedPost} : {...addedPosts};
+                console.log(newObject);
+                newObject.pictures = pictures;
                 dispatch(editPost(true, []));
-                dispatch(fetchEditPost(currentObject));
-                
+                dispatch(fetchEditPost(newObject));
             }).catch(error => {
-                console.log(error);
-                if(error.response){
+                console.log(error.response);
                     const array = [];
                     array.push("Błąd serwera");
-                    dispatch(editPost(false, (error.response.status === 404 || error.response.status === 401 )? 
+                    dispatch(editPost(false, (error.response.status === 404 || error.response.status === 401 || 
+                        error.response.status === 400 )? 
                     array : error.response.data.errors));
-                }
             })
             
         
