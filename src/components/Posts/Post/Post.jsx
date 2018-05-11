@@ -46,6 +46,9 @@ class Post extends Component{
                 this.setState({showEditPrompt: null});
             }, 3000);
         }
+        if(nextProps.editedPost !== this.props.editedPost && this.state.blockId === 2){
+            this.setState({files: nextProps.editedPost.pictures});
+        }
     }
 
     showCommentsClickHandler = () => { 
@@ -103,7 +106,6 @@ class Post extends Component{
             const responseObject = JSON.parse(localStorage.getItem('responseObject'));
             this.setState({changeSpinner: true});
             this.props.editPostPicture(this.props.post, files, this.props.currentObject, responseObject.token);
-            
         }
         this.setState({addFilesError: result}); 
     }
@@ -235,9 +237,10 @@ class Post extends Component{
                             
                             </Dropzone>
                             <div style={{backgroundImage: 
-                                `url(${this.state.files.length > 0 ? 
-                                this.state.files[0].preview : 
-                                this.props.postPicture.length > 0 ? apiPicturesUrl + 
+                                `url(${ this.state.files.length > 0 ? 
+                                apiPicturesUrl + this.state.files[0].fullResolutionPicName :
+                                this.props.postPicture.length > 0 ? 
+                                apiPicturesUrl + 
                                 this.props.postPicture[0].fullResolutionPicName : null})`}} 
 
                                 className="drop-preview">
@@ -251,7 +254,7 @@ class Post extends Component{
                          : null} 
                         
                         {this.state.changeSpinner ? 
-                        <div style={{bottom: this.state.blockId === 2 ? "150px" : "15px"}} className="own-spinner-container">
+                        <div style={{bottom: this.state.blockId === 2 ? "160px" : "15px"}} className="own-spinner-container">
                             <OwnSpinner spinnerText="trwa edycja..."/>     
                         </div> : null}
                         
@@ -290,7 +293,8 @@ class Post extends Component{
 const mapStateToProps = state => {
     return {
         editPostResult: state.PostsReducer.editPostResult,
-        editPostErrors: state.PostsReducer.editPostErrors
+        editPostErrors: state.PostsReducer.editPostErrors,
+        editedPost: state.PostsReducer.editedPost
     };
 }
 

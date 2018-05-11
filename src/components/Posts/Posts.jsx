@@ -78,7 +78,7 @@ class Posts extends Component{
            
             newPosts[index].title = this.props.editedPost.title;
             newPosts[index].content = this.props.editedPost.content;
-            newPosts[index].pictures = this.props.editedPost.pictures
+            newPosts[index].pictures = this.props.editedPost.pictures;
             this.setState({posts: newPosts});
         }
         

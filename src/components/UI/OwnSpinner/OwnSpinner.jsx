@@ -1,12 +1,6 @@
 import React from 'react';
 import './OwnSpinner.css';
 const ownSpinner = props => (
-<div className="modal-spinner">
-        <div className="dot-container">
-            <div className="animated-item"></div>
-            <div className="animated-item"></div>
-        </div>
-    <p className="spinner-text">{props.spinnerText}</p>
-</div>
+<div className="lds-dual-ring"></div>
 );
 export default ownSpinner;

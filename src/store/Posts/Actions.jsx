@@ -223,7 +223,6 @@ export const editPostPictureActionCreator = (addedPosts, pictures, editedPost, t
                     headers: {'Content-Type': 'multipart/form-data', 
                     'Authorization' : "bearer " + token}
             }; 
-            console.log(addedPosts);
             const idsArray = [];
             if(addedPosts.pictures.length > 0){
                 idsArray.push(addedPosts.pictures[0].id);
@@ -231,19 +230,17 @@ export const editPostPictureActionCreator = (addedPosts, pictures, editedPost, t
                     formData.append('picsToDeleteIds['+ idsArray.indexOf(value) +']', value);
                 });
             }
-        
-            formData.append("newPictures", pictures);
+            formData.append("newPictures", pictures[0]);
             formData.append("postId", addedPosts.id);
            
             axios.post("/api/posts/updatepictures", formData, config)
             .then(response => {
                 const newObject = editedPost !== null ? {...editedPost} : {...addedPosts};
                 console.log(newObject);
-                newObject.pictures = pictures;
+                newObject.pictures = response.data.successResult.addedPictures;
                 dispatch(editPost(true, []));
                 dispatch(fetchEditPost(newObject));
             }).catch(error => {
-                console.log(error.response);
                     const array = [];
                     array.push("Błąd serwera");
                     dispatch(editPost(false, (error.response.status === 404 || error.response.status === 401 || 

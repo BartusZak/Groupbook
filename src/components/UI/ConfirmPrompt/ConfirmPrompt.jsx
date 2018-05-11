@@ -21,7 +21,7 @@ const confirmPrompt = props => {
                                 
                 </div>
 
-                {props.animation ? 
+                {props.animation ?
                 <OwnSpinner spinnerText={props.spinnerText} /> : null}
                 
             

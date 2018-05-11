@@ -67,7 +67,6 @@ class SideMenuContent extends Component{
     }
    
     render(){
-        console.log(this.props.loadedRandomGroups);
         const settings = {
             dots: true,
             speed: 500,
