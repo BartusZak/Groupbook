@@ -43,6 +43,7 @@ const reducer = (state = initialState, action) => {
                 editPostErrors: action.editPostErrors})
         case actionTypes.FETCH_EDIT_POST:
             return updateObject(state, { editedPost: action.editedPost})
+        
     }
     return state;   
 }

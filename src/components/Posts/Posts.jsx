@@ -81,7 +81,6 @@ class Posts extends Component{
             newPosts[index].pictures = this.props.editedPost.pictures
             this.setState({posts: newPosts});
         }
-        // educka zdkeco zpsta;a
         
     }
     render(){
@@ -130,6 +129,8 @@ class Posts extends Component{
                             
                             this.state.posts.map( item => {
                                 return <Post 
+                                post={item}
+                                currentObject={this.props.editedPost}
                                 isUserGroupLeader={this.props.isUserGroupLeader}
                                 openDeleteModal={() => this.setState({openDeleteModal: true, postToDelete: item})}
                                 changeChangedPost={this.changeChangedPost}

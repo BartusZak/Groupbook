@@ -14,7 +14,7 @@ import Button from '../../UI/Button/Button';
 import OnInputEdit from '../../Edit/OneInputEdit';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
-import { editPostActionCreator, fetchEditPost } from '../../../store/Posts/Actions';
+import { editPostActionCreator, fetchEditPost, editPostPictureActionCreator } from '../../../store/Posts/Actions';
 // Pamietac, zeby potem tu wrocic i to poprawic - problem z erroramni od komentarzy
 class Post extends Component{
     state = {
@@ -98,8 +98,17 @@ class Post extends Component{
     onDropHandler = files => {
         const result = validatePictures(files[0].type, 200000, files[0].size);
         if(result === ""){
-            const responseObject = JSON.parse(localStorage.getItem('responseObject'));
             this.setState({files: files});
+            const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+            const array = [];
+            array.push(this.props.post);
+            let newObject = {...this.props.currentObject};
+            if(newObject.id === null || newObject.id === undefined){
+                newObject = {...this.props.post};
+            }
+            newObject.pictures = files;
+            console.log(newObject);
+            this.props.editPostPicture(array, files, newObject);
         }
         this.setState({addFilesError: result}); 
     }
@@ -286,7 +295,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        editPost: (token, Name, Description, postId, currName, currDesc) => dispatch(editPostActionCreator(token, Name, Description, postId, currName, currDesc))
+        editPost: (token, Name, Description, postId, currName, currDesc) => dispatch(editPostActionCreator(token, Name, Description, postId, currName, currDesc)),
+        editPostPicture: (addedPosts, pictures, currentObject) => dispatch(editPostPictureActionCreator(addedPosts, pictures, currentObject))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

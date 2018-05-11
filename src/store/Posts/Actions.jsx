@@ -212,3 +212,43 @@ export const fetchEditPost = editedPost => {
         editedPost: editedPost
     }
 }
+
+
+
+
+export const editPostPictureActionCreator = (addedPosts, pictures, currentObject) => {
+    return dispatch => {
+        
+            let formData = new FormData();
+
+            const idsArray = addedPosts.map(i => {
+                return i.id
+            })
+            idsArray.forEach(function (value){
+                formData.append('postsIds['+ idsArray.indexOf(value) +']', value);
+            });
+            formData.append("pictures", pictures[0]);
+            
+            axios({
+                method: 'post',
+                url: '/api/posts/addpictures',
+                data: formData,
+                config: { headers: {'Content-Type': 'multipart/form-data' }}
+            }).then(response => {
+                console.log(response.data);
+                dispatch(editPost(true, []));
+                
+            }).catch(error => {
+                console.log(error.response);
+                if(error.response){
+                    const array = [];
+                    array.push("Błąd serwera");
+                    dispatch(editPost(false, error.response.status === 404 ? 
+                    array : error.response.data.errors));
+                }
+            })
+            
+        
+    }
+    
+}
