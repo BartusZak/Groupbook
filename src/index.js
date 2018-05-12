@@ -19,7 +19,7 @@ import EventsReducer from './store/Events/Reducers';
 import userOptionsReducer from './containers/UserOptions/Store/reducer';
 import changePassword from 'store/reducers/changePassword';
 import deleteAccount from 'store/reducers/deleteAccount';
-
+import OtherReducer from './store/Other/Reducers';
 
 import './theme/globalStyle'; //globalne style css 
 import 'font-awesome/css/font-awesome.min.css';
@@ -40,6 +40,7 @@ const rootReducer = combineReducers({
     GroupReducer: GroupReducer,
     PostsReducer: PostsReducer,
     EventsReducer: EventsReducer,
+    OtherReducer: OtherReducer,
     changePassword: changePassword,
     deleteAccount: deleteAccount
 }); 

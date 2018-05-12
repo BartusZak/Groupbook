@@ -37,11 +37,16 @@ import UserDetails from '../UserDetails/UserDetails';
 //<Route path="/repos/:userName/:repoName" component={Repo}/>
 import { loggingOut } from '../../store/actions/loggingActions';
 import { withRouter } from 'react-router-dom';
+import './RootContainer.css';
+import SearchBlock from '../../components/SearchBlock/SearchBlock';
+import Transition from 'react-transition-group/Transition';
 
 class RootContainer extends Component{
     state = {
         showSideMenu: false,
-        localStorage: null
+        localStorage: null,
+        openSearchBar: false,
+        searchValue: ""
     }
     componentDidMount(){
         this.setState({localStorage: 
@@ -63,6 +68,11 @@ class RootContainer extends Component{
         this.setState({localStorage: null});
         this.props.loggingOut();
     }
+    onSearchHandler = e => {
+        this.setState({searchValue: e.target.value, openSearchBar: 
+            e.target.value !== "" ? true : false});
+    }
+
     render(){
         let IsLogged = null;
         let IsLoggedMenuExpander = null;
@@ -109,12 +119,37 @@ class RootContainer extends Component{
             
         return(
             <Aux>
-                <Navbar loggingOut={() => this.loggout()} 
+                <Navbar 
+                value={this.state.searchValue}
+                searchValue={this.state.searchValue}
+                search={e => this.onSearchHandler(e)}
+                closeSearch={() => this.setState({openSearchBar: false, searchValue: ""})}
+                loggingOut={() => this.loggout()} 
                 responseObject={JSON.parse(localStorage.getItem('responseObject'))}/>
                 <SideMenu IsDisplay={this.state.showSideMenu}>
                     <SideMenuContent clicked={() => this.ClickOnSideMenuHandler()} IsLogged={this.props.isLogged}/>
                 </SideMenu> 
                 <CenterComponent currentUrl={window.location.href}>
+                    
+
+                <Transition 
+                mountOnEnter 
+                unmountOnExit 
+                in={this.state.openSearchBar}
+                timeout={400}>
+                    {state => (
+                        <SearchBlock value={this.state.searchValue} 
+                        close={() => this.setState({openSearchBar: false, searchValue: ""})}
+                        animClass={this.state.openSearchBar ? 
+                        "search-block-in" : "search-block-out"}/>
+                    )}
+                </Transition>
+
+
+                    
+
+
+
                     <Switch> {/*@bartuszak*/}
                         <Route exact path='/' render={() => (
                         <About />

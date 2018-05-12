@@ -10,7 +10,7 @@ const button = props => {
                     {props.children}
                 </button>
 
-                : <button disabled={props.disabled} onClick={props.clicked} 
+                : <button id={props.id} value={props.value} disabled={props.disabled} onClick={props.clicked} 
                 className={`uni-btn ${props.btnClass}`}>
                     {props.content}
                 </button>
