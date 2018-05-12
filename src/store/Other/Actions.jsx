@@ -17,12 +17,10 @@ export const fetchSearcherDataActionCreator = token => {
         axios.get("/api/account/getsearchdata", config).then(response => {
             dispatch(fetchSearcherData(response.data, []));
         }).catch(error => {
-            console.log(error);
-                const array = [];
-                array.push("Błąd serwera");
-                dispatch(fetchSearcherData([], (error.response !== undefined) ? 
-                    error.response.data.errors : array));
-          
+            const array = [];
+            array.push("Błąd serwera");
+            dispatch(fetchSearcherData([], (error.response !== undefined) ? 
+                error.response.data.errors : array));
         })
     }
 }
