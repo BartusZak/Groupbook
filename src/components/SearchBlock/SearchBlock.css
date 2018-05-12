@@ -9,7 +9,7 @@
     left: 0;
     right: 0;
     margin: 0 auto;
-    top: 75px;
+    top: 50%;
 }
 .search-block > h3{
     text-align: center;
@@ -141,7 +141,7 @@
 }
 .searcher-footer{
     position: absolute;
-    bottom: -120px;
+    bottom: -130px;
     width: 100%;
     color: white;
     padding: 10px 0;
@@ -157,4 +157,7 @@
     letter-spacing: 1px;
     justify-content: center;
     align-items: center;
+}
+.more{
+    transform: scale(1.3);
 }
