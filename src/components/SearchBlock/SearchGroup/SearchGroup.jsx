@@ -1,26 +1,40 @@
 import React from 'react';
 import './SearchGroup.css';
-import Img from '../../../assets/img/404/404.jpg';
 import Button from '../../UI/Button/Button'; 
+import moment from 'moment';
+const searchGroup = props => {
+    const dateNow = moment().format();
+    const timeFromGroupCreate = moment(props.item.creationDate.slice(0, 10)).fromNow(dateNow);
+    return(
+        <div className="search-group-block">
+            <div className="search-group-details">
+                <header>
+                    <span>{props.item.name}</span>
+                    <div>
+                        <i className="fa fa-times"></i>
+                        <i className="fa fa-users"></i>
+                    </div>
+                </header>
+                <div style={{backgroundImage: `url(${props.item.picture ? 
+                props.apiPicturesUrl + props.item.picture.fullResolutionPicName : 
+                require("../../../assets/img/groupimages/back.jpg") })`}} className="search-group-pic">
+                    <p>
+                        <span>{props.item.creationDate.slice(0, 10)}</span>
+                        <span>utworzona {timeFromGroupCreate} temu</span>
+                    </p>
+                    <Button clicked={props.redirectToGroup} content="Szczegóły"/>
+                </div>
+                <article>
+                    {props.item.description}
+                </article>
 
-/*
-<p>
-            <span>Problemy z zachowani sa</span>
-            <i className="fa fa-align-center"></i>
-            <b>
-                <i className="fa fa-user"></i>
-                <i className="fa fa-align-center"></i>
-                <i className="fa fa-users"></i>
-            </b>
-        </p>
-        <div className="post-animated-content">
-        
+            </div>
+            <div className="search-group-elements">
+
+            </div>
         </div>
-        <Button content="Szczegóły" btnClass="circle-button"/>*/
-const searchGroup = props => (
-    <div className="search-group-block">
-        
-    </div>
-);
+    );
+    
+};
 
 export default searchGroup;

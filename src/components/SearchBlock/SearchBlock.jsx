@@ -7,11 +7,15 @@ import SearchEvent from './SearchEvent/SearchEvent';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchSearcherDataActionCreator, fetchSearcherData } from '../../store/Other/Actions';
+import { loadGroupActionCreator } from '../../store/Groups/Actions';
+import { redirectToOtherEventActionCreator } from '../../store/Events/Actions';
 import OwnSpinner from '../UI/OwnSpinner/OwnSpinner';
 import { apiPicturesUrl } from '../../axios/apiPicturesUrl';
 import Man from '../../assets/img/empty_avatars/empty_avatar_man.jpg';
 import Woman from '../../assets/img/empty_avatars/empty-avatar-girl.jpg';
 import Aux from '../../hoc/Auxi';
+import { validateInput } from '../../containers/UserOptions/Validation/Validation';
+
 
 class SearchBlock  extends Component {
     state = {
@@ -23,10 +27,10 @@ class SearchBlock  extends Component {
             {val: 0},
             {val: 0}
         ],
-        blockInPosts: [],
         startArray: [],
         clickedIconId: null,
-        responseObject: null
+        responseObject: null,
+        validationError: ""
 
     }
     componentDidMount(){
@@ -43,9 +47,22 @@ class SearchBlock  extends Component {
             this.setState({spinner: false});
         }
         if(nextProps.value !== "" && nextProps.fetchedSearcherData.events !== undefined){
-            const result = this.search(nextProps.value, nextProps.fetchedSearcherData);
-            this.setState({resultArray: result[0], counters: result[1], 
-                startArray: this.connectArrays(result[0]), clickedIconId: null});
+            const validationResult = validateInput("", "", nextProps.value, "", "", "", "", "standard");
+            if(validationResult !== ""){
+                this.setState({validationError: validationResult});
+            }
+            
+
+            else{
+                const result = this.search(nextProps.value, nextProps.fetchedSearcherData);
+                this.setState({resultArray: result[0], counters: result[1], 
+                    startArray: this.connectArrays(result[0]), clickedIconId: null});
+            }
+                
+            
+            
+            
+            
         }
     }
     connectArrays = arrays => {
@@ -105,30 +122,6 @@ class SearchBlock  extends Component {
         return [finalArray, counters];
     }
 
-    redirectTo = (name,id) => {
-        this.props.close();
-        this.props.history.push(`/logged/${name}/${id}`);
-    }
-
-    changeShowPostBlock = (e, postId) => {
-        const newArray = [...this.state.blockInPosts];
-        
-        const index = newArray.findIndex(i => {
-            return i.postId === postId
-        });
-        if(index === -1){
-            const newItem = {
-                postId: postId,
-                value: e.target.id
-            }
-            newArray.push(newItem);
-        }
-        else
-            newArray[index].value = e.target.id;
-        
-        this.setState({blockInPosts: newArray});
-        
-    }
     filter = (name, id) => {
         const newArray = [...this.state.startArray];
         const resultArray = [];
@@ -144,12 +137,13 @@ class SearchBlock  extends Component {
     }
     redirectToUsers = e => {
         this.props.close();
-        this.props.history.push("/logged/user/" + e.target.id);
+        this.props.changeUserId(e.target.id);
     }
     render() { 
-        console.log(this.props.searcherDataErrors);
+        console.log(this.props.fetchedSearcherData);
         return ( 
             <div className={`search-block ${this.props.animClass}`}>
+                {this.state.validationError === "" ? 
                 <p className="result-icons">
                     <i onClick={ this.state.counters[0].val > 0 ? () => this.filter("events", 0) : null} 
                     className={`fa fa-calendar ${this.state.clickedIconId === 0 ? "more" : null} ${this.state.counters[0].val !== 0 ? 
@@ -165,17 +159,21 @@ class SearchBlock  extends Component {
                     <i onClick={ this.state.counters[3].val > 0 ? () => this.filter("users", 3) : null}
                     className={`fa fa-user ${this.state.clickedIconId === 3 ? "more" : null}  ${this.state.counters[3].val !== 0 ? 
                     "result-icons-active-user act" : null}`}></i>
-                </p>
+                </p> : null}
+               
+                
 
                 <h3>Wyniki wyszukiwania </h3>
-                <div className="searcher-footer">
-                    <b className="counter-of-found">
-                        {this.state.resultArray.length}
-                    </b>
-                </div>
+                
 
                 <div className="search-block-content">
-                    {this.state.spinner ? <OwnSpinner /> : 
+                    {this.state.validationError ? 
+                    <p className="no-result">
+                        {this.state.validationError}
+                    </p> : 
+                    
+                    <Aux>
+                        {this.state.spinner ? <OwnSpinner /> : 
                         this.props.searcherDataErrors.length > 0 ? 
                         <p className="no-result">
                             Wystapił błąd podczas ładowania danych. Spróbuj poźniej :/
@@ -195,7 +193,7 @@ class SearchBlock  extends Component {
                                     eventUsers={i.array.eventUsers}
                                     picture={i.array.picture}
                                     Man={Man}
-                                    redirectToEvents={() => this.redirectTo("event", i.array.id)}
+                                    redirectToEvents={() => {this.props.redirectToOtherEvent(i.array.id, this.props.history); this.props.close();}}
                                     apiPicturesUrl={apiPicturesUrl}
                                     Woman={Woman}
                                     redirectToUsers={e => this.redirectToUsers(e)}
@@ -204,18 +202,22 @@ class SearchBlock  extends Component {
                                 :
                                 i.name === "posts" ? 
                                 <SearchPost 
-                                changeBlock={e => this.changeShowPostBlock(e, i.array.id)}
                                 title={i.array.title}
-
                                 id={i.array.id}
                                 pictures={i.array.pictures}
                                 content={i.array.content}
                                 apiPicturesUrl={apiPicturesUrl}
+                                creationDate={i.array.creationDate}
+                                author={i.array.author}
+                                comments={i.array.comments}
+                                Man={Man}
+                                Woman={Woman}
+                                redirectToUser={e => this.redirectToUsers(e)}
                                 /> :
                                 
                                 i.name === "users" ? 
                                 <SearchUser 
-                                redirectTo={() => this.redirectTo("user", i.array.id)}
+                                redirectTo={() => {this.props.history.push(`/logged/user/${i.array.id}`); this.props.close();}}
                                 Man={Man}
                                 id={i.array.id}
                                 Woman={Woman}
@@ -226,16 +228,30 @@ class SearchBlock  extends Component {
                                 email={i.email}
                                 birthDate={i.array.birthDate}
                                 /> : 
-                                <div>Grupy</div> }
+                                <SearchGroup 
+                                item={i.array} 
+                                apiPicturesUrl={apiPicturesUrl}
+                                redirectToGroup={() => {this.props.loadGroup(i.array.id, this.props.history);
+                                    this.props.close();}}
+                                /> }
                             </Aux>
                             );
                         }) : <p className="no-result">
                             Nic nie znalazłem<i className="fa fa-ban"></i>
                         </p>
-                    }
+                        }
+                    </Aux>
                     
+                    }    
+                   
                 </div>
-                
+
+
+                <div className="searcher-footer">
+                    <b className="counter-of-found">
+                        {this.state.validationError !== "" ? 0 : this.state.resultArray.length}
+                    </b>
+                </div>
             </div>
         )
     }
@@ -250,7 +266,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchSearcherData: (token) => dispatch(fetchSearcherDataActionCreator(token)),
-        fetchSearcherDataToZero: (result, errors) => dispatch(fetchSearcherData(result, errors))
+        fetchSearcherDataToZero: (result, errors) => dispatch(fetchSearcherData(result, errors)),
+        loadGroup: (groupId, history) => dispatch(loadGroupActionCreator(groupId, history)),
+        redirectToOtherEvent: (eventId, history) => dispatch(redirectToOtherEventActionCreator(eventId, history))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SearchBlock));

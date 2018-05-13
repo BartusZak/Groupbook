@@ -1,33 +1,52 @@
 import React from 'react';
 import './SearchPost.css';
-import Img from '../../../assets/img/404/404.jpg';
 import Button from '../../UI/Button/Button';
-const searchPost = props => (
-    <div className="search-result">
-        <div style={{backgroundImage: `url(${Img})`}} className="search-post-block">
-            <p>
-                <span>{props.title}</span>
-                <i className="fa fa-align-center"></i>
-                <b>
-                    <i onClick={props.changeBlock} id={0} className="fa fa-user"></i>
-                    <i onClick={props.changeBlock} id={1} className="fa fa-align-center"></i>
-                    <i onClick={props.changeBlock} id={2} className="fa fa-info-circle"></i>
-                </b>
-            </p>
-            <div className="post-animated-content">
-                {props.block === "0" ? 
-                    props.author ? props.author : null : null
-                }
+import moment from 'moment';
+const searchPost = props => {
+    const dateNow = moment().format();
+    const timeFromPostPublish = moment(props.creationDate.slice(0, 10)).fromNow(dateNow);
+
+    return (
+    <div className="search-post-block">
+        <p className="search-post-date">
+        {props.creationDate.slice(0,10)}<b>Opublikowano {timeFromPostPublish} temu</b>
+        <i className="fa fa-align-center"></i>
+        </p>
+
+        <div className="flex-wrapper">
+            <div className="search-post-user-details">
+                <header>
+                    {props.author !== null ? 
+                        <img  
+                        src={props.author.profilePicture === null ? props.author.sex ? props.Woman : props.Man : 
+                        props.apiPicturesUrl + props.author.profilePicture.profile} 
+                        alt="Avatar autora" />
+                        : <img src={require('assets/img/404/error-image-generic.png')} alt="Brak usera" />}
+
+                    <span id={props.author ? props.author.id : null} onClick={props.author ? props.redirectToUser : null}>{props.author ? props.author.username : "Tego użytkownika już nie ma"}</span>
+                </header>
                 
-                {props.block === "1" ? 
-                    props.content : null}
-                
-                {props.block === "2" ? 
-                    props.content : null}
+                <article>
+                    <p>{props.title}</p>
+                    {props.content}
+                </article>
             </div>
-            <Button content="Szczegóły" btnClass="circle-button"/>
+
+            <div className="search-post-content">
+                {props.pictures.length > 0 ? 
+                    <div className="pic-post" 
+                    style={{backgroundImage: `url(${
+                        props.apiPicturesUrl + props.pictures[0].mediumResolutionPicName
+                    })`
+                    }}></div>
+                : <div>Brak zdjęcia</div>}
+                
+            </div>
         </div>
+        <Button content="Wyświetl szczegóły" />
     </div>
-);
+    );
+    
+};
 
 export default searchPost;

@@ -1,6 +1,5 @@
 import React from 'react';
 import './SearchEvent.css';
-import Img from '../../../assets/img/404/404.jpg';
 import moment from 'moment';
 import Button from '../../UI/Button/Button';
 
@@ -19,7 +18,8 @@ const searchEvent = props => {
     
     return(
     <div className="search-event-block">
-        <div style={{backgroundImage: `url(${Img})`}} className="search-event-picture">
+        <div style={{backgroundImage: `url(${props.picture ? props.apiPicturesUrl + 
+            props.picture.fullResolutionPicName : null})`}} className="search-event-picture">
             <h2 className="event-picture-header">
                 <span>{props.title}</span>
                 <i className="fa fa-calendar"></i>

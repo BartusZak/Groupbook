@@ -111,7 +111,6 @@ class Group extends Component{
               }, 3000);
         }
     }
-    
     componentDidUpdate(prevProps){
         if(prevProps.loadedGroup !== this.props.loadedGroup 
             || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
