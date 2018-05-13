@@ -137,7 +137,7 @@ class SearchBlock  extends Component {
     }
     redirectToUsers = e => {
         this.props.close();
-        this.props.changeUserId(e.target.id);
+        this.props.history.push(`/logged/user/${e.target.id}`);
     }
     render() { 
         console.log(this.props.fetchedSearcherData);
@@ -230,6 +230,10 @@ class SearchBlock  extends Component {
                                 /> : 
                                 <SearchGroup 
                                 item={i.array} 
+                                responseObjectId={this.state.responseObject.id}
+                                Man={Man}
+                                redirectToUser={e => this.redirectToUsers(e)}
+                                Woman={Woman}
                                 apiPicturesUrl={apiPicturesUrl}
                                 redirectToGroup={() => {this.props.loadGroup(i.array.id, this.props.history);
                                     this.props.close();}}
