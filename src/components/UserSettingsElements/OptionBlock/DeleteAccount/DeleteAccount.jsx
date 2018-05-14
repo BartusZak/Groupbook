@@ -11,32 +11,52 @@ class deleteAccount extends Component{
         super();
         this.state = {
             checkboxCheked: false,
-            redirect: false
+            redirect: false,
+            error: null,
+            response: null,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onAccountRemoveHandler = this.onAccountRemoveHandler.bind(this);
     }
     
+    componentDidMount(){
+        this.setState({response: null, error: null});
+    }
+
     handleInputChange(){
         this.setState({checkboxCheked: !this.state.checkboxCheked })
     }
+
 
     onAccountRemoveHandler(){
         //spinner na true
         this.props.setLoadingToTrue();
         
         //axios 
-        this.props.deleteAccount(JSON.parse(localStorage.getItem('responseObject')).token);
-
-        localStorage.clear();
- 
-        setTimeout( () => {
-            console.log(this.props);
-            this.setState({redirect: !this.state.redirect});
-        }, 3000);
-       
+       this.props.deleteAccount(JSON.parse(localStorage.getItem('responseObject')).token);
+        
+        // setTimeout( () => {
+        //     console.log(this.state);
+        //     console.log(this.props);
+        //     if(!this.props.response.data.isError){
+        //         localStorage.clear();
+        
+        //         setTimeout( () => {
+        //             console.log(this.props);
+        //             this.setState({redirect: !this.state.redirect});
+        //         }, 2000);
+        //     }
+        // }, 2000);
+        
     }
-    
+
+    componentWillReceiveProps(nextProps){
+        console.log(this.props.response, nextProps.response);
+        if(this.props.response !== nextProps.response){
+            this.setState({response: nextProps.response});
+        }
+    }
+
 
     render(){
         let content;
@@ -63,15 +83,14 @@ class deleteAccount extends Component{
         if(this.props.loading){
             content = <Spinner/>;
         }
-        if(this.props.response !== null){
-            
-            if(!this.props.response.isError){
-                content = <p style={{color: 'green', fontWeight: 'bold'}}>Konto zosało poprawnie usunięte!</p>
+        if(this.state.response !== null){
+            if(!this.props.response.data.isError){
+                content = <p style={{color: 'green', fontWeight: 'bold'}}>Konto zostało poprawnie usunięte!</p>
             }
             else if(this.props.response.status !== 200){
                 console.log(this.props.response.data.errors);
                 content = <p>Błąd serwera ziomuś</p>;
-                if (this.props.response.data !== null && this.props.response.data !== null){
+                if (this.props.response.data !== null){
                     content = 
                     (
                     <Aux>
@@ -86,8 +105,7 @@ class deleteAccount extends Component{
                 }
                 
             }
-
-
+             //this.setState({response: null});
         }
 
 

@@ -17,6 +17,12 @@ const mainReducer = (state=defaultState, action)=>{
             errors: action.errors
         }
     }
+    else if( action.type === "SET_RESPONSE_TO_NULL"){
+        return{
+            ...state,
+            response: action.response,
+        }
+    }
     else {
         return{
             ...state //czy state??

@@ -27,17 +27,26 @@ class changePassword extends Component{
         let errorsTmp = []
         let valid = true;
 
-        if(this.state.newPassword !== this.state.repeatedNewPassword){
-            errorsTmp.push("Hasła nie pasują do siebie.");
-            valid = false;
-        }
         if(this.state.oldPassword === null || this.state.newPassword === null || this.state.repeatedNewPassword === null){
             errorsTmp.push("Żadne pole nie może być puste.");
             valid = false;
         }
-        if(this.state.oldPassword.length < 5 || this.state.newPassword.length < 5 || this.state.repeatedNewPassword.length < 5){
-            errorsTmp.push("Nowe hasło powinno mieć od 5 do 30 znaków.");
-            valid = false;
+
+        if(this.state.oldPassword !== null || this.state.newPassword !== null || this.state.repeatedNewPassword !== null){
+            if(this.state.newPassword !== this.state.repeatedNewPassword){
+                errorsTmp.push("Hasła nie pasują do siebie.");
+                valid = false;
+            }
+            
+            if(this.state.newPassword.length < 5 || this.state.repeatedNewPassword.length < 5){
+                errorsTmp.push("Nowe hasło powinno mieć od 5 do 30 znaków.");
+                valid = false;
+            }
+
+            if(this.state.oldPassword.length < 5){
+                errorsTmp.push("Błędne Stare Hasło!");
+                valid = false;
+            }
         }
 
         this.setState({errors: errorsTmp});
@@ -68,12 +77,12 @@ class changePassword extends Component{
     render(){
         console.log(this.props)
         let content;
-       console.log(this.state.errors);
+        console.log(this.state.errors);
         let errors = (this.state.errors !== null && this.state.errors.length > 0 )?( 
             <ul>
-                {this.state.errors.map(item => {
+                {this.state.errors.map((item, id) => {
                     return(
-                        <li style={{color: 'red', fontWeight: 'bold'}} key={item}>{item}</li>
+                        <li style={{color: 'red', fontWeight: 'bold'}} key={id}>{item}</li>
                     )
                 })}
             </ul>
@@ -94,22 +103,21 @@ class changePassword extends Component{
         content = (
             <Aux>
                 <h2>Zmień hasło</h2>
-                <hr/>
                 {errors}
                 {apiErrors}
                 <form style={{width: '90%'}} onSubmit={this.changePasswordHandler}>
                     <ul style={{margin: '0px', padding: '0px'}}>
                         <li>
                             <b>Stare hasło:</b>
-                            <input type="password" name="oldPassword" onChange={this.inputChangeHandler}/>
+                            <input className="user-account-input" type="password" name="oldPassword" onChange={this.inputChangeHandler}/>
                         </li>
                         <li>
                             <b>Nowe hasło:</b>
-                            <input type="password" name="newPassword" onChange={this.inputChangeHandler}/>
+                            <input className="user-account-input" type="password" name="newPassword" onChange={this.inputChangeHandler}/>
                         </li>
                         <li>
                             <b>Powtórz hasło:</b>
-                            <input type="password" name="repeatedNewPassword" onChange={this.inputChangeHandler}/>
+                            <input className="user-account-input" type="password" name="repeatedNewPassword" onChange={this.inputChangeHandler}/>
                         </li>
                     </ul>
                     <Button type="submit" title="Zmień hasło"/>
@@ -117,9 +125,16 @@ class changePassword extends Component{
             </Aux>
         );
         if(this.props.response !== null){
-            if(!this.props.response.isError){
-                content = <p style={{color: 'red', fontWeight: 'bold'}}>Hasło zostało zmienione!</p>;
+            if(!this.props.response.hasOwnProperty('data')){
+                content = <p style={{color: 'green', fontWeight: 'bold'}}>Hasło zostało zmienione!</p>;
             }
+            console.log(this.props.response);
+            // if(this.props.response.data.errors.length === 0){
+            //     content = <p style={{color: 'green', fontWeight: 'bold'}}>Hasło zostało zmienione!</p>;
+            // }
+            // else if(!this.props.response.data.hasOwnProperty('errors')){
+            //     content = <p style={{color: 'green', fontWeight: 'bold'}}>Hasło zostało zmienione!</p>;
+            // }
         }
         
 
