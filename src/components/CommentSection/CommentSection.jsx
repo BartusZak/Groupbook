@@ -165,8 +165,6 @@ const mapDispatchToProps = dispatch => {
         addCommentsActionCreator: (content, postId) => dispatch(addCommentsActionCreator(content, postId)),
         deleteCommentsActionCreator: (commentId) => dispatch(deleteCommentsActionCreator(commentId)),
         editCommentsActionCreator: (commentId, content) => dispatch(editCommentsActionCreator(commentId, content)),
-        
-        
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CommentSection);

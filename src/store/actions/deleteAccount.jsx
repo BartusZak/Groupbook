@@ -1,5 +1,21 @@
 import axios from 'axios/axios-groupsconnects';
 
+export function setResponseToNull(){
+    console.log("aaaaa");
+    return(dispatch)=>{
+        return(
+            dispatch(setResponseToNullFunction())
+            )
+        }
+}
+
+function setResponseToNullFunction(){
+    return{
+        type: "SET_RESPONSE_TO_NULL",
+        response: null,
+    }
+}
+
 export function deleteAccount(token){
     return(dispatch)=>{
 

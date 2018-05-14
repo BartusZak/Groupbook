@@ -7,17 +7,24 @@ export const validateInput = (min, max, inputText, specialKeys, inputType, isZer
     }
     switch(regularExpType){
         case "standard":
-            const pattern = /^([a-zA-Z0-9ąłęóńśćżź _-]+)$/;
+            const pattern = /^([a-zA-Z0-9ąłęóńśćżź ._-]+)$/;
             if(!pattern.test(inputText)){
-                return "Pole " + inputName + " zawiera niedozwolone znaki";
+                return "Pole " + inputName + " zawiera niedozwolone znaki!";
             }
             break;
         case "email":
-            const emailPattern = /\S+@\S+\.\S+/;
+            const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
             if(!emailPattern.test(inputText)){
-                return "Adres email posiada niedozwolone znaki";
+                return "Niewłaściwy Adres Email!";
             }
             break;
+        case "imieNazwisko":
+            const imieNazwiskoPattern = /^([A-Za-ząłęóńśćżź-]+)$/;
+            if(!imieNazwiskoPattern.test(inputText)){
+                return "Pole " + inputName + " zawiera niedozwolone znaki!";
+            }
+            break;
+        default:
     }
    
     switch(inputType){

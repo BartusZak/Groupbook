@@ -15,6 +15,19 @@ import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
 import Button from 'components/UI/Button';
+import { validateInput } from 'containers/UserOptions/Validation/Validation';
+
+
+const valSettings = [
+    {min: 3, max: 15, 
+        name: "Imię", type: "imieNazwisko"},
+    {min: 3, max: 15, 
+        name: "Nazwisko", type:  "imieNazwisko"},
+    {min: 5, max: 120, 
+        name: "Nazwa Usera", type: "standard"},
+    {min: 5, max: 20, 
+        name: "Adres Email", type: "email"},
+]
 
 class wholeBlock extends Component{
     state = {
@@ -40,12 +53,12 @@ class wholeBlock extends Component{
                 .then( response => {
                     console.log(response.data);
                     const WholeItems = [ 
-                        {id: 1, name: "Imię", value: response.data.firstName},
-                        {id: 2, name: "Nazwisko", value: response.data.lastName},
-                        {id: 3, name: "Nazwa użytkownika", value: response.data.username},
-                        {id: 4, name: "Adres email", value: response.data.email},
-                        {id: 5, name: "Data urodzenia", value: response.data.birthDate},
-                        {id: 6, name: "Płec", value: response.data.sex}            
+                        {id: 1, name: "Imię", value: response.data.firstName, error: null},
+                        {id: 2, name: "Nazwisko", value: response.data.lastName, error: null},
+                        {id: 3, name: "Nazwa użytkownika", value: response.data.username, error: null},
+                        {id: 4, name: "Adres email", value: response.data.email, error: null},
+                        {id: 5, name: "Data urodzenia", value: response.data.birthDate, error: null},
+                        {id: 6, name: "Płec", value: response.data.sex, error: null}            
                     ];
                     this.setState({ userDetailsList: WholeItems })
                 } )
@@ -92,8 +105,8 @@ class wholeBlock extends Component{
         console.log(this.state.userDetailsList[0].value);
         
         let data = {
-            FirstName: this.state.userDetailsList[0].value.trim(),
-            LastName: this.state.userDetailsList[1].value.trim(),
+            FirstName: (this.state.userDetailsList[0].value !== null)? this.state.userDetailsList[0].value.trim():null,
+            LastName: (this.state.userDetailsList[1].value !== null)? this.state.userDetailsList[1].value.trim(): null,
             Email: this.state.userDetailsList[3].value.trim(),
             BirthDate: this.state.userDetailsList[4].value,
             Sex: this.state.userDetailsList[5].value
@@ -117,14 +130,23 @@ class wholeBlock extends Component{
         const updatedForm = {
             ...this.state.userDetailsList
         };
+        
+        const id = inputIdentifier;
 
         const updatedFormElement = { 
             ...updatedForm[inputIdentifier]
         };
 
         updatedFormElement.value = event.target.value;
-
         updatedForm[inputIdentifier] = updatedFormElement;
+
+        const result = validateInput(valSettings[id].min, valSettings[id].max, 
+            updatedForm[id].value, "", "", "",
+            valSettings[id].name, valSettings[id].type);
+        
+        updatedFormElement.error = result;
+
+        
         console.log(updatedForm[inputIdentifier])
         console.log(updatedForm);
         this.setState({userDetailsList: updatedForm});
@@ -166,7 +188,6 @@ class wholeBlock extends Component{
     }
     render(){
         moment.locale('pl');
-        console.log(this.state.avatarDeleted);
         let topContent = (
             <Aux>
                 <OptionBlock number="1" title="Wyglad" icon="fa fa-image" function="Zmień zdjęcie profilowe" shortContent="Zmień swoje zdjęcie profilowe, tak aby budzić respekt wsród płci przeciwnej." />
@@ -252,6 +273,7 @@ class wholeBlock extends Component{
                             <form style={{width: '100%'}}>
                                 <ul className="WholeBlock">
                                     {formElementsArray.map(item => {
+                                    let placeholder = "Wpisz " + item.config.name + "...";
                                     return (
                                     <li key={item.id}>
                                         <b style={{fontWeight: 'initial', textAlign: 'left'}}>
@@ -284,10 +306,21 @@ class wholeBlock extends Component{
                                                 )
                                                 :
                                                 (
-                                                    <input 
-                                                    value={(item.config.value === null || item.config.value === undefined) ? "" : item.config.value}
-                                                    onChange={(event) => this.changeInputValue(event, item.id)}
-                                                />
+                                                    <div style={{display: 'inline-grid'}}>
+
+                                                        <input 
+                                                        className="user-account-input"
+                                                        placeholder={placeholder}
+                                                        value={(item.config.value === null || item.config.value === undefined) ? "" : item.config.value}
+                                                        onChange={(event) => this.changeInputValue(event, item.id)}
+                                                        />
+                                                        {(item.config.error !== null) ?
+                                                        (
+                                                            <span style={{marginTop: '10px', color: 'red'}}>{item.config.error}</span>
+                                                        )
+                                                        : 
+                                                        null}   
+                                                    </div>
                                                 )
                                                
                                             )
@@ -298,8 +331,10 @@ class wholeBlock extends Component{
                                 })}
                                 </ul>
                             </form>
-                            <b onClick={this.saveAccountDetails}>Zapisz dane konta</b>
-                            <b onClick={this.editAccountDetails}>Anuluj</b>
+
+                            <Button clicked={this.saveAccountDetails} color="primary" title="Zapisz dane konta" />
+                            <Button clicked={this.editAccountDetails} color="blue-grey" title="Anuluj" />
+                            
                             </Aux>
                         )
                         :
