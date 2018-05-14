@@ -154,6 +154,7 @@
     background-repeat: no-repeat;
     width: 80px;
     height: 80px;
+    cursor: pointer;
     border-radius: 50%;
     float: left;
     margin: 10px 15px;
