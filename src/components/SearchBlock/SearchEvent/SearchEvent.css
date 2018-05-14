@@ -1,0 +1,119 @@
+.search-event-block{
+    width: 700px;
+    margin: 50px 20px;
+    height: 400px;
+    background-color: #32323d;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    box-shadow: 0 1px 2px black;
+    border-radius: 5px;
+    position: relative;
+    justify-content: space-between;
+}
+
+.search-event-picture{
+    height: 200px;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inherit;
+    justify-content: space-between;
+    flex-flow: column;
+}
+.user-in-event-result{
+    width: 100%;
+}
+.user-in-event-result span{
+    font-size: 18px;
+    background-color: rgba(0,0,0,0.8);
+    letter-spacing: 1px;
+    display: block;
+    padding: 10px;
+    max-width: 230px;
+    text-align: center;
+    border-top-right-radius: 5px;
+}
+.event-picture-header{
+    text-align: center;
+    display: inherit;
+    justify-content: inherit;
+    padding: 10px 20px;
+    background-color: rgba(0,0,0,0.8);
+}
+.event-picture-header i{
+    color: orangered;
+}
+
+.event-picture-footer{
+    position: relative;
+}
+.users-in-events-container{
+    position: absolute;
+    display: flex;
+    width: 65%;
+    top: 20px;
+    right: 0;
+    border-bottom: 3px solid olivedrab;
+    padding: 0 0 25px 10px;
+    border-bottom-left-radius: 50%;
+    justify-content: flex-end;
+    
+}
+
+.user-in-events-header{
+    position: absolute;
+    letter-spacing: 3px;
+    font-family: 'Lobster', cursive;
+    color: olivedrab;
+    top: 100px;
+    right: 0;
+    width: 65%;
+    text-align: center;
+}
+.users-in-events-container img{
+    width: 50px;
+    height: 50px;
+    margin: 0 15px;
+    border-radius: 50%;
+    box-shadow: 0 2px 3px black;
+    cursor: pointer;
+}
+.users-in-events-container img:hover{
+    transform: scale(1.1);
+    transition: 0.5s all ease-in-out;
+}
+.event-start-date{
+    position: absolute;
+    left: 20px;
+    font-weight: bolder;
+    color: orangered;
+    letter-spacing: 1px;
+    bottom: -60px;
+}
+.how-long-msg{
+    position: absolute;
+    bottom: 125px;
+    left: 15px;
+    color: lavender;
+}
+
+.search-event-block button{
+    margin-bottom: 25px;
+}
+.event-owner-picture{
+    background-color: rgba(0,0,0,0.8);
+    padding: 20px;
+    position: absolute;
+    top: 55px;
+    border-bottom-left-radius: 5px;
+    right: 0;
+}
+.event-owner-picture b{
+    color: lightseagreen;
+    cursor: pointer;
+}
+.event-owner-picture b:hover{
+    color: lightblue;
+}

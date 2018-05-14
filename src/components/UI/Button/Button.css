@@ -15,6 +15,9 @@
 .circle-button:hover{
     background-color: rgb(238, 86, 59);
 }
+.circle-button:disabled{
+    background-color: grey;
+}
 .dis-btn-circle{
     background-color: grey;
 }
@@ -30,6 +33,7 @@
     font-size: 18px;
     letter-spacing: 1px;
     cursor: pointer;
+    transition: 1s all ease-in-out;
 }
 .uni-btn:focus{
     outline: none;

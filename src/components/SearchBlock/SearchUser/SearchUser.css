@@ -1,0 +1,74 @@
+.search-user-block{
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+.search-user-block .fa-user{
+    position: absolute;
+    right: 20px;
+    font-size: 26px;
+    cursor: initial;
+    top: 5px;
+    color: lightseagreen;
+}
+.search-user-avatar{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    margin: 0 auto 15px auto;
+}
+.search-user-avatar::before,
+.search-user-avatar::after{
+    content: '';
+    display: block;
+    border: 1px solid white;
+    position: absolute;
+    width: 100%;
+    top: 49.5%;
+}
+.search-user-avatar::before{
+    right: -110px;
+}
+.search-user-avatar::after{
+    left: -110px;
+}
+.search-user-block h3{
+    text-transform: uppercase;
+    text-align: center;
+    font-family: cursive;
+    color: lightcoral;
+    margin-bottom: 10px;
+}
+.search-user-info{
+    text-align: center;
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 30px;
+    background-color: #32323d;
+}
+.search-user-info b{
+    letter-spacing: 1px;
+    color: lightcoral
+}
+.search-user-info span{
+    font-size: 17px;
+}
+
+.search-user-block > button{
+    font-size: 32px;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    box-shadow: 0 2px 3px black;
+    margin: 0 auto;
+    bottom: -35px;
+}
+.search-user-block > button i{
+    padding: 0 3px 2px 0;
+}

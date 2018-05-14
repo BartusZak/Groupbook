@@ -119,7 +119,15 @@ class NavbarComponent extends Component{
 
                 navbarContent = (
                 <MenuAfterLogIn>
+<<<<<<< HEAD
                     <Searcher items={items}/>
+=======
+                    <Searcher search={this.props.search}
+                    closeSearch={this.props.closeSearch} 
+                    value={this.props.value}
+                    />
+
+>>>>>>> 59ad308b983f6cef9d20f202bf81e7aeda3ea56a
                     <ul className="navbar-nav ml-auto nav-flex-icons">
                     <div style={{margin: "auto", textAlign: "right"}}>
                         <span style={{color: "#898989", fontSize: "small"}}>Zalogowano jako:</span><br/>

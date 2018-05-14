@@ -5,13 +5,14 @@ import Input from './Input/Input';
 import 'font-awesome/css/font-awesome.min.css';
 import {SearcherDiv} from './Searcher.style';
 
-const searcher = (props) => {
+const searcher = props => {
     return(
         <SearcherDiv>
             <div className="InputContent">
-                <Input />
+                <Input search={props.search}
+                value={props.value} 
+                closeSearch={props.closeSearch}/>
             </div>
-            <Checkboxes items={props.items}/>
         </SearcherDiv>
     );
 }

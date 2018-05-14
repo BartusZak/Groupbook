@@ -164,7 +164,6 @@ class EventDetails extends Component{
             this.props.fetchedOneEvent.id);
     }
 
-
     render(){
         const date = moment().format();
         const eventLider = this.searchEventLider();
@@ -294,8 +293,8 @@ class EventDetails extends Component{
             <EventDetailsBlock events={this.state.width >= 1001 ? 
             this.props.groupEvents : null} 
             click={e => this.redirectToOtherEvent(e)} 
-            errors={this.props.groupEventsErrors}/>
-
+            errors={this.props.groupEventsErrors}
+           />
             </div>
         
             }

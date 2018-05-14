@@ -3,15 +3,14 @@ import media from 'theme/media';
 
 export const SearcherDiv = styled.div`
 
-    margin-left: 30%;
     display: flex;
-    
+    margin-left: 5%;
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: column;
 
     ${media.desktop`
-        margin-left: 10%;
+        margin-left: 5%;
     `}
 
     .InputContent {

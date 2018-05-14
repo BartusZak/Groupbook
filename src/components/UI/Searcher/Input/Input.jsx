@@ -1,9 +1,15 @@
 import React from 'react';
 
 import './Input.css';
-const input = () => (
+//onBlur={props.closeSearch}
+
+const input = props => (
     <div className="holder">
-        <input type="text"  placeholder="Znajdź.." />
+        <input 
+        onChange={props.search}
+        type="text"
+        value={props.value} 
+        placeholder="Znajdź.." />
     </div>
 );
 

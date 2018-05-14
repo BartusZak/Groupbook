@@ -10,6 +10,8 @@ import { Container, Row, Col, Alert } from 'reactstrap';
 import axios from 'axios/axios-groupsconnects';
 import Aux from 'hoc/Auxi';
 import Spinner from 'components/UI/Spinner/Spinner';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class UserDetails extends Component{
     state = {
@@ -23,7 +25,6 @@ class UserDetails extends Component{
         this.loadData();
         this.loadGroupsIdsOfUser();
     }
-
     loadData () {
         if ( this.props.match.params.id) {
             if ( !this.state.user) {
@@ -157,4 +158,10 @@ class UserDetails extends Component{
     }
 }
 
-export default UserDetails;
+const mapStateToProps = state => {
+    return {
+        userId: state.UsersReducer.userId
+    };
+}
+export default connect(mapStateToProps, null)(withRouter(UserDetails));
+

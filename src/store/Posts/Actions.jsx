@@ -149,7 +149,7 @@ export const deletePostActionCreator = (token, postId) => {
         const config = {
             headers: {'Authorization': "bearer " + token}
         };
-        axios.delete(`/api/pdosts/${postId}`, config).then(response => {
+        axios.delete(`/api/posts/${postId}`, config).then(response => {
             dispatch(deletePost(true, []));
             console.log(response.data);
         }).catch(error => {
@@ -162,4 +162,93 @@ export const deletePostActionCreator = (token, postId) => {
             }
         })
     }
+}
+
+export const editPost = (editPostResult, editPostErrors) => {
+    return {
+        type: actionTypes.EDIT_POST,
+        editPostResult: editPostResult,
+        editPostErrors: editPostErrors
+    }
+}
+
+export const editPostActionCreator = (token, Name, Description, postId, currName, currDesc) => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + token}
+        };
+        let correctName = Name;
+        let correctDesc = Description;
+        if(correctName === ""){
+            correctName = currName;
+        }
+        if(correctDesc === ""){
+            correctDesc = currDesc;
+        }
+        const objectToSend = {
+            Id: postId, 
+            Title: correctName,
+            Content: correctDesc
+        }
+
+        axios.post("/api/posts/update",objectToSend, config).then(response => {
+            console.log(response.data);
+            dispatch(editPost(true, []));
+            dispatch(fetchEditPost(response.data.successResult));
+        }).catch(error => {
+            if(error.response){
+                const array = [];
+                array.push("Błąd serwera");
+                dispatch(editPost(false, !error.response.data.errors ? 
+                array : error.response.data.errors));
+            }
+        })
+    }
+}
+
+export const fetchEditPost = editedPost => {
+    return {
+        type: actionTypes.FETCH_EDIT_POST,
+        editedPost: editedPost
+    }
+}
+
+
+
+
+export const editPostPictureActionCreator = (addedPosts, pictures, editedPost, token) => {
+    return dispatch => {
+            let formData = new FormData();
+            const config = {
+                    headers: {'Content-Type': 'multipart/form-data', 
+                    'Authorization' : "bearer " + token}
+            }; 
+            const idsArray = [];
+            if(addedPosts.pictures.length > 0){
+                idsArray.push(addedPosts.pictures[0].id);
+                idsArray.forEach(function (value){
+                    formData.append('picsToDeleteIds['+ idsArray.indexOf(value) +']', value);
+                });
+            }
+            formData.append("newPictures", pictures[0]);
+            formData.append("postId", addedPosts.id);
+           
+            axios.post("/api/posts/updatepictures", formData, config)
+            .then(response => {
+                const newObject = editedPost !== null ? {...editedPost} : {...addedPosts};
+                console.log(newObject);
+                newObject.pictures = response.data.successResult.addedPictures;
+                dispatch(editPost(true, []));
+                dispatch(fetchEditPost(newObject));
+            }).catch(error => {
+                    const array = [];
+                    array.push("Błąd serwera");
+                    dispatch(editPost(false, (error.response.status === 404 || error.response.status === 401 || 
+                        error.response.status === 400 )? 
+                    array : error.response.data.errors));
+            })
+            
+        
+    }
+    
 }
