@@ -12,10 +12,16 @@ const searchGroup = props => {
                 youInGroup = true;
         }
     }
+    const usersInGroup = []; 
+    if(props.item.userGroups.length > 0){
+        for(let key in props.item.userGroups){
+            if(!props.item.userGroups[key].isModerator){
+                usersInGroup.push(props.item.userGroups[key]);
+            }
+        }
+    }
     
-    
-    
-    console.log(props.item.userGroups);
+    console.log(usersInGroup);
     return(
         <div className="search-group-block">
             <div className="search-group-details">
@@ -58,12 +64,20 @@ const searchGroup = props => {
 
                             <p id={props.item.moderator.id} 
                             onClick={props.redirectToUser}>{props.item.moderator.username}</p>
-                        </div> : <p className="no-result">
-                            Brak moderatora<i className="fa fa-ban"></i></p>}
+                        </div> : null}
 
                         
                         <div className="users-in-search-group">
-                            Dokonczyć to jutro :/
+                            <h4>Użytkownicy</h4>
+                            {usersInGroup.map(i => {
+                                return (
+                                    <div id={i.user.id} onClick={props.redirectToUser} style={{backgroundImage: `url(${i.user.profilePicture ? 
+                                    props.apiPicturesUrl + i.user.profilePicture.profile : 
+                                    i.user.sex ? props.Woman : props.Man})`}}>
+                                    
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div> : 
                     <p className="no-result">
