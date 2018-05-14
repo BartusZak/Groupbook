@@ -1,7 +1,6 @@
 import axios from 'axios/axios-groupsconnects';
 
 export function setResponseToNull(){
-    console.log("aaaaa");
     return(dispatch)=>{
         return(
             dispatch(setResponseToNullFunction())

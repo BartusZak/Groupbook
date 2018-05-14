@@ -19,39 +19,42 @@ class deleteAccount extends Component{
         this.onAccountRemoveHandler = this.onAccountRemoveHandler.bind(this);
     }
     
+    componentDidMount(){
+        this.setState({response: null, error: null});
+    }
+
     handleInputChange(){
         this.setState({checkboxCheked: !this.state.checkboxCheked })
     }
+
 
     onAccountRemoveHandler(){
         //spinner na true
         this.props.setLoadingToTrue();
         
         //axios 
-        this.props.deleteAccount(JSON.parse(localStorage.getItem('responseObject')).token);
-
-        setTimeout( () => {
-            console.log(this.state);
-            console.log(this.props);
-            if(!this.props.response.data.isError){
-                localStorage.clear();
+       this.props.deleteAccount(JSON.parse(localStorage.getItem('responseObject')).token);
         
-                setTimeout( () => {
-                    console.log(this.props);
-                    this.setState({redirect: !this.state.redirect});
-                }, 2000);
-            }
-        }, 2000);
+        // setTimeout( () => {
+        //     console.log(this.state);
+        //     console.log(this.props);
+        //     if(!this.props.response.data.isError){
+        //         localStorage.clear();
+        
+        //         setTimeout( () => {
+        //             console.log(this.props);
+        //             this.setState({redirect: !this.state.redirect});
+        //         }, 2000);
+        //     }
+        // }, 2000);
         
     }
 
     componentWillReceiveProps(nextProps){
+        console.log(this.props.response, nextProps.response);
         if(this.props.response !== nextProps.response){
-            this.setState({response: this.props.response});
+            this.setState({response: nextProps.response});
         }
-    }
-    componentWillUnmount(){
-        this.setState({response: null});
     }
 
 
