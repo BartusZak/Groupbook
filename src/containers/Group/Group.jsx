@@ -128,9 +128,12 @@ class Group extends Component{
         if(prevProps.loadedGroup !== this.props.loadedGroup 
             || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
                 let image = false;
-                if(this.props.loadedGroup.picture.fullResolutionPicName !== undefined){
-                   image = imageExists(apiPicturesUrl + this.props.loadedGroup.picture.fullResolutionPicName)
+                if(this.props.loadedGroup.picture !== null){
+                    if(this.props.loadedGroup.picture.fullResolutionPicName !== undefined){
+                        image = imageExists(apiPicturesUrl + this.props.loadedGroup.picture.fullResolutionPicName)
+                     }
                 }
+                
             this.setState({loadedData: this.props.loadedGroup, 
                 loadingGroupDataSpinner: false, loadedPosts: this.props.loadedGroup.posts ,
                 showBackdrop: false, openEditPlace: false, openEditPlaceDesc: false, 
@@ -245,7 +248,7 @@ class Group extends Component{
             <nav style={{backgroundImage: `url(${
                 this.state.files.length > 0 ? this.state.files[0].preview :
                 (
-                    this.state.loadedData.picture.fullResolutionPicName === null ? Back : 
+                    this.state.loadedData.picture === null ? Back : 
                     (
                         this.state.bgImageLoadedSucces ? apiPicturesUrl + this.state.loadedData.picture.fullResolutionPicName : NotFoundBack
                     )
