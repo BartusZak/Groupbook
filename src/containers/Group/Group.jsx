@@ -127,13 +127,14 @@ class Group extends Component{
     componentDidUpdate(prevProps){
         if(prevProps.loadedGroup !== this.props.loadedGroup 
             || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
+                let image = false;
+                if(this.props.loadedGroup.picture.fullResolutionPicName !== undefined){
+                   image = imageExists(apiPicturesUrl + this.props.loadedGroup.picture.fullResolutionPicName)
+                }
             this.setState({loadedData: this.props.loadedGroup, 
                 loadingGroupDataSpinner: false, loadedPosts: this.props.loadedGroup.posts ,
                 showBackdrop: false, openEditPlace: false, openEditPlaceDesc: false, 
-                bgImageLoadedSucces: imageExists(apiPicturesUrl + this.props.loadedGroup.picture.fullResolutionPicName)});
-                setTimeout(() => {
-                    this.forceUpdate()
-                  }, 3000);
+                bgImageLoadedSucces: image});
                 
         }
     }
