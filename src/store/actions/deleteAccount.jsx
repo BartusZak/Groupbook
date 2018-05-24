@@ -26,6 +26,7 @@ export function deleteAccount(token){
             .then((response)=>{
                 dispatch(accountRemovedSuccessfull(response.data));
                 console.log(response.data)
+                localStorage.clear();
             })
             .catch((error)=>{
                 dispatch(accountRemovedUnSuccessfull(error.response));
@@ -40,7 +41,8 @@ function accountRemovedSuccessfull(response){
     return{
         type: "ACCOUNT_REMOVED_SUCCESSFULL",
         response: response,
-        loading: false
+        loading: false,
+        redirect: true,
     }
 }
 

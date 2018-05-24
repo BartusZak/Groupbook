@@ -35,19 +35,6 @@ class deleteAccount extends Component{
         //axios 
        this.props.deleteAccount(JSON.parse(localStorage.getItem('responseObject')).token);
         
-        // setTimeout( () => {
-        //     console.log(this.state);
-        //     console.log(this.props);
-        //     if(!this.props.response.data.isError){
-        //         localStorage.clear();
-        
-        //         setTimeout( () => {
-        //             console.log(this.props);
-        //             this.setState({redirect: !this.state.redirect});
-        //         }, 2000);
-        //     }
-        // }, 2000);
-        
     }
 
     componentWillReceiveProps(nextProps){
