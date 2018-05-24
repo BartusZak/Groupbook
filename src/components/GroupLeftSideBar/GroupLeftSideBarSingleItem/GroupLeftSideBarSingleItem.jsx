@@ -4,7 +4,7 @@ const groupPostSingleItem = props => {
     return(
         <div className="single-left-group-container">   
             <div className="left-group-image-holder">
-                <img src={props.pic} alt={props.email} />
+                <img src={props.pic} alt={props.email} onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}}/>
                 <i className="fa fa-envelope"></i>
             </div>
             <Link 

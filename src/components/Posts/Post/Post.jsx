@@ -135,7 +135,8 @@ class Post extends Component{
                           this.props.sex ? EmptyAvatarGirl : 
                           EmptyAvatarMan : apiPicturesUrl + 
                           this.props.authorAvatar.avatar
-                          } alt="Opis"/>
+                          } alt="Opis"
+                          onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}}/>
                       </div>
                       <p className="post-block-author">{this.props.userName}</p>
 
@@ -271,7 +272,7 @@ class Post extends Component{
                     {this.props.postPicture.length > 0 ? 
                     <img src={this.props.postPicture[0].preview ? 
                         this.props.postPicture[0].preview : 
-                        apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie"/>
+                        apiPicturesUrl + this.props.postPicture[0].fullResolutionPicName} alt="Zdjęcie" onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}} />
                     : null}
                 </div>
                 </Backdrop> : null

@@ -5,6 +5,7 @@ import GroupLeftSideBar from '../../components/GroupLeftSideBar/GroupLeftSideBar
 import Modal from '../../components/UI/Modal/Modal';
 import OpenedMessage from '../../components/UI/OpenedMessage/OpenedMessage';
 import Back from '../../assets/img/groupimages/back.jpg';
+import NotFoundBack from 'assets/img/404/error-image-generic.png';
 import Events from '../../components/Events/Events';
 import Posts from '../../components/Posts/Posts';
 import { connect } from 'react-redux';
@@ -34,6 +35,17 @@ const valSettings = [
     {min: 5, max: 260, 
         name: "opis grupy", type:  "standard"}
 ]
+
+function imageExists(image_url){
+
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', image_url, false);
+    http.send();
+
+    return http.status !== 404;
+
+}
 
 class Group extends Component{
    
@@ -72,7 +84,8 @@ class Group extends Component{
         files: [],
         addFilesError: "",
 
-        addPicPrompt: false
+        addPicPrompt: false,
+        bgImageLoadedSucces: null
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
@@ -116,7 +129,12 @@ class Group extends Component{
             || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
             this.setState({loadedData: this.props.loadedGroup, 
                 loadingGroupDataSpinner: false, loadedPosts: this.props.loadedGroup.posts ,
-                showBackdrop: false, openEditPlace: false, openEditPlaceDesc: false});
+                showBackdrop: false, openEditPlace: false, openEditPlaceDesc: false, 
+                bgImageLoadedSucces: imageExists(apiPicturesUrl + this.props.loadedGroup.picture.fullResolutionPicName)});
+                setTimeout(() => {
+                    this.forceUpdate()
+                  }, 3000);
+                
         }
     }
     showEventsClickHandler = () => { this.setState({showEvents: true, showPosts: false}); }
@@ -216,10 +234,73 @@ class Group extends Component{
     render(){
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
-        
+        let navBar = <nav className="navigation-bar"/>
+
+        let loadedDataLength = Object.keys(this.state.loadedData)
+
+        if(loadedDataLength.length > 0){
+            navBar=
+            (
+            <nav style={{backgroundImage: `url(${
+                this.state.files.length > 0 ? this.state.files[0].preview :
+                (
+                    this.state.loadedData.picture.fullResolutionPicName === null ? Back : 
+                    (
+                        this.state.bgImageLoadedSucces ? apiPicturesUrl + this.state.loadedData.picture.fullResolutionPicName : NotFoundBack
+                    )
+                )
+                })`}}
+                className="navigation-bar">
+                {isUserInGroup.result ? 
+                 
+                
+
+                <span className="group-owner">Należysz <i className="fa fa-check"></i></span> :
+                <span className="group-owner">Nie należysz <i className="fa fa-ban"></i></span>}
+
+                {isUserGroupLeader ? 
+                    <div className="leader-options">
+                        <Button clicked={this.openDeleteModal} btnClass="user-opts-del" content="Usuń grupę" />
+                        <Dropzone onDrop={this.onDropHandler} className="user-opts-deny">
+                            <Button
+                            btnClass="change-photo" 
+                            content={<Aux><span>Zmień tło grupy</span><i className="fa fa-photo"></i></Aux>} />
+                        </Dropzone> 
+                      
+                    </div>
+
+                    : null
+                } 
+                {this.state.addFilesError ? 
+                <p className="picture-error">{this.state.addFilesError}</p> : null}
+
+                <ConfirmModal mode="Small" action={this.deleteGroupHandler}
+                clicked={this.openDeleteModal} show={this.state.confirmModal}>
+                    <div className="delete-group-prompt">
+                        <i onClick={this.openDeleteModal} className="fa fa-close den"></i>
+                        <h2>Jesteś pewny?</h2>
+                        <p>Czy jestes pewny, że chcesz usunąć grupę <b>{this.props.loadedGroup.name}</b>. Pamiętaj, że ten zabieg
+                        jest nie odwracalny.</p>
+                        <div className="delete-group-buttons">
+                            <Button clicked={this.openDeleteModal} 
+                            btnClass="user-opts-deny" content="Anuluj" />
+
+                            <Button clicked={this.deleteGroupHandler} 
+                            btnClass="user-opts-del" content="Usuń grupę" />
+
+                            
+                        </div>
+                    </div>
+                
+                </ConfirmModal>
+                
+            </nav>
+            )
+        }
+
         return(
             <Aux>
-            <Backdrop show={this.state.showBackdrop}>
+            <Backdrop show={this.state.showBackdrop}> 
                  {this.state.loadingGroupDataSpinner ? <Spinner /> : null}
             </Backdrop>
 
@@ -311,14 +392,13 @@ class Group extends Component{
                     )}
             </Transition>
 
-
              <div className="left-trash-container">
                  <GroupLeftSideBar 
                  users={this.state.loadedData.userGroups}
                  loadingUsersError={this.state.loadingGroupDataError} />
                  
              </div>
-             
+
              <div className="group-container">
                 
                 <div className="group-header-area">
@@ -347,61 +427,9 @@ class Group extends Component{
                     : null}
                 </p>}
                 </div>
-                
-                
-                
-                
-                 <nav style={{backgroundImage: `url(${
-                    this.state.files.length > 0 ? this.state.files[0].preview : 
-                    this.state.loadedData.picture ? 
-                    apiPicturesUrl + 
-                    this.state.loadedData.picture.fullResolutionPicName: Back})`}} className="navigation-bar">
-                    {isUserInGroup.result ? 
-                     
-                    
+                  
+                {navBar}
 
-                    <span className="group-owner">Należysz <i className="fa fa-check"></i></span> :
-                    <span className="group-owner">Nie należysz <i className="fa fa-ban"></i></span>}
-
-                    {isUserGroupLeader ? 
-                        <div className="leader-options">
-                            <Button clicked={this.openDeleteModal} btnClass="user-opts-del" content="Usuń grupę" />
-                            <Dropzone onDrop={this.onDropHandler} className="user-opts-deny">
-                                <Button
-                                btnClass="change-photo" 
-                                content={<Aux><span>Zmień tło grupy</span><i className="fa fa-photo"></i></Aux>} />
-                            </Dropzone> 
-                          
-                        </div>
-
-                        : null
-                    } 
-                    {this.state.addFilesError ? 
-                    <p className="picture-error">{this.state.addFilesError}</p> : null}
-
-                    <ConfirmModal mode="Small" action={this.deleteGroupHandler}
-                    clicked={this.openDeleteModal} show={this.state.confirmModal}>
-                        <div className="delete-group-prompt">
-                            <i onClick={this.openDeleteModal} className="fa fa-close den"></i>
-                            <h2>Jesteś pewny?</h2>
-                            <p>Czy jestes pewny, że chcesz usunąć grupę <b>{this.props.loadedGroup.name}</b>. Pamiętaj, że ten zabieg
-                            jest nie odwracalny.</p>
-                            <div className="delete-group-buttons">
-                                <Button clicked={this.openDeleteModal} 
-                                btnClass="user-opts-deny" content="Anuluj" />
-
-                                <Button clicked={this.deleteGroupHandler} 
-                                btnClass="user-opts-del" content="Usuń grupę" />
-
-                                
-                            </div>
-                        </div>
-                    
-                    </ConfirmModal>
-                    
-                </nav>
-                 
-                 
                  <div className="navigate">
                      {isUserInGroup.result ? <div className="group-nav-left">
                          <i onClick={this.showPostsClickHandler} className="fa fa-clipboard"></i>
@@ -481,6 +509,7 @@ class Group extends Component{
                 
                   
              </div>
+
              <Modal
              show={this.state.showSendMessageToOwnerModal} 
              clickedMethod={this.modalShowClickHandler}> 
