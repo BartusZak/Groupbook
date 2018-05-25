@@ -12,7 +12,8 @@ const singleEvent = props => {
         <Aux>
         <div className="single-event">
             <div className="single-image-placeholder">
-                <img src={props.picture ? apiPicturesUrl + props.picture.mediumResolutionPicName : avocado} alt={props.title} />
+                <img onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}}
+                src={props.picture ? apiPicturesUrl + props.picture.mediumResolutionPicName : avocado} alt={props.title} />
             </div>
             <div className="event-desc-holder">
                 {!moment(props.eventDate.slice(0,10)).isAfter(dateNow) ? null : 

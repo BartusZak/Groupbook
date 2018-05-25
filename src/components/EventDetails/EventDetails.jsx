@@ -169,7 +169,7 @@ class EventDetails extends Component{
         const eventLider = this.searchEventLider();
         const isUserInEvent = this.isUserExistInEvent();
         const isUserLider = this.isUserLider();
-
+        console.log(this.props.fetchedOneEvent.eventUsers);
         return(
         <Aux>
             <Backdrop show={this.state.addUserToEventSpinner}>
@@ -241,7 +241,6 @@ class EventDetails extends Component{
              <Calendar choosenDay={19} showCalendar={this.state.showCalendar}/> 
          </div>
 
-
          <div style={{backgroundImage: `url(${this.props.fetchedOneEvent.picture ? 
          apiPicturesUrl + this.props.fetchedOneEvent.picture.fullResolutionPicName : Image })`}} className="event-details-bar">
              <span className="enjoy-event-block">
@@ -283,13 +282,14 @@ class EventDetails extends Component{
                 <span onClick={this.openUsersModal}>Sprawdź wszystkich</span>
             </p>
 
-            <ul className="event-user-bar-container">
+            <div className="event-user-bar-container">
                 {this.props.fetchedOneEvent.eventUsers ? this.props.fetchedOneEvent.eventUsers.map(item => {
-                    return <li style={{backgroundImage: `url(${item.user.profilePicture ? 
+                    return <img onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}}
+                    src={item.user.profilePicture ? 
                     apiPicturesUrl + item.user.profilePicture.avatar :
-                    item.user.sex ? AvatarMan : AvatarGirl})`}} key={item} className="event-user-bar"></li>;
+                    item.user.sex ? AvatarMan : AvatarGirl} key={item} className="event-user-bar"/>;
                 }) : null}
-            </ul>
+            </div>
             <EventDetailsBlock events={this.state.width >= 1001 ? 
             this.props.groupEvents : null} 
             click={e => this.redirectToOtherEvent(e)} 
