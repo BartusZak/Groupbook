@@ -47,7 +47,7 @@ class Posts extends Component{
 
     }
     loadMoreItems = () => {
-        if(this.state.posts.length > 0){
+        if(this.state.posts.length >= 10){
             if(this.postEnd.scrollTop + this.postEnd.clientHeight >= this.postEnd.scrollHeight){
                 this.setState({loadingMorePostsSpinner: true});
                 let newPosts = [...this.state.posts];
@@ -128,6 +128,7 @@ class Posts extends Component{
                             
                             this.state.posts.map( item => {
                                 return <Post 
+                                users={this.props.users}
                                 post={item}
                                 currentObject={this.props.editedPost}
                                 isUserGroupLeader={this.props.isUserGroupLeader}

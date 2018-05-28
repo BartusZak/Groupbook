@@ -12,6 +12,9 @@
 }
 .CommentSection::-webkit-scrollbar { display: none; }
 
+.add-comment-area{
+    position: relative;
+}
 .add-comment-area textarea { 
     width: 100%;
     resize: none;
@@ -19,7 +22,6 @@
     border-radius: 5px;
     outline: none;
     height: 110px;
-    
 }
 
     
@@ -27,23 +29,23 @@
 .CommentInfo {
     display: flex;
     justify-content: space-between;
-    width: 90%;
-    margin: 0 auto 10px auto !important;
-    padding: auto !important;
+    width: 94%;
+    margin: 0 auto;
 }
 
 .CommentInfo .fa-trash {
     color: red;
 }
-
-.CommentInfo i{
-    margin-left: 20px;
+.CommentInfo span{
+    width: 40px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .CommentInfo i:hover {
     opacity: 0.6;
 }
-.CommentSection li:first-child{ border: none; }
+.CommentSection > li:first-child{ border: none; }
 .add-comment-gr-button{
    width: 150px;
    font-size: 14px;
@@ -60,7 +62,7 @@
 .add-comment-gr-button:focus{
     outline: none;
 }
-.CommentSection li{
+.CommentSection > li{
     margin-top: 30px;
     border: 2px solid grey;
     padding: 5px;
@@ -95,9 +97,95 @@
         
        
     }
-    .CommentSection li{
+    .CommentSection > li{
         margin-top: 5px;
         border: 1px solid grey;
         padding: 0 !important;
     }
+}
+.edit-comment-input{
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #23232d;
+    color: white;
+    outline: none;
+}
+.tag-user-button{
+    position: absolute;
+    bottom: 70px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    color: lightgreen;
+    cursor: pointer;
+    outline: none;
+}
+.tag-user-button:hover{
+    color: lightcyan;
+}
+.tag-user-button:focus{
+    outline: none;
+}
+.users-to-tag-container{
+    width: 50%;
+    height: 350px;
+    position: absolute;
+    background-color: rgba(0,0,0,0.8);
+    right: 0;
+    bottom: -320px;
+    padding: 40px 12px 20px 12px;
+    box-sizing: border-box;
+}
+.users-to-tag-container::before{
+    content: '';
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    display: block;
+    top: -20px;
+    right: 80px;
+    transform: rotate(45deg);
+    background-color: rgba(0,0,0,0.8);
+}
+.users-to-tag-container .fa-times{
+    color: white;
+    position: absolute;
+    font-size: 24px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 100;
+    top: 5px
+}
+.users-to-tag-container ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 100%;
+    overflow-y: auto;
+}
+.users-to-tag-container ul > li{
+   display: flex;
+   align-items: center;
+   flex-flow: row;
+   position: relative;
+   width: 90%;
+   margin-left: 5%;
+}
+.users-to-tag-container ul > li img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.users-to-tag-container ul > li i{
+    color: lightgreen;
+    position: absolute;
+    right: 25px;
+    font-size: 24px;
+}
+.tagged-user{
+    color: tomato;
+    font-weight: bold;
+    letter-spacing: 2.5px;
 }

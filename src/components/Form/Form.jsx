@@ -10,7 +10,7 @@ import Spinner from '../UI/Spinner/Spinner';
 import axios from 'axios/axios-groupsconnects';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { validateInput } from '../../containers/UserOptions/Validation/Validation';
-
+import OwnSpinner from '../UI/OwnSpinner/OwnSpinner';
 class Form extends Component {
     state = {
         names: this.props.names, // Co ma byc wrzucone w formularz
@@ -21,9 +21,14 @@ class Form extends Component {
         password: null,
         registredSuccesfully: false,
         errors: null,
-        logingError: ""
+        logingError: "",
+        loadingSpinner: false
     }
-
+    componentWillReceiveProps(nextProps){
+        if(nextProps.logingError !== this.props.logingError){
+            this.setState({loadingSpinner: false});
+        }
+    }
     componentDidUpdate(prevProps, prevState){
         if(prevProps.logingError !== this.props.logingError){
             this.setState({logingError: this.props.logingError});
@@ -31,7 +36,6 @@ class Form extends Component {
        
     }
     Validate = () => {
-
         const errors = [...this.state.itemsErrors];
         const oldState = [...this.state.names];
         let result = true;
@@ -50,6 +54,7 @@ class Form extends Component {
         this.setState({...this.state, itemsErrors: errors, logingError: ""});
 
         if(result){
+            this.setState({loadingSpinner: true});
             this.props.fetchingLogingIn(this.state.names[0].text,
                 this.state.names[1].text, this.props.history);
         }
@@ -142,7 +147,9 @@ class Form extends Component {
         {
             text = <p className="message">Nie masz konta? <Link to="/register">Utwórz konto</Link></p>;
             button = (
-                <Button color="dark-green"
+                <Button 
+                    disabled={this.state.loadingSpinner}
+                    color="dark-green"
                     type="submit"
                     clicked={this.props.isLogged ? this.props.clicked :  e => this.onSubmitHandler(e)}
                     title={this.props.buttonTitle}
@@ -196,14 +203,22 @@ class Form extends Component {
                             dropdownOptions={item.dropdownOptions}
                             />
                         })}
+
                         {button}
                         {text}
-                        {this.state.logingError ?
-                        <p className="loging-error">
-                            {this.state.logingError}
-                        </p> :
-                        null
-                        }
+                        
+                        <div className="const-wrapper">
+                            {this.state.loadingSpinner ? 
+                            <OwnSpinner /> : null}
+                            
+                            {this.state.logingError ?
+                            <p className="loging-error">
+                                {this.state.logingError}
+                            </p> :
+                            null
+                            }
+                        </div>
+                        
                     </MainForm> 
                     );
         }
