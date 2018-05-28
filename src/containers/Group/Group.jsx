@@ -28,6 +28,7 @@ import ConfirmModal from '../../components/UI/ActionConfirm/ActionConfirm';
 import OneInputEdit from '../../components/Edit/OneInputEdit';
 import { validateInput, validatePictures } from '../../containers/UserOptions/Validation/Validation';
 import Dropzone from 'react-dropzone';
+import ReactImageFallback from "react-image-fallback";
 
 const valSettings = [
     {min: 5, max: 120, 
@@ -35,17 +36,6 @@ const valSettings = [
     {min: 5, max: 260, 
         name: "opis grupy", type:  "standard"}
 ]
-
-function imageExists(image_url){
-
-    var http = new XMLHttpRequest();
-
-    http.open('HEAD', image_url, false);
-    http.send();
-
-    return http.status !== 404;
-
-}
 
 class Group extends Component{
    
@@ -128,11 +118,13 @@ class Group extends Component{
         if(prevProps.loadedGroup !== this.props.loadedGroup 
             || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
                 let image = false;
+                console.log(image);
                 if(this.props.loadedGroup.picture !== null){
                     if(this.props.loadedGroup.picture.fullResolutionPicName !== undefined){
-                        image = imageExists(apiPicturesUrl + this.props.loadedGroup.picture.fullResolutionPicName)
+                            image = true; //zaimplementowac sprawdzanie obrazow
                      }
                 }
+                console.log(image);
                 
             this.setState({loadedData: this.props.loadedGroup, 
                 loadingGroupDataSpinner: false, loadedPosts: this.props.loadedGroup.posts ,
