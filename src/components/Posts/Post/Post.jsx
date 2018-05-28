@@ -120,6 +120,7 @@ class Post extends Component{
         const Content = this.state.showComments ? this.props.commentsErrorLoading ? 
         <h5 className="loading-error-eessage">Wystąpił błąd podczas ładowania komentarzy</h5> : 
         <CommentSection 
+        users={this.props.users}
         comments={this.props.comments}
         PostId={this.state.postId}/> : null; 
         return(
