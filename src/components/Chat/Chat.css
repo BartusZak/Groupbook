@@ -20,7 +20,7 @@
         opacity: 0.5;
     }
     100%{
-        opacity: 1;
+        opacity: 0.99;
     }
 }
 .chat-container .fa-times{
