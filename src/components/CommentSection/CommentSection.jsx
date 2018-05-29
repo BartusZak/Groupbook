@@ -114,29 +114,27 @@ class CommentSection extends Component{
         let tagString = "";
         let commentContentString = "";
         console.log(content);
-        for(let i = 0; i < content.length; i++){
-            if(content.charAt(i) === "@"){
-                for(let j = i; j < content.length; j++){
-                    if(content.charAt(j) === "]"){
+        let counter = 0;
+        while(counter < content.length){
+            if(content.charAt(counter) === "@"){
+                for(let i = counter; i < content.length; i++){
+                    if(content.charAt(i) === "]"){
                         returnArray.push({isTag: true , content: tagString});
                         tagString = "";
+                        counter = i;
                         break;
                     }
-                    else if(content.charAt(j) !== "[" && content.charAt(j) !== "@")
-                        tagString += content.charAt(j);
+                    else if(content.charAt(i) !== "[")
+                        tagString += content.charAt(i);
                 }
+                
             }
             else{
-                commentContentString += content.charAt(i);
-                
+                commentContentString += content.charAt(counter);
             }
-           
-                
+            counter++;
         }
-        if(commentContentString.length > 0)
-            returnArray.push({isTag: false , content: commentContentString});
-
-    
+        returnArray.push({isTag: false , content: commentContentString});
         console.log(returnArray);
         return returnArray;
         /*
