@@ -77,7 +77,7 @@ class Group extends Component{
         addPicPrompt: false,
         bgImageLoadedSucces: null,
 
-        openChat: true
+        openChat: false
     }
    componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
