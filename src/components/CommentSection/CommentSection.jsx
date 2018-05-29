@@ -30,6 +30,13 @@ class CommentSection extends Component{
         tagsCounter: 0,
         notChangedUsers: []
     }
+    contains = (array, element) => {
+        for(let i = 0 ; i < array.length; i++)
+            if(array[i].user.username === element)
+                return true;
+
+        return false;
+    }
 
     onChangeHandler = event => {
         let result = validateInput(2,255, 
@@ -37,8 +44,27 @@ class CommentSection extends Component{
         if(result === "")
             result = validateTags(event.target.value, this.state.notChangedUsers);
         
+        
+        const usersArray = createUsersArray(event.target.value);
+        const newNotChangedUsers = [...this.state.notChangedUsers];
+        const newLoadedUsers = [...this.state.notChangedUsers];
+        const newTaggedUsers = [];
+        console.log(newLoadedUsers);
+        for(let i = 0; i < usersArray.length; i++){
+            const index = newNotChangedUsers.findIndex(j => {
+                return j.user.username === usersArray[i]
+            });
+            if(newNotChangedUsers[index])
+                newTaggedUsers.push(newNotChangedUsers[index]);
+            const secondIndex = newLoadedUsers.findIndex(j => {
+                return j.user.username === usersArray[i]
+            });
+            if(newLoadedUsers[secondIndex])
+                newLoadedUsers.splice(secondIndex, 1);
+        }
+
         this.setState({CommentContent: event.target.value, commentValidation: result,
-        sendingCommentError: ""});
+        sendingCommentError: "", taggedUsers: newTaggedUsers, loadedUsers: newLoadedUsers});
     }
    
     componentDidUpdate(prevProps){
@@ -152,6 +178,7 @@ class CommentSection extends Component{
         return returnArray;
     }
     render(){
+        console.log(this.state.taggedUsers);
         return(
             <ul className="CommentSection">
                 <li className="add-comment-area">
