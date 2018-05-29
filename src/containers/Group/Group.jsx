@@ -235,7 +235,7 @@ class Group extends Component{
     }
 
     render(){
-        console.log(this.state.openChat);
+        console.log(this.state.loadedData.userGroups);
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
         let navBar = <nav className="navigation-bar"/>

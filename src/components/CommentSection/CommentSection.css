@@ -79,7 +79,33 @@
     box-sizing: border-box;
 }
 
-
+.succ-add-comment{
+    color: lightgreen;
+}
+.add-comment-area .server-error,
+.add-comment-area .succ-add-comment{
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    position: absolute;
+    top: -45px;
+    text-align: center;
+    width: 100%;
+    transition: 1s all linear;
+    animation: 1s animate-in-prompt linear forwards;
+}
+.add-comment-area .lds-dual-ring{
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+@keyframes animate-in-prompt{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
 @media(min-width: 992px){
     .CommentSection{ max-height: 700px; }
 }

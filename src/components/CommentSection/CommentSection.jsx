@@ -6,6 +6,7 @@ import { validateInput, validateTags, createUsersArray } from 'containers/UserOp
 import { connect } from 'react-redux';
 import { addCommentsActionCreator, deleteCommentsActionCreator, editCommentsActionCreator } from '../../store/Comments/Actions';
 import { apiPicturesUrl } from '../../axios/apiPicturesUrl';
+import OwnSpinner from '../UI/OwnSpinner/OwnSpinner';
 import Aux from '../../hoc/Auxi';
 function getIndex(value, arr, prop) {
     for(var i = 0; i < arr.length; i++) {
@@ -28,53 +29,13 @@ class CommentSection extends Component{
         taggedUsers: [],
         loadedUsers: [],
         tagsCounter: 0,
-        notChangedUsers: []
+        notChangedUsers: [],
+        addCommentSpinner: false,
+        addPrompt: null
     }
-    contains = (array, element) => {
-        for(let i = 0 ; i < array.length; i++)
-            if(array[i].user.username === element)
-                return true;
-
-        return false;
-    }
-
-    onChangeHandler = event => {
-        let result = validateInput(2,255, 
-            event.target.value, ["przeklenstwo"], "", "", "komentarz", "");
-        if(result === "")
-            result = validateTags(event.target.value, this.state.notChangedUsers);
-        
-        
-        const usersArray = createUsersArray(event.target.value);
-        const newNotChangedUsers = [...this.state.notChangedUsers];
-        const newLoadedUsers = [...this.state.notChangedUsers];
-        const newTaggedUsers = [];
-        console.log(newLoadedUsers);
-        for(let i = 0; i < usersArray.length; i++){
-            const index = newNotChangedUsers.findIndex(j => {
-                return j.user.username === usersArray[i]
-            });
-            if(newNotChangedUsers[index])
-                newTaggedUsers.push(newNotChangedUsers[index]);
-            const secondIndex = newLoadedUsers.findIndex(j => {
-                return j.user.username === usersArray[i]
-            });
-            if(newLoadedUsers[secondIndex])
-                newLoadedUsers.splice(secondIndex, 1);
-        }
-
-        this.setState({CommentContent: event.target.value, commentValidation: result,
-        sendingCommentError: "", taggedUsers: newTaggedUsers, loadedUsers: newLoadedUsers});
-    }
-   
-    componentDidUpdate(prevProps){
-        if(prevProps.addedComments !== this.props.addedComments){
-            this.setState({comments: this.props.addedComments});
-        }
-        if(prevProps.response !== this.props.response){
-            this.setState({response: this.props.response});
-        }
-        if(this.state.loadedUsers.length === 0){
+    componentDidMount(){
+        console.log(this.props.users.length);
+        if(this.props.users.length > 1){
             const newLoadedUsers = [];
             const responseObject = JSON.parse(localStorage.getItem("responseObject"));
             for(let key in this.props.users){
@@ -83,12 +44,71 @@ class CommentSection extends Component{
             }
             this.setState({loadedUsers: newLoadedUsers, notChangedUsers: newLoadedUsers});
         }
-       
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.addCommentStatus !== this.props.addCommentStatus || 
+            nextProps.addCommentErrors !== this.props.addCommentErrors){
+            this.setState({addCommentSpinner: false, addPrompt: nextProps.addCommentStatus});
+
+            if(nextProps.addCommentStatus === true){
+                setTimeout(() => {
+                    this.setState({addPrompt: null});
+                }, 2000);
+            }
+        }
+
+    }
+    onChangeHandler = event => {
+        let result = validateInput(2,255, 
+            event.target.value, ["przeklenstwo"], "", "", "komentarz", "");
+        
+        
+        
+
+        if(this.state.notChangedUsers.length > 0){
+            if(result === "")
+                result = validateTags(event.target.value, this.state.notChangedUsers);
+
+            const usersArray = createUsersArray(event.target.value);
+            const newNotChangedUsers = [...this.state.notChangedUsers];
+            const newLoadedUsers = [...this.state.notChangedUsers];
+            const newTaggedUsers = [];
+            for(let i = 0; i < usersArray.length; i++){
+                const index = newNotChangedUsers.findIndex(j => {
+                    return j.user.username === usersArray[i]
+                });
+                if(newNotChangedUsers[index])
+                    newTaggedUsers.push(newNotChangedUsers[index]);
+                const secondIndex = newLoadedUsers.findIndex(j => {
+                    return j.user.username === usersArray[i]
+                });
+                if(newLoadedUsers[secondIndex])
+                    newLoadedUsers.splice(secondIndex, 1);
+            }
+            this.setState({CommentContent: event.target.value, commentValidation: result,
+                taggedUsers: newTaggedUsers, loadedUsers: newLoadedUsers});
+        }
+        else
+            this.setState({CommentContent: event.target.value, commentValidation: result});
+
+    }
+    
+    componentDidUpdate(prevProps){
+        if(prevProps.addedComments !== this.props.addedComments){
+            this.setState({comments: this.props.addedComments});
+        }
+        if(prevProps.response !== this.props.response){
+            this.setState({response: this.props.response});
+        }
+
     }
 
     addComment = () => {
         if(!this.state.commentValidation && this.state.CommentContent){
-            this.props.addCommentsActionCreator(this.state.CommentContent, this.props.PostId);
+            this.setState({addCommentSpinner: true});
+            this.props.addCommentsActionCreator(this.state.CommentContent, this.props.PostId, this.state.taggedUsers, 
+                this.state.comments);
         }
         else{
             const result = validateInput(2,255, 
@@ -178,7 +198,6 @@ class CommentSection extends Component{
         return returnArray;
     }
     render(){
-        console.log(this.state.taggedUsers);
         return(
             <ul className="CommentSection">
                 <li className="add-comment-area">
@@ -218,7 +237,20 @@ class CommentSection extends Component{
                     className="backdropo-error">{this.state.sendingCommentError ? this.state.sendingCommentError : 
                     this.state.commentValidation ? this.state.commentValidation : null}</span>         
                     
-                    <button onClick={this.showUsersToTag} className="tag-user-button">Oznacz użytkowników</button>
+
+                    {this.state.addCommentSpinner ? <OwnSpinner /> : null}
+                    
+                    {this.state.addPrompt === true ? 
+                    <p className="succ-add-comment">
+                        Pomyślnie dodano komentarz
+                    </p> : this.state.addPrompt === false ? 
+                    <p className="server-error">
+                        {this.props.addCommentErrors[0]}
+                    </p> : null}
+                    
+                    {this.state.notChangedUsers.length > 0 ? 
+                    <button onClick={this.showUsersToTag} className="tag-user-button">Oznacz użytkowników</button> : null}
+                    
                 </li>
     
                 {this.state.comments.map((item, id) => {
@@ -273,12 +305,14 @@ class CommentSection extends Component{
 const mapStateToProps = state => {
     return {
         addedComments: state.CommentsReducer.addedComments,
-        response: state.CommentsReducer.response
+        response: state.CommentsReducer.response,
+        addCommentErrors: state.CommentsReducer.addCommentErrors,
+        addCommentStatus: state.CommentsReducer.addCommentStatus
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        addCommentsActionCreator: (content, postId) => dispatch(addCommentsActionCreator(content, postId)),
+        addCommentsActionCreator: (content, postId, taggedUsers, backupComments) => dispatch(addCommentsActionCreator(content, postId, taggedUsers, backupComments)),
         deleteCommentsActionCreator: (commentId) => dispatch(deleteCommentsActionCreator(commentId)),
         editCommentsActionCreator: (commentId, content) => dispatch(editCommentsActionCreator(commentId, content)),
     };

@@ -1,12 +1,15 @@
 import * as actionTypes from './ActionTypes';
 import axios from 'axios/axios-groupsconnects';
 
-export const addComment = addedComments => {
+export const addComment = (addedComments, addCommentErrors, addCommentStatus) => {
     return {
         type: actionTypes.ADD_COMMENT,
-        addedComments: addedComments
+        addedComments: addedComments,
+        addCommentErrors: addCommentErrors,
+        addCommentStatus: addCommentStatus
     };
 }
+
 
 export const deleteComment = response => {
     return {
@@ -16,21 +19,30 @@ export const deleteComment = response => {
 }
 
 
-export const addCommentsActionCreator = (content, postId) => {
+export const addCommentsActionCreator = (content, postId, taggedUsers, backupComments) => {
     return dispatch => {
-        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
-        const newComment = {
-                Content: content,
-                PostId: postId,
-                AuthorId: responseObject.id
+        const config = {
+            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
         }
-        console.log(newComment);
-        axios.post('api/comments/add', newComment).then(response => {
-            console.log(response.data);
-            dispatch(addComment(response.data.successResult.post.comments));
+        const taggedUsersIds = taggedUsers.map(i => {
+            return i.user.id
+        });
+        const newComment = {
+            Content: content,
+            PostId: postId,
+            TaggedUsersIds: taggedUsersIds
+        }
+        axios.post('api/comments/add', newComment, config).then(response => {
+            dispatch(addComment(response.data.successResult.post.comments, [], true));
         }).catch(error => {
-            console.log(error.response)
-        })
+            console.log(error.response);
+            const array = [];
+            array.push("Przepraszamy coś poszło nie tak");
+            const errors = error.response.hasOwnProperty('status') ? error.response.data.errors : 
+                array;
+
+            dispatch(addComment(backupComments, errors, false));
+        });
     }
 }
 
