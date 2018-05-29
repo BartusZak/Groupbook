@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import axios from 'axios/axios-groupsconnects';
 import {Container} from 'reactstrap';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
+import {loadGroupActionCreator } from 'store/Groups/Actions';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import {
     NavbarBrandStyled,
@@ -28,7 +30,8 @@ class NavbarComponent extends Component{
             isWideEnough: false,
             dropdownOpen: false,
             user: null,
-            avatarImg: null
+            avatarImg: null,
+            redirectToMainPage: false
         };
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
@@ -66,12 +69,20 @@ class NavbarComponent extends Component{
             dropdownOpen: !this.state.dropdownOpen
         });
     }
+
+    loadPoczekalnie = () => {
+        //this.props.delFiles();
+        this.props.loadGroup("poczekalnia", this.props.history);
+    }
+
+
     render(){
         let navbarContent = null;
         let items = null;
         let homePageLink = "/";
         let renderAvatar = null;
         let renderNickname = null;
+        let linkToMainPage = null;
 
         
         if (this.state.user !== null){
@@ -88,6 +99,18 @@ class NavbarComponent extends Component{
                 {id: 1, name: "Rejestracja", url: "/register"},
                 {id: 2, name: "Logowanie", url: "/logging"} 
             ];
+
+            linkToMainPage =  (
+                <Aux>
+                    <Link to={homePageLink} className="navIconLogo">
+                        <img src={logoIcon} alt="logo icon"/>
+                    </Link>
+                        <div className="mainLogo">
+                            <Logo redirect={true} anchorClass="navLogo" width="300"/>
+                            <span className="logoSubtitle">Ludzie z pasją!</span>
+                        </div>
+                </Aux>    
+            )
 
             navbarContent = (
                 <Aux>
@@ -114,8 +137,18 @@ class NavbarComponent extends Component{
             }
             else{
                 items = ["Grupa", "Post", "Użytkownik"];
-                
-                homePageLink = "/logged/group/poczekalnia";
+
+                linkToMainPage = (
+                    <Aux>
+                        <div className="smallLogo">
+                            <img onClick={e => this.loadPoczekalnie()} src={logoIcon} alt="logo icon"/>
+                        </div>
+                        <div onClick={e => this.loadPoczekalnie()} className="mainLogo">
+                            <Logo  anchorClass="navLogo" width="300"/>
+                            <span className="logoSubtitle">Ludzie z pasją!</span>
+                        </div>
+                    </Aux>    
+                )
 
                 navbarContent = (
                 <MenuAfterLogIn>
@@ -161,17 +194,7 @@ class NavbarComponent extends Component{
                 <Navbar className="navbar navbar-expand-lg navbar navbar-dark bg-dark lovedMenu" expand="md" scrolling>
                     <Container fluid={true}>
                         <NavbarBrandStyled className="navbar-brand">
-                            <div className="smallLogo">
-                                <Link to={homePageLink} className="navIconLogo">
-                                    <img src={logoIcon} alt="logo icon"/>
-                                </Link>
-                            </div>
-                            <div className="mainLogo">
-                                <Logo to={homePageLink} anchorClass="navLogo" width="300"/>
-                                <span className="logoSubtitle">Ludzie z pasją!</span>
-                            </div>
-                                
-                               
+                            {linkToMainPage}    
                         </NavbarBrandStyled>
                         { !this.state.isWideEnough && <NavbarToggler style={{width:"30%"}} onClick = { this.onClick } />}
                         <Collapse isOpen = { this.state.collapse } navbar>
@@ -185,8 +208,14 @@ class NavbarComponent extends Component{
 
 const mapStateToProps = state => {
     return {
-        token: state.logRed.token
+        token: state.logRed.token,
     };
 }
 
-export default connect(mapStateToProps, null, null, {pure:false})( NavbarComponent);
+const mapDispatchToProps = dispatch => {
+    return {
+        loadGroup: (groupId, history) => dispatch(loadGroupActionCreator(groupId, history))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)( withRouter(NavbarComponent));
