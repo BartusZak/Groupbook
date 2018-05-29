@@ -28,8 +28,9 @@ import ConfirmModal from '../../components/UI/ActionConfirm/ActionConfirm';
 import OneInputEdit from '../../components/Edit/OneInputEdit';
 import { validateInput, validatePictures } from '../../containers/UserOptions/Validation/Validation';
 import Dropzone from 'react-dropzone';
-import ReactImageFallback from "react-image-fallback";
 import Chat from '../../components/Chat/Chat';
+import {BeatLoader} from 'react-spinners';
+
 const valSettings = [
     {min: 5, max: 120, 
         name: "nazwa grupy", type: "standard"},
@@ -77,7 +78,8 @@ class Group extends Component{
         addPicPrompt: false,
         bgImageLoadedSucces: null,
 
-        openChat: false
+        openChat: false,
+        loading: true,
     }
    componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
@@ -119,11 +121,12 @@ class Group extends Component{
     async componentDidUpdate(prevProps){
         if(prevProps.loadedGroup !== this.props.loadedGroup 
             || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
-                let showImage = false;
+                let showImage = true;
                 if(this.props.loadedGroup.picture !== null){
                     if(this.props.loadedGroup.picture.fullResolutionPicName !== undefined){
                             let image = new Image();
                             image.onload = () => this.setState({ bgImageLoadedSucces: true})
+                            image.onerror =() => this.setState({ bgImageLoadedSucces: false})
                             image.src = apiPicturesUrl + this.props.loadedGroup.picture.fullResolutionPicName;
                      }
                      
@@ -242,6 +245,7 @@ class Group extends Component{
 
         let loadedDataLength = Object.keys(this.state.loadedData)
 
+        console.log(loadedDataLength);
         if(loadedDataLength.length > 0){
             navBar=
             (
@@ -300,6 +304,9 @@ class Group extends Component{
                 
             </nav>
             )
+        }
+        else {
+            navBar = <BeatLoader color={'black'} loading={this.state.loading} />
         }
 
         return(
