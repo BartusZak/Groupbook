@@ -34,7 +34,6 @@ class CommentSection extends Component{
         addPrompt: null
     }
     componentDidMount(){
-        console.log(this.props.users.length);
         if(this.props.users.length > 1){
             const newLoadedUsers = [];
             const responseObject = JSON.parse(localStorage.getItem("responseObject"));
