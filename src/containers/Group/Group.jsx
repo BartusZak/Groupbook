@@ -77,7 +77,7 @@ class Group extends Component{
         addPicPrompt: false,
         bgImageLoadedSucces: null
     }
-    componentWillReceiveProps(nextProps){
+   componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
             this.setState({joinIntoGroupSpinner: false, joinIntoGroupPrompt: true});
             setTimeout(() => {
@@ -114,23 +114,23 @@ class Group extends Component{
               }, 3000);
         }
     }
-    componentDidUpdate(prevProps){
+    async componentDidUpdate(prevProps){
         if(prevProps.loadedGroup !== this.props.loadedGroup 
             || prevProps.loadedGroupErrors !== this.props.loadedGroupErrors){
-                let image = false;
-                console.log(image);
+                let showImage = false;
                 if(this.props.loadedGroup.picture !== null){
                     if(this.props.loadedGroup.picture.fullResolutionPicName !== undefined){
-                            image = true; //zaimplementowac sprawdzanie obrazow
+                            let image = new Image();
+                            image.onload = () => this.setState({ bgImageLoadedSucces: true})
+                            image.src = apiPicturesUrl + this.props.loadedGroup.picture.fullResolutionPicName;
                      }
+                     
                 }
-                console.log(image);
-                
+        
             this.setState({loadedData: this.props.loadedGroup, 
                 loadingGroupDataSpinner: false, loadedPosts: this.props.loadedGroup.posts ,
                 showBackdrop: false, openEditPlace: false, openEditPlaceDesc: false, 
-                bgImageLoadedSucces: image});
-                
+                bgImageLoadedSucces: showImage});        
         }
     }
     showEventsClickHandler = () => { this.setState({showEvents: true, showPosts: false}); }
