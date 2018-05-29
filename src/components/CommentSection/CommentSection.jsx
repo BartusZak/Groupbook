@@ -150,7 +150,6 @@ class CommentSection extends Component{
         this.setState({showUsersToTag: true});
     }
     tagUser = id => {
-        
         const newLoadedUsers = [...this.state.loadedUsers];
         const newTagedUsers = [...this.state.taggedUsers];
         let newCommentContent = new String(this.state.CommentContent);
@@ -168,7 +167,6 @@ class CommentSection extends Component{
             CommentContent: newCommentContent, tagsCounter: this.state.tagsCounter++, 
             commentValidation: ""});
     }
-   
     createTagElements = content => {
         const returnArray = [];
         let tagString = "";
