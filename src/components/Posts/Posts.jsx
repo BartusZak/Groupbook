@@ -151,7 +151,8 @@ class Posts extends Component{
                     </ul>
                     }   
                     
-                    <UserNavbar delFiles={this.props.delFiles}></UserNavbar>   
+                    <UserNavbar activateChatWindow={this.props.activateChatWindow}
+                    delFiles={this.props.delFiles}></UserNavbar>   
                 </Aux>
             }
                 

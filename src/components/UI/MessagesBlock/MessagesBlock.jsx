@@ -16,9 +16,7 @@ class MessagesBlock extends Component {
         end: 15,
         downSpinnerIsLoading: false,
         scrollStartPoint: 300,
-        stopScrollPoint: 0,
-
-        showMessages: false
+        stopScrollPoint: 0
     }
     componentDidMount(){
         this.takingMessagesFromTheServerAtStart(this.state.start, this.state.end);
@@ -36,8 +34,6 @@ class MessagesBlock extends Component {
     }
 
     onLoadMoreEventHandler = () => {
-       
-    
         const oldStartPoint = this.state.scrollStartPoint;
         const oldData = this.state.data;
         const oldStart = this.state.start;
@@ -56,21 +52,17 @@ class MessagesBlock extends Component {
              });
            
         }
-        
-        
     }
-
-    showHideMessageOnClickHandler = () => { 
-        this.setState({showMessages: !this.state.showMessages});
-     }
     render() {
         let Messages =  this.state.isLoading ? <Spinner /> : this.state.data.map(item => {
             return <Message 
             author={item.email}
             content={item.body}
             date="19-12-2015 16:43"
-            key={item.id}
-            clicked={() => this.showHideMessageOnClickHandler()}/>;
+            key={item.id} 
+            clicked={this.props.activateChatWindow}
+            />
+            
         });
 
 
@@ -90,9 +82,6 @@ class MessagesBlock extends Component {
                     {this.state.downSpinnerIsLoading ? <Spinner /> : Messages}
                 </div>
                 
-                <Modal width={window.innerWidth > 1100 ? "50%" : "90%"} left={window.innerWidth > 1100 ? "20%" : ""} heightPosition="10%" show={this.state.showMessages} clickedMethod={this.showHideMessageOnClickHandler}>
-                    <OpenedMessage />
-                </Modal>
             </MessagesBlockDiv>
         );
     }

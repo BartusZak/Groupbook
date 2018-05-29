@@ -29,7 +29,7 @@ import OneInputEdit from '../../components/Edit/OneInputEdit';
 import { validateInput, validatePictures } from '../../containers/UserOptions/Validation/Validation';
 import Dropzone from 'react-dropzone';
 import ReactImageFallback from "react-image-fallback";
-
+import Chat from '../../components/Chat/Chat';
 const valSettings = [
     {min: 5, max: 120, 
         name: "nazwa grupy", type: "standard"},
@@ -75,7 +75,9 @@ class Group extends Component{
         addFilesError: "",
 
         addPicPrompt: false,
-        bgImageLoadedSucces: null
+        bgImageLoadedSucces: null,
+
+        openChat: true
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.joinIntoGroupErrors !== this.props.joinIntoGroupErrors){
@@ -227,7 +229,13 @@ class Group extends Component{
         }
         this.setState({addFilesError: result}); 
     }
+
+    activateChatWindow = () => {
+        this.setState({openChat: !this.state.openChat});
+    }
+
     render(){
+        console.log(this.state.openChat);
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
         let navBar = <nav className="navigation-bar"/>
@@ -311,6 +319,9 @@ class Group extends Component{
             <Backdrop show={this.state.editGroupSpinner}>
                 <Spinner />
             </Backdrop>
+            
+           
+
 
             {this.props.editGroupResult === null ? null : 
                     <Prompt 
@@ -396,7 +407,9 @@ class Group extends Component{
              </div>
 
              <div className="group-container">
-                
+                {this.state.openChat ? 
+                <Chat exitChat={this.activateChatWindow}/> : null}
+
                 <div className="group-header-area">
                 {this.state.openEditPlace ? 
                 
@@ -497,6 +510,7 @@ class Group extends Component{
                 events={this.props.loadedGroup.events}
                 groupId={this.props.loadedGroup.id}/> : 
                    <Posts 
+                   activateChatWindow={this.activateChatWindow}
                    users={this.state.loadedData.userGroups}
                    delFiles={() => this.setState({files: []})} isUserGroupLeader={isUserGroupLeader}
                    groupName={this.state.loadedData.name} loadingPostsError={this.state.loadingPostsError}

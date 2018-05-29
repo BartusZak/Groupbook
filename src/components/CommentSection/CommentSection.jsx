@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './CommentSection.css';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios/axios-groupsconnects';
-import { validateInput } from 'containers/UserOptions/Validation/Validation';
+import { validateInput, validateTags, createUsersArray } from 'containers/UserOptions/Validation/Validation';
 import { connect } from 'react-redux';
 import { addCommentsActionCreator, deleteCommentsActionCreator, editCommentsActionCreator } from '../../store/Comments/Actions';
 import { apiPicturesUrl } from '../../axios/apiPicturesUrl';
@@ -26,14 +26,17 @@ class CommentSection extends Component{
         editingCommentId: null,
         showUsersToTag: false,
         taggedUsers: [],
-        loadedUsers: [...this.props.users],
-        tagsCounter: 0
+        loadedUsers: [],
+        tagsCounter: 0,
+        notChangedUsers: []
     }
 
     onChangeHandler = event => {
-        const result = validateInput(2,255, 
+        let result = validateInput(2,255, 
             event.target.value, ["przeklenstwo"], "", "", "komentarz", "");
-
+        if(result === "")
+            result = validateTags(event.target.value, this.state.notChangedUsers);
+        
         this.setState({CommentContent: event.target.value, commentValidation: result,
         sendingCommentError: ""});
     }
@@ -44,6 +47,15 @@ class CommentSection extends Component{
         }
         if(prevProps.response !== this.props.response){
             this.setState({response: this.props.response});
+        }
+        if(this.state.loadedUsers.length === 0){
+            const newLoadedUsers = [];
+            const responseObject = JSON.parse(localStorage.getItem("responseObject"));
+            for(let key in this.props.users){
+                if(responseObject.username !== this.props.users[key].user.username)
+                    newLoadedUsers.push(this.props.users[key]);
+            }
+            this.setState({loadedUsers: newLoadedUsers, notChangedUsers: newLoadedUsers});
         }
        
     }
@@ -93,9 +105,11 @@ class CommentSection extends Component{
         this.setState({showUsersToTag: true});
     }
     tagUser = id => {
+        
         const newLoadedUsers = [...this.state.loadedUsers];
         const newTagedUsers = [...this.state.taggedUsers];
         let newCommentContent = new String(this.state.CommentContent);
+        
         const index = newLoadedUsers.findIndex(i => {
             return i.user.id === id
         });
@@ -106,14 +120,14 @@ class CommentSection extends Component{
         newCommentContent += newTagedUsers[newTagedUsers.length - 1].user.username + "]";
         
         this.setState({loadedUsers: newLoadedUsers, taggedUsers: newTagedUsers,
-            CommentContent: newCommentContent, tagsCounter: this.state.tagsCounter++});
+            CommentContent: newCommentContent, tagsCounter: this.state.tagsCounter++, 
+            commentValidation: ""});
     }
    
     createTagElements = content => {
         const returnArray = [];
         let tagString = "";
         let commentContentString = "";
-        console.log(content);
         let counter = 0;
         while(counter < content.length){
             if(content.charAt(counter) === "@"){
@@ -135,54 +149,20 @@ class CommentSection extends Component{
             counter++;
         }
         returnArray.push({isTag: false , content: commentContentString});
-        console.log(returnArray);
         return returnArray;
-        /*
-
-        console.log(content);
-        const returnArray = [];
-        let helpString = "";
-        let contentHelpString = "";
-        let indexer = 0;
-        for(let i = indexer; i < content.length; i++){
-            console.log(indexer);
-            if(content.charAt(i) === "@"){
-                returnArray.push({isTag: false , content: contentHelpString});
-                contentHelpString = "";
-                for(let j = i; j < content.length; j++){    
-                    console.log(j);
-                    if(content.charAt(j) === "]"){
-                        indexer = j+1;
-                        break;
-                    }
-                    if(content.charAt(j) !== "@" && content.charAt(j) !== "[")
-                        helpString += content.charAt(j);
-                }
-                returnArray.push({isTag: true , content: helpString});
-                helpString = "";
-            }
-            else if(content.charAt(i) !== "@" && content.charAt(i) !== "[" && 
-                content.charAt(i) !== "]")
-                contentHelpString += content.charAt(i);
-            
-        }
-        returnArray.push({isTag: false , content: contentHelpString});
-        console.log(returnArray);
-        return returnArray;
-        */
     }
     render(){
         return(
             <ul className="CommentSection">
                 <li className="add-comment-area">
-                    
                     <textarea className={this.state.commentValidation 
                     ? "validation-input-error" : null}
                     value={this.state.CommentContent} 
                     onChange={(e) => this.onChangeHandler(e)} 
                     placeholder="Dodaj nowy komentarz...">
                     </textarea>
-                    <button onClick={this.addComment} className="add-comment-gr-button">
+                    <button disabled={this.state.commentValidation === "" ? false : true}  
+                    onClick={this.addComment} className="add-comment-gr-button">
                         Dodaj komentarz <i className="fa fa-plus"></i>
                     </button>
                     

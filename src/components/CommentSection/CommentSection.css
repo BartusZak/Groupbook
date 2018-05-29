@@ -62,6 +62,10 @@
 .add-comment-gr-button:focus{
     outline: none;
 }
+.add-comment-gr-button:disabled{
+    background-color: grey;
+    cursor: not-allowed;
+}
 .CommentSection > li{
     margin-top: 30px;
     border: 2px solid grey;
