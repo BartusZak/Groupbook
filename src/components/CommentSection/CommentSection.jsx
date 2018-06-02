@@ -33,7 +33,8 @@ class CommentSection extends Component{
         addCommentSpinner: false,
         addPrompt: null
     }
-    componentDidMount(){
+    componentDidMount(){ this.initialUsers(); }
+    initialUsers = () => {
         if(this.props.users.length > 1){
             const newLoadedUsers = [];
             const responseObject = JSON.parse(localStorage.getItem("responseObject"));
@@ -41,7 +42,8 @@ class CommentSection extends Component{
                 if(responseObject.username !== this.props.users[key].user.username)
                     newLoadedUsers.push(this.props.users[key]);
             }
-            this.setState({loadedUsers: newLoadedUsers, notChangedUsers: newLoadedUsers});
+            this.setState({loadedUsers: newLoadedUsers, notChangedUsers: newLoadedUsers, 
+                CommentContent: "", commentValidation: ""});
         }
     }
 
@@ -63,9 +65,10 @@ class CommentSection extends Component{
             event.target.value, ["przeklenstwo"], "", "", "komentarz", "");
         
         
-        
 
-        if(this.state.notChangedUsers.length > 0){
+
+
+        if(this.state.notChangedUsers.length > 1){
             if(result === "")
                 result = validateTags(event.target.value, this.state.notChangedUsers);
 
@@ -88,8 +91,12 @@ class CommentSection extends Component{
             this.setState({CommentContent: event.target.value, commentValidation: result,
                 taggedUsers: newTaggedUsers, loadedUsers: newLoadedUsers});
         }
-        else
+        else{
+            if(result === "")
+                result = validateTags(event.target.value, this.state.notChangedUsers, true);
+
             this.setState({CommentContent: event.target.value, commentValidation: result});
+        }
 
     }
     
@@ -108,6 +115,7 @@ class CommentSection extends Component{
             this.setState({addCommentSpinner: true});
             this.props.addCommentsActionCreator(this.state.CommentContent, this.props.PostId, this.state.taggedUsers, 
                 this.state.comments);
+            this.initialUsers();
         }
         else{
             const result = validateInput(2,255, 
@@ -281,13 +289,13 @@ class CommentSection extends Component{
                         )
                         :
                         <span className="CommentBody">
-                            {this.createTagElements(item.content).map((i, index) => {
+                            {this.props.users.length > 1 ? this.createTagElements(item.content).map((i, index) => {
                                 return (
                                     <Aux key={index}>
                                         {i.isTag ? <b className="tagged-user">{i.content}</b> : i.content}
                                     </Aux>
                                 );
-                            })}
+                            }) : item.content}
                         </span>
                         }
                         

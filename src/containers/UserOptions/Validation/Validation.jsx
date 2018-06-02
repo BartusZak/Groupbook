@@ -98,15 +98,19 @@ export const createUsersArray = commentToValidate => {
     return helpArray;
 }
 
-export const validateTags = (commentToValidate, loadedUsers) => {
+export const validateTags = (commentToValidate, loadedUsers, wrongContentOption) => {
         const responseObject = JSON.parse(localStorage.getItem("responseObject"));
         const stringArray = [];
         const subString = "@[" + responseObject.username + "]";
         if(commentToValidate.includes(subString))
             return "Nie możesz oznaczyć siebie";
-        
-        
+
         const helpArray = createUsersArray(commentToValidate);
+
+        if(wrongContentOption)
+            if(helpArray.length !== 0)
+                return "W tej grupie nie ma użytkowników do oznaczenia";
+            
 
         const pattern = /^([a-zA-Z0-9_]+)$/;
         for(let key in helpArray){

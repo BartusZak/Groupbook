@@ -238,14 +238,13 @@ class Group extends Component{
     }
 
     render(){
-        console.log(this.state.loadedData.userGroups);
+        console.log(this.state.loadedData.posts);
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
         let navBar = <nav className="navigation-bar"/>
 
         let loadedDataLength = Object.keys(this.state.loadedData)
 
-        console.log(loadedDataLength);
         if(loadedDataLength.length > 0){
             navBar=
             (

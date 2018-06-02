@@ -35,7 +35,6 @@ export const addCommentsActionCreator = (content, postId, taggedUsers, backupCom
         axios.post('api/comments/add', newComment, config).then(response => {
             dispatch(addComment(response.data.successResult.post.comments, [], true));
         }).catch(error => {
-            console.log(error.response);
             const array = [];
             array.push("Przepraszamy coś poszło nie tak");
             const errors = error.response.hasOwnProperty('status') ? error.response.data.errors : 
@@ -52,10 +51,8 @@ export const deleteCommentsActionCreator = (commentId) => {
             headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
         }
         axios.delete(`api/comments/ ${commentId}`, config).then(response => {
-            console.log(response);
             dispatch(deleteComment(response.status));
         }).catch(error => {
-            console.log(error.response);
         })
     }
 }
@@ -70,10 +67,8 @@ export const editCommentsActionCreator = (commentId, content) => {
             Content: content
         }
         axios.post(`/api/comments/update`, data, config).then(response => {
-            console.log(response);
             //dispatch(deleteComment(response.status));
         }).catch(error => {
-            console.log(error.response);
         })
     }
 }
