@@ -17,7 +17,9 @@ export const MainForm = styled.form`
         height: 40px;
     }
     .lds-dual-ring{
-        margin-top: 15px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
     }
     p {
         transition: 1s all ease-in-out;
