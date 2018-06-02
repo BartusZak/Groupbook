@@ -121,3 +121,8 @@
 .beforeFooter h3 {
     margin: 0;
 }
+
+.logo-about-big {
+    width: 50%;
+    margin: 0 auto;
+}
