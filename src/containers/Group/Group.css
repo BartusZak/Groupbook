@@ -65,14 +65,16 @@
     color: white;
     align-items: center;
     justify-content: space-around;
-    margin-top: 20px;
 }
 .group-nav-right i:hover, .group-nav-left i:hover{cursor: pointer; color: green;}
 .group-main-content{
     box-sizing: border-box;
     
 }
-
+.middle-buttons{
+    display: flex;
+    text-align: center;
+}
 
 .btn-container { width: 100%; background-color: #23232d; display: flex; justify-content: center;}
 .event-info { color: white; padding: 10px; font-size: 24px; border-bottom: 1px solid grey;}
@@ -143,6 +145,7 @@
     z-index: 30;
     justify-content: space-between;
 }
+
 .delete-group-prompt{
     width: 100%;
     background-color: #32323f;
@@ -331,6 +334,7 @@
         flex-flow: column;
         align-items: center;
     }
+    
   
  }   
 @media(max-width: 550px){
@@ -373,6 +377,29 @@
         height: 120px;
         flex-flow: column;
         align-items: center;
+    }
+    .add-smth-new-link-in-group{
+        font-size: 14px;
+    }
+    .leader-options .change-photo{
+        width: 140px;
+        font-size: 12px;
+        padding: 5px;
+        margin: 0 5px;
+    }
+    .leader-options .user-opts-del{
+        width: 140px;
+        height: 45px;
+        font-size: 14px;
+        margin: 0 5px;
+    }
+    .leader-options{
+        width: 100%;
+        padding: 0 20px;
+        height: 80px;
+        right: 0;
+        flex-flow: row-reverse;
+        justify-content: center;
     }
   
 }

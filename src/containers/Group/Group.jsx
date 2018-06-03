@@ -238,7 +238,6 @@ class Group extends Component{
     }
 
     render(){
-        console.log(this.state.loadedData.posts);
         const isUserGroupLeader = this.checkIfUserIsGroupLeader();
         const isUserInGroup = this.checkIfUserIsInGroup();
         let navBar = <nav className="navigation-bar"/>
@@ -266,6 +265,7 @@ class Group extends Component{
                 <span className="group-owner">Nie należysz <i className="fa fa-ban"></i></span>}
 
                 {isUserGroupLeader ? 
+                    !this.state.openEditPlaceDesc ? 
                     <div className="leader-options">
                         <Button clicked={this.openDeleteModal} btnClass="user-opts-del" content="Usuń grupę" />
                         <Dropzone onDrop={this.onDropHandler} className="user-opts-deny">
@@ -274,8 +274,7 @@ class Group extends Component{
                             content={<Aux><span>Zmień tło grupy</span><i className="fa fa-photo"></i></Aux>} />
                         </Dropzone> 
                       
-                    </div>
-
+                    </div> : null
                     : null
                 } 
                 {this.state.addFilesError ? 
@@ -288,15 +287,16 @@ class Group extends Component{
                         <h2>Jesteś pewny?</h2>
                         <p>Czy jestes pewny, że chcesz usunąć grupę <b>{this.props.loadedGroup.name}</b>. Pamiętaj, że ten zabieg
                         jest nie odwracalny.</p>
+
+                        
                         <div className="delete-group-buttons">
                             <Button clicked={this.openDeleteModal} 
                             btnClass="user-opts-deny" content="Anuluj" />
 
                             <Button clicked={this.deleteGroupHandler} 
                             btnClass="user-opts-del" content="Usuń grupę" />
-
-                            
                         </div>
+                        
                     </div>
                 
                 </ConfirmModal>
@@ -452,7 +452,7 @@ class Group extends Component{
                      </div> : null}
 
                      {isUserInGroup.result ? 
-                     <div>
+                     <div className="middle-buttons">
                         <Link className="add-smth-new-link-in-group" to="/logged/addpost">
                             Dodaj post
                         </Link>
