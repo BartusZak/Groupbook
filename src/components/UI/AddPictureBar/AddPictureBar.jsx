@@ -30,7 +30,8 @@ const addPictureBar = (props) => {
 
                 
             </Dropzone>
-            <button onClick={props.onSubmitHandler} className={props.isGroupForm ? "add-new-group-button" : "add-new-other"}>{props.buttonTitle}</button> 
+            <button 
+            onClick={props.onSubmitHandler} className={props.isGroupForm ? "add-new-group-button" : "add-new-other"}>{props.buttonTitle}</button> 
         </div>
     );
 }

@@ -1,0 +1,113 @@
+.google-map-modal{
+    width: 60%;
+    position: absolute;
+    height: 80%;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+    background-color: #23232d;
+    transition: 1s all ease-in-out;
+    top: 10%;
+}
+
+.google-map-modal-in{
+    animation: 1s google-map-in linear forwards;
+}
+.google-map-modal-out{
+    animation: 1s google-map-out linear forwards;
+}
+@keyframes google-map-in{
+    0%{
+        opacity: 0;
+        transform: translateX(-100vw);
+    }
+    50%{
+        opacity: 0.5;
+        transform: translateX(5vw);
+    }
+    100%{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes google-map-out{
+    0%{
+        opacity: 1;
+        transform: translateX(0);    
+    }
+    50%{
+        opacity: 0.5;
+        transform: translateX(5vw);
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(-100vw);
+    }
+}
+.google-map-modal h3{
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+    color: white;
+    color: lightblue;
+    font-weight: bolder;
+}
+.google-map-modal h5{
+    height: 65px;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+}
+.google-map-modal h5 b{
+    color: tomato;
+}
+.google-buttons-container{
+    width: 100%;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+.google-buttons-container button{
+    padding: 15px;
+    font-size: 18px;
+    width: 150px;
+    margin: 0 10px;
+    transition: 0.3s all ease-in-out;
+    border: none;
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 5px;
+}
+.accept-google-btn{
+    background-color: orange;
+}
+.google-buttons-container > button:focus{
+    outline: none;
+}
+.google-buttons-container > button:hover{
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+}
+.google-buttons-container > button:nth-of-type(2){
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    border-color: rgba(0,0,0,0.7);
+}
+.google-buttons-container > button:nth-of-type(2):hover{
+    background-color: rgba(255,255,255,0.1);
+    border-color: white;
+}
+
+.google-btn-dis{
+    cursor: not-allowed !important;
+    background-color: transparent !important;
+}
+
+@media(max-width: 1000px){
+    .google-map-modal{
+        width: 90%;
+        height: 80%;
+    }
+}

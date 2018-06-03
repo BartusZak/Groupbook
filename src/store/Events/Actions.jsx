@@ -126,7 +126,7 @@ export const addEvent = addEventErrors => {
 }
 
 export const addEventActionCreator = (pictures, addedGroups, eventTitle,
-    eventContent, eventDate, history ) => {
+    eventContent, eventDate, history, place ) => {
 
     return dispatch => {
 
@@ -140,7 +140,8 @@ export const addEventActionCreator = (pictures, addedGroups, eventTitle,
             Description: eventContent,
             EventDate: eventDate,
             GroupsIds: groupsIds,
-            UserId: storageItem.id
+            UserId: storageItem.id,
+            Place: place
         }
 
         axios.post('/api/events/add', newEvent).then(response => {

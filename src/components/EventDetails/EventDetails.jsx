@@ -23,8 +23,7 @@ import Backdrop from '../UI/Backdrop/Backdrop';
 import Spinner from '../UI/Spinner/Spinner';
 import Prompt from '../UI/Prompt/Prompt';
 import ConfrimPrompt from '../../components/UI/ConfirmPrompt/ConfirmPrompt';
-
-
+import MapComponent from '../MapComponent/MapComponent';
 
 
 class EventDetails extends Component{
@@ -48,9 +47,38 @@ class EventDetails extends Component{
             deletingEventSpinner: false,
             deletingEventPrompt: null,
 
-            confirmModalOpen: false
+            confirmModalOpen: false,
+            lat: null,
+            lng: null,
+            address: null
         }
         this.updateWindowWidth = this.updateWindowWidth.bind(this);
+    }
+    cutTheNeededPlaceData = place => {
+        const array = [];
+        const indexOfCords = place.indexOf("[")
+        let newAddress = "";
+        for(let i = 0; i < indexOfCords; i++)
+            newAddress += place.charAt(i);
+        
+        let letAndLng = "";
+        for(let i = indexOfCords; i < place.length; i++)
+            letAndLng += place.charAt(i); 
+        
+        const spaceIndex = letAndLng.indexOf(" ");
+        let value = "";
+        for(let i = 1; i < spaceIndex; i++)
+            value += letAndLng.charAt(i);
+
+        array.push(Number(value));
+        value = "";
+
+        for(let i = spaceIndex; i < letAndLng.length-1; i++)
+            value += letAndLng.charAt(i);
+
+        array.push(Number(value));
+
+        this.setState({address: newAddress, lat: array[0], lng: array[1]});  
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.addUserToEventErrorList !== this.props.addUserToEventErrorList){
@@ -62,6 +90,9 @@ class EventDetails extends Component{
         }
         if(nextProps.fetchedOneEvent !== this.props.fetchedOneEvent){
             this.setState({loadEventSpinner: false});
+
+            if(nextProps.fetchedOneEvent.place)
+                this.cutTheNeededPlaceData(nextProps.fetchedOneEvent.place);
         }
         if(nextProps.rejectErrors !== this.props.rejectErrors){
             this.setState({rejectEventSpinner: false, rejectEventPrompt: true});
@@ -163,13 +194,12 @@ class EventDetails extends Component{
         this.props.deleteEvent(responseObject.token, 
             this.props.fetchedOneEvent.id);
     }
-
+    
     render(){
         const date = moment().format();
         const eventLider = this.searchEventLider();
         const isUserInEvent = this.isUserExistInEvent();
         const isUserLider = this.isUserLider();
-        console.log(this.props.fetchedOneEvent.eventUsers);
         return(
         <Aux>
             <Backdrop show={this.state.addUserToEventSpinner}>
@@ -262,7 +292,16 @@ class EventDetails extends Component{
              {this.props.fetchedOneEvent.description}
          </div>
          
-         <iframe className="event-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2446.079849572969!2d21.045057280270107!3d52.18742126867426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc9b773b2197%3A0x6338f59562daf786!2sBillennium+-+Rozwi%C4%85zania+IT+dla+biznesu!5e0!3m2!1spl!2spl!4v1522142041683"></iframe>
+        {this.props.fetchedOneEvent.place ? 
+        <div className="event-map">
+            <MapComponent 
+            lat={this.state.lat}
+            lng={this.state.lng} />
+            <h5>{this.state.address}</h5>
+        </div> : null}
+
+
+         
          
          {!isUserInEvent ? 
          <Button clicked={this.addUserToEvent} btnClass="join-event" content="Dołącz" /> :

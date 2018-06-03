@@ -5,6 +5,14 @@
 .add-event-form-container h4{
     padding: 15px 10px 10px 10px;
     font-weight: lighter;
+    display: flex;
+    justify-content: space-between;
+}
+.add-event-form-container h4 b{
+    font-size: 14px;
+    color: tomato;
+    padding-right: 100px;
+    cursor: pointer;
 }
 .add-event-form-container nav{
     margin: 20px auto;
@@ -69,10 +77,12 @@
 }
 .hidden-block{
     left: -100%;
+    z-index: -1;
     opacity: 0;
 }
 .visible-block{
     left: 0;
+    z-index: 10;
     opacity: 1;
 }
 .continue-button{
@@ -93,6 +103,12 @@
 }
 .block-header{
     padding-left: 10px;
+}
+.back-times{
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 24px;
 }
 .Spinner-holder{
     width: 100%;

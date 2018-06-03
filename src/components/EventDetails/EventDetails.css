@@ -76,7 +76,11 @@
     padding: 10px;
 }
 .event-map{ border: none;}
-
+.event-map h5{
+    margin-top: 10px;
+    text-align: center;
+    color: lightblue;
+}
 
 /*Modale*/
 

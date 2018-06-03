@@ -16,7 +16,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import { addEventActionCreator } from '../../../store/Events/Actions';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import ErrorPrompt from '../../../components/UI/ErrorPromptMessage/ErrorPromptMessage';
-
+import GoogleMap from '../../../components/GoogleMapModal/GoogleMapModal';
 const helpArray = [1,2,3];
 const array = [
     {id: 0, name: "Nazwa wydarzenia", placeholder: "Wprowadz nazwe wydarzenia...", type: "text", value: "", error: ""},
@@ -40,8 +40,10 @@ class AddEventForm extends Component{
         loadingGroupsSpinner: true,
 
         addEventSpinner: false,
-        openBackdrop: false
+        openBackdrop: false,
+        mapModal: true,
 
+        location: null
     }
     
     componentDidMount(){
@@ -147,15 +149,23 @@ class AddEventForm extends Component{
     deleteFiles = () => {
         this.setState({files: []});
     }
+    openMapModal = () => {
+        this.setState({mapModal: !this.state.mapModal});
+    }
 
     addingNewEvent = () => {
         this.setState({openBackdrop: true, addEventSpinner: true});
 
         this.props.addEvent(this.state.files, this.state.addedGroups, this.state.inputValues[0].value,
-            this.state.inputValues[1].value, this.state.inputValues[2].value, this.props.history);
+            this.state.inputValues[1].value, this.state.inputValues[2].value, this.props.history, this.state.location);
     }
     closeBackdrop = () => {
         this.setState({openBackdrop: false});
+    }
+
+    acceptLocation = (address, position) => {
+        const newLocation = address + "[" + position.lat + " " + position.lng + "]";
+        this.setState({location: newLocation, mapModal: false});
     }
     render(){
         return(
@@ -168,7 +178,7 @@ class AddEventForm extends Component{
                     <ErrorPrompt color="red" message={this.props.addEventErrors[0]} /> : null}
                 </Backdrop>
 
-                <h4>Stwórz wydarzenie</h4>
+                <h4>Stwórz wydarzenie <b onClick={this.openMapModal}>Wybierz lokację</b></h4>
                 <nav className="form-navigation">
                     {helpArray.map( item => {
                         return <button className={item === this.state.actualBlock ?
@@ -271,6 +281,17 @@ class AddEventForm extends Component{
                 toogleValidationModal={this.toogleValidationModal}
                 validateError={this.state.validateError}
                 />
+                
+
+                
+
+                <GoogleMap 
+                acceptLocation={this.acceptLocation}
+                toggle={this.openMapModal}
+                show={this.state.mapModal} />
+                
+                
+                
             </div>
         );
     }
@@ -287,7 +308,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchGroups: (userId) => dispatch(fetchGroupsActionCreator(userId)),
-        addEvent: (pictures, addedGroups, eventTitle, eventContent, eventDate, history) => dispatch(addEventActionCreator (pictures, addedGroups, eventTitle,eventContent, eventDate, history))
+        addEvent: (pictures, addedGroups, eventTitle, eventContent, eventDate, history, place) => dispatch(addEventActionCreator (pictures, addedGroups, eventTitle,eventContent, eventDate, history, place))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddEventForm));
