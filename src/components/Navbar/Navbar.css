@@ -1,5 +1,4 @@
 .lovedMenu{
-
     box-shadow: 0 2px 3px #ccc;
     font-size: 24px;
 }
@@ -14,6 +13,10 @@
         max-width: unset !important;
     }
 }
+
+    .smallLogo img{
+        height: 50px;
+    }
 
 .navIconLogo img {
     width: 50px;
