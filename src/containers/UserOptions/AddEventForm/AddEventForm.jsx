@@ -288,7 +288,8 @@ class AddEventForm extends Component{
                 <GoogleMap 
                 acceptLocation={this.acceptLocation}
                 toggle={this.openMapModal}
-                show={this.state.mapModal} />
+                show={this.state.mapModal}
+                />
                 
                 
                 

@@ -268,7 +268,9 @@ class EventDetails extends Component{
              {this.props.fetchedOneEvent.eventUsers ? 
              this.props.fetchedOneEvent.eventUsers.length : null} {this.props.fetchedOneEvent.eventUsers ? 
              this.props.fetchedOneEvent.eventUsers.length > 1 ? "użytkowników" : "użytkownik" : null} bierze udział w tym wydarzeniu
-             <Calendar choosenDay={19} showCalendar={this.state.showCalendar}/> 
+             <Calendar choosenDay={
+                 Number(this.props.fetchedOneEvent.eventDate.slice(5,7))
+             } showCalendar={this.state.showCalendar}/> 
          </div>
 
          <div style={{backgroundImage: `url(${this.props.fetchedOneEvent.picture ? 
