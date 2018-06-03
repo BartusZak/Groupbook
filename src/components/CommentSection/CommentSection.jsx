@@ -64,7 +64,6 @@ class CommentSection extends Component{
         let result = validateInput(2,255, 
             event.target.value, ["przeklenstwo"], "", "", "komentarz", "");
         
-        
 
 
 
