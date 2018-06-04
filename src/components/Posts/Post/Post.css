@@ -126,6 +126,19 @@
     position: absolute;
     left: 1%;
 }
+.tagged-class{
+    border: 1px solid lightblue;
+    position: relative;
+}
+.tagged-class::before{
+    content: 'Ktoś cię oznaczył';
+    position: absolute;
+    top: 10px;
+    color: tomato;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
 @keyframes val-in{
     0%{
         transform: translateX(-10vw);

@@ -144,7 +144,8 @@ class Posts extends Component{
                                 authorAvatar={(item.author != null)?item.author.profilePicture: null}
                                 sex={(item.author != null)?item.author.sex:null}
                                 comments={item.comments}
-                                postPicture={item.pictures} />
+                                postPicture={item.pictures}
+                                tags={item.tags} />
                             })
                         : null}
                         

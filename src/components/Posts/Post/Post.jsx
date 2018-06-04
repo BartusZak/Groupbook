@@ -115,8 +115,31 @@ class Post extends Component{
             changeArray: [{error: "", value:""}, {error: "", value: ""}], blockId: 0, files: []})
         this.props.changeChangedPost();
     }
+    checkIsUserTagged = comments => {
+        if(comments.length === 0)
+            return false;
 
+        const tagsArray = [];
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        for(let key in comments){
+            if(comments[key].tags.length > 0){
+                for(let keyo in comments[key].tags){
+                    tagsArray.push(comments[key].tags[keyo]);
+                }
+            }
+        }
+      
+        
+        for(let key in tagsArray)
+            if(tagsArray[key].taggedUser.username === responseObject.username)
+                return true;
+        
+        return false;
+
+    }
     render(){
+        const isUserTagged = this.checkIsUserTagged(this.props.comments);
+        console.log(isUserTagged);
         const Content = this.state.showComments ? this.props.commentsErrorLoading ? 
         <h5 className="loading-error-eessage">Wystąpił błąd podczas ładowania komentarzy</h5> : 
         <CommentSection 
@@ -126,7 +149,7 @@ class Post extends Component{
         return(
             <Aux>
                 {!this.state.editBlock ?  
-                  <li>
+                  <li className={isUserTagged ? "tagged-class" : null}>
                     
                   <p className="post-block-add-date">
                   {this.props.addDate.slice(0,10) + " " + this.props.addDate.slice(11,16)}</p>
@@ -175,7 +198,7 @@ class Post extends Component{
 
                 : 
 
-                <li>
+                <li className={isUserTagged ? "tagged-class" : null}>
                     <div className="edit-post-form">
                         <nav>
                             <Button disabled={this.state.changeArray[0].error ? true : false} 
