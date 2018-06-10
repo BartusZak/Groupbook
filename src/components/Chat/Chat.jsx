@@ -8,7 +8,8 @@ import {connect} from 'react-redux';
 class Chat extends Component {
     state = {
         chatOn: null,
-        isLoading: false
+        isLoading: false,
+        usersPanel: true
     }
     
     componentDidMount(){
@@ -29,12 +30,14 @@ class Chat extends Component {
         this.props.fetchUsers();
     }
    
+    toggleUserPanel = () => { this.setState({usersPanel: !this.state.usersPanel}); }
     render() { 
-        console.log(this.props.fetchedUsers);
         return ( 
         <div className="chat-container">
             { this.state.chatOn ? 
             <ChatClient 
+            toggleUserPanel={this.toggleUserPanel}
+            usersPanel={this.state.usersPanel}
             isLoading={this.state.isLoading}
             exitChat={this.props.exitChat} 
             error={this.props.fetchUsersResult} 

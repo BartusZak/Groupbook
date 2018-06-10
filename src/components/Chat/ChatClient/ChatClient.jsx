@@ -27,7 +27,10 @@ const chatClient = props => {
         {props.error ?
         <p className="loading-error">{props.errorMessage}</p> : 
 
-        <div className="chat-users">
+
+        props.usersPanel ?
+
+        <div className={`chat-users ${props.usersPanel ? "chat-users-in" : "chat-users-out"}`}>
             <ul>
                 {usersToShow.map(item => {
                     return (
@@ -45,10 +48,13 @@ const chatClient = props => {
                     );
                 })}
             </ul>
+
+            
+            <button onClick={props.toggleUserPanel} 
+            className="toggle-panel-button">Schowaj</button>
         </div>
         
-        
-        
+        : null
         }
        
     </div>
