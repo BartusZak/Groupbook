@@ -20,7 +20,10 @@ export const fetchUsers = (fetchedUsers, fetchUsersErrors, fetchUsersResult) => 
 
 export const fetchUsersActionCreator = () => {
     return dispatch => {
-        axios.get('/api/users').then(response => {
+        const config = {
+            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
+        }
+        axios.get('/api/chat/users', config).then(response => {
             dispatch(fetchUsers(response.data, [], false));
         }).catch(error => {
             dispatch(fetchUsers([], handleErrors(error), true));
