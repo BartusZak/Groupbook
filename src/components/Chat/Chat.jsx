@@ -1,47 +1,67 @@
 import React, { Component } from 'react';
 import './Chat.css';
-
+import Aux from '../../hoc/Auxi';
+import RodoPrompt from './RodoPrompt/RodoPrompt';
+import ChatClient from './ChatClient//ChatClient';
+import { fetchUsersActionCreator } from '../../store/Users/Actions'; 
+import {connect} from 'react-redux';
 class Chat extends Component {
+    state = {
+        chatOn: null,
+        isLoading: false
+    }
     
+    componentDidMount(){
+        if(this.props.ruleAccepted){
+            this.setState({isLoading: true, chatOn: true});
+            this.props.fetchUsers();
+        }
+        
+        else if(!this.props.ruleAccepted)
+            this.setState({chatOn: false});
+    }
+    componentDidUpdate(nextProps){
+        if(nextProps.fetchUsersErrors !== this.props.fetchUsersErrors)
+            this.setState({isLoading: false});
+    }
+    confirmRodo = () => { 
+        this.setState({chatOn: true, isLoading: true});
+        this.props.fetchUsers();
+    }
+   
     render() { 
+        console.log(this.props.fetchedUsers);
         return ( 
         <div className="chat-container">
-            <i onClick={this.props.exitChat} className="fa fa-times"></i>
-            <h1>Witaj w naszym komunikatorze</h1>
-            <div className="chat-caffels">
-                <div className="chat-caffel">
-                    <i className="fa fa-comments"></i>
-                    <h2>RODO ?</h2>
-                    <article>
-                        Z powodu wprowadzenia ustawy 
-                        masz możliwość korzystania z komunikatora bez konieczności potwierdzania
-                        polityki naszego serwisu. Pamiętaj jednak, że zgadzając się z nią ułatwiasz nam życie.
-                    </article>
-                </div>
-                <div className="chat-caffel">
-                    <i className="fa fa-users"></i>
-                    <h2>Komunikacja</h2>
-                    <article>
-                        Kontaktuj się ze z grupowiczami za pomocą komunikatora. Będąc w grupie i przeglądając posty, 
-                        warto podzielić się wspólnymi wrażeniami. Pamiętaj, że możesz rozmawiać tylko z użytkownikami
-                        będącymi członkami tych samych grup co ty.
-                    </article>
-                </div>
-                <div className="chat-caffel">
-                    <i className="fa fa-angellist"></i>
-                    <h2>Zasady</h2>
-                    <article>
-                        Pamiętaj, aby podczas komunikacji nie ubliżać innym użytkownikom. Nie taka jest idea naszego serwisu.
-                        Konwersacje powinny być prowadzone w miły i przyjazny sposób. 
-                    </article>
-                </div>
-            </div>
-            <button className="run-chat-btn">
-                Rozpocznij chatowanie!
-            </button>
+            { this.state.chatOn ? 
+            <ChatClient 
+            isLoading={this.state.isLoading}
+            exitChat={this.props.exitChat} 
+            error={this.props.fetchUsersResult} 
+            errorMessage={this.props.fetchUsersErrors[0]}
+            fetchedUsers={this.props.fetchedUsers} />
+
+            : <RodoPrompt
+            confirmRodo={this.confirmRodo}
+            exitChat={this.props.exitChat} /> 
+            }
+            
         </div> 
         )
     }
 }
  
-export default Chat;
+const mapStateToProps = state => {
+    return {
+        fetchedUsers: state.UsersReducer.fetchedUsers,
+        fetchUsersErrors: state.UsersReducer.fetchUsersErrors,
+        fetchUsersResult: state.UsersReducer.fetchUsersResult
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchUsers: () => dispatch(fetchUsersActionCreator())
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);

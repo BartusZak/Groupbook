@@ -414,7 +414,7 @@ class Group extends Component{
 
              <div className="group-container">
                 {this.state.openChat ? 
-                <Chat exitChat={this.activateChatWindow}/> : null}
+                <Chat ruleAccepted={false} exitChat={this.activateChatWindow}/> : null}
 
                 <div className="group-header-area">
                 {this.state.openEditPlace ? 

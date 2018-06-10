@@ -1,0 +1,78 @@
+.chat-client{
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.chat-client .spinner-prompt{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 45%;
+    width: 190px;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    font-family: 'Lobster', cursive;
+    font-size: 20px;
+    letter-spacing: 2.5px;
+    margin: 0 auto;
+}
+.spinner-prompt p{
+    color: rgb(98, 190, 52);
+}
+.loading-error{
+    color: tomato;
+    font-size: 22px;
+    font-size: 32px;
+    position: absolute;
+    top: 49%;
+    width: 100%;
+    text-align: center;
+}
+
+
+.chat-users{
+    width: 16%;
+    background-color: #32323d;
+    color: white;
+    border-right: 1px solid black;
+    box-shadow: 0 2px 3px black;
+    overflow-y: auto;
+}
+
+.chat-users::-webkit-scrollbar {
+    width: 10px;
+}
+.chat-users::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.chat-users::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.9);
+  border-radius: 5px;
+  outline: 1px solid rgba(0,0,0,0.3);
+}
+.chat-users ul{
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+.chat-users li{
+    padding: 0 25px;
+    margin: 15px 0;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
+.chat-users li b{
+    font-weight: bolder;
+    color: skyblue;
+    letter-spacing: 1.5px;
+}
+.chat-users li img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
