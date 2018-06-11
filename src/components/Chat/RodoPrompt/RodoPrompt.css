@@ -1,16 +1,3 @@
-
-.chat-container .fa-times{
-    color: white;
-    position: absolute;
-    right: 25px;
-    top: 25px;
-    font-size: 30px;
-}
-.chat-container h1{
-    color: tomato;
-    text-align: center;
-    margin: 35px 0 100px 0;
-}
 .chat-caffels{
     width: 100%;
     display: flex;

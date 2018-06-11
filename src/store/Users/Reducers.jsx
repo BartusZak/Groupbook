@@ -7,7 +7,12 @@ const initialState = {
 
     fetchedUsers: [],
     fetchUsersErrors: [],
-    fetchUsersResult: null
+    fetchUsersResult: null,
+    lastUserId: null,
+
+    conversations: [],
+    conversationsErrors: [],
+    conversationResults: []
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -16,7 +21,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_USERS:
             return updateObject(state, { fetchedUsers: action.fetchedUsers, 
             fetchUsersErrors: action.fetchUsersErrors, fetchUsersResult: action.fetchUsersResult})
-        
+        case actionTypes.GET_CONVERSATIONS:
+            return updateObject(state, {conversations: action.conversations, 
+                conversationsErrors: action.conversationsErrors, conversationResults: action.conversationResults})
+        case actionTypes.FETCH_LAST_USER_ID:
+            return updateObject(state, {lastUserId: action.lastUserId})
     }
     return state;   
 }

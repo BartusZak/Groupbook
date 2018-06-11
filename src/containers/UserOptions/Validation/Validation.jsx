@@ -167,3 +167,6 @@ export const checkingForDuplicates = array => {
 
     return "";
 }
+
+
+export const IncorrectWords = ["brzydkie słowo", "prosiak", "warchlak", "major", "konon"];

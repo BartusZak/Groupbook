@@ -17,6 +17,12 @@ export const fetchUsers = (fetchedUsers, fetchUsersErrors, fetchUsersResult) => 
         fetchUsersResult: fetchUsersResult
     }
 }
+export const fetchLastUserId = lastUserId => {
+    return {
+        type: actionTypes.FETCH_LAST_USER_ID,
+        lastUserId: lastUserId
+    }
+}
 
 export const fetchUsersActionCreator = () => {
     return dispatch => {
@@ -24,6 +30,7 @@ export const fetchUsersActionCreator = () => {
             headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
         }
         axios.get('/api/chat/users', config).then(response => {
+            dispatch(fetchLastUserId(response.data[response.data.length-1].id));
             dispatch(fetchUsers(response.data, [], false));
         }).catch(error => {
             dispatch(fetchUsers([], handleErrors(error), true));
@@ -31,16 +38,49 @@ export const fetchUsersActionCreator = () => {
     };
 }
 
-export const fetchNextUsersActionCreator = (lastUserId, actualUsers) => {
+export const fetchNextUsersActionCreator = (actualUsers, lastUserId) => {
     return dispatch => {
         const config = {
             headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
         };
         axios.get("/api/chat/users/" + lastUserId, config).then(response => {
-            dispatch(fetchUsers(response.data, [], false));
+            const newActualUsers = [];
+            for(let key in actualUsers)
+                newActualUsers.push(actualUsers[key]);
+            
+            if(response.data.length !== 0){
+                dispatch(fetchLastUserId(response.data[response.data.length-1].id));
+                for(let key in response.data)
+                    newActualUsers.push(response.data[key]);
+            }
+          
+            
+            dispatch(fetchUsers(newActualUsers, [], false));
+            
         }).catch(error => {
             dispatch(fetchUsers([], handleErrors(error), true));
         })
 
+    }
+}
+
+export const getConversations = (conversations, conversationsErrors, conversationResults) => {
+    return {
+        type: actionTypes.GET_CONVERSATIONS,
+        conversations: conversations,
+        conversationsErrors: conversationsErrors,
+        conversationResults: conversationResults
+    }
+}
+export const getConversationsActionCreator = receiverId => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
+        };
+
+        axios.get("/api/chat/conversation/" + receiverId, config).then(response => {
+        }).catch(error => {
+            dispatch(getConversations([], handleErrors(error), true));
+        })
     }
 }

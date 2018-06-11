@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aspnet/signalr": "^1.0.0",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
     "babel-core": "6.26.0",
@@ -74,6 +75,7 @@
     "style-loader": "0.19.0",
     "styled-components": "^3.2.2",
     "sw-precache-webpack-plugin": "0.11.4",
+    "tslib": "^1.9.2",
     "url-loader": "0.6.2",
     "webfontloader": "^1.6.28",
     "webpack": "3.8.1",
