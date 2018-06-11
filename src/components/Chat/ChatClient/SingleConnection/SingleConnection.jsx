@@ -33,6 +33,15 @@ class SingleConnection extends Component {
  
     sendMessage = e => {
         e.preventDefault();
+        const validationResult = this.state.currentMessage ? "" : "Wiadomość musi być dłuższa";
+        if(validationResult){
+            this.setState({validationStatus: validationResult});
+        }
+        else{
+            alert("Wysyłano wiadomość");
+        }
+
+
     }
     onChangeHandler = e => {
         const validationResult = e.target.value.length > 1 ? "" : "Wiadomość musi być dłuższa";
