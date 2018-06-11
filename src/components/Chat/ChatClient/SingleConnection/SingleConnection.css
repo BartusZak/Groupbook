@@ -32,6 +32,13 @@
     padding: 10px;
     margin-bottom: 10px;
 }
+
+.single-connection article p{
+    color: red;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+}
 .single-connection textarea{
     padding: 5px;
     resize: none;

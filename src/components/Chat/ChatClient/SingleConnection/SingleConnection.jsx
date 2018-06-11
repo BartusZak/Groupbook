@@ -1,34 +1,35 @@
 import React, { Component } from 'react';
 import './SingleConnection.css';
 import { connect } from 'react-redux';
-import * as signalR from '@aspnet/signalr';
+import * as signalR from '@aspnet/signalr'
 import { getConversationsActionCreator } from '../../../../store/Users/Actions';
 import { validateInput, IncorrectWords } from '../../../../containers/UserOptions/Validation/Validation';
-
+import { HubConnection } from '@aspnet/signalr';
 class SingleConnection extends Component {
     state = {
-        currentMessage: null,
-        validationStatus: ""
+        currentMessage: "",
+        validationStatus: "",
+
+
+        connectionMessages: [],
+        connection: null,
+        connectionError: ""
+
     }
     componentDidMount(){
         this.props.getConversations(this.props.id);
 
-        const config = {
-            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
-        };
+        const connection = new signalR.HubConnectionBuilder().
+            withUrl("https://groupsconnectsapi.azurewebsites.net/chat").
+            configureLogging(signalR.LogLevel.Information).
+            build();
 
-        const transport = signalR.HttpTransportType;
-        let connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://groupsconnectsapi.azurewebsites.net/chat").build();
-
-        connection.on("MessageAdded", data => {
-            console.log(data);
+        let connectionError = "";
+        connection.start().catch(error => {
+            this.setState({connectionError: "Wystąpił błąd podczas komunikacji"});
         });
-      
-
-        connection.start().then( () => {
-            connection.invoke("addMessage", "siema", this.props.id)
-        });
+        
+        this.setState({connection: connection});
     }
  
     sendMessage = e => {
@@ -38,7 +39,9 @@ class SingleConnection extends Component {
             this.setState({validationStatus: validationResult});
         }
         else{
-            alert("Wysyłano wiadomość");
+            
+
+      
         }
 
 
@@ -57,6 +60,8 @@ class SingleConnection extends Component {
                 <i onClick={this.props.closeSingleWindow} id={this.props.id} className="fa fa-times"></i>
             </h5>
             <article>
+                {this.state.connectionError === "" ?
+                null : <p>{this.state.connectionError}</p>}
             </article>
 
             <textarea value={this.state.currentMessage} 

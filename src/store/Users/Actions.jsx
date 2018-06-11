@@ -72,13 +72,15 @@ export const getConversations = (conversations, conversationsErrors, conversatio
         conversationResults: conversationResults
     }
 }
-export const getConversationsActionCreator = receiverId => {
+export const getConversationsActionCreator = (receiverId, currentConversations, 
+    currentErrors, currentResults) => {
     return dispatch => {
         const config = {
             headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
         };
 
         axios.get("/api/chat/conversation/" + receiverId, config).then(response => {
+            console.log(response.data);
         }).catch(error => {
             dispatch(getConversations([], handleErrors(error), true));
         })

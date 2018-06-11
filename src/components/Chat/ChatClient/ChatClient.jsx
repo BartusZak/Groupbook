@@ -13,7 +13,6 @@ const chatClient = props => {
         if(props.fetchedUsers[key].id !== responseObject.id)
             usersToShow.push(props.fetchedUsers[key]);
 
-    
     return (
     <div className="chat-client">
         <i onClick={props.exitChat} className="fa fa-times"></i>
