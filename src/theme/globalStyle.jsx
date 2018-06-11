@@ -10,6 +10,7 @@ injectGlobal `
     
     .modal-bartuszak{
         width: 100%;
+        min-height: 60%;
         background-color: #32323f;
         border-radius: 5px;
         display: flex;

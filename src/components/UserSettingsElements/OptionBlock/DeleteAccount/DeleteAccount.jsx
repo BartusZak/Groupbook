@@ -38,7 +38,6 @@ class deleteAccount extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(this.props.response, nextProps.response);
         if(this.props.response !== nextProps.response){
             this.setState({response: nextProps.response});
         }
@@ -71,27 +70,33 @@ class deleteAccount extends Component{
             content = <Spinner/>;
         }
         if(this.state.response !== null){
-            if(!this.props.response.data.isError){
-                content = <p style={{color: 'green', fontWeight: 'bold'}}>Konto zostało poprawnie usunięte!</p>
-            }
-            else if(this.props.response.status !== 200){
-                console.log(this.props.response.data.errors);
-                content = <p>Błąd serwera ziomuś</p>;
-                if (this.props.response.data !== null){
-                    content = 
-                    (
-                    <Aux>
-                        <p>Error</p>
-                        <ul style={{margin: '0px'}}>
-                            {this.props.response.data.errors.map((item) => 
-                                <li style={{color: 'red', fontWeight: 'bold'}} key={item}>{item}</li>
-                            
-                        )}
-                        </ul>
-                    </Aux>);
+            console.log(this.state.response)
+
+                if(!this.props.response.data.isError){
+                    content = <p style={{color: 'green', fontWeight: 'bold'}}>Konto zostało poprawnie usunięte!</p>
+                    setTimeout(() => {
+                        //window.localStorage.clear();
+                        window.location.reload();
+                        //return  <Redirect to='/'/>
+                    }, 300);
                 }
-                
-            }
+                else if(this.props.response.data.status !== 200){
+                    console.log(this.props.response.errors);
+                    content = <p>Błąd serwera ziomuś</p>;
+                    if (this.props.response.data !== null){
+                        content = 
+                        (
+                        <Aux>
+                            <p>Error</p>
+                            <ul style={{margin: '0px'}}>
+                                {this.props.response.data.errors.map((item) => 
+                                    <li style={{color: 'red', fontWeight: 'bold'}} key={item}>{item}</li>
+                                
+                            )}
+                            </ul>
+                        </Aux>);
+                    }
+                }
              //this.setState({response: null});
         }
 

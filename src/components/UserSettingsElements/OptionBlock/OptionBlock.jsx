@@ -18,6 +18,7 @@ class optionBlock extends Component{
         showChangePassword: false,
         showDeleteAccount: false,
         loading: false,
+        avatarError: false
     };
 
     onDrop = (files) => {
@@ -51,12 +52,17 @@ class optionBlock extends Component{
             .then(response => {
                 console.log(response)
                 this.setState({showChangeAvatar: !this.state.showChangeAvatar, loading: !this.state.loading});
-                window.location.reload();
+                //window.location.reload();
             })
             .catch(error =>{
                 console.log(error);
                 console.log(error.response)
-                window.location.reload();
+                this.setState({loading: !this.state.loading, avatarError: !this.state.avatarError});      
+                setTimeout(() => {
+                this.setState({showChangeAvatar: !this.state.showChangeAvatar});                       
+                }, 3000)
+                
+                //window.location.reload();
             });
     }
 
@@ -66,7 +72,8 @@ class optionBlock extends Component{
 
     render(){
         let onClickFunction;
-
+        const responseObject = JSON.parse(localStorage.getItem('responseObject'));
+        console.log(responseObject);
         //zmiana awataru
         if(this.props.number === "1"){
             onClickFunction = this.changeShowChangeAvatar;
@@ -97,7 +104,7 @@ class optionBlock extends Component{
             </div>
             <ConfirmModal mode="Small" show={this.state.showChangeAvatar} clicked={this.changeShowChangeAvatar}>
                 <div className="modal-bartuszak">
-                    {(this.state.loading)?<Spinner className="whiteSpinner"/>: 
+                    {(this.state.loading)?<Spinner className="whiteSpinner"/>: (this.state.avatarError)?<h2 style={{color: "red"}}>Błąd serwera! Spróbuj jeszcze raz :(</h2>: 
                         <AddPictureBar
                         mainLabelTitle="Zmień avatar"
                         buttonTitle="Zatwierdź"
