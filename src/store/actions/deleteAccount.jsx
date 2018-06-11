@@ -24,8 +24,8 @@ export function deleteAccount(token){
         return (
             axios.delete('/api/account', config)
             .then((response)=>{
-                dispatch(accountRemovedSuccessfull(response.data));
-                console.log(response.data)
+                dispatch(accountRemovedSuccessfull(response));
+                console.log(response)
                 localStorage.clear();
             })
             .catch((error)=>{
