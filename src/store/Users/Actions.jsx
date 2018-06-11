@@ -30,3 +30,17 @@ export const fetchUsersActionCreator = () => {
         })
     };
 }
+
+export const fetchNextUsersActionCreator = (lastUserId, actualUsers) => {
+    return dispatch => {
+        const config = {
+            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
+        };
+        axios.get("/api/chat/users/" + lastUserId, config).then(response => {
+            dispatch(fetchUsers(response.data, [], false));
+        }).catch(error => {
+            dispatch(fetchUsers([], handleErrors(error), true));
+        })
+
+    }
+}

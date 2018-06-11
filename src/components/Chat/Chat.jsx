@@ -3,15 +3,17 @@ import './Chat.css';
 import Aux from '../../hoc/Auxi';
 import RodoPrompt from './RodoPrompt/RodoPrompt';
 import ChatClient from './ChatClient//ChatClient';
-import { fetchUsersActionCreator } from '../../store/Users/Actions'; 
+import { fetchUsersActionCreator, fetchNextUsersActionCreator } from '../../store/Users/Actions'; 
 import {connect} from 'react-redux';
 class Chat extends Component {
-    state = {
-        chatOn: null,
-        isLoading: false,
-        usersPanel: true
+    constructor(props){
+        super(props);
+        this.state = {
+            chatOn: null,
+            isLoading: false,
+            usersPanel: true
+        }
     }
-    
     componentDidMount(){
         if(this.props.ruleAccepted){
             this.setState({isLoading: true, chatOn: true});
@@ -31,11 +33,18 @@ class Chat extends Component {
     }
    
     toggleUserPanel = () => { this.setState({usersPanel: !this.state.usersPanel}); }
+
+    loadMoreUsers = () => {
+        console.log(this.ulScrollItem.scrollTop);
+        this.props.fetchNextUsers(this.props.fetchedUsers[this.props.fetchedUsers.length-1].id, [...this.props.fetchedUsers]);
+    }
     render() { 
         return ( 
         <div className="chat-container">
             { this.state.chatOn ? 
             <ChatClient 
+            reference={el => this.ulScrollItem = el}
+            loadMoreUsers={e => this.loadMoreUsers(e)}
             toggleUserPanel={this.toggleUserPanel}
             usersPanel={this.state.usersPanel}
             isLoading={this.state.isLoading}
@@ -64,7 +73,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchUsers: () => dispatch(fetchUsersActionCreator())
+        fetchUsers: () => dispatch(fetchUsersActionCreator()),
+        fetchNextUsers: (lastUserId, actualUsers) => dispatch(fetchNextUsersActionCreator(lastUserId, actualUsers))
+
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

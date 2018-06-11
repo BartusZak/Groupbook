@@ -31,7 +31,7 @@ const chatClient = props => {
         props.usersPanel ?
 
         <div className={`chat-users ${props.usersPanel ? "chat-users-in" : "chat-users-out"}`}>
-            <ul>
+            <ul ref={props.reference} onScroll={props.loadMoreUsers}>
                 {usersToShow.map(item => {
                     return (
                         <li key={item.id}>

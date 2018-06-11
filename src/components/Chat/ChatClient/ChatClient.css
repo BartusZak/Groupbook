@@ -73,14 +73,14 @@
 }
 
 
-.chat-users::-webkit-scrollbar {
+.chat-users ul::-webkit-scrollbar {
     width: 10px;
 }
-.chat-users::-webkit-scrollbar-track {
+.chat-users ul::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
  
-.chat-users::-webkit-scrollbar-thumb {
+.chat-users ul::-webkit-scrollbar-thumb {
   background-color: rgba(0,0,0,0.9);
   border-radius: 5px;
   outline: 1px solid rgba(0,0,0,0.3);
