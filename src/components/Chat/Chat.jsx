@@ -35,7 +35,6 @@ class Chat extends Component {
     toggleUserPanel = () => { this.setState({usersPanel: !this.state.usersPanel}); }
 
     loadMoreUsers = () => {
-        console.log(this.ulScrollItem.scrollTop);
         this.props.fetchNextUsers(this.props.fetchedUsers[this.props.fetchedUsers.length-1].id, [...this.props.fetchedUsers]);
     }
     render() { 
