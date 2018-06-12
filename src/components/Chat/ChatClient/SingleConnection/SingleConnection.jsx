@@ -39,10 +39,6 @@ class SingleConnection extends Component {
 
             connection.on('receiveMessage', (content, date, id, senderId, receiverId) => {
                 Alert.info('Test message 2', {
-                    customFields: {
-                        closeAlert: Alert.close(this.props.user.id),
-                        id: this.props.user.id
-                    },
                     position: 'top',
                     effect: 'bouncyflip',
                     beep: Sound,
@@ -56,7 +52,7 @@ class SingleConnection extends Component {
             });
             connection.on('messageSent', (content, date, id, senderId, receiverId) => {
                 if(this.props.user.id === senderId){
-                    
+                    Alert.closeAll();
                     const newMessage = {content: content, creationDate: date, 
                         id: id, senderId: senderId, receiverId: receiverId};
                     const conversation = [...this.state.conversation];
