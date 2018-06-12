@@ -21,23 +21,27 @@ class SingleConnection extends Component {
             headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
         };
         axios.get("/api/chat/conversation/" + this.props.user.id, config).then(response => {
-            const transport = signalR.HttpTransportType.WebSockets;
+            console.log(response.data);
             const connection = new signalR.HubConnectionBuilder().
             withUrl("https://groupsconnectsapi.azurewebsites.net/chat?" + "token=" + 
-            JSON.parse(localStorage.getItem('responseObject')).token).
+            JSON.parse(localStorage.getItem('responseObject')).token, 
+            {transport: signalR.HttpTransportType.LongPolling}).
             build();
 
-            connection.start({transport: transport}).catch(error => {
+            connection.start().catch(error => {
                 this.setState({connectionError: "Błąd przy nawiązaniu połączenia"});
             })
 
-            connection.on('receiveMessage', (content, date) => {
+            connection.on('receiveMessage', (content, date, id, senderId, receiverId) => {
+                const newMessage = {content: content, creationDate: date, 
+                    id: id, senderId: senderId, receiverId: receiverId};
+                console.log(newMessage);
                 const conversation = [...this.state.conversation];
-                conversation.concat([content]);
+                conversation.push(newMessage);
                 this.setState({ conversation: conversation });
             });
-            this.setState({connection: connection, transport: transport, 
-                conversation: response.data, loadingMessages: false});
+
+            this.setState({connection: connection, conversation: response.data, loadingMessages: false});
             
         }).catch(error => {
             this.setState({loadingMessages: false, connectionError: handleErrors(error)});
@@ -51,9 +55,8 @@ class SingleConnection extends Component {
             this.setState({validationStatus: validationResult});
         }
         else{
-            this.state.connection.invoke("addMessage", this.state.currentMessage, this.props.user.id);
-
-            
+            this.state.connection.invoke("addMessage", 
+            this.state.currentMessage, this.props.user.id);
         }
 
 

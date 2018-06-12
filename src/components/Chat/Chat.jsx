@@ -72,7 +72,7 @@ class Chat extends Component {
     }
     render() { 
         return ( 
-        <div className="chat-container">
+        <div className={this.props.openChat === true ? "chat-container" : "chat-hidden"}>
             { this.state.chatOn ? 
             <ChatClient 
             closeChat={this.props.closeChat}
