@@ -3,6 +3,20 @@
     position: relative;
     display: flex;
 }
+.chat-client i {
+    z-index: 60;
+    color: white;
+    position: absolute;
+    font-size: 30px;
+}
+.chat-client .fa-times{
+    right: 20px;
+    top: 20px;
+}
+.chat-client .fa-level-down{
+    top: 20px;
+    right: 120px;    
+}
 .chat-client .spinner-prompt{
     position: absolute;
     left: 0;

@@ -13,7 +13,6 @@ class SingleConnection extends Component {
         validationStatus: "",
         conversation: [],
         connection: null,
-        transport: null,
         connectionError: "",
         loadingMessages: true,
     }
@@ -22,24 +21,22 @@ class SingleConnection extends Component {
             headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
         };
         axios.get("/api/chat/conversation/" + this.props.user.id, config).then(response => {
-            const transport = signalR.HttpTransportType;
+            const transport = signalR.HttpTransportType.WebSockets;
             const connection = new signalR.HubConnectionBuilder().
             withUrl("https://groupsconnectsapi.azurewebsites.net/chat?" + "token=" + 
             JSON.parse(localStorage.getItem('responseObject')).token).
             build();
 
-            
+            connection.start({transport: transport}).catch(error => {
+                this.setState({connectionError: "Błąd przy nawiązaniu połączenia"});
+            })
+
             this.setState({connection: connection, transport: transport, 
                 conversation: response.data, loadingMessages: false});
             
         }).catch(error => {
             this.setState({loadingMessages: false, connectionError: handleErrors(error)});
         })
-        
-        
-       
-       
-
     }
   
     sendMessage = e => {
@@ -49,13 +46,8 @@ class SingleConnection extends Component {
             this.setState({validationStatus: validationResult});
         }
         else{
-            this.state.connection.start({transport: this.state.transport}).then(
-                () => { 
-                    this.state.connection.invoke("addMessage", this.state.currentMessage, this.props.user.id);
-                }
-            ).catch(error => {
-                this.setState({connectionError: "Błąd przy nawiązaniu połączenia"});
-            });
+        
+            this.state.connection.invoke("addMessage", this.state.currentMessage, this.props.user.id);
         }
 
 

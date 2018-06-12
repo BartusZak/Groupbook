@@ -15,8 +15,9 @@ const chatClient = props => {
 
     return (
     <div className="chat-client">
-        <i onClick={props.exitChat} className="fa fa-times"></i>
-
+        <i onClick={props.closeChat} className="fa fa-times"></i>
+        <i onClick={props.hideChat} className="fa fa-level-down"></i>
+        
         {props.isLoading ?
         <div className="spinner-prompt">
             <p>Trwa ładowanie</p>

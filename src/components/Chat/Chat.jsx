@@ -75,6 +75,7 @@ class Chat extends Component {
         <div className="chat-container">
             { this.state.chatOn ? 
             <ChatClient 
+            closeChat={this.props.closeChat}
             openedConnections={this.state.openedConnections}
             closeSingleWindow={e => this.closeSingleWindow(e)}
             startConnection={e => this.startConnection(e)}
@@ -84,6 +85,7 @@ class Chat extends Component {
             toggleUserPanel={this.toggleUserPanel}
             usersPanel={this.state.usersPanel}
             isLoading={this.state.isLoading}
+
             exitChat={this.props.exitChat} 
             error={this.props.fetchUsersResult} 
             errorMessage={this.props.fetchUsersErrors[0]}

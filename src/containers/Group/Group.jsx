@@ -78,7 +78,7 @@ class Group extends Component{
         addPicPrompt: false,
         bgImageLoadedSucces: null,
 
-        openChat: false,
+        openChat: null,
         loading: true,
     }
    componentWillReceiveProps(nextProps){
@@ -234,7 +234,13 @@ class Group extends Component{
     }
 
     activateChatWindow = () => {
-        this.setState({openChat: !this.state.openChat});
+        this.setState({openChat: true});
+    }
+    hideChatWindow = () => {
+        this.setState({openChat: false});
+    }
+    closeChatWindow = () => {
+        this.setState({openChat: null});
     }
 
     render(){
@@ -413,8 +419,11 @@ class Group extends Component{
              </div>
 
              <div className="group-container">
-                {this.state.openChat ? 
-                <Chat ruleAccepted={false} exitChat={this.activateChatWindow}/> : null}
+                {this.state.openChat === true ? 
+                <Chat ruleAccepted={false} 
+                openChat={this.state.openChat}
+                activateChatWindow={this.activateChatWindow} 
+                hideChat={this.hideChatWindow} closeChat={this.closeChatWindow}/> : null}
 
                 <div className="group-header-area">
                 {this.state.openEditPlace ? 
