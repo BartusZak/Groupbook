@@ -11,6 +11,7 @@
     width: 190px;
     display: flex;
     align-items: center;
+    z-index: 30;
     flex-flow: column;
     font-family: 'Lobster', cursive;
     font-size: 20px;

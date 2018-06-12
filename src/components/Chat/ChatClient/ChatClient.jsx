@@ -76,7 +76,7 @@ const chatClient = props => {
             {props.openedConnections.map(i => {
                 return (
                     <SingleConnection closeSingleWindow={props.closeSingleWindow} 
-                    id={i.id} key={i.id} username={i.username}/>
+                    user={i} key={i.id} />
                 );
             })}
             </div>
