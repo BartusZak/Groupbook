@@ -10,7 +10,7 @@
     display: flex;
     flex-flow: column;
     height: 400px;
-    margin: 10px 0;
+    margin: 20px 0;
     box-shadow: 0 1px 3px black;
     position: relative;
 }
@@ -51,25 +51,29 @@
     top: 45%;
     font-weight: bold;
 }
-.single-connection textarea{
+.single-connection input[type="text"]{
     padding: 5px;
     resize: none;
+    width: 100%;
     height: 70px;
     background-color: #32323d;
-    border: none;
     color: white;
+    border: 1px solid transparent;
 }
-
-.single-connection textarea::-webkit-scrollbar,
+.single-connection input[type="text"]:focus{
+    border: 1px solid lightblue;
+    cursor: initial;
+}
+.single-connection input[type="text"]::-webkit-scrollbar,
 .single-connection article::-webkit-scrollbar {
     width: 10px;
 }
-.single-connection textarea::-webkit-scrollbar-track, 
+.single-connection input[type="text"]::-webkit-scrollbar-track, 
 .single-connection article::-webkit-scrollbar-track{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
  
-.single-connection textarea::-webkit-scrollbar-thumb,
+.single-connection input[type="text"]::-webkit-scrollbar-thumb,
 .single-connection article::-webkit-scrollbar-thumb {
   background-color: rgba(0,0,0,0.9);
   border-radius: 5px;

@@ -1,0 +1,22 @@
+.alert-container{
+    position: absolute;
+    top: -25px;
+    box-shadow: 0 1px 3px black;
+    background-color: #23232d;
+    color: lightgreen;
+    right: 0;
+    transition: 1s all ease-in-out;
+    font-size: 11px;
+    animation: 1s animate-alert ease-in-out infinite;
+}
+@keyframes animate-alert{
+    0%{
+        background-color: #23232d;
+    }
+    50%{
+        background-color: #32323d;
+    }
+    100%{
+        background-color: #23232d;
+    }
+}

@@ -13,7 +13,8 @@ class Chat extends Component {
         isLoading: false,
         usersPanel: true,
         isLoadingMoreUsers: false,
-        openedConnections: []
+        openedConnections: [],
+        comunicates: []
     }
     componentDidMount(){
         if(this.props.ruleAccepted){
@@ -71,6 +72,7 @@ class Chat extends Component {
         newOpennedConnections.splice(index, 1);
         this.setState({openedConnections: newOpennedConnections, fetchedUsers: newUsers});
     }
+
     render() { 
         return ( 
             <div className={this.props.openChat ? 

@@ -13,10 +13,6 @@
     right: 20px;
     top: 20px;
 }
-.chat-client .fa-level-down{
-    top: 20px;
-    right: 120px;    
-}
 .chat-client .spinner-prompt{
     position: absolute;
     left: 0;
