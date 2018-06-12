@@ -31,6 +31,11 @@ class SingleConnection extends Component {
                 this.setState({connectionError: "Błąd przy nawiązaniu połączenia"});
             })
 
+            connection.on('receiveMessage', (content, date) => {
+                const conversation = [...this.state.conversation];
+                conversation.concat([content]);
+                this.setState({ conversation: conversation });
+            });
             this.setState({connection: connection, transport: transport, 
                 conversation: response.data, loadingMessages: false});
             
@@ -46,8 +51,9 @@ class SingleConnection extends Component {
             this.setState({validationStatus: validationResult});
         }
         else{
-        
             this.state.connection.invoke("addMessage", this.state.currentMessage, this.props.user.id);
+
+            
         }
 
 
