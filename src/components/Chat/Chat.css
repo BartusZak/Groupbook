@@ -20,9 +20,8 @@
 .chat-container, .chat-client{
     animation: 1s animate-chat-in linear forwards;
 }
-
 .hidden-chat{
-    
+    animation: 1s animate-chat-out linear forwards; 
 }
 @keyframes animate-chat-in{
     0%{
@@ -35,3 +34,15 @@
         opacity: 0.99;
     }
 }
+@keyframes animate-chat-out{
+    0%{
+        opacity: 0.99;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+

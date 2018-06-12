@@ -138,6 +138,7 @@
 .conv-message-sender,
 .conv-message-receiver{
     margin: 10px;
+    position: relative;
 }
 .conv-message-sender{
     color: skyblue;
@@ -147,3 +148,18 @@
     color: tomato;
 }
 
+.conv-message-sender b,
+.conv-message-receiver b{
+    position: absolute;
+  
+    font-size: 11px;
+    color: white;
+}
+.conv-message-sender b{
+    top: -10px;
+    right: 0;
+}
+.conv-message-receiver b{
+    top: -10px;
+    left: 0;
+}

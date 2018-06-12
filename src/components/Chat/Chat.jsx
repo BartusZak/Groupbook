@@ -5,6 +5,7 @@ import RodoPrompt from './RodoPrompt/RodoPrompt';
 import ChatClient from './ChatClient//ChatClient';
 import { fetchUsersActionCreator, fetchNextUsersActionCreator } from '../../store/Users/Actions'; 
 import {connect} from 'react-redux';
+
 class Chat extends Component {
     state = {
         fetchedUsers: [],
@@ -72,31 +73,40 @@ class Chat extends Component {
     }
     render() { 
         return ( 
-        <div className={this.props.openChat === true ? "chat-container" : "chat-hidden"}>
-            { this.state.chatOn ? 
-            <ChatClient 
-            closeChat={this.props.closeChat}
-            openedConnections={this.state.openedConnections}
-            closeSingleWindow={e => this.closeSingleWindow(e)}
-            startConnection={e => this.startConnection(e)}
-            isLoadingMoreUsers={this.state.isLoadingMoreUsers}
-            reference={el => this.ulScrollItem = el}
-            loadMoreUsers={e => this.loadMoreUsers(e)}
-            toggleUserPanel={this.toggleUserPanel}
-            usersPanel={this.state.usersPanel}
-            isLoading={this.state.isLoading}
+            <div className={this.props.openChat ? 
+            "chat-container" : "hidden-chat"}>
+            {this.props.openChat ? 
+                <Aux>
+                { this.state.chatOn ? 
+                    <ChatClient 
+                    hideChat={this.props.hideChat}
+                    closeChat={this.props.closeChat}
+                    openedConnections={this.state.openedConnections}
+                    closeSingleWindow={e => this.closeSingleWindow(e)}
+                    startConnection={e => this.startConnection(e)}
+                    isLoadingMoreUsers={this.state.isLoadingMoreUsers}
+                    reference={el => this.ulScrollItem = el}
+                    loadMoreUsers={e => this.loadMoreUsers(e)}
+                    toggleUserPanel={this.toggleUserPanel}
+                    usersPanel={this.state.usersPanel}
+                    isLoading={this.state.isLoading}
 
-            exitChat={this.props.exitChat} 
-            error={this.props.fetchUsersResult} 
-            errorMessage={this.props.fetchUsersErrors[0]}
-            fetchedUsers={this.state.fetchedUsers} />
+                    exitChat={this.props.exitChat} 
+                    error={this.props.fetchUsersResult} 
+                    errorMessage={this.props.fetchUsersErrors[0]}
+                    fetchedUsers={this.state.fetchedUsers} />
 
-            : <RodoPrompt
-            confirmRodo={this.confirmRodo}
-            exitChat={this.props.exitChat} /> 
-            }
+                    : <RodoPrompt
+                    confirmRodo={this.confirmRodo}
+                    exitChat={this.props.exitChat} /> 
+                }
+                </Aux>
+            : null}
             
-        </div> 
+            
+            
+            </div>
+         
         )
     }
 }

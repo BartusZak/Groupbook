@@ -7,6 +7,10 @@ import Spinner from '../../../UI/OwnSpinner/OwnSpinner';
 import axios from '../../../../axios/axios-groupsconnects';
 import { handleErrors } from '../../../../store/errorHandler';
 import { apiPicturesUrl } from '../../../../axios/apiPicturesUrl';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+import Alert from 'react-s-alert';
+import Sound from '../../../../assets/sounds/unconvinced.mp3';
 class SingleConnection extends Component {
     state = {
         currentMessage: "",
@@ -32,6 +36,11 @@ class SingleConnection extends Component {
             })
 
             connection.on('receiveMessage', (content, date, id, senderId, receiverId) => {
+                Alert.info('Test message 2', {
+                    position: 'top',
+                    effect: 'bouncyflip',
+                    beep: Sound
+                });
                 const newMessage = {content: content, creationDate: date, 
                     id: id, senderId: senderId, receiverId: receiverId};
                 const conversation = [...this.state.conversation];
@@ -39,26 +48,32 @@ class SingleConnection extends Component {
                 this.setState({ conversation: conversation });
             });
             connection.on('messageSent', (content, date, id, senderId, receiverId) => {
-                const newMessage = {content: content, creationDate: date, 
-                    id: id, senderId: senderId, receiverId: receiverId};
-                const conversation = [...this.state.conversation];
-                conversation.push(newMessage);
-                this.setState({ conversation: conversation });
+                if(this.props.user.id === senderId){
+                    const newMessage = {content: content, creationDate: date, 
+                        id: id, senderId: senderId, receiverId: receiverId};
+                    const conversation = [...this.state.conversation];
+                    conversation.push(newMessage);
+                    this.setState({ conversation: conversation });
+                }
+                
             });
-           
-                    
-            
-            
-
             this.setState({connection: connection, conversation: response.data, loadingMessages: false});
+            this.scrollToBottom();
             
         }).catch(error => {
             this.setState({loadingMessages: false, connectionError: handleErrors(error)});
         })
     }
-  
+    componentDidUpdate(){
+        this.scrollToBottom();
+    }
+    scrollToBottom = () => {
+        this.formRef.scrollTop = this.formRef.scrollHeight;
+    }
+      
     sendMessage = e => {
         e.preventDefault();
+       
         const validationResult = this.state.currentMessage ? "" : "Wiadomość musi być dłuższa";
         if(validationResult){
             this.setState({validationStatus: validationResult});
@@ -66,6 +81,7 @@ class SingleConnection extends Component {
         else{
             this.state.connection.invoke("addMessage", 
                 this.state.currentMessage, this.props.user.id);
+           
         }
 
 
@@ -92,7 +108,7 @@ class SingleConnection extends Component {
             </h5>
 
 
-            <article>
+            <article ref={el => { this.formRef = el; }}>
                 {!this.state.loadingMessages ? 
                     this.state.connectionError === "" ?
                     this.state.conversation.length > 0 ? 
@@ -101,6 +117,7 @@ class SingleConnection extends Component {
                             <p key={i.id} className={i.senderId !== JSON.parse(localStorage.getItem('responseObject')).id ? 
                             "conv-message-sender" : "conv-message-receiver"}>
                                 {i.content}
+                                <b>{i.creationDate.slice(0, 10) + " " + i.creationDate.slice(11,16)}</b>
                             </p>
                         );
                     })
@@ -131,7 +148,8 @@ class SingleConnection extends Component {
                 <input type="submit" value="Prześlij" />}
             </div>}
             
-            
+            <Alert 
+            stack={{limit: 5}}  />
         </form>
         )
     }
