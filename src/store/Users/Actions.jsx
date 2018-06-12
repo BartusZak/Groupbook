@@ -63,26 +63,3 @@ export const fetchNextUsersActionCreator = (actualUsers, lastUserId) => {
 
     }
 }
-
-export const getConversations = (conversations, conversationsErrors, conversationResults) => {
-    return {
-        type: actionTypes.GET_CONVERSATIONS,
-        conversations: conversations,
-        conversationsErrors: conversationsErrors,
-        conversationResults: conversationResults
-    }
-}
-export const getConversationsActionCreator = (receiverId, currentConversations, 
-    currentErrors, currentResults) => {
-    return dispatch => {
-        const config = {
-            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
-        };
-
-        axios.get("/api/chat/conversation/" + receiverId, config).then(response => {
-            console.log(response.data);
-        }).catch(error => {
-            dispatch(getConversations([], handleErrors(error), true));
-        })
-    }
-}

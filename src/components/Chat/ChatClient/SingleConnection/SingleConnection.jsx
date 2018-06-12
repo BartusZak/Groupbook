@@ -1,24 +1,39 @@
 import React, { Component } from 'react';
 import './SingleConnection.css';
-import { connect } from 'react-redux';
 import * as signalR from '@aspnet/signalr'
-import { getConversationsActionCreator } from '../../../../store/Users/Actions';
 import { validateInput, IncorrectWords } from '../../../../containers/UserOptions/Validation/Validation';
 import { HubConnection } from '@aspnet/signalr';
+import Spinner from '../../../UI/OwnSpinner/OwnSpinner';
+import axios from '../../../../axios/axios-groupsconnects';
+import { handleErrors } from '../../../../store/errorHandler';
 class SingleConnection extends Component {
     state = {
         currentMessage: "",
         validationStatus: "",
 
-
-        connectionMessages: [],
+        conversation: [],
         connection: null,
-        connectionError: ""
+        
+
+
+        connectionError: "",
+        loadingMessages: true,
+
 
     }
     componentDidMount(){
-        this.props.getConversations(this.props.id);
+        const config = {
+            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('responseObject')).token}
+        };
+        axios.get("/api/chat/conversation/" + this.props.id, config).then(response => {
+            this.setState({conversation: response.data, loadingMessages: false});
+        }).catch(error => {
+            this.setState({loadingMessages: false, connectionError: handleErrors(error)});
+        })
 
+
+
+        /*
         const connection = new signalR.HubConnectionBuilder().
             withUrl("https://groupsconnectsapi.azurewebsites.net/chat").
             configureLogging(signalR.LogLevel.Information).
@@ -26,12 +41,13 @@ class SingleConnection extends Component {
 
         let connectionError = "";
         connection.start().catch(error => {
-            this.setState({connectionError: "Wystąpił błąd podczas komunikacji"});
+            this.setState({connectionError: "Wystąpił błąd podczas komunikacji", loadingMessages: false});
         });
-        
+       
         this.setState({connection: connection});
+        */
     }
- 
+  
     sendMessage = e => {
         e.preventDefault();
         const validationResult = this.state.currentMessage ? "" : "Wiadomość musi być dłuższa";
@@ -39,9 +55,6 @@ class SingleConnection extends Component {
             this.setState({validationStatus: validationResult});
         }
         else{
-            
-
-      
         }
 
 
@@ -61,13 +74,28 @@ class SingleConnection extends Component {
             </h5>
             <article>
                 {this.state.connectionError === "" ?
-                null : <p>{this.state.connectionError}</p>}
+                    this.state.conversation.length > 0 ? 
+                    this.state.conversation.map(i => {
+                        return (
+                            <p key={i.id} className="conv-message"></p>
+                        );
+                    })
+                    : <p className="nt-started-conversation">Tej konwersacji nie rozpoczęto :(</p>
+                
+                : <p className="connection-error">{this.state.connectionError}</p>}
             </article>
 
-            <textarea value={this.state.currentMessage} 
-            onChange={e => this.onChangeHandler(e)} placeholder="wpisz wiadomość...">
-            </textarea>   
+            {this.state.loadingMessages ? null : 
+                <textarea className="loading-content" value={this.state.currentMessage} 
+                onChange={e => this.onChangeHandler(e)} placeholder="wpisz wiadomość...">
+                </textarea>
+            }
 
+              
+            
+            {this.state.loadingMessages ? 
+            <Spinner /> : null}
+            
             <div className="btn-and-validation-container">
                 {this.state.validationStatus !== "" ? 
                 <p className="connection-validation">{this.state.validationStatus}</p> : 
@@ -81,17 +109,4 @@ class SingleConnection extends Component {
 }
  
 
-const mapStateToProps = state => {
-    return {
-        conversations: state.UsersReducer.conversations,
-        conversationsErrors: state.UsersReducer.conversationsErrors,
-        conversationResults: state.UsersReducer.conversationResults
-    };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getConversations: (receiverId) => dispatch(getConversationsActionCreator(receiverId))
-    };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SingleConnection);
+export default SingleConnection;

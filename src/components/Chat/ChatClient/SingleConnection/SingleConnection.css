@@ -29,14 +29,18 @@
     height: 230px;
     overflow-y: auto;
     border-top: 1px solid #32323d;
-    padding: 10px;
     margin-bottom: 10px;
+    position: relative;
 }
 
-.single-connection article p{
+.single-connection article .connection-error{
     color: red;
     text-align: center;
     font-size: 17px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 45%;
     font-weight: bold;
 }
 .single-connection textarea{
@@ -98,4 +102,25 @@
     100%{
         opacity: 1;
     }
+}
+
+.single-connection .lds-dual-ring{
+    left: 0;
+    right: 0;
+    position: absolute;
+    bottom: 48px;
+    margin: 0 auto;
+}
+
+.loading-content{
+    animation: 1s change-connection-validation ease-in-out forwards;
+    transition: 1s all ease-in-out;
+}
+
+.nt-started-conversation{
+    color: lightskyblue;
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    text-align: center;
 }
