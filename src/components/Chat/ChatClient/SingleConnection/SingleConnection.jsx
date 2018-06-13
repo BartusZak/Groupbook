@@ -38,20 +38,17 @@ class SingleConnection extends Component {
             })
 
             connection.on('receiveMessage', (content, date, id, senderId, receiverId) => {
-                if(this.props.user.id === senderId){
-                    Alert.info('Test message 2', {
-                        position: 'top',
-                        effect: 'bouncyflip',
-                        beep: Sound,
-                        timeout: 'none'
-                    });
-                    const newMessage = {content: content, creationDate: date, 
-                        id: id, senderId: senderId, receiverId: receiverId};
-                    const conversation = [...this.state.conversation];
-                    conversation.push(newMessage);
-                    this.setState({ conversation: conversation });
-                }
-                
+                Alert.info('Test message 2', {
+                    position: 'top',
+                    effect: 'bouncyflip',
+                    beep: Sound,
+                    timeout: 'none'
+                });
+                const newMessage = {content: content, creationDate: date, 
+                    id: id, senderId: senderId, receiverId: receiverId};
+                const conversation = [...this.state.conversation];
+                conversation.push(newMessage);
+                this.setState({ conversation: conversation });
             });
             connection.on('messageSent', (content, date, id, senderId, receiverId) => {
                 if(this.props.user.id === senderId){
