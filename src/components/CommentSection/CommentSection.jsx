@@ -259,9 +259,10 @@ class CommentSection extends Component{
     
                 {this.state.comments.map((item, id) => {
                     return (
+                    item.author ?
                     <li key={item.id}>
                         <span className="CommentInfo">
-                            <b>{item.author.username}</b>
+                            <b>{item.author ? item.author.username ? item.author.username : "anonim" : "anonim"}</b>
                             <b>{item.modifiedDate.slice(0,10) + " "
                              + item.modifiedDate.slice(11,16)}</b>
                             {(JSON.parse(localStorage.getItem('responseObject')).id === item.author.id)?
@@ -299,7 +300,7 @@ class CommentSection extends Component{
                         }
                         
                     </li>
-                    );
+                    : null);
                 })}
             </ul>
         );

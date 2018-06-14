@@ -162,7 +162,7 @@ class Post extends Component{
                           } alt="Opis"
                           onError={(e)=>{e.target.src=require('assets/img/404/error-image-generic.png')}}/>
                       </div>
-                      <p className="post-block-author">{this.props.userName}</p>
+                      <p className="post-block-author">{this.props.userName && this.props.userName}</p>
 
                      
                       <div className="user-post-options-block">
