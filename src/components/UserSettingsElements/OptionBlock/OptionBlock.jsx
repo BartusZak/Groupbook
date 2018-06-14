@@ -52,7 +52,7 @@ class optionBlock extends Component{
             .then(response => {
                 console.log(response)
                 this.setState({showChangeAvatar: !this.state.showChangeAvatar, loading: !this.state.loading});
-                //window.location.reload();
+                window.location.reload();
             })
             .catch(error =>{
                 console.log(error);
