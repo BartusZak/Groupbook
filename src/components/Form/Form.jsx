@@ -71,10 +71,10 @@ class Form extends Component {
         event.preventDefault();
         this.setState({loading: true});
         let registerData = {
-            Username: this.state.names[0].text,
-            Email: this.state.names[1].text,
-            Password: this.state.names[2].text,
-            ConfirmedPassword: this.state.names[3].text,
+            Username: String.prototype.trim.call(this.state.names[0].text),
+            Email: String.prototype.trim.call(this.state.names[1].text),
+            Password: String.prototype.trim.call(this.state.names[2].text),
+            ConfirmedPassword: String.prototype.trim.call(this.state.names[3].text),
         };
         axios.post('/api/account/register', registerData)
         .then(response => {
@@ -142,7 +142,7 @@ class Form extends Component {
         let text = null;
         let button = null;
         let content = <p>Tu powinien być formularz - "{this.props.name}"</p>
-        let summaryErrors = (this.state.errors !== null)? this.state.errors.map(error =>{return <p key={error} className="ValidationError">{error}</p>}): null;
+        let summaryErrors = (this.state.errors !== null && this.state.errors !== undefined)? this.state.errors.map(error =>{return <p key={error} className="ValidationError">{error}</p>}): null;
         if(this.props.name.toUpperCase() === "LOGOWANIE")
         {
             text = <p className="message">Nie masz konta? <Link to="/register">Utwórz konto</Link></p>;
