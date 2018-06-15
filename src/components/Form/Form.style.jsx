@@ -61,7 +61,6 @@ export const MainForm = styled.form`
         padding: 15px;
         box-sizing: border-box;
         font-size: 14px;
-        text-transform: lowercase;
       }
 
       button {
